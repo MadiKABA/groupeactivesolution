@@ -1,5 +1,7 @@
 import { Code2, GraduationCap, Settings2, type LucideIcon } from "lucide-react";
 
+import { EASE } from "@/lib/motion";
+
 export type HeroSlide = {
   /** Ligne du titre (les 3 lignes forment le h1). */
   line: string;
@@ -48,11 +50,8 @@ export const heroSlides: readonly HeroSlide[] = [
 /** Durée d'affichage d'un état du carrousel, en millisecondes. */
 export const HERO_SLIDE_DURATION = 6000;
 
-/** Courbes d'animation du hero (cubic-bezier). */
-export const HERO_EASE = {
-  reveal: [0.22, 1, 0.36, 1],
-  wipe: [0.77, 0, 0.18, 1],
-} as const;
+/** Courbes d'animation du hero (communes au site). */
+export const HERO_EASE = EASE;
 
 /** Séquence d'entrée au chargement, en secondes (délai total < 1.4 s). */
 export const HERO_ENTRY_DELAY = {

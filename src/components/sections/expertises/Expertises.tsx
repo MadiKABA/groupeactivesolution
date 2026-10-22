@@ -1,24 +1,44 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { expertiseImagePath, expertises, expertisesIntro } from "@/lib/expertises";
+
+import { ExpertisesScroller } from "./ExpertisesScroller";
+import { SectionMotif } from "./SectionMotif";
+
 /*
- * Section « Nos expertises » — amorce seulement (surtitre + titre de la maquette).
- * Sur desktop, son padding-top réduit laisse voir le surtitre et le haut du titre
+ * Section « Nos expertises » (fond clair). Rendue côté serveur ; seule la partie
+ * interactive (bloc actif, visuel sticky) est un composant client.
+ * Sur desktop, le padding-top réduit laisse voir le libellé et le début du titre
  * dans les 96px de teaser sous le hero.
- * TODO : intro et cartes des trois expertises, à construire à partir des contenus validés.
  */
 export function Expertises() {
+  // Photos déposées dans public/expertises/ prises en compte au build, sinon emplacement graphique.
+  const images = expertises.map((expertise) => {
+    const path = expertiseImagePath(expertise.slug);
+    return existsSync(join(process.cwd(), "public", path)) ? path : null;
+  });
+
   return (
     <section
       id="expertises"
       aria-labelledby="expertises-title"
-      className="bg-surface-warm pt-16 pb-section lg:pt-10"
+      className="expertises-section relative isolate overflow-x-clip bg-surface-warm pt-16 lg:pt-10"
     >
-      <div className="mx-auto max-w-site px-6 md:px-10 xl:px-28">
-        <p className="flex items-center gap-3 text-xs font-semibold tracking-label text-text-primary uppercase">
-          <span aria-hidden="true" className="h-0.5 w-9 bg-brand-gold" />
-          Nos expertises
-        </p>
-        <h2 id="expertises-title" className="mt-3 text-h2 font-bold tracking-display text-text-primary">
-          Trois expertises, un même engagement
-        </h2>
+      {/* Motif sur toute la section ; le padding bas est porté par la scène (sticky jusqu'au bout) */}
+      <SectionMotif />
+      {/* Contenu au-dessus du motif, sans fond opaque */}
+      <div className="relative z-10 mx-auto max-w-site px-6 md:px-10 xl:px-28">
+        <SectionHeader
+          id="expertises-title"
+          eyebrow={expertisesIntro.eyebrow}
+          titleLines={expertisesIntro.titleLines}
+          underlineLast
+          display
+          intro={expertisesIntro.intro}
+        />
+        <ExpertisesScroller images={images} />
       </div>
     </section>
   );
