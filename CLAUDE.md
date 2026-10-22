@@ -28,18 +28,19 @@ Après tout changement pertinent : `pnpm lint && pnpm typecheck && pnpm build`. 
 
 - Tous les tokens sont dans `src/app/globals.css` (`@theme` Tailwind CSS v4). Pas de `tailwind.config`.
 - Couleurs officielles (ne jamais modifier) :
-  - Bleu nuit `#0B1730` → `brand-navy`
-  - Doré `#E8B04A` → `brand-gold` (survol des boutons dorés : `brand-gold-light` `#F0BE5E`)
+  - Bleu nuit `#07172E` → `brand-navy`
+  - Doré `#E3A93F` → `brand-gold` ; dégradé du logo : `brand-gold-light` `#EDB94D` (aussi survol des boutons dorés), `brand-gold-deep` `#D89F37`
   - Blanc `#FFFFFF` → `brand-white`
-- Autres tokens : `brand-navy-soft`, `brand-gold-hover`, `surface`, `surface-muted`, `text-primary`, `text-secondary`, `text-on-dark`, `border-subtle` (ex. `bg-surface-muted`, `text-text-secondary`, `border-border-subtle`).
+- Autres tokens : `brand-navy-soft`, `brand-navy-glow`, `surface`, `surface-muted`, `surface-warm`, `text-primary`, `text-secondary`, `text-on-dark`, `border-subtle` (ex. `bg-surface-muted`, `text-text-secondary`, `border-border-subtle`).
 - La palette par défaut de Tailwind est désactivée : **aucun code hex en dur ni valeur arbitraire `[#...]`**. Une nouvelle couleur s'ajoute dans `globals.css`, justifiée.
-- Direction « hybride premium » : bleu nuit pour les zones fortes, doré en accent (actions, détails) sans envahir, blanc comme surface principale. Pas de dégradés ni d'effets décoratifs gratuits. **Exception validée : le header** (bande de verre, liseré doré et reflet en dégradé, reflet du CTA), à ne pas étendre au reste du site sans décision explicite.
-- Contrastes : doré sur blanc ≈ 2:1 → **jamais pour du texte**. Sur un bouton doré, texte bleu nuit (≈ 9.1:1), pas blanc. Doré sur bleu nuit ≈ 9:1 : OK.
+- Direction « hybride premium » : bleu nuit pour les zones fortes, doré en accent (actions, détails) sans envahir, blanc comme surface principale. Pas de dégradés ni d'effets décoratifs gratuits. **Exceptions validées : le header** (bande de verre, liseré doré et reflet en dégradé, reflet du CTA) **et le hero** (dégradés radiaux, grain, titre en dégradé doré, motif et reflets ; classes `hero-*` de `globals.css`). Les éléments en verre utilisent tous la classe `.glass` (variables `--glass-bg`, `--glass-border`, `--glass-blur`) et éventuellement `.glass-sweep`, à ne pas étendre au reste du site sans décision explicite.
+- Contrastes : doré sur blanc ≈ 2:1 → **jamais pour du texte**. Sur un bouton doré, texte bleu nuit (≈ 8.5:1), pas blanc. Doré sur bleu nuit ≈ 8.5:1 : OK. Blanc à 35 % sur bleu nuit ≈ 3.2:1 : réservé aux grands titres (≥ 24px gras).
 - Focus : variable `--focus-ring` (bleu nuit par défaut) ; la redéfinir en `var(--color-brand-gold)` sur fond sombre.
-- Police : **Plus Jakarta Sans** via `next/font/google` dans `src/app/layout.tsx` (400, 500, 600, 700, 800) → utilitaire `font-sans` (appliqué au `body`).
-- Échelle : `text-sm`, `text-nav` (15px, menu), `text-base`, `text-lg`, `text-h3`, `text-h2`, `text-h1` (fluides) ; `leading-tight|snug|normal`.
-- Géométrie : `rounded-sm|md|lg|xl`, `shadow-sm|md|lg|header|gold`, `max-w-site` (1684px, avec les marges `px-6 md:px-10 xl:px-28`), `py-section`.
+- Police : **Manrope** via `next/font/google` dans `src/app/layout.tsx` (400, 500, 600, 700, 800) → utilitaire `font-sans` (appliqué au `body`).
+- Échelle : `text-2xs` (11px), `text-xs` (12px), `text-sm`, `text-nav` (15px, menu), `text-base`, `text-lg`, `text-h3`, `text-h2`, `text-h1`, `text-hero` (fluides) ; `tracking-display|label|badge` ; `leading-tight|snug|normal`.
+- Géométrie : `rounded-sm|md|lg|xl`, `rounded-2xl|hero`, `shadow-sm|md|lg|header|gold|hero|glow`, point de rupture `xs` (480px), `h-hero` (hero desktop : écran moins 96px de teaser, en `svh`), `max-w-site` (1684px, avec les marges `px-6 md:px-10 xl:px-28`), `py-section`.
 - Animations : `ease-standard`, `ease-emphasized`, `duration-(--duration-fast|base|slow)`. `prefers-reduced-motion` est géré globalement ; avec Motion, utiliser aussi `useReducedMotion`.
+- Header fixe (72px, 90px à partir de `xl`) : chaque page compense sa hauteur elle-même (le hero le fait avec `pt-18 xl:pt-22.5`) ; il n'y a plus d'espaceur global dans le layout. Les `section[id]` ont une `scroll-margin-top` égale à la hauteur du header pour les ancres.
 - Icônes : `lucide-react`. Animations : `motion` (`motion/react`), à réserver aux composants client.
 
 ## Ressources

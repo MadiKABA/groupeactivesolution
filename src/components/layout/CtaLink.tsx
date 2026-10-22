@@ -4,6 +4,8 @@ import { Send } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 
+import { ButtonShine } from "@/components/ui/ButtonShine";
+
 import { ctaLink } from "./navigation";
 
 const MotionLink = motion.create(Link);
@@ -27,11 +29,7 @@ export function CtaLink({ className = "", onClick }: CtaLinkProps) {
         className="size-3.5 transition-transform duration-(--duration-base) ease-standard group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
       />
       {ctaLink.label}
-      {/* Reflet qui traverse le bouton au survol ; revient sans transition à la sortie. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -skew-x-20 bg-linear-to-r from-transparent via-text-on-dark/40 to-transparent motion-safe:group-hover:translate-x-[450%] motion-safe:group-hover:transition-transform motion-safe:group-hover:duration-700 motion-safe:group-hover:ease-out"
-      />
+      <ButtonShine />
     </MotionLink>
   );
 }

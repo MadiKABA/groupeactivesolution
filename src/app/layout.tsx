@@ -1,10 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Manrope } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
+const manrope = Manrope({
+  variable: "--font-manrope",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   display: "swap",
@@ -32,17 +32,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b1730",
+  themeColor: "#07172e",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="fr" className={jakarta.variable}>
+    <html lang="fr" className={manrope.variable}>
       <body>
         <Header />
-        {/* Réserve la hauteur du header fixe (72px, 90px à partir de xl). En navy pour que le
-            header translucide se fonde avec le hero en haut de page. */}
-        <div aria-hidden="true" className="h-18 bg-brand-navy xl:h-22.5" />
         {children}
       </body>
     </html>
