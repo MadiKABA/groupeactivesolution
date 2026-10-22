@@ -17,20 +17,22 @@
   --color-*: initial;
 
   /* Couleurs de référence de la charte (ne pas modifier) */
-  --color-brand-navy: #272332;
-  --color-brand-gold: #c39631;
+  --color-brand-navy: #0b1730;
+  --color-brand-gold: #e8b04a;
   --color-brand-white: #ffffff;
 
   /* Variantes calculées depuis les couleurs de référence */
   --color-brand-navy-soft: color-mix(in oklab, var(--color-brand-navy) 88%, white);
   --color-brand-gold-hover: color-mix(in oklab, var(--color-brand-gold) 85%, black);
+  /* Survol des boutons dorés à texte bleu nuit (contraste ≈ 10.4:1) */
+  --color-brand-gold-light: #f0be5e;
 
   /* Surfaces */
   --color-surface: #ffffff;
   --color-surface-muted: #f6f6f7;
 
   /* Textes */
-  --color-text-primary: #272332;
+  --color-text-primary: #0b1730;
   --color-text-secondary: #52525b; /* contraste ≈ 7.7:1 sur blanc */
   --color-text-on-dark: #ffffff;
 
@@ -42,6 +44,8 @@
 
   --text-sm: 0.875rem;
   --text-sm--line-height: 1.5;
+  --text-nav: 0.9375rem; /* liens du menu principal (15px) */
+  --text-nav--line-height: 1.5;
   --text-base: 1rem;
   --text-base--line-height: 1.65;
   --text-lg: 1.125rem;
@@ -53,7 +57,7 @@
   --text-h1: clamp(2.5rem, 1.75rem + 3.2vw, 4.5rem);
   --text-h1--line-height: 1.05;
 
-  /* Graisses alignées sur celles chargées pour Manrope (layout.tsx) */
+  /* Graisses alignées sur celles chargées pour Plus Jakarta Sans (layout.tsx) */
   --font-weight-*: initial;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -77,9 +81,13 @@
     0 4px 12px -2px color-mix(in oklab, var(--color-brand-navy) 8%, transparent),
     0 2px 4px -2px color-mix(in oklab, var(--color-brand-navy) 6%, transparent);
   --shadow-lg: 0 16px 40px -12px color-mix(in oklab, var(--color-brand-navy) 14%, transparent);
+  /* Header après défilement, et halo du CTA doré au survol */
+  --shadow-header: 0 10px 30px color-mix(in oklab, black 25%, transparent);
+  --shadow-gold: 0 8px 24px color-mix(in oklab, var(--color-brand-gold) 25%, transparent);
 
   /* Largeur de contenu (`max-w-site`) et rythme vertical des sections (`py-section`) */
-  --container-site: 76rem;
+  /* 1684px : avec les marges `px-6 md:px-10 xl:px-28` (112px), aligne header, hero et sections. */
+  --container-site: 105.25rem;
   --spacing-section: clamp(4rem, 3rem + 4vw, 7rem);
 
   /* ---------- Interactions ---------- */
@@ -89,7 +97,7 @@
 
 /* La police est injectée par next/font sur <html> : `inline` est requis pour résoudre la variable. */
 @theme inline {
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -125,6 +133,11 @@
   :focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 3px;
+  }
+
+  /* Bloque le défilement de la page tant qu'un <dialog> modal est ouvert (menu mobile). */
+  html:has(dialog[open]:modal) {
+    overflow: hidden;
   }
 
   ::selection {

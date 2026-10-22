@@ -28,17 +28,17 @@ Après tout changement pertinent : `pnpm lint && pnpm typecheck && pnpm build`. 
 
 - Tous les tokens sont dans `src/app/globals.css` (`@theme` Tailwind CSS v4). Pas de `tailwind.config`.
 - Couleurs officielles (ne jamais modifier) :
-  - Bleu nuit `#272332` → `brand-navy`
-  - Doré `#C39631` → `brand-gold`
+  - Bleu nuit `#0B1730` → `brand-navy`
+  - Doré `#E8B04A` → `brand-gold` (survol des boutons dorés : `brand-gold-light` `#F0BE5E`)
   - Blanc `#FFFFFF` → `brand-white`
 - Autres tokens : `brand-navy-soft`, `brand-gold-hover`, `surface`, `surface-muted`, `text-primary`, `text-secondary`, `text-on-dark`, `border-subtle` (ex. `bg-surface-muted`, `text-text-secondary`, `border-border-subtle`).
 - La palette par défaut de Tailwind est désactivée : **aucun code hex en dur ni valeur arbitraire `[#...]`**. Une nouvelle couleur s'ajoute dans `globals.css`, justifiée.
-- Direction « hybride premium » : bleu nuit pour les zones fortes, doré en accent (actions, détails) sans envahir, blanc comme surface principale. Pas de dégradés ni d'effets décoratifs gratuits.
-- Contrastes : doré sur blanc ≈ 2.7:1 → **jamais pour du texte courant**. Sur un bouton doré, texte bleu nuit (pas blanc). Doré sur bleu nuit ≈ 5.6:1 : OK.
+- Direction « hybride premium » : bleu nuit pour les zones fortes, doré en accent (actions, détails) sans envahir, blanc comme surface principale. Pas de dégradés ni d'effets décoratifs gratuits. **Exception validée : le header** (bande de verre, liseré doré et reflet en dégradé, reflet du CTA), à ne pas étendre au reste du site sans décision explicite.
+- Contrastes : doré sur blanc ≈ 2:1 → **jamais pour du texte**. Sur un bouton doré, texte bleu nuit (≈ 9.1:1), pas blanc. Doré sur bleu nuit ≈ 9:1 : OK.
 - Focus : variable `--focus-ring` (bleu nuit par défaut) ; la redéfinir en `var(--color-brand-gold)` sur fond sombre.
-- Police : **Manrope** via `next/font/google` dans `src/app/layout.tsx` (400, 500, 600, 700, 800) → utilitaire `font-sans` (appliqué au `body`).
-- Échelle : `text-sm`, `text-base`, `text-lg`, `text-h3`, `text-h2`, `text-h1` (fluides) ; `leading-tight|snug|normal`.
-- Géométrie : `rounded-sm|md|lg|xl`, `shadow-sm|md|lg`, `max-w-site`, `py-section`.
+- Police : **Plus Jakarta Sans** via `next/font/google` dans `src/app/layout.tsx` (400, 500, 600, 700, 800) → utilitaire `font-sans` (appliqué au `body`).
+- Échelle : `text-sm`, `text-nav` (15px, menu), `text-base`, `text-lg`, `text-h3`, `text-h2`, `text-h1` (fluides) ; `leading-tight|snug|normal`.
+- Géométrie : `rounded-sm|md|lg|xl`, `shadow-sm|md|lg|header|gold`, `max-w-site` (1684px, avec les marges `px-6 md:px-10 xl:px-28`), `py-section`.
 - Animations : `ease-standard`, `ease-emphasized`, `duration-(--duration-fast|base|slow)`. `prefers-reduced-motion` est géré globalement ; avec Motion, utiliser aussi `useReducedMotion`.
 - Icônes : `lucide-react`. Animations : `motion` (`motion/react`), à réserver aux composants client.
 
