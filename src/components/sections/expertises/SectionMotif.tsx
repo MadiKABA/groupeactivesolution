@@ -21,11 +21,25 @@ const points = [
 const MOBILE_POINTS = 3;
 const links = [[0, 4], [4, 5], [1, 3], [2, 4], [1, 2]] as const;
 
-export type MotifTone = "light" | "dark";
+export type MotifTone = "light" | "dark" | "night" | "vivid";
+
+const TILE_CLASS: Record<MotifTone, string> = {
+  light: "section-motif-tile",
+  dark: "section-motif-tile-dark",
+  night: "section-motif-tile-night",
+  vivid: "section-motif-tile-night section-motif-tile-vivid",
+};
+
+/** Variantes dont les opacités (zigzag, réseau, points) viennent de variables CSS de la section. */
+const TUNED: Partial<Record<MotifTone, string>> = { night: "motif-night", vivid: "motif-vivid" };
+
 /**
  * Calques du motif textile (tuiles, chevrons, liaisons, points, reflet), sans état : le
  * conteneur (opacité, masque, pause) et la dérive verticale sont fournis par l'appelant.
- * `light` : traits dorés et bleu nuit sur fond clair ; `dark` : traits dorés seuls sur bleu nuit.
+ * `light` : traits dorés et bleu nuit sur fond clair ; `dark` : traits dorés seuls sur bleu nuit,
+ * faibles (bandeau de la Méthode) ; `night` : traits dorés sur bleu nuit dont les opacités
+ * (zigzag, réseau, points) viennent des variables --motif-night-* de la section (Formations) ;
+ * `vivid` : même principe sur fond clair (--motif-vivid-*, réseau en gold-line), pour la FAQ.
  */
 export function SectionMotifLayers({
   tone,
@@ -41,7 +55,8 @@ export function SectionMotifLayers({
   /** `will-change` permanent en desktop ; false si l'appelant le gère (seulement à l'écran). */
   willChange?: boolean;
 }) {
-  const tile = `${tone === "light" ? "section-motif-tile" : "section-motif-tile-dark"}${willChange ? " desk:will-change-transform" : ""}`;
+  const tile = `${TILE_CLASS[tone]}${willChange ? " desk:will-change-transform" : ""}`;
+  const tuned = TUNED[tone];
   return (
     <>
       {/* will-change en desktop : ces calques suivent le défilement en continu (sinon repeints à chaque image) */}
@@ -62,9 +77,10 @@ export function SectionMotifLayers({
             points={Array.from({ length: 21 }, (_, i) => `${i * 5},${y + (i % 2 ? 1.2 : -1.2)}`).join(" ")}
             fill="none"
             stroke="currentColor"
-            strokeOpacity="0.07"
+            strokeOpacity={tuned ? undefined : 0.07}
             strokeWidth="1"
             vectorEffect="non-scaling-stroke"
+            className={tuned ? `${tuned}-zigzag` : undefined}
           />
         ))}
         {links.map(([from, to]) => (
@@ -75,10 +91,10 @@ export function SectionMotifLayers({
             x2={points[to].x}
             y2={points[to].y}
             stroke="currentColor"
-            strokeOpacity="0.05"
+            strokeOpacity={tuned ? undefined : 0.05}
             strokeWidth="1"
             vectorEffect="non-scaling-stroke"
-            className={from >= MOBILE_POINTS || to >= MOBILE_POINTS ? "hidden desk:inline" : ""}
+            className={`${tuned ? `${tuned}-lines ` : ""}${from >= MOBILE_POINTS || to >= MOBILE_POINTS ? "hidden desk:inline" : ""}`}
           />
         ))}
       </svg>
@@ -99,11 +115,11 @@ export function SectionMotifLayers({
       )}
 
       {/* Scintillement 0.44 → 1, × 0.22 puis × l'opacité du conteneur (intensité du motif) */}
-      <div className="absolute inset-0 opacity-22">
+      <div className={`absolute inset-0 ${tuned ? `${tuned}-points` : "opacity-22"}`}>
         {points.map((point, index) => (
           <span
             key={`${point.x}-${point.y}`}
-            className={`absolute size-1.5 -translate-1/2 rounded-full bg-brand-gold opacity-44 motion-safe:animate-twinkle-soft ${index >= MOBILE_POINTS ? "hidden desk:block" : ""}`}
+            className={`absolute size-1.5 -translate-1/2 rounded-full ${tone === "vivid" ? "bg-gold-line" : "bg-brand-gold"} opacity-44 motion-safe:animate-twinkle-soft ${index >= MOBILE_POINTS ? "hidden desk:block" : ""}`}
             style={{
               left: `${point.x}%`,
               top: `${point.y}%`,

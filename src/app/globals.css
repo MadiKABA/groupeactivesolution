@@ -75,6 +75,8 @@
      Début assombri pour atteindre 3:1 sur le fond clair (3.2:1) ; fin à 3.9:1 */
   --color-gold-ink-start: #b3811b;
   --color-gold-ink-end: #a8710f;
+  /* Petit texte doré sur blanc (numéro de la question ouverte, FAQ) : 4.7:1, au-dessus de gold-ink-end (4.2:1) */
+  --color-gold-ink-strong: #9c690e;
   /* Traits dorés sur fond clair (couche active, numéro actif) */
   --color-gold-line: #c48a1a;
   /* Face et tranche d'une couche active de la pile */
@@ -85,6 +87,9 @@
 
   /* Bordures */
   --color-border-subtle: #e4e4e7;
+
+  /* Bleu nuit en relief sur fond bleu nuit (section Formations : puce et nœuds inactifs) */
+  --color-navy-raised: #0c2342;
 
   /* ---------- Typographie ---------- */
   --text-*: initial;
@@ -140,6 +145,37 @@
   /* Grands numéros décoratifs en contour */
   --text-numeral: clamp(5rem, 9vw, 8rem);
   --text-numeral--line-height: 1;
+  /* Section Formations : titre (une ligne dès 640px), introduction, onglets, titre de panneau, cartes */
+  --text-display-formations: clamp(2.25rem, 5vw, 4.5rem);
+  --text-display-formations--line-height: 1.05;
+  --text-intro: 1.15rem;
+  --text-intro--line-height: 1.6;
+  --text-tab: 1.1875rem;
+  --text-tab--line-height: 1.3;
+  --text-formation: 1.625rem;
+  --text-formation--line-height: 1.25;
+  --text-card: 0.90625rem;
+  --text-card--line-height: 1.6;
+  /* FAQ : question et réponse (desktop, puis sous 1024px), compteur des filtres */
+  --text-question: 1.25rem;
+  --text-question--line-height: 1.35;
+  --text-question-sm: 1.03125rem;
+  --text-question-sm--line-height: 1.35;
+  --text-answer: 1.03125rem;
+  --text-answer--line-height: 1.7;
+  --text-answer-sm: 0.96875rem;
+  --text-answer-sm--line-height: 1.7;
+  --text-counter: 0.78125rem;
+  --text-counter--line-height: 1;
+  --text-counter-sm: 0.71875rem;
+  --text-counter-sm--line-height: 1;
+  /* FAQ : onglets (15.5px), titre du bloc contact sous 1024px (21px), texte du bloc contact (15px) */
+  --text-faq-tab: 0.96875rem;
+  --text-faq-tab--line-height: 1;
+  --text-aside-sm: 1.3125rem;
+  --text-aside-sm--line-height: 1.3;
+  --text-aside-body: 0.9375rem;
+  --text-aside-body--line-height: 1.55;
   /* Titre du hero (3 lignes cliquables) */
   --text-hero: clamp(2.25rem, 3.1vw, 3.25rem);
   --text-hero--line-height: 1.08;
@@ -160,9 +196,14 @@
   /* Espacement des lettres : titres serrés, micro-libellés en capitales espacés */
   --tracking-display: -0.02em;
   --tracking-display-tight: -0.03em;
+  --tracking-display-tighter: -0.035em;
+  /* Questions de la FAQ */
+  --tracking-question: -0.015em;
   --tracking-label: 0.2em;
   --tracking-badge: 0.04em;
   --tracking-eyebrow: 0.18em;
+  /* Libellés « 01 / FORMATION » et « Pour qui ? » (section Formations) */
+  --tracking-eyebrow-wide: 0.16em;
   --tracking-caps: 0.12em;
   /* Catégorie des pastilles de visuels (Réalisations) */
   --tracking-category: 0.14em;
@@ -195,6 +236,8 @@
   /* Cartes blanches sur fond clair (étapes de la Méthode) */
   --shadow-card: 0 1px 2px color-mix(in oklab, var(--color-brand-navy) 4%, transparent),
   0 24px 44px -28px color-mix(in oklab, var(--color-brand-navy) 22%, transparent);
+  /* Bloc contact sombre de la FAQ */
+  --shadow-aside: 0 40px 80px -40px color-mix(in oklab, var(--color-brand-navy) 60%, transparent);
   /* Bandeau d'appel à l'action sombre sur fond clair */
   --shadow-cta: 0 36px 70px -30px color-mix(in oklab, var(--color-brand-navy) 55%, transparent);
   /* Points lumineux du réseau du hero */
@@ -335,6 +378,10 @@
   /* ---------- Interactions ---------- */
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
   --ease-emphasized: cubic-bezier(0.3, 0, 0, 1.15);
+  /* FAQ : entrées et ouvertures ; survols ; icône plus uniquement (léger dépassement) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* La police est injectée par next/font sur <html> : `inline` est requis pour résoudre la variable. */
@@ -846,6 +893,984 @@
   /* will-change seulement en desktop avec souris, section à l'écran */
   [data-immersive="true"][data-paused="false"] :is(.methode-parallax, .methode-layer, .methode-motif .section-motif-tile) {
     will-change: transform;
+  }
+
+  /*
+   * Section Formations (fond bleu nuit) — effets validés pour cette section : liseré haut, motif du
+   * hero (variante nuit de SectionMotif), halo derrière le circuit, mot du titre en dégradé doré
+   * clair, pistes et impulsion du circuit.
+   *
+   * --motif-strength-formations : multiplie les trois opacités du motif (zigzag 0.14, réseau 0.20,
+   * points 0.32). Identique à toutes les largeurs : jamais redéfinie par palier.
+   *
+   * États posés par FormationsInteractive sur .formations-root : data-active (1 → 5), data-js
+   * (JS actif : état masqué initial), data-in-a|b|c (séquences d'entrée), data-lit (piste allumée),
+   * data-inview (boucles actives). Sans JS : tout visible, piste 01 allumée, boucles suspendues.
+   */
+  .formations-section {
+    --motif-strength-formations: 1;
+    --motif-night-zigzag: calc(0.14 * var(--motif-strength-formations));
+    --motif-night-lines: calc(0.2 * var(--motif-strength-formations));
+    --motif-night-points: calc(0.32 * var(--motif-strength-formations));
+    --fo-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  /* Tuile du motif, variante nuit : traits dorés à pleine opacité, ramenés par --motif-night-zigzag */
+  .section-motif-tile-night {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23e3a93f' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M0 12 L12 0 L24 12 L36 0 L48 12 L60 0 L72 12 L84 0 L96 12'/%3E%3Cpath d='M0 22 L12 10 L24 22 L36 10 L48 22 L60 10 L72 22 L84 10 L96 22'/%3E%3Cpath d='M24 30 L42 48 L24 66 L6 48 Z'/%3E%3Cpath d='M24 38 L34 48 L24 58 L14 48 Z'/%3E%3Cpath d='M72 30 L90 48 L72 66 L54 48 Z'/%3E%3Cpath d='M72 38 L82 48 L72 58 L62 48 Z'/%3E%3Cpath d='M48 44 L52 48 L48 52 L44 48 Z'/%3E%3Cpath d='M0 74 L12 86 L24 74 L36 86 L48 74 L60 86 L72 74 L84 86 L96 74'/%3E%3Cpath d='M0 84 L12 96 L24 84 L36 96 L48 84 L60 96 L72 84 L84 96 L96 84'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 160px 160px;
+    background-repeat: repeat;
+    opacity: var(--motif-night-zigzag, 0.14);
+  }
+
+  .motif-night-zigzag {
+    stroke-opacity: var(--motif-night-zigzag, 0.14);
+  }
+
+  .motif-night-lines {
+    stroke-opacity: var(--motif-night-lines, 0.2);
+  }
+
+  .motif-night-points {
+    opacity: var(--motif-night-points, 0.32);
+  }
+
+  .formations-topline {
+    background-image: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-brand-gold) 50%, transparent), transparent);
+  }
+
+  .formations-gradient-text {
+    background-image: linear-gradient(90deg, var(--color-brand-gold-light), var(--color-brand-gold-deep));
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Halo doré derrière le circuit (900 × 760), parallaxe ±12px */
+  .formations-glow {
+    left: 50%;
+    top: 50%;
+    width: 900px;
+    height: 760px;
+    margin: -380px 0 0 -450px;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 13%, transparent), transparent);
+    transform: translate(calc(var(--px, 0) * 12px), calc(var(--py, 0) * 12px));
+  }
+
+  /* Pastilles (sous 1024px) : défilement horizontal sans barre */
+  .formations-pills {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /* ---------- Entrée (une fois par cible, depuis l'état masqué posé seulement avec JS) ---------- */
+  @keyframes fo-enter {
+    from {
+      opacity: 0;
+      transform: var(--fo-from, none);
+    }
+  }
+
+  @keyframes fo-title {
+    from {
+      clip-path: inset(0 0 100% 0);
+      transform: translateY(24px);
+    }
+  }
+
+  @keyframes fo-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .formations-root[data-js]:not([data-in-a]) .fo-a,
+  .formations-root[data-js]:not([data-in-b]) .fo-b,
+  .formations-root[data-js]:not([data-in-c]) .fo-c {
+    opacity: 0;
+  }
+
+  .formations-root[data-in-a] .fo-a,
+  .formations-root[data-in-b] .fo-b,
+  .formations-root[data-in-c] .fo-c {
+    animation: fo-enter var(--fo-dur, 500ms) var(--fo-ease) var(--fo-d, 0ms) backwards;
+  }
+
+  .formations-root[data-in-a] .fo-title {
+    animation-name: fo-title;
+  }
+
+  .formations-root[data-in-a] .formations-track {
+    animation-name: fo-draw;
+  }
+
+  /* ---------- Panneaux : tous dans la même cellule, seul celui de l'onglet actif est visible ---------- */
+  @keyframes fo-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+
+  @keyframes fo-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .formations-panel {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 140ms ease-out,
+      visibility 0s linear 140ms;
+  }
+
+  .formations-panel:is(
+      .formations-root[data-active="1"] [data-i="1"],
+      .formations-root[data-active="2"] [data-i="2"],
+      .formations-root[data-active="3"] [data-i="3"],
+      .formations-root[data-active="4"] [data-i="4"],
+      .formations-root[data-active="5"] [data-i="5"]
+    ) {
+    --fo-tag-anim: fo-fade-in;
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    animation: fo-panel-in 280ms ease-out 180ms backwards;
+  }
+
+  .formations-tag {
+    animation: var(--fo-tag-anim, none) 280ms ease-out calc(180ms + var(--fo-tag, 0) * 60ms) backwards;
+  }
+
+  /* ---------- Circuit : étape allumée (onglet actif, après l'entrée ; toujours sans JS) ---------- */
+  .formations-root:is(:not([data-js]), [data-lit])[data-active="1"] [data-i="1"],
+  .formations-root:is(:not([data-js]), [data-lit])[data-active="2"] [data-i="2"],
+  .formations-root:is(:not([data-js]), [data-lit])[data-active="3"] [data-i="3"],
+  .formations-root:is(:not([data-js]), [data-lit])[data-active="4"] [data-i="4"],
+  .formations-root:is(:not([data-js]), [data-lit])[data-active="5"] [data-i="5"] {
+    --fo-on: 1;
+    --fo-draw-anim: fo-draw;
+    --fo-pulse-anim: fo-pulse;
+    --fo-ring-anim: fo-ring;
+  }
+
+  .formations-circuit-wrap {
+    container-type: inline-size;
+  }
+
+  .formations-parallax {
+    transform: translate(calc(var(--px, 0) * 6px), calc(var(--py, 0) * 6px));
+  }
+
+  .formations-halo-stop {
+    stop-color: var(--color-brand-gold);
+    stop-opacity: 0.35;
+
+    & + & {
+      stop-opacity: 0;
+    }
+  }
+
+  @keyframes fo-breathe {
+    50% {
+      opacity: 0.6;
+    }
+  }
+
+  .formations-breathe {
+    animation: fo-breathe 4s ease-in-out infinite;
+  }
+
+  /* Pistes : base, doublon flouté (opacité seule) et tracé doré redessiné du nœud vers la puce */
+  .formations-track,
+  .formations-track-glow,
+  .formations-track-on {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+  }
+
+  .formations-track {
+    stroke: color-mix(in oklab, var(--color-text-on-dark) 20%, transparent);
+    stroke-width: 2;
+  }
+
+  .formations-track-glow,
+  .formations-track-on {
+    stroke: var(--color-brand-gold-light);
+    stroke-width: 3;
+    opacity: var(--fo-on, 0);
+    transition: opacity 200ms ease-out;
+    animation: var(--fo-draw-anim, none) 450ms ease-out 60ms backwards;
+  }
+
+  .formations-track-glow {
+    opacity: calc(var(--fo-on, 0) * 0.7);
+  }
+
+  .formations-chip {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .formations-chip-body {
+    fill: var(--color-navy-raised);
+    stroke: color-mix(in oklab, var(--color-brand-gold) 70%, transparent);
+    stroke-width: 2;
+  }
+
+  .formations-chip-inner {
+    fill: none;
+    stroke: color-mix(in oklab, var(--color-brand-gold) 22%, transparent);
+    stroke-width: 1;
+  }
+
+  .formations-chip-pin {
+    stroke: color-mix(in oklab, var(--color-brand-gold) 55%, transparent);
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  /* Impulsion (12px + halo 26px) : 600ms du nœud à la puce, puis toutes les 4.5s ; anneau à l'arrivée */
+  @keyframes fo-pulse {
+    0% {
+      offset-distance: 0%;
+      opacity: 0;
+    }
+
+    3% {
+      opacity: 1;
+    }
+
+    13.33% {
+      offset-distance: 100%;
+      opacity: 1;
+    }
+
+    16%,
+    100% {
+      offset-distance: 100%;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fo-ring {
+    0%,
+    13.33% {
+      opacity: 0;
+      transform: scale(1);
+    }
+
+    17.78% {
+      opacity: 0.8;
+    }
+
+    22.22%,
+    100% {
+      opacity: 0;
+      transform: scale(1.06);
+    }
+  }
+
+  .formations-pulse {
+    offset-rotate: 0deg;
+    opacity: 0;
+    animation: var(--fo-pulse-anim, none) 4.5s ease-in-out 510ms infinite;
+  }
+
+  .formations-pulse-dot {
+    fill: var(--color-brand-gold-light);
+  }
+
+  .formations-pulse-halo {
+    fill: color-mix(in oklab, var(--color-brand-gold) 35%, transparent);
+  }
+
+  .formations-ring {
+    fill: none;
+    stroke: var(--color-brand-gold-light);
+    stroke-width: 2;
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: var(--fo-ring-anim, none) 4.5s linear 510ms infinite;
+  }
+
+  /* Nœuds : calques d'état en opacité ; survol (pointeur fin) scale 1.06 */
+  .formations-node-in,
+  .formations-node {
+    transform-box: view-box;
+  }
+
+  .formations-node {
+    transition: transform 180ms ease-out;
+  }
+
+  .formations-node-halo {
+    fill: color-mix(in oklab, var(--color-brand-gold) 22%, transparent);
+    opacity: var(--fo-on, 0);
+    transition: opacity 200ms ease-out;
+  }
+
+  .formations-node-base {
+    fill: var(--color-navy-raised);
+    stroke: color-mix(in oklab, var(--color-text-on-dark) 28%, transparent);
+    stroke-width: 1.5;
+  }
+
+  .formations-node-on {
+    fill: var(--color-brand-gold);
+    stroke: var(--color-brand-gold-light);
+    stroke-width: 2;
+    opacity: var(--fo-on, 0);
+    transition: opacity 200ms ease-out;
+  }
+
+  .formations-node-num {
+    font-size: 16px;
+    font-weight: 800;
+    fill: color-mix(in oklab, var(--color-text-on-dark) 80%, transparent);
+    opacity: calc(1 - var(--fo-on, 0));
+    transition: opacity 200ms ease-out;
+  }
+
+  .formations-node-num-on {
+    fill: var(--color-brand-navy);
+    opacity: var(--fo-on, 0);
+  }
+
+  .formations-node-label {
+    font-size: 14px;
+    font-weight: 700;
+    fill: color-mix(in oklab, var(--color-text-on-dark) 76%, transparent);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .formations-node-in {
+      cursor: pointer;
+    }
+
+    .formations-node-in:hover .formations-node {
+      transform: scale(1.06);
+    }
+  }
+
+  /* Circuit étroit (< 600px) : libellés masqués (déjà dans les pastilles), numéros ≥ 12px rendus */
+  @container (width < 37.5rem) {
+    .formations-node-label {
+      display: none;
+    }
+
+    .formations-node-num {
+      font-size: 31px;
+    }
+  }
+
+  /* Boucles (respiration, impulsion, scintillement) suspendues hors écran, onglet masqué ou avant l'entrée */
+  .formations-root:not([data-inview]) :is(.fo-loop, [class*="animate-"]),
+  .formations-root[data-js]:not([data-in-a]) .fo-loop {
+    animation-play-state: paused;
+  }
+
+  /* Animations réduites : ni tracé, ni impulsion, ni respiration, ni translation ; fondus en JS (WAAPI) */
+  @media (prefers-reduced-motion: reduce) {
+    .formations-root[data-in-a] .fo-a,
+    .formations-root[data-in-b] .fo-b,
+    .formations-root[data-in-c] .fo-c,
+    .formations-root .formations-panel,
+    .formations-root .formations-tag,
+    .formations-root :is(.formations-track-on, .formations-track-glow, .formations-breathe) {
+      animation: none;
+    }
+
+    .formations-root :is(.formations-pulse, .formations-ring) {
+      display: none;
+    }
+  }
+
+  /*
+   * Section FAQ (fond clair) — effets validés pour cette section : liseré haut, halo doré derrière
+   * le titre, motif du hero (variante vivid, parallaxe douce en desktop), mot du titre en dégradé or
+   * foncé (.gold-ink-text), bloc contact sombre (zigzag, halo, projecteur, scène du « ? »).
+   *
+   * --motif-strength-faq : multiplicateur des trois opacités du motif (zigzag 0.34, réseau 0.48,
+   * points 0.68), appliqué une seule fois, identique à toutes les largeurs.
+   *   1 = valeurs du brief (luminance motif/fond mesurée p90 25/255) · 1.5 = valeur choisie (p90 38,
+   *   cible 34 à 48 ; points plafonnés à 1)
+   * --motif-strength-faq-cta : zigzag du bloc contact (0.14 × valeur).
+   *
+   * États posés par FaqInteractive — sur .faq-root : data-js (état masqué initial), data-in-a (en-tête,
+   * onglets, cartes), data-in-s (bloc contact ; départ dans --fq-side-at), data-swapped (cascades
+   * suivantes en WAAPI) ; sur .faq-scene : data-inview, data-pulse ; sur .faq-aside : data-spot.
+   *
+   * Transform et opacité partout, sauf exceptions assumées : grid-template-rows (réponse), largeur de
+   * l'indicateur d'onglet, hauteur de la liste au changement de catégorie, tracé de la coche.
+   */
+  .faq-section {
+    --motif-strength-faq: 1.5;
+    --motif-strength-faq-cta: 1;
+    --motif-vivid-zigzag: calc(0.34 * var(--motif-strength-faq));
+    --motif-vivid-lines: calc(0.48 * var(--motif-strength-faq));
+    --motif-vivid-points: calc(0.68 * var(--motif-strength-faq));
+  }
+
+  /* Motif, variante vivid : tuile de la variante nuit (traits dorés pleins) ramenée par les variables */
+  .section-motif-tile-vivid {
+    opacity: var(--motif-vivid-zigzag, 0.34);
+  }
+
+  .motif-vivid-zigzag {
+    stroke-opacity: var(--motif-vivid-zigzag, 0.34);
+  }
+
+  .motif-vivid-lines {
+    stroke: var(--color-gold-line);
+    stroke-opacity: var(--motif-vivid-lines, 0.48);
+  }
+
+  .motif-vivid-points {
+    opacity: var(--motif-vivid-points, 0.68);
+  }
+
+  .faq-topline {
+    background-image: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-brand-gold) 50%, transparent), transparent);
+  }
+
+  /* Halo doré derrière le titre, en haut à gauche (900 × 700) */
+  .faq-glow {
+    top: 0;
+    left: 0;
+    width: 900px;
+    height: 700px;
+    margin: -260px 0 0 -320px;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 16%, transparent), transparent);
+  }
+
+  /* Voile clair fondu derrière le titre : le motif ne passe jamais sous le texte (mot doré ≥ 3:1) */
+  .fq-title {
+    position: relative;
+    isolation: isolate;
+    width: fit-content;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -0.35em -0.5em;
+      z-index: -1;
+      background-color: var(--color-surface-warm);
+      mask-image:
+        linear-gradient(to right, transparent, black 0.45em, black calc(100% - 0.45em), transparent),
+        linear-gradient(transparent, black 0.25em, black calc(100% - 0.25em), transparent);
+      mask-composite: intersect;
+    }
+  }
+
+  /* ---------- Entrée (une fois par cible, état masqué posé seulement avec JS) ---------- */
+  @keyframes fq-title {
+    from {
+      clip-path: inset(0 0 100% 0);
+      transform: translateY(28px);
+    }
+  }
+
+  .faq-root[data-js]:not([data-in-a]) .fq-a,
+  .faq-root[data-js]:not([data-in-s]) .fq-s {
+    opacity: 0;
+  }
+
+  .faq-root[data-in-a] .fq-a:not(.faq-card),
+  .faq-root[data-in-a]:not([data-swapped]) .faq-card.fq-a {
+    animation: fo-enter var(--fo-dur, 500ms) var(--ease-out-expo) var(--fo-d, 0ms) backwards;
+  }
+
+  .faq-root[data-in-a] .fq-a.fq-title {
+    animation-name: fq-title;
+  }
+
+  .faq-root[data-in-s] .fq-s {
+    animation: fo-enter var(--fo-dur, 500ms) var(--ease-out-expo) calc(var(--fq-side-at, 0ms) + var(--fo-d, 0ms)) backwards;
+  }
+
+  /* ---------- Onglets : pastilles (fond en ::before) et indicateur unique qui glisse dessous ---------- */
+  .faq-tablist {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .faq-indicator {
+    transition:
+      translate 380ms var(--ease-out-expo),
+      width 380ms var(--ease-out-expo);
+  }
+
+  .faq-tab {
+    color: color-mix(in oklab, var(--color-brand-navy) 78%, transparent);
+    transition:
+      color 220ms var(--ease-soft),
+      translate 200ms var(--ease-soft);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -20;
+      border: 1px solid color-mix(in oklab, var(--color-brand-navy) 14%, transparent);
+      border-radius: inherit;
+      background-color: var(--color-surface);
+      transition:
+        opacity 220ms var(--ease-soft),
+        background-color 200ms var(--ease-soft);
+    }
+
+    &[aria-selected="true"] {
+      color: var(--color-text-on-dark);
+
+      &::before {
+        opacity: 0;
+      }
+    }
+  }
+
+  .faq-counter {
+    background-color: color-mix(in oklab, var(--color-brand-navy) 8%, transparent);
+    transition:
+      background-color 220ms var(--ease-soft),
+      color 220ms var(--ease-soft);
+  }
+
+  .faq-tab[aria-selected="true"] .faq-counter {
+    background-color: var(--color-brand-gold);
+    color: var(--color-brand-navy);
+  }
+
+  /* ---------- Accordéon : une carte ouverte (classe is-open, aria-expanded sur le bouton) ---------- */
+  .faq-list {
+    transition: height 350ms var(--ease-out-expo);
+  }
+
+  .faq-card {
+    transition: translate 240ms var(--ease-soft);
+
+    /* Ombre de survol : seule l'opacité du calque change (jamais box-shadow) */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: 0 22px 40px -26px color-mix(in oklab, var(--color-brand-navy) 30%, transparent);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 240ms var(--ease-soft);
+    }
+  }
+
+  .faq-ring {
+    border: 1px solid color-mix(in oklab, var(--color-gold-line) 55%, transparent);
+    box-shadow:
+      0 0 0 4px color-mix(in oklab, var(--color-brand-gold) 14%, transparent),
+      0 20px 36px -26px color-mix(in oklab, var(--color-brand-navy) 22%, transparent);
+    opacity: 0;
+    transition: opacity 240ms var(--ease-soft);
+  }
+
+  .faq-bar {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 360ms var(--ease-out-expo);
+  }
+
+  .faq-plus-icon {
+    transition: transform 320ms var(--ease-overshoot);
+  }
+
+  .faq-num {
+    transition: color 240ms var(--ease-soft);
+  }
+
+  .faq-answer {
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition:
+      grid-template-rows 380ms var(--ease-out-expo),
+      visibility 0s linear 380ms;
+  }
+
+  .faq-answer-inner {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 200ms var(--ease-soft),
+      transform 200ms var(--ease-soft);
+  }
+
+  @keyframes fq-pop {
+    50% {
+      transform: scale(1.06);
+    }
+  }
+
+  .faq-card.is-open {
+    .faq-ring {
+      opacity: 1;
+    }
+
+    .faq-bar {
+      transform: scaleY(1);
+    }
+
+    .faq-plus {
+      animation: fq-pop 240ms var(--ease-soft);
+    }
+
+    .faq-plus-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-num {
+      color: var(--color-gold-ink-strong);
+    }
+
+    .faq-answer {
+      grid-template-rows: 1fr;
+      visibility: visible;
+      transition:
+        grid-template-rows 380ms var(--ease-out-expo),
+        visibility 0s;
+    }
+
+    .faq-answer-inner {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity 320ms var(--ease-out-expo) 90ms,
+        transform 320ms var(--ease-out-expo) 90ms;
+    }
+  }
+
+  /* ---------- Bloc contact ---------- */
+  .faq-aside {
+    --fo-from: translateY(16px);
+
+    @media (width >= 64rem) {
+      --fo-from: translateX(28px);
+    }
+  }
+
+  .faq-aside-motif {
+    opacity: calc(0.14 * var(--motif-strength-faq-cta, 1));
+  }
+
+  /* Projecteur (260px) qui suit le pointeur : desktop à pointeur fin seulement */
+  .faq-spot {
+    display: none;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 22%, transparent), transparent);
+    opacity: 0;
+    transition: opacity 300ms var(--ease-soft);
+  }
+
+  .faq-wa {
+    transition:
+      background-color 200ms var(--ease-soft),
+      translate 200ms var(--ease-soft),
+      scale 150ms var(--ease-soft);
+
+    /* Balayage lumineux au survol (transform seul) */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 45%;
+      background-image: linear-gradient(90deg, transparent, color-mix(in oklab, white 55%, transparent), transparent);
+      transform: translateX(-120%) skewX(-20deg);
+      pointer-events: none;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--color-brand-gold-light);
+    }
+
+    &:active {
+      scale: 0.98;
+    }
+  }
+
+  .faq-contact {
+    transition: background-color 200ms var(--ease-soft);
+  }
+
+  .faq-contact-arrow {
+    transition: transform 200ms var(--ease-soft);
+  }
+
+  .faq-contact:focus-visible {
+    background-color: color-mix(in oklab, white 8%, transparent);
+
+    .faq-contact-arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .faq-tab[aria-selected="false"]:hover {
+      translate: 0 -1px;
+
+      &::before {
+        background-color: color-mix(in oklab, var(--color-brand-navy) 5%, var(--color-surface));
+      }
+    }
+
+    .faq-card:not(.is-open):hover {
+      translate: 0 -2px;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    .faq-contact:hover {
+      background-color: color-mix(in oklab, white 8%, transparent);
+
+      .faq-contact-arrow {
+        transform: translateX(4px);
+      }
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .faq-wa:hover {
+      translate: 0 -2px;
+
+      &::after {
+        transform: translateX(330%) skewX(-20deg);
+        transition: transform 700ms var(--ease-soft);
+      }
+    }
+
+    @media (width >= 64rem) {
+      .faq-spot {
+        display: block;
+      }
+
+      .faq-aside[data-spot] .faq-spot {
+        opacity: 0.7;
+      }
+    }
+  }
+
+  /* ---------- Scène du « ? » (desktop) : boucles douces, en pause hors écran ou onglet masqué ---------- */
+  .faq-scene-halo {
+    translate: -50% -50%;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 36%, transparent), transparent);
+    animation: fq-halo 6s var(--ease-soft) infinite alternate;
+  }
+
+  @keyframes fq-halo {
+    from {
+      opacity: 0.6;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .fqm-float {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fqm-float 5.5s ease-in-out infinite;
+  }
+
+  @keyframes fqm-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-1.5deg);
+    }
+
+    50% {
+      transform: translateY(-6px) rotate(1.5deg);
+    }
+  }
+
+  /* Point : petit saut, léger tassement à l'atterrissage (décalé de 0.4 s) */
+  .fqm-dot {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: fqm-dot 2.8s ease-in-out 0.4s infinite;
+  }
+
+  @keyframes fqm-dot {
+    0%,
+    70%,
+    100% {
+      transform: none;
+    }
+
+    35% {
+      transform: translateY(-9px);
+    }
+
+    78% {
+      transform: scaleY(0.9);
+    }
+
+    86% {
+      transform: none;
+    }
+  }
+
+  .fqm-ring-dash,
+  .fqm-ring {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fqm-spin 60s linear infinite;
+  }
+
+  .fqm-ring {
+    animation-duration: 90s;
+    animation-direction: reverse;
+  }
+
+  @keyframes fqm-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .fqm-node {
+    animation: fqm-node 3.2s ease-in-out infinite alternate;
+  }
+
+  @keyframes fqm-node {
+    from {
+      opacity: 0.45;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .faq-scene:not([data-inview="true"]) :is(.faq-scene-halo, .fqm *) {
+    animation-play-state: paused;
+  }
+
+  /* Ouverture d'une question : le « ? » s'efface, la coche se dessine, maintien, retour (1.5 s).
+     Deux copies des keyframes : alterner data-pulse relance la séquence proprement. */
+  .fqm-check {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    opacity: 0;
+  }
+
+  .faq-scene[data-pulse="odd"] .fqm-mark {
+    animation: fqm-mark-a 1.5s var(--ease-soft);
+  }
+
+  .faq-scene[data-pulse="even"] .fqm-mark {
+    animation: fqm-mark-b 1.5s var(--ease-soft);
+  }
+
+  .faq-scene[data-pulse="odd"] .fqm-check {
+    animation: fqm-check-a 1.5s linear;
+  }
+
+  .faq-scene[data-pulse="even"] .fqm-check {
+    animation: fqm-check-b 1.5s linear;
+  }
+
+  @keyframes fqm-mark-a {
+    0% {
+      opacity: 1;
+    }
+
+    13.33%,
+    76.67% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fqm-mark-b {
+    0% {
+      opacity: 1;
+    }
+
+    13.33%,
+    76.67% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fqm-check-a {
+    0% {
+      opacity: 1;
+      stroke-dashoffset: 1;
+      animation-timing-function: ease-out;
+    }
+
+    30%,
+    76.67% {
+      opacity: 1;
+      stroke-dashoffset: 0;
+      animation-timing-function: ease-in-out;
+    }
+
+    100% {
+      opacity: 0;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes fqm-check-b {
+    0% {
+      opacity: 1;
+      stroke-dashoffset: 1;
+      animation-timing-function: ease-out;
+    }
+
+    30%,
+    76.67% {
+      opacity: 1;
+      stroke-dashoffset: 0;
+      animation-timing-function: ease-in-out;
+    }
+
+    100% {
+      opacity: 0;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Animations réduites : ni translation, ni masque, ni rotation, scène statique ; fondus en JS (WAAPI) */
+  @media (prefers-reduced-motion: reduce) {
+    .faq-root[data-in-a] .fq-a,
+    .faq-root[data-in-s] .fq-s,
+    .faq-card.is-open .faq-plus,
+    .faq-scene-halo,
+    .faq-scene .fqm * {
+      animation: none;
+    }
+
+    .faq-card.is-open .faq-plus-icon,
+    .faq-answer-inner {
+      transform: none;
+    }
+
+    .fqm-check {
+      stroke-dashoffset: 0;
+    }
   }
 
   /* Grand numéro décoratif en contour doré (jamais du texte porteur de sens) */
