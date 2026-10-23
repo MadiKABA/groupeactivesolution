@@ -66,6 +66,10 @@
   /* contraste ≈ 7.7:1 sur blanc */
   --color-text-on-dark: #ffffff;
 
+  /* Emplacements photo sur fond sombre (Réalisations, développement uniquement) : jamais une fausse photo */
+  --color-placeholder-start: #16335c;
+  --color-placeholder-end: #0e2244;
+
   /* Bordures */
   --color-border-subtle: #e4e4e7;
 
@@ -99,6 +103,9 @@
   --text-display-section-sm: clamp(2rem, 8.5vw, 3.25rem);
   /* même titre, sous 1024px */
   --text-display-section-sm--line-height: 1.1;
+  /* Titre phare sur une ligne dès 640px (Réalisations) : 72px à 1440px */
+  --text-display-wide: clamp(2.25rem, 4.6vw, 4.5rem);
+  --text-display-wide--line-height: 1.04;
   /* Titres de section (h2) et de bloc (h3) éditoriaux */
   --text-section: clamp(2rem, 3.5vw, 3rem);
   --text-section--line-height: 1.1;
@@ -136,6 +143,8 @@
   --tracking-badge: 0.04em;
   --tracking-eyebrow: 0.18em;
   --tracking-caps: 0.12em;
+  /* Catégorie des pastilles de visuels (Réalisations) */
+  --tracking-category: 0.14em;
 
   /* ---------- Géométrie ---------- */
   --radius-sm: 0.375rem;
@@ -159,6 +168,9 @@
   0 0 60px color-mix(in oklab, var(--color-brand-gold) 15%, transparent);
   /* Cadre visuel sur fond clair (section Expertises) */
   --shadow-frame: 0 30px 70px -25px color-mix(in oklab, var(--color-brand-navy) 35%, transparent);
+  /* Photos sur fond bleu nuit (Réalisations) : ombre profonde */
+  --shadow-photo: 0 40px 90px -30px color-mix(in oklab, black 70%, transparent),
+  0 12px 30px -12px color-mix(in oklab, black 50%, transparent);
   /* Points lumineux du réseau du hero */
   --shadow-glow: 0 0 8px 1px color-mix(in oklab, var(--color-brand-gold) 70%, transparent);
 
@@ -173,6 +185,23 @@
   --animate-motif-band-inner: motif-band-inner 8s ease-in-out infinite;
   --animate-text-shine: text-shine 1.2s ease-out 1 both;
   --animate-pulse-ring: pulse-ring 2.2s ease-out infinite;
+
+  /* Dérive lente de la lueur dorée de la section Réalisations (transform uniquement) */
+  @keyframes glow-drift {
+
+    0%,
+    100% {
+      transform: translate(0, 0);
+    }
+
+    33% {
+      transform: translate(20px, -20px);
+    }
+
+    66% {
+      transform: translate(-20px, 20px);
+    }
+  }
 
   @keyframes pulse-ring {
     from {
@@ -571,6 +600,115 @@
   /* Animations en boucle suspendues quand la section est hors écran ou l'onglet masqué. */
   [data-paused="true"] * {
     animation-play-state: paused !important;
+  }
+
+  /*
+   * Section Réalisations (fond bleu nuit) — effets validés pour cette section : filet haut,
+   * lueurs radiales, grille dorée (projecteur au curseur).
+   *
+   * --motif-grid-strength : intensité de la grille, appliquée UNE SEULE FOIS sur son conteneur
+   * (.realisations-grid), identique à toutes les largeurs. Lignes de 1px à 8 % de doré :
+   *   0.6 = presque invisible · 0.85 = valeur choisie (écart ≈ 15/255) · 1.1 = très visible
+   */
+  .realisations-section {
+    --motif-grid-strength: 0.85;
+  }
+
+  /* Lueur bleue en haut à gauche (900 × 760, décalée de -260px / -240px) */
+  .realisations-glow-blue {
+    left: -260px;
+    top: -240px;
+    width: 900px;
+    height: 760px;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-navy-glow) 38%, transparent), transparent);
+  }
+
+  /* Lueur dorée derrière la photo principale (1100 × 760), centrée par marges négatives sur son centre */
+  .realisations-glow-gold {
+    left: 50%;
+    top: 37.5cqw;
+    width: 1100px;
+    height: 760px;
+    margin: -380px 0 0 -550px;
+
+    @media (width >=64rem) {
+      /* Centre des 8 colonnes : (8 colonnes + 7 gaps de 20px) / 2 */
+      left: calc((100% - 11 * 1.25rem) / 3 + 3.5 * 1.25rem);
+      top: calc(23cqw + 0.625rem);
+    }
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 11%, transparent), transparent);
+  }
+
+  /* Grille : bande droite (260px, cellules de 48px ; 760px et 64px en desktop), estompée vers la gauche */
+  .realisations-grid {
+    --grid-cell: 48px;
+    width: 260px;
+    opacity: var(--motif-grid-strength, 0.85);
+    mask-image: linear-gradient(to left, black, transparent 92%);
+
+    @media (width >=64rem) {
+      --grid-cell: 64px;
+      width: 760px;
+    }
+  }
+
+  /* Lignes de 1px et un point de 2px à une intersection sur quatre, alignés sur le bord droit */
+  .realisations-grid-lines {
+    --grid-line: color-mix(in oklab, var(--color-brand-gold) 8%, transparent);
+    --grid-dot: color-mix(in oklab, var(--color-brand-gold) 40%, transparent);
+    background-image:
+      radial-gradient(circle at 1px 1px, var(--grid-dot) 1px, transparent 1.5px),
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size:
+      calc(2 * var(--grid-cell)) calc(2 * var(--grid-cell)),
+      var(--grid-cell) var(--grid-cell),
+      var(--grid-cell) var(--grid-cell);
+    background-position: right top;
+  }
+
+  /* Couche lumineuse de la grille (reflet, projecteur) : même motif, plus marqué */
+  .realisations-grid-bright {
+    --grid-line: color-mix(in oklab, var(--color-brand-gold) 32%, transparent);
+    --grid-dot: color-mix(in oklab, var(--color-brand-gold) 80%, transparent);
+  }
+
+  /* Projecteur : rayon de 280px autour du curseur (--sx, --sy, mis à jour par rAF) */
+  .realisations-spotlight {
+    mask-image: radial-gradient(280px circle at var(--sx, -999px) var(--sy, -999px), black, transparent);
+    opacity: 0;
+    transition: opacity 0.4s ease-out;
+
+    &[data-on="true"] {
+      opacity: 1;
+    }
+  }
+
+  /* Dérive de la lueur et will-change : desktop avec souris uniquement, section à l'écran */
+  [data-immersive="true"] .realisations-glow-gold {
+    animation: glow-drift 14s ease-in-out infinite;
+  }
+
+  [data-immersive="true"][data-paused="false"] :is(.realisations-glow-gold, .realisation-parallax) {
+    will-change: transform;
+  }
+
+  /* Bento desktop : deux lignes de photos de 23cqw (280px pour 1216px de contenu) */
+  .realisations-bento {
+    container-type: inline-size;
+  }
+
+  .realisations-bento-grid {
+    @media (width >=64rem) {
+      grid-template-rows: 23cqw 23cqw;
+    }
+  }
+
+  /* Emplacement photo (développement) : dégradé bleu nuit et hachures dorées à 7 % */
+  .realisation-placeholder {
+    background-image:
+      repeating-linear-gradient(135deg, color-mix(in oklab, var(--color-brand-gold) 7%, transparent) 0 1px, transparent 1px 14px),
+      linear-gradient(135deg, var(--color-placeholder-start), var(--color-placeholder-end));
   }
 
   /* Grand numéro décoratif en contour doré (jamais du texte porteur de sens) */
