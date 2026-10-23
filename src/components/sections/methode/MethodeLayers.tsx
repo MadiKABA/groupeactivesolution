@@ -1,12 +1,22 @@
 "use client";
 
-import { motion, useTransform, type MotionValue } from "motion/react";
+import { motion, useTransform, type MotionValue, type Transition } from "motion/react";
 import { memo } from "react";
 
 import { EASE } from "@/lib/motion";
 import { METHODE_LAYERS } from "@/lib/methode";
 
 export type LayerState = "rest" | "done" | "active" | "upcoming";
+
+/** Entrée de la pile, issue de la table de séquence de MethodeClient (s). */
+export type PileTiming = {
+  /** Durée de l'entrée d'une couche et décalage entre couches (l'étape 4 part la première, le logo en dernier). */
+  duration: number;
+  stagger: number;
+  /** Apparition de chaque nœud (index 0 → étape 1) ; null : le nœud entre avec sa couche. */
+  nodeDelays: readonly number[] | null;
+  nodeDuration: number;
+};
 
 const VIEW_H = 740;
 const THICKNESS = 20;
@@ -51,11 +61,19 @@ function Slab({ hw, cy, face, side, stroke, width }: SlabProps) {
   );
 }
 
-function Node({ cy, label, active, reduce }: { cy: number; label: string; active: boolean; reduce: boolean }) {
+type NodeProps = { cy: number; label: string; active: boolean; reduce: boolean; entered: boolean; appear: Transition | null };
+
+function Node({ cy, label, active, reduce, entered, appear }: NodeProps) {
   const fade = { duration: 0.3, ease: "easeOut" } as const;
   const text = { x: CX, y: cy, textAnchor: "middle", dominantBaseline: "central", fontSize: 14, fontWeight: 800 } as const;
   return (
-    <g>
+    // Apparition propre au nœud (desktop : à l'instant de son étape), sinon avec sa couche.
+    <motion.g
+      data-reveal
+      initial={appear ? { opacity: 0, scale: reduce ? 1 : 0.6 } : false}
+      animate={entered ? { opacity: 1, scale: 1 } : undefined}
+      transition={appear ?? undefined}
+    >
       {/* Halo de la couche active : pulse une fois à chaque activation (monté à l'activation) */}
       {active && (
         <motion.circle
@@ -76,7 +94,7 @@ function Node({ cy, label, active, reduce }: { cy: number; label: string; active
       <motion.text {...text} style={{ fill: "var(--color-brand-navy)" }} initial={false} animate={{ opacity: active ? 1 : 0 }} transition={fade}>
         {label}
       </motion.text>
-    </g>
+    </motion.g>
   );
 }
 
@@ -116,7 +134,7 @@ type LayerProps = {
   state: LayerState;
   order: number;
   entered: boolean;
-  entryDelay: number;
+  timing: PileTiming;
   mobile: boolean;
   reduce: boolean;
   strokeWidth: number;
@@ -129,7 +147,7 @@ type LayerProps = {
  * sont des transforms HTML, composités, sans repeindre les autres couches.
  * Mémoïsée : seule la couche dont l'état change est re-rendue.
  */
-const Layer = memo(function Layer({ index, state, order, entered, entryDelay, mobile, reduce, strokeWidth, pointerX, pointerY }: LayerProps) {
+const Layer = memo(function Layer({ index, state, order, entered, timing, mobile, reduce, strokeWidth, pointerX, pointerY }: LayerProps) {
   const { hw, cy, stroke } = METHODE_LAYERS[index];
   // Profondeur : le logo (en haut) bouge le plus, l'étape 4 le moins.
   const depth = 1 - index * 0.2;
@@ -138,15 +156,16 @@ const Layer = memo(function Layer({ index, state, order, entered, entryDelay, mo
   const active = state === "active";
   const fade = { duration: 0.3, ease: "easeOut" } as const;
 
+  const delay = order * timing.stagger;
   const entry = reduce
-    ? { initial: { opacity: 0 }, transition: { duration: 0.4 } }
-    : mobile
-      ? { initial: { opacity: 0, y: "-2.7%" }, transition: { duration: 0.6, ease: EASE.reveal } }
-      : { initial: { opacity: 0, y: ENTRY_Y }, transition: { duration: 0.8, delay: entryDelay + order * 0.12, ease: EASE.reveal } };
+    ? { initial: { opacity: 0 }, transition: { duration: timing.duration, delay } }
+    : { initial: { opacity: 0, y: mobile ? "-2.7%" : ENTRY_Y }, transition: { duration: timing.duration, delay, ease: EASE.reveal } };
+  const nodeAppear = timing.nodeDelays && index > 0 ? { duration: timing.nodeDuration, delay: timing.nodeDelays[index - 1], ease: EASE.reveal } : null;
 
   return (
     <motion.div className="methode-layer absolute inset-0" style={{ x, y }}>
       <motion.div
+        data-reveal
         className="size-full"
         initial={entry.initial}
         animate={entered ? { opacity: state === "upcoming" ? 0.55 : 1, y: "0%" } : undefined}
@@ -169,9 +188,9 @@ const Layer = memo(function Layer({ index, state, order, entered, entryDelay, mo
           </motion.g>
 
           {index === 0 ? (
-            <LogoFace entered={entered} reduce={reduce} delay={entryDelay + order * 0.12 + 0.8} />
+            <LogoFace entered={entered} reduce={reduce} delay={delay + timing.duration} />
           ) : (
-            <Node cy={cy} label={String(index)} active={active} reduce={reduce} />
+            <Node cy={cy} label={String(index)} active={active} reduce={reduce} entered={entered} appear={nodeAppear} />
           )}
         </motion.svg>
       </motion.div>
@@ -183,8 +202,8 @@ type MethodeLayersProps = {
   /** État des quatre étapes (index 0 → étape 1). */
   states: readonly LayerState[];
   entered: boolean;
-  /** Début de l'assemblage (s) ; la couche de l'étape 4 part la première. */
-  entryDelay: number;
+  /** Assemblage (la couche de l'étape 4 part la première) et apparition des nœuds ; objet stable. */
+  timing: PileTiming;
   mobile: boolean;
   reduce: boolean;
   /** Position du pointeur normalisée (-1 → 1), ressorts (desktop avec souris), sinon 0. */
@@ -196,7 +215,7 @@ type MethodeLayersProps = {
  * Pile de quatre couches et de la couche du logo, en SVG pur (aucun filtre, aucune image raster) :
  * un <svg> par couche, superposés dans l'ordre de dessin.
  */
-export function MethodeLayers({ states, entered, entryDelay, mobile, reduce, pointerX, pointerY }: MethodeLayersProps) {
+export function MethodeLayers({ states, entered, timing, mobile, reduce, pointerX, pointerY }: MethodeLayersProps) {
   return (
     <div role="img" aria-label="Pile de quatre couches représentant les quatre étapes de la méthode" className="relative size-full">
       {DRAW_ORDER.map((index, order) => (
@@ -206,7 +225,7 @@ export function MethodeLayers({ states, entered, entryDelay, mobile, reduce, poi
           order={order}
           state={index === 0 ? "rest" : states[index - 1]}
           entered={entered}
-          entryDelay={entryDelay}
+          timing={timing}
           mobile={mobile}
           reduce={reduce}
           strokeWidth={mobile ? 2 : 1.5}

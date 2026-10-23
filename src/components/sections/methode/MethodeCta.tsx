@@ -67,13 +67,14 @@ export function MethodeCta({ revealed, reduce, immersive }: MethodeCtaProps) {
 
   return (
     <motion.div
+      data-reveal
       initial={{ opacity: 0, y: reduce ? 0 : 24 }}
       animate={revealed ? { opacity: 1, y: 0 } : undefined}
       transition={{ duration: reduce ? 0.4 : 0.7, ease: EASE.reveal }}
       onPointerMove={onBannerMove}
       onPointerEnter={onBannerEnter}
       onPointerLeave={onBannerLeave}
-      className="relative mx-auto mt-10 flex w-full max-w-246 flex-col gap-6 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy px-6 py-7 text-text-on-dark shadow-cta [--focus-ring:var(--color-brand-gold)] lg:min-h-32 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:px-10 lg:py-5"
+      className="relative mx-auto mt-8 flex md:mt-6 lg:mt-10 w-full max-w-246 flex-col gap-6 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy px-6 py-7 text-text-on-dark shadow-cta [--focus-ring:var(--color-brand-gold)] lg:min-h-32 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:px-10 lg:py-5"
     >
       {/* Motif du hero, variante sombre, faible et estompé vers la droite */}
       <div aria-hidden="true" className="methode-cta-motif pointer-events-none absolute inset-0">

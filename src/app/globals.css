@@ -750,16 +750,16 @@
    *
    * --motif-strength-methode : intensité du motif, appliquée UNE SEULE FOIS sur son conteneur
    * (.methode-motif), identique à toutes les largeurs, sans masque.
-   *   0.5 = presque invisible · 0.75 = valeur choisie · 1 = trop présent derrière les cartes
+   *   0.5 = presque invisible · 0.75 = ancienne valeur · 1 = valeur choisie (0.75 × 1.35, plafonnée à 1)
    * --motif-strength-methode-cta : motif sombre du bandeau d'appel à l'action (faible).
    */
   .methode-section {
-    --motif-strength-methode: 0.75;
+    --motif-strength-methode: 1;
     --motif-strength-methode-cta: 0.6;
   }
 
   .methode-motif {
-    opacity: var(--motif-strength-methode, 0.75);
+    opacity: var(--motif-strength-methode, 1);
   }
 
   .methode-cta-motif {
@@ -809,18 +809,6 @@
     @media (width >=64rem) {
       --u: calc(100cqw / 1216);
       height: calc(var(--u) * 740);
-    }
-  }
-
-  /*
-   * Fin de scène (mobile) : élément dans le flux, pas un padding — un sticky est borné par la boîte
-   * de contenu de sa scène. Laisse l'étape 4 atteindre la zone de lecture pile encore fixe.
-   */
-  .methode-stage-end {
-    height: max(0px, calc(100svh - var(--stack-h) - 160px));
-
-    @variant short {
-      height: 0;
     }
   }
 

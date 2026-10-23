@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, MotionConfig, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
-import { memo, useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react";
+import { motion, MotionConfig, useMotionValue, useScroll, useSpring, useTransform, type Transition } from "motion/react";
+import { memo, useEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react";
 
 import { SectionMotifLayers } from "@/components/sections/expertises/SectionMotif";
 import { WordsTitle } from "@/components/ui/WordsTitle";
@@ -10,7 +10,7 @@ import { EASE } from "@/lib/motion";
 import { METHODE_CARD_SIDE, METHODE_LAYERS, methodeEtapes, methodeIntro } from "@/lib/methode";
 
 import { MethodeCta } from "./MethodeCta";
-import { MethodeLayers, type LayerState } from "./MethodeLayers";
+import { MethodeLayers, type LayerState, type PileTiming } from "./MethodeLayers";
 import { MethodeStepCard } from "./MethodeStepCard";
 
 /*
@@ -30,13 +30,36 @@ const SHORT_QUERY = "(max-height: 32.499rem)";
 /** Haut de la pile fixe (header de 72px + 8px) et marge sous la pile pour la bande de lecture. */
 const STICKY_TOP = 80;
 const BAND_GAP = 16;
-/** Desktop : début de l'assemblage après le début de l'en-tête, puis étapes de la séquence (s). */
-const ASSEMBLE_AFTER_HEADER = 1.2;
-const NODES_AT = 1.1;
-const TICKS_AT = 1.3;
-const CARDS_AT = 1.4;
-const TOUR_AT = 2.4;
-const TOUR_STEP_MS = 700;
+/** Desktop : part visible de la composition qui déclenche sa séquence (ou 60 % de l'écran si elle est plus haute). */
+const COMPO_AMOUNT = 0.4;
+/** Mobile : part visible d'une étape qui révèle sa carte. */
+const CARD_AMOUNT = 0.25;
+/**
+ * Séquences d'entrée (s), jouées une fois, depuis le déclenchement de leur bloc.
+ * Desktop : la pile s'assemble, puis chaque étape i (0 → 3) à firstStep + i × stepInterval :
+ * nœud, traits, couche active, carte ; à l'étape suivante, la couche passe à « fait ».
+ * Animations réduites (desktop) : fondus seuls, un élément à la fois — pile, puis liaison
+ * (nœud et traits) et carte de chaque étape, un fondu toutes les fade + gap.
+ * Mobile : pile à l'entrée de la scène, chaque carte à son passage.
+ */
+const SEQUENCE_DELAYS = {
+  desktop: {
+    layerDuration: 0.7,
+    layerStagger: 0.1,
+    firstStep: 0.8,
+    stepInterval: 0.6,
+    node: 0,
+    nodeDuration: 0.35,
+    ticks: 0.1,
+    ticksDuration: 0.35,
+    active: 0.2,
+    card: 0.3,
+    cardDuration: 0.5,
+  },
+  reduced: { fade: 0.25, gap: 0.2 },
+  mobile: { layerDuration: 0.7, layerStagger: 0.08, nodeDuration: 0.5, cardDuration: 0.5 },
+} as const;
+const STEP_INDEXES = [0, 1, 2, 3] as const;
 const TILT = 2;
 const POINTER_SPRING = { stiffness: 120, damping: 20, mass: 0.6 } as const;
 
@@ -49,18 +72,69 @@ function useSaveData(): boolean {
   );
 }
 
-type Started = { header?: number; compo?: number; cta?: number };
+type Timeline = {
+  pile: PileTiming;
+  node: (index: number) => Transition;
+  tick: (index: number) => Transition;
+  card: (index: number) => Transition;
+  /** Desktop : instants d'activation des étapes 1 → 4, puis de l'état « fait » de toutes (s). */
+  tour: { steps: readonly number[]; done: number } | null;
+};
+
+/** Transitions de la composition, toutes tirées de SEQUENCE_DELAYS. */
+function buildTimeline(desktop: boolean, reduce: boolean): Timeline {
+  const { desktop: d, reduced: r, mobile: m } = SEQUENCE_DELAYS;
+  const ease = EASE.reveal;
+  if (!desktop) {
+    const fade = reduce ? { duration: r.fade } : null;
+    return {
+      pile: { duration: fade ? r.fade : m.layerDuration, stagger: fade ? 0 : m.layerStagger, nodeDelays: null, nodeDuration: 0 },
+      node: () => fade ?? { duration: m.nodeDuration, ease },
+      tick: () => ({ duration: 0 }),
+      card: () => fade ?? { duration: m.cardDuration, ease },
+      tour: null,
+    };
+  }
+  if (reduce) {
+    const slot = (index: number) => ({ duration: r.fade, delay: index * (r.fade + r.gap) });
+    const liaison = (index: number) => slot(1 + 2 * index);
+    return {
+      pile: { duration: r.fade, stagger: 0, nodeDelays: STEP_INDEXES.map((index) => liaison(index).delay), nodeDuration: r.fade },
+      node: liaison,
+      tick: liaison,
+      card: (index) => slot(2 + 2 * index),
+      tour: { steps: [], done: slot(8).delay },
+    };
+  }
+  const step = (index: number) => d.firstStep + index * d.stepInterval;
+  return {
+    pile: { duration: d.layerDuration, stagger: d.layerStagger, nodeDelays: STEP_INDEXES.map((index) => step(index) + d.node), nodeDuration: d.nodeDuration },
+    node: (index) => ({ duration: d.nodeDuration, delay: step(index) + d.node, ease }),
+    tick: (index) => ({ duration: d.ticksDuration, delay: step(index) + d.ticks, ease }),
+    card: (index) => ({ duration: d.cardDuration, delay: step(index) + d.card, ease }),
+    tour: { steps: STEP_INDEXES.map((index) => step(index) + d.active), done: step(4) + d.active },
+  };
+}
+
+/*
+ * Sans JavaScript : annule l'état initial invisible posé en ligne par Motion (blocs marqués
+ * data-reveal et mots du titre).
+ */
+const NOSCRIPT_STYLE =
+  "<style>.methode-section [data-reveal],#methode-title>span>span{opacity:1!important;transform:none!important}</style>";
 
 /**
  * Contenu interactif de la section Méthode : en-tête, pile de couches et étapes, bandeau.
- * Desktop : composition à l'échelle (--u), séquence d'entrée puis parcours automatique, survol et
- * focus. Sous 1024px : pile sticky (CSS) au-dessus des étapes, étape active selon la lecture.
+ * Desktop : composition à l'échelle (--u), séquence d'entrée (pile, puis les étapes une par une),
+ * survol et focus. Sous 1024px : pile sticky (CSS) au-dessus des étapes, étape active selon la lecture.
+ * Un observateur par bloc (en-tête, composition, cartes mobiles, bandeau), joué une fois.
  * Un seul useScroll ; parallaxes et inclinaison en MotionValues, sans re-rendu React.
  */
 export function MethodeClient() {
   const rootRef = useRef<HTMLDivElement>(null);
   const compoRef = useRef<HTMLDivElement>(null);
   const stackRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLDivElement>(null);
   const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
   const reduce = usePrefersReducedMotion();
   const desktop = useMediaQuery(DESKTOP_QUERY);
@@ -69,9 +143,11 @@ export function MethodeClient() {
   const saveData = useSaveData();
   const immersive = finePointer && !reduce && !saveData;
 
-  const [started, setStarted] = useState<Started>({});
+  const [headerOn, setHeaderOn] = useState(false);
+  const [compoOn, setCompoOn] = useState(false);
+  const [ctaOn, setCtaOn] = useState(false);
   const [appeared, setAppeared] = useState<readonly boolean[]>([false, false, false, false]);
-  // Desktop : étape du parcours automatique (1 → 4, 0 hors parcours), interaction en cours, état « fait ».
+  // Desktop : étape de la séquence (1 → 4, 0 hors séquence), interaction en cours, état « fait ».
   const [tourStep, setTourStep] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
   // Focus clavier séparé du survol : une sortie du pointeur n'efface pas l'étape focalisée.
@@ -79,11 +155,7 @@ export function MethodeClient() {
   const [doneAll, setDoneAll] = useState(false);
   // Mobile : étape active selon la lecture (étape 1 avant tout défilement).
   const [mobileActive, setMobileActive] = useState(0);
-  const tourTimers = useRef<number[]>([]);
-  const desktopRef = useRef(desktop);
-  useEffect(() => {
-    desktopRef.current = desktop;
-  }, [desktop]);
+  const timeline = useMemo(() => buildTimeline(desktop, reduce), [desktop, reduce]);
 
   // Défilement : un seul useScroll ; motif ±10px, lueur ±20px (desktop avec souris).
   const { scrollYProgress } = useScroll({ target: rootRef, offset: ["start end", "end start"] });
@@ -98,53 +170,23 @@ export function MethodeClient() {
   const rotateY = useTransform(pointerX, (v) => v * TILT);
   const rotateX = useTransform(pointerY, (v) => -v * TILT);
 
-  // Entrée, pause et apparition des cartes : un IntersectionObserver.
+  // En-tête et pause : la section entre à l'écran.
   useEffect(() => {
     const root = rootRef.current;
-    const compo = compoRef.current;
-    if (!root || !compo) return;
+    if (!root) return;
     let rootVisible = false;
-    let headerAt = Number.NaN;
     const updatePaused = () => {
       root.dataset.paused = String(!rootVisible || document.hidden);
     };
     const observer = new IntersectionObserver(
-      (entries) => {
-        const now = performance.now() / 1000;
-        const next: Started = {};
-        const cards: number[] = [];
-        for (const entry of entries) {
-          const key = (entry.target as HTMLElement).dataset.observe;
-          if (entry.target === root) {
-            rootVisible = entry.isIntersecting;
-            if (rootVisible && Number.isNaN(headerAt)) {
-              headerAt = now;
-              next.header = 0;
-            }
-          } else if (key === "compo") {
-            // Desktop : composition visible à 30 % ; mobile : la scène (haute) dès qu'elle entre.
-            const visible = desktopRef.current ? entry.intersectionRatio >= 0.3 : entry.isIntersecting;
-            if (visible) {
-              const base = Number.isNaN(headerAt) ? now : headerAt;
-              next.compo = Math.max(0, base + ASSEMBLE_AFTER_HEADER - now);
-              observer.unobserve(entry.target);
-            }
-          } else if (key === "cta" && entry.isIntersecting) {
-            next.cta = 0;
-            observer.unobserve(entry.target);
-          } else if (key?.startsWith("step-") && entry.isIntersecting) {
-            cards.push(Number(key.slice(5)));
-            observer.unobserve(entry.target);
-          }
-        }
+      ([entry]) => {
+        rootVisible = entry.isIntersecting;
+        if (rootVisible) setHeaderOn(true);
         updatePaused();
-        if (Object.keys(next).length > 0) setStarted((current) => ({ ...next, ...current }));
-        if (cards.length > 0) setAppeared((current) => current.map((value, index) => value || cards.includes(index)));
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: [0, 0.3] },
+      { rootMargin: "0px 0px -10% 0px" },
     );
     observer.observe(root);
-    root.querySelectorAll<HTMLElement>("[data-observe]").forEach((element) => observer.observe(element));
     document.addEventListener("visibilitychange", updatePaused);
     return () => {
       observer.disconnect();
@@ -152,26 +194,75 @@ export function MethodeClient() {
     };
   }, []);
 
-  // Desktop : parcours automatique, une seule fois, après l'assemblage (sauf animations réduites).
-  const stopTour = useCallback(() => {
-    tourTimers.current.forEach((timer) => window.clearTimeout(timer));
-    tourTimers.current = [];
-  }, []);
+  // Composition : desktop, visible à 40 % (ou sur 60 % de l'écran) ; mobile, la scène dès qu'elle entre.
   useEffect(() => {
-    if (!desktop || reduce || started.compo === undefined || doneAll) return;
-    const start = (started.compo + TOUR_AT) * 1000;
-    const timers = [1, 2, 3, 4].map((step) => window.setTimeout(() => setTourStep(step), start + (step - 1) * TOUR_STEP_MS));
+    const compo = compoRef.current;
+    if (!compo) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const screen = entry.rootBounds?.height ?? window.innerHeight;
+        const visible = window.matchMedia(DESKTOP_QUERY).matches
+          ? entry.intersectionRatio >= COMPO_AMOUNT || entry.intersectionRect.height >= screen * 0.6
+          : entry.isIntersecting;
+        if (!visible) return;
+        setCompoOn(true);
+        observer.disconnect();
+      },
+      { threshold: [0, 0.1, 0.2, 0.3, COMPO_AMOUNT] },
+    );
+    observer.observe(compo);
+    return () => observer.disconnect();
+  }, []);
+
+  // Cartes (mobile) : chacune à son passage, une seule fois.
+  useEffect(() => {
+    const steps = stepRefs.current.filter((element): element is HTMLLIElement => element !== null);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const cards: number[] = [];
+        for (const entry of entries) {
+          if (entry.intersectionRatio < CARD_AMOUNT) continue;
+          cards.push(steps.indexOf(entry.target as HTMLLIElement));
+          observer.unobserve(entry.target);
+        }
+        if (cards.length > 0) setAppeared((current) => current.map((value, index) => value || cards.includes(index)));
+      },
+      { threshold: CARD_AMOUNT },
+    );
+    steps.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  // Bandeau : à son entrée à l'écran.
+  useEffect(() => {
+    const cta = ctaRef.current;
+    if (!cta) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setCtaOn(true);
+        observer.disconnect();
+      },
+      { rootMargin: "0px 0px -10% 0px" },
+    );
+    observer.observe(cta);
+    return () => observer.disconnect();
+  }, []);
+
+  // Desktop : étape active de la séquence, au plus 4 activations puis l'état « fait », une seule fois.
+  // Aucune interaction ne l'interrompt ni ne l'accélère ; les timers ne sont nettoyés qu'au démontage.
+  useEffect(() => {
+    if (!compoOn || doneAll || !timeline.tour) return;
+    const { steps, done } = timeline.tour;
+    const timers = steps.map((at, index) => window.setTimeout(() => setTourStep(index + 1), at * 1000));
     timers.push(
       window.setTimeout(() => {
         setTourStep(0);
         setDoneAll(true);
-      }, start + 4 * TOUR_STEP_MS),
+      }, done * 1000),
     );
-    tourTimers.current = timers;
-    return stopTour;
-    // Le parcours ne démarre qu'une fois : `doneAll` passe à true à la fin ou à la première interaction.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [desktop, reduce, started.compo, stopTour]);
+    return () => timers.forEach((timer) => window.clearTimeout(timer));
+  }, [compoOn, doneAll, timeline.tour]);
 
   // Mobile : étape active = la plus basse des étapes dont le haut de carte est dans la bande de lecture.
   useEffect(() => {
@@ -207,22 +298,13 @@ export function MethodeClient() {
     };
   }, [desktop, short]);
 
-  // Interactions desktop : survol d'une carte ou d'un nœud, ou focus d'un nœud ; interrompt le parcours.
-  const interrupt = () => {
-    stopTour();
-    setTourStep(0);
-    setDoneAll(true);
-  };
+  // Interactions desktop : survol d'une carte ou d'un nœud, ou focus d'un nœud ; la séquence continue.
   const hover = (index: number) => {
-    if (!desktop) return;
-    interrupt();
-    setHovered(index);
+    if (desktop) setHovered(index);
   };
   const unhover = (index: number) => setHovered((current) => (current === index ? null : current));
   const focus = (index: number) => {
-    if (!desktop) return;
-    interrupt();
-    setFocused(index);
+    if (desktop) setFocused(index);
   };
   const blur = (index: number) => setFocused((current) => (current === index ? null : current));
   const interacting = hovered ?? focused;
@@ -252,9 +334,6 @@ export function MethodeClient() {
     stepRefs.current[index]?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   };
 
-  const headerOn = started.header !== undefined;
-  const compoOn = started.compo !== undefined;
-  const compoDelay = started.compo ?? 0;
   const at = (delay: number, duration = 0.6) =>
     reduce ? { duration: 0.4 } : { duration, delay, ease: EASE.reveal };
 
@@ -266,8 +345,10 @@ export function MethodeClient() {
         data-immersive={immersive}
         className="relative pt-24 pb-32 lg:pt-28"
       >
+        <noscript dangerouslySetInnerHTML={{ __html: NOSCRIPT_STYLE }} />
         {/* Filet doré du haut, tracé depuis le centre */}
         <motion.div
+          data-reveal
           aria-hidden="true"
           className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-brand-gold/50 to-transparent"
           initial={{ scaleX: reduce ? 1 : 0, opacity: reduce ? 0 : 1 }}
@@ -278,6 +359,7 @@ export function MethodeClient() {
         {/* Motif du hero (variante claire) sur toute la section ; intensité --motif-strength-methode */}
         <div aria-hidden="true" className="methode-motif pointer-events-none absolute inset-0 z-0 overflow-clip">
           <motion.div
+            data-reveal
             className="absolute inset-0"
             initial={{ opacity: 0 }}
             animate={headerOn ? { opacity: 1 } : undefined}
@@ -292,13 +374,14 @@ export function MethodeClient() {
           <header>
             <p className="flex items-center gap-3 text-xs font-semibold tracking-eyebrow text-brand-navy uppercase">
               <motion.span
+                data-reveal
                 aria-hidden="true"
                 className="h-0.5 w-8 origin-left bg-brand-gold"
                 initial={{ scaleX: reduce ? 1 : 0 }}
                 animate={headerOn ? { scaleX: 1 } : undefined}
                 transition={at(0.3)}
               />
-              <motion.span initial={{ opacity: 0 }} animate={headerOn ? { opacity: 1 } : undefined} transition={at(0.4)}>
+              <motion.span data-reveal initial={{ opacity: 0 }} animate={headerOn ? { opacity: 1 } : undefined} transition={at(0.4)}>
                 {methodeIntro.eyebrow}
               </motion.span>
             </p>
@@ -313,6 +396,7 @@ export function MethodeClient() {
               className="mt-6 text-display-section-sm font-extrabold tracking-display-tight text-brand-navy sm:text-display-wide sm:whitespace-nowrap"
             />
             <motion.p
+              data-reveal
               initial={{ opacity: 0, y: reduce ? 0 : 16 }}
               animate={headerOn ? { opacity: 1, y: 0 } : undefined}
               transition={at(1.0)}
@@ -325,7 +409,6 @@ export function MethodeClient() {
           {/* Composition : 1216 unités de large (--u), 1360px au plus, centrée */}
           <div
             ref={compoRef}
-            data-observe="compo"
             onPointerMove={onCompoPointerMove}
             onPointerLeave={onCompoPointerLeave}
             className="methode-compo relative mx-auto mt-10 w-full max-w-340 lg:mt-14"
@@ -353,8 +436,8 @@ export function MethodeClient() {
                     <MethodeLayers
                       key={desktop ? "desktop" : "mobile"}
                       states={states}
-                      entered={desktop ? compoOn : headerOn}
-                      entryDelay={compoDelay}
+                      entered={compoOn}
+                      timing={timeline.pile}
                       mobile={!desktop}
                       reduce={reduce}
                       pointerX={pointerX}
@@ -374,9 +457,10 @@ export function MethodeClient() {
                       onPointerLeave={() => unhover(index)}
                       onFocus={() => focus(index)}
                       onBlur={() => blur(index)}
+                      data-reveal
                       initial={{ opacity: 0, scale: reduce ? 1 : 0.6 }}
-                      animate={(desktop ? compoOn : headerOn) ? { opacity: 1, scale: 1 } : undefined}
-                      transition={desktop ? at(compoDelay + NODES_AT + index * 0.06, 0.5) : at(0, 0.5)}
+                      animate={compoOn ? { opacity: 1, scale: 1 } : undefined}
+                      transition={timeline.node(index)}
                       // Position du nœud en CSS (hors du style géré par Motion) : y = cy / 740 de la pile.
                       className="absolute top-[calc(var(--node-y)/740*100%)] left-1/2 size-11 -translate-1/2 cursor-pointer rounded-full"
                       style={{ "--node-y": METHODE_LAYERS[index + 1].cy } as CSSProperties}
@@ -398,12 +482,13 @@ export function MethodeClient() {
                 return (
                   <motion.div
                     key={etape.id}
+                    data-reveal
                     aria-hidden="true"
                     className={`pointer-events-none absolute hidden h-[calc(var(--u)*12)] w-[calc(var(--u)*292)] -translate-y-1/2 lg:block ${left ? "left-[calc(var(--u)*300)] origin-right" : "left-[calc(var(--u)*624)] origin-left"}`}
                     style={{ top: `calc(var(--u) * ${METHODE_LAYERS[index + 1].cy})` }}
                     initial={{ scaleX: reduce ? 1 : 0, opacity: reduce ? 0 : 1 }}
                     animate={compoOn ? { scaleX: 1, opacity: 1 } : undefined}
-                    transition={at(compoDelay + TICKS_AT + index * 0.06)}
+                    transition={timeline.tick(index)}
                   >
                     <span className="methode-tick absolute inset-0" />
                     <span className={`methode-tick-active absolute inset-0 transition-opacity duration-300 ${active ? "opacity-100" : "opacity-0"}`} />
@@ -425,12 +510,11 @@ export function MethodeClient() {
                       ref={(element) => {
                         stepRefs.current[index] = element;
                       }}
-                      data-observe={`step-${index}`}
                       aria-current={active ? "step" : undefined}
                       onPointerEnter={(event) => event.pointerType === "mouse" && hover(index)}
                       onPointerLeave={() => unhover(index)}
                       // Desktop : centrée verticalement sur le nœud de son étape (CSS pur, sans attendre le JS).
-                      className={`methode-step relative min-h-[clamp(160px,26svh,240px)] lg:absolute lg:top-[calc(var(--u)*var(--node-y))] lg:min-h-0 lg:w-[calc(var(--u)*300)] lg:-translate-y-1/2 ${left ? "lg:left-0" : "lg:right-0"}`}
+                      className={`methode-step relative min-h-[clamp(160px,26svh,240px)] last:min-h-0 lg:absolute lg:top-[calc(var(--u)*var(--node-y))] lg:min-h-0 lg:w-[calc(var(--u)*300)] lg:-translate-y-1/2 ${left ? "lg:left-0" : "lg:right-0"}`}
                       style={{ "--node-y": METHODE_LAYERS[index + 1].cy } as CSSProperties}
                     >
                       {/* Pastille numérotée sur la frise (mobile et tablette) */}
@@ -443,9 +527,10 @@ export function MethodeClient() {
                       <motion.div
                         // Remonté quand le palier est connu : la bonne entrée (x en desktop, y sinon).
                         key={desktop ? "desktop" : "mobile"}
+                        data-reveal
                         initial={{ opacity: 0, x: reduce || !desktop ? 0 : left ? -24 : 24, y: reduce || desktop ? 0 : 16 }}
                         animate={shown ? { opacity: 1, x: 0, y: 0 } : undefined}
-                        transition={desktop ? at(compoDelay + CARDS_AT + index * 0.1) : at(0)}
+                        transition={timeline.card(index)}
                       >
                         <div className="relative">
                           {/* Repère du haut de la carte : bande de lecture (mobile) */}
@@ -457,12 +542,12 @@ export function MethodeClient() {
                   );
                 })}
               </ol>
-              <div aria-hidden="true" className="methode-stage-end lg:hidden" />
             </div>
           </div>
 
-          <div data-observe="cta">
-            <Cta revealed={started.cta !== undefined} reduce={reduce} immersive={immersive} />
+          {/* Au-dessus du fondu de la pile (mobile) quand celle-ci est libérée */}
+          <div ref={ctaRef} className="relative z-30">
+            <Cta revealed={ctaOn} reduce={reduce} immersive={immersive} />
           </div>
         </div>
       </div>
