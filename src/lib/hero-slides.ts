@@ -24,7 +24,7 @@ export const heroSlides: readonly HeroSlide[] = [
     alt: "Apprenants en séance de formation au numérique",
     caption:
       "Programmation, robotique, intelligence artificielle et compétences digitales pour tous les niveaux.",
-    href: "/education-numerique",
+    href: "/formations",
   },
   {
     line: "créer les solutions,",

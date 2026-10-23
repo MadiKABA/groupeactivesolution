@@ -7,7 +7,7 @@ export const navLinks: readonly NavLink[] = [
   { label: "Accueil", href: "/" },
   { label: "Nos services", href: "/services" },
   { label: "Réalisations", href: "/realisations" },
-  { label: "Éducation numérique", href: "/education-numerique" },
+  { label: "Formations", href: "/formations" },
   { label: "À propos", href: "/a-propos" },
 ];
 

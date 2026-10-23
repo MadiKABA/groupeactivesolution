@@ -27,19 +27,19 @@ export const expertisesIntro = {
     "Nous connectons l'éducation, la technologie et la stratégie pour transformer les idées en compétences et en solutions concrètes.",
 } as const;
 
-// Destinations à confirmer : /education-numerique et /services n'existent pas encore.
+// Destinations à confirmer : /formations et /services n'existent pas encore.
 export const expertises: readonly Expertise[] = [
   {
     slug: "education",
     number: "01",
-    name: "Éducation numérique",
+    name: "Formations",
     icon: GraduationCap,
     tagline: "Donner aux talents les moyens de créer le futur.",
     description:
       "Des programmes qui permettent aux jeunes de découvrir la programmation, la robotique et les technologies émergentes.",
     services: ["Programmation", "Robotique", "Électronique", "Internet des objets", "Intelligence artificielle"],
     idealFor: ["Établissements scolaires", "Jeunes talents"],
-    link: { label: "Découvrir les programmes", href: "/education-numerique" },
+    link: { label: "Découvrir les programmes", href: "/formations" },
     alt: "Jeunes apprenants en atelier de programmation et de robotique",
     focalDesktop: "50% 45%",
     focalMobile: "50% 40%",
