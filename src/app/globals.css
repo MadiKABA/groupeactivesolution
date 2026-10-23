@@ -70,6 +70,19 @@
   --color-placeholder-start: #16335c;
   --color-placeholder-end: #0e2244;
 
+  /* Dorés pour fond clair (section Méthode) */
+  /* Dégradé de texte des grands titres sur fond clair uniquement (≥ 24px gras), jamais pour du petit texte.
+     Début assombri pour atteindre 3:1 sur le fond clair (3.2:1) ; fin à 3.9:1 */
+  --color-gold-ink-start: #b3811b;
+  --color-gold-ink-end: #a8710f;
+  /* Traits dorés sur fond clair (couche active, numéro actif) */
+  --color-gold-line: #c48a1a;
+  /* Face et tranche d'une couche active de la pile */
+  --color-gold-tint: #f5ead7;
+  --color-gold-tint-side: #f1e0bc;
+  /* Tranches des couches au repos */
+  --color-surface-sunken: #f0eee8;
+
   /* Bordures */
   --color-border-subtle: #e4e4e7;
 
@@ -116,6 +129,14 @@
   --text-body-lg--line-height: 1.65;
   --text-tag: 0.8125rem;
   --text-tag--line-height: 1.4;
+  /* Titre d'un bandeau d'appel à l'action (28px en desktop) */
+  --text-banner: 1.75rem;
+  --text-banner--line-height: 1.2;
+  /* Titres des étapes de la Méthode : 22px (20px sous 1100px et sur mobile) */
+  --text-step: 1.375rem;
+  --text-step--line-height: 1.3;
+  --text-step-sm: 1.25rem;
+  --text-step-sm--line-height: 1.3;
   /* Grands numéros décoratifs en contour */
   --text-numeral: clamp(5rem, 9vw, 8rem);
   --text-numeral--line-height: 1;
@@ -171,6 +192,11 @@
   /* Photos sur fond bleu nuit (Réalisations) : ombre profonde */
   --shadow-photo: 0 40px 90px -30px color-mix(in oklab, black 70%, transparent),
   0 12px 30px -12px color-mix(in oklab, black 50%, transparent);
+  /* Cartes blanches sur fond clair (étapes de la Méthode) */
+  --shadow-card: 0 1px 2px color-mix(in oklab, var(--color-brand-navy) 4%, transparent),
+  0 24px 44px -28px color-mix(in oklab, var(--color-brand-navy) 22%, transparent);
+  /* Bandeau d'appel à l'action sombre sur fond clair */
+  --shadow-cta: 0 36px 70px -30px color-mix(in oklab, var(--color-brand-navy) 55%, transparent);
   /* Points lumineux du réseau du hero */
   --shadow-glow: 0 0 8px 1px color-mix(in oklab, var(--color-brand-gold) 70%, transparent);
 
@@ -709,6 +735,129 @@
     background-image:
       repeating-linear-gradient(135deg, color-mix(in oklab, var(--color-brand-gold) 7%, transparent) 0 1px, transparent 1px 14px),
       linear-gradient(135deg, var(--color-placeholder-start), var(--color-placeholder-end));
+  }
+
+  /* Tuile du motif sur fond sombre : traits dorés seuls (0.055 à 0.095 avant l'opacité du conteneur) */
+  .section-motif-tile-dark {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23e3a93f' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M0 12 L12 0 L24 12 L36 0 L48 12 L60 0 L72 12 L84 0 L96 12' stroke-opacity='0.08'/%3E%3Cpath d='M0 22 L12 10 L24 22 L36 10 L48 22 L60 10 L72 22 L84 10 L96 22' stroke-opacity='0.055'/%3E%3Cpath d='M24 30 L42 48 L24 66 L6 48 Z' stroke-opacity='0.095'/%3E%3Cpath d='M24 38 L34 48 L24 58 L14 48 Z' stroke-opacity='0.065'/%3E%3Cpath d='M72 30 L90 48 L72 66 L54 48 Z' stroke-opacity='0.095'/%3E%3Cpath d='M72 38 L82 48 L72 58 L62 48 Z' stroke-opacity='0.065'/%3E%3Cpath d='M48 44 L52 48 L48 52 L44 48 Z' stroke-opacity='0.085'/%3E%3Cpath d='M0 74 L12 86 L24 74 L36 86 L48 74 L60 86 L72 74 L84 86 L96 74' stroke-opacity='0.055'/%3E%3Cpath d='M0 84 L12 96 L24 84 L36 96 L48 84 L60 96 L72 84 L84 96 L96 84' stroke-opacity='0.08'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 160px 160px;
+    background-repeat: repeat;
+  }
+
+  /*
+   * Section Méthode (fond clair) — effets validés : filet haut, lueur dorée derrière la pile,
+   * motif du hero (variante claire de SectionMotif), titre en dégradé doré foncé.
+   *
+   * --motif-strength-methode : intensité du motif, appliquée UNE SEULE FOIS sur son conteneur
+   * (.methode-motif), identique à toutes les largeurs, sans masque.
+   *   0.5 = presque invisible · 0.75 = valeur choisie · 1 = trop présent derrière les cartes
+   * --motif-strength-methode-cta : motif sombre du bandeau d'appel à l'action (faible).
+   */
+  .methode-section {
+    --motif-strength-methode: 0.75;
+    --motif-strength-methode-cta: 0.6;
+  }
+
+  .methode-motif {
+    opacity: var(--motif-strength-methode, 0.75);
+  }
+
+  .methode-cta-motif {
+    opacity: var(--motif-strength-methode-cta, 0.6);
+    /* Estompé vers la droite : le bouton reste sur un fond uni */
+    mask-image: linear-gradient(to right, black, transparent 85%);
+  }
+
+  /* Dégradé doré foncé des grands titres sur fond clair */
+  .gold-ink-text {
+    background-image: linear-gradient(90deg, var(--color-gold-ink-start), var(--color-gold-ink-end));
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Lueur dorée derrière la pile (920 × 900), centrée par marges négatives sur le centre de la pile */
+  .methode-glow {
+    left: 50%;
+    top: calc(var(--stack-h) / 2 + 5rem);
+    width: 920px;
+    height: 900px;
+    margin: -450px 0 0 -460px;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 15%, transparent), transparent);
+
+    @media (width >=64rem) {
+      top: calc(var(--u) * 370);
+    }
+  }
+
+  /* Composition desktop : unité de conception --u (1216 de large, 740 de haut) */
+  .methode-compo {
+    container-type: inline-size;
+  }
+
+  /* Scène : sous 1024px, pile sticky (top 80px) au-dessus des étapes ; en desktop, composition à l'échelle */
+  .methode-stage {
+    --stack-h: clamp(200px, 34svh, 300px);
+
+    @media (width >=48rem) {
+      --stack-h: clamp(240px, 34svh, 370px);
+    }
+
+    @variant short {
+      --stack-h: min(240px, 60svh);
+    }
+
+    @media (width >=64rem) {
+      --u: calc(100cqw / 1216);
+      height: calc(var(--u) * 740);
+    }
+  }
+
+  /*
+   * Fin de scène (mobile) : élément dans le flux, pas un padding — un sticky est borné par la boîte
+   * de contenu de sa scène. Laisse l'étape 4 atteindre la zone de lecture pile encore fixe.
+   */
+  .methode-stage-end {
+    height: max(0px, calc(100svh - var(--stack-h) - 160px));
+
+    @variant short {
+      height: 0;
+    }
+  }
+
+  /* Étape atteinte par le bouton de son nœud : elle s'arrête sous la pile fixe (mobile) */
+  .methode-step {
+    scroll-margin-top: calc(5rem + var(--stack-h) + 1rem);
+  }
+
+  /* Traits d'union carte ↔ nœud (desktop) et frise verticale (mobile) */
+  .methode-tick {
+    background-image: repeating-linear-gradient(90deg, color-mix(in oklab, var(--color-brand-navy) 38%, transparent) 0 2px, transparent 2px 8px);
+  }
+
+  .methode-tick-active {
+    background-image: repeating-linear-gradient(90deg, var(--color-brand-gold) 0 2px, transparent 2px 8px);
+  }
+
+  /* Frise de la liste (mobile) : traits horizontaux de 12px tous les 8px, centrés sur les pastilles (x 9 → 21px) */
+  .methode-frise {
+    background-image: linear-gradient(to bottom, color-mix(in oklab, var(--color-brand-navy) 30%, transparent) 0 2px, transparent 2px);
+    background-size: 12px 8px;
+    background-position: 9px 0;
+    background-repeat: repeat-y;
+  }
+
+  /* Anneau de 1px du bandeau : seule la bordure laisse voir la lueur qui suit le curseur */
+  .methode-cta-ring {
+    padding: 1px;
+    mask:
+      linear-gradient(black, black) content-box,
+      linear-gradient(black, black);
+    mask-composite: exclude;
+  }
+
+  /* will-change seulement en desktop avec souris, section à l'écran */
+  [data-immersive="true"][data-paused="false"] :is(.methode-parallax, .methode-layer, .methode-motif .section-motif-tile) {
+    will-change: transform;
   }
 
   /* Grand numéro décoratif en contour doré (jamais du texte porteur de sens) */
