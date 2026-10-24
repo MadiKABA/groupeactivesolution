@@ -98,6 +98,9 @@
   /* Bleu nuit en relief sur fond bleu nuit (section Formations : puce et nœuds inactifs) */
   --color-navy-raised: #0c2342;
 
+  /* Bleu nuit très profond (fond du footer) : dernière zone de la page, plus sombre que brand-navy */
+  --color-navy-deep: #050f1f;
+
   /* ---------- Typographie ---------- */
   --text-*: initial;
 
@@ -2900,5 +2903,590 @@
     background-size: 250% 100%;
     background-clip: text;
     color: transparent;
+  }
+}
+/*
+ * Footer (fond navy-deep uni) — effets validés pour le footer : filet doré en haut, motif sombre
+ * réduit en haut à droite, anneaux concentriques discrets (décor statique, sans aucune lueur),
+ * phrase en dégradé doré (.rz-gradient-text), bouton « Retour en haut » en dégradé doré.
+ *
+ * États posés par FooterLive sur .ft : data-js (état masqué initial, jamais en CSS statique) et
+ * data-in (révélation du contenu, une fois). Seul le contenu (.ft-a) s'anime ; le décor n'y participe pas.
+ *
+ * Paliers : mobile (< 768px, une colonne, anneaux en haut à droite), tablette (768–1099px, marque
+ * puis deux colonnes, anneaux derrière Services/Navigation), desktop (≥ 1100px, trois blocs de 300px).
+ * Centre des anneaux : --ft-rx / --ft-ry, relatifs au conteneur positionné le plus proche.
+ */
+@layer components {
+  .ft {
+    --ft-rx: calc(100% - 72px);
+    --ft-ry: 104px;
+    --focus-ring: var(--color-brand-gold-light);
+    background-color: var(--color-navy-deep);
+    /* Anneaux et lueur débordent en haut : aucun élément sticky dans le footer */
+    overflow: clip;
+  }
+
+  /* Cible du « Retour en haut » (<body>) : pas d'anneau de focus autour de la page */
+  #top:focus {
+    outline: none;
+  }
+
+  .ft-inner {
+    position: relative;
+    padding-top: 64px;
+    padding-bottom: 32px;
+
+    @media (width >= 48rem) {
+      padding-top: 80px;
+    }
+
+    @media (width >= 68.75rem) {
+      padding-top: 92px;
+    }
+  }
+
+  /* ---------- Décor : filet, lueur du filet, motif ---------- */
+  .ft-decor {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .ft-topline {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 1px;
+    background-image: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-brand-gold) 60%, transparent) 50%, transparent);
+  }
+
+  /* Motif du hero (variante sombre) réduit : zigzag ≈ 0.10, en haut à droite seulement */
+  .ft-motif {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(560px, 80%);
+    height: 340px;
+    color: var(--color-brand-gold);
+    mask-image: radial-gradient(ellipse 100% 100% at 100% 0, black 20%, transparent 72%);
+
+    > svg {
+      opacity: 0.31;
+    }
+  }
+
+  .ft-motif-point {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 9999px;
+    background-color: var(--color-brand-gold);
+    opacity: 0.26;
+    translate: -50% -50%;
+  }
+
+  /* ---------- Anneaux ---------- */
+  .ft-rings {
+    position: absolute;
+    left: var(--ft-rx);
+    top: var(--ft-ry);
+    z-index: 0;
+    width: 1060px;
+    height: 1060px;
+    translate: -50% -50%;
+    pointer-events: none;
+
+    :where(svg) {
+      position: absolute;
+      inset: 0;
+      overflow: visible;
+    }
+  }
+
+  .ft-ring {
+    fill: none;
+    stroke: var(--color-brand-gold);
+    stroke-opacity: var(--a);
+    stroke-width: 1;
+  }
+
+  /* ---------- Mise en page (mobile d'abord) ---------- */
+  .ft-top {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .ft-brand {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .ft-logo {
+    width: 140px;
+    height: auto;
+
+    @media (width >= 48rem) {
+      width: 156px;
+    }
+  }
+
+  .ft-tagline {
+    max-width: 300px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--color-text-on-dark);
+
+    @media (width >= 48rem) {
+      font-size: 22px;
+    }
+  }
+
+  .ft-socials {
+    display: flex;
+    gap: 12px;
+  }
+
+  .ft-social {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in oklab, white 18%, transparent);
+    border-radius: 9999px;
+    background-color: color-mix(in oklab, white 8%, transparent);
+    color: var(--color-text-on-dark);
+    transition:
+      transform 240ms var(--ease-soft),
+      border-color 240ms var(--ease-soft),
+      background-color 240ms var(--ease-soft);
+
+    &[aria-disabled="true"] {
+      opacity: 0.45;
+    }
+  }
+
+  a.ft-social:is(:hover, :focus-visible) {
+    border-color: color-mix(in oklab, var(--color-brand-gold) 50%, transparent);
+    background-color: color-mix(in oklab, white 14%, transparent);
+    transform: translateY(-3px);
+  }
+
+  .ft-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .ft-col {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ft-col-title {
+    margin-bottom: 8px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-brand-gold);
+  }
+
+  .ft-col-list {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+  }
+
+  @media (width >= 48rem) {
+    .ft-top {
+      gap: 56px;
+    }
+
+    .ft-brand {
+      align-items: center;
+      text-align: center;
+    }
+
+    .ft-links {
+      --ft-rx: 50%;
+      --ft-ry: 50%;
+      position: relative;
+      gap: 0;
+    }
+
+    .ft-col {
+      align-items: center;
+      text-align: center;
+    }
+
+    .ft-col-title {
+      margin-bottom: 10px;
+    }
+  }
+
+  @media (width >= 68.75rem) {
+    .ft-top {
+      --ft-rx: 50%;
+      --ft-ry: 50%;
+      position: relative;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+    }
+
+    /* Les deux colonnes deviennent des enfants directs de la zone haute (trois blocs égaux) */
+    .ft-links {
+      display: contents;
+    }
+
+    .ft-brand,
+    .ft-col {
+      width: 300px;
+    }
+  }
+
+  /* ---------- Liens des colonnes : trait doré et point lumineux au survol / focus ---------- */
+  .ft-link {
+    position: relative;
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    border-radius: 4px;
+    padding-block: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.35;
+    color: color-mix(in oklab, white 86%, transparent);
+    transition: color 220ms var(--ease-soft);
+
+    /* Lien sur deux lignes (mobile) : la marge verticale garde l'espace entre les liens */
+    @media (width >= 48rem) {
+      padding-block: 0;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -14px;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      margin-top: -3px;
+      border-radius: 9999px;
+      background-color: var(--color-brand-gold-light);
+      box-shadow: 0 0 10px color-mix(in oklab, var(--color-brand-gold-light) 80%, transparent);
+      opacity: 0;
+      transform: scale(0.6);
+      transition:
+        opacity 220ms var(--ease-soft),
+        transform 220ms var(--ease-soft);
+    }
+  }
+
+  .ft-link-text {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      bottom: -4px;
+      height: 1.5px;
+      background-image: linear-gradient(90deg, var(--color-brand-gold-light), var(--color-brand-gold-deep));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 240ms var(--ease-soft);
+    }
+  }
+
+  .ft-link:is(:hover, :focus-visible) {
+    color: var(--color-text-on-dark);
+
+    &::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .ft-link-text::after {
+      transform: scaleX(1);
+    }
+  }
+
+  /* ---------- Coordonnées et liens légaux ---------- */
+  .ft-rule {
+    position: relative;
+    z-index: 1;
+    height: 1px;
+    margin-top: 48px;
+    background-image: linear-gradient(90deg, color-mix(in oklab, var(--color-brand-gold) 45%, transparent), color-mix(in oklab, white 10%, transparent) 60%, color-mix(in oklab, white 4%, transparent));
+    transform-origin: left;
+
+    @media (width >= 68.75rem) {
+      margin-top: 56px;
+    }
+  }
+
+  .ft-contact {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 26px;
+
+    @media (width >= 48rem) {
+      align-items: center;
+    }
+
+    @media (width >= 68.75rem) {
+      flex-flow: row wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px 32px;
+    }
+  }
+
+  .ft-contact-list {
+    display: flex;
+    flex-direction: column;
+
+    @media (width >= 48rem) {
+      align-items: center;
+    }
+
+    @media (width >= 68.75rem) {
+      flex-direction: row;
+      gap: 48px;
+    }
+  }
+
+  .ft-contact-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    gap: 12px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: color-mix(in oklab, white 88%, transparent);
+    overflow-wrap: anywhere;
+    transition: color 220ms var(--ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      color: var(--color-text-on-dark);
+    }
+  }
+
+  .ft-contact-icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--color-brand-gold);
+    transition: color 220ms var(--ease-soft);
+
+    .ft-contact-link:is(:hover, :focus-visible) & {
+      color: var(--color-brand-gold-light);
+    }
+  }
+
+  .ft-legal ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 14px;
+
+    @media (width >= 48rem) {
+      justify-content: center;
+    }
+
+    > li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    > li + li::before {
+      content: "";
+      width: 3px;
+      height: 3px;
+      border-radius: 9999px;
+      background-color: var(--color-brand-gold);
+    }
+  }
+
+  .ft-legal-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    border-radius: 4px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: color-mix(in oklab, white 74%, transparent);
+    transition: color 220ms var(--ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      color: var(--color-text-on-dark);
+    }
+  }
+
+  /* ---------- Barre du bas ---------- */
+  .ft-bottom {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid color-mix(in oklab, white 8%, transparent);
+    text-align: center;
+
+    @media (width >= 68.75rem) {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+
+  .ft-copy {
+    font-size: 13px;
+    color: color-mix(in oklab, white 64%, transparent);
+  }
+
+  /* Mobile : pilule centrée (180 × 48), au-dessus du copyright */
+  .ft-totop {
+    display: inline-flex;
+    width: 180px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    order: -1;
+    border: 1px solid color-mix(in oklab, var(--color-brand-gold) 50%, transparent);
+    border-radius: 9999px;
+    background-color: color-mix(in oklab, white 8%, transparent);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-on-dark);
+    transition: background-color 220ms var(--ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      background-color: color-mix(in oklab, white 14%, transparent);
+    }
+  }
+
+  .ft-totop-circle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-brand-gold-light);
+  }
+
+  .ft-totop-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform 220ms var(--ease-soft);
+  }
+
+  .ft-totop:is(:hover, :focus-visible) .ft-totop-arrow {
+    transform: translateY(-2px);
+  }
+
+  /* Tablette et desktop : texte + bouton rond doré 44 × 44, flèche bleu nuit, lueur au survol */
+  @media (width >= 48rem) {
+    .ft-totop {
+      width: auto;
+      height: auto;
+      min-height: 44px;
+      gap: 14px;
+      order: 0;
+      border: 0;
+      background-color: transparent;
+
+      &:is(:hover, :focus-visible) {
+        background-color: transparent;
+      }
+    }
+
+    .ft-totop-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      background-image: linear-gradient(135deg, var(--color-brand-gold-light), var(--color-brand-gold) 50%, var(--color-brand-gold-deep));
+      color: var(--color-brand-navy);
+
+      /* Lueur derrière le bouton (z-index négatif : sous le bouton, dans la barre du bas) */
+      &::before {
+        content: "";
+        position: absolute;
+        inset: -2px;
+        z-index: -1;
+        border-radius: inherit;
+        background-color: color-mix(in oklab, var(--color-brand-gold) 45%, transparent);
+        filter: blur(14px);
+        opacity: 0;
+        transition: opacity 240ms var(--ease-soft);
+      }
+    }
+
+    .ft-totop:is(:hover, :focus-visible) .ft-totop-circle::before {
+      opacity: 1;
+    }
+  }
+
+  /* ---------- Entrée (une fois) ---------- */
+  @keyframes ft-rise {
+    from {
+      opacity: 0;
+      transform: var(--fo-from, translateY(20px));
+    }
+  }
+
+  .ft[data-js]:not([data-in]) .ft-a {
+    opacity: 0;
+  }
+
+  .ft[data-in] .ft-a {
+    animation: ft-rise var(--fo-dur, 550ms) var(--ease-out-expo) var(--fo-d, 0ms) backwards;
+  }
+
+  /* ---------- Animations réduites : état statique, survols en couleur seule ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .ft .ft-a {
+      animation: none !important;
+    }
+
+    .ft-link::before {
+      transform: none;
+    }
+
+    .ft-link-text::after {
+      opacity: 0;
+      transform: none;
+    }
+
+    .ft-link:is(:hover, :focus-visible) .ft-link-text::after {
+      opacity: 1;
+    }
+
+    a.ft-social:is(:hover, :focus-visible),
+    .ft-totop:is(:hover, :focus-visible) .ft-totop-arrow {
+      transform: none;
+    }
   }
 }

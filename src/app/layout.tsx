@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/sections/footer/Footer";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -38,9 +39,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="fr" className={manrope.variable}>
-      <body>
+      {/* #top : cible du lien « Retour en haut » du footer (focus programmatique, sans tabulation) */}
+      <body id="top" tabIndex={-1}>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
