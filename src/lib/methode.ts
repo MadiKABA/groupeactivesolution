@@ -74,9 +74,9 @@ export const methodeEtapes: readonly MethodeEtape[] = [
 export const methodeCta = {
   title: "Créons ensemble votre prochain projet numérique.",
   text: "Contactez-nous pour discuter de votre projet, d'une collaboration ou simplement échanger.",
-  // Destination à confirmer : /contact n'existe pas encore.
+  // Section « Contact » de la page d'accueil (ancre).
   label: "Nous contacter",
-  href: "/contact",
+  href: "#contact",
 } as const;
 
 /**

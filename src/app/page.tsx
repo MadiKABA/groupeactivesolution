@@ -1,3 +1,4 @@
+import { Contact } from "@/components/sections/contact/Contact";
 import { Expertises } from "@/components/sections/expertises/Expertises";
 import { Faq } from "@/components/sections/faq/Faq";
 import { Formations } from "@/components/sections/formations/Formations";
@@ -14,6 +15,7 @@ export default function Home() {
       <Methode />
       <Formations />
       <Faq />
+      <Contact />
     </main>
   );
 }

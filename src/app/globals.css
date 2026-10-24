@@ -92,6 +92,9 @@
   /* Bordures */
   --color-border-subtle: #e4e4e7;
 
+  /* Message d'erreur sur bleu nuit (formulaire de contact) : 14:1 */
+  --color-error-on-dark: #ffd9a3;
+
   /* Bleu nuit en relief sur fond bleu nuit (section Formations : puce et nœuds inactifs) */
   --color-navy-raised: #0c2342;
 
@@ -173,6 +176,15 @@
   --text-counter--line-height: 1;
   --text-counter-sm: 0.71875rem;
   --text-counter-sm--line-height: 1;
+  /* Contact : titre (une ligne dès 640px), libellés (11.5px), e-mail sous 1024px (13.5px), titre du formulaire (24px) */
+  --text-display-contact: clamp(2.4rem, 4.6vw, 4rem);
+  --text-display-contact--line-height: 1.04;
+  --text-label-xs: 0.71875rem;
+  --text-label-xs--line-height: 1.3;
+  --text-email-sm: 0.84375rem;
+  --text-email-sm--line-height: 1.4;
+  --text-h3-lg: 1.5rem;
+  --text-h3-lg--line-height: 1.25;
   /* Réalisations : titre sous 640px (38px), index (15px), pastille « Illustration » (10.5px), légendes
      des tuiles (17px, 14px), titre de la barre compacte (22px, puis 28 à 40px), numéro du projet, phrase de fin */
   --text-display-mobile: 2.375rem;
@@ -260,6 +272,8 @@
   /* Cartes blanches sur fond clair (étapes de la Méthode) */
   --shadow-card: 0 1px 2px color-mix(in oklab, var(--color-brand-navy) 4%, transparent),
   0 24px 44px -28px color-mix(in oklab, var(--color-brand-navy) 22%, transparent);
+  /* Carte du formulaire de contact sur bleu nuit */
+  --shadow-form: 0 24px 60px color-mix(in oklab, black 28%, transparent);
   /* Tuiles du bento et cadre de la scène (Réalisations) */
   --shadow-tile: 0 40px 80px -28px color-mix(in oklab, black 70%, transparent);
   --shadow-scene: 0 44px 90px -26px color-mix(in oklab, black 70%, transparent);
@@ -2514,6 +2528,358 @@
 
     .fqm-check {
       stroke-dashoffset: 0;
+    }
+  }
+
+  /*
+   * Section Contact (fond bleu nuit) — effets validés pour cette section : motif du hero (variante
+   * nuit, statique), cartes en verre (bloc d'infos, réseaux, pastilles), carte du formulaire, mot du
+   * titre en dégradé doré (.rz-gradient-text), bouton principal en dégradé doré avec reflet au survol.
+   *
+   * --motif-strength-contact : multiplicateur des trois opacités du motif nuit (zigzag 0.14, réseau
+   * 0.20, points 0.32), appliqué une seule fois, identique à toutes les largeurs.
+   *
+   * États posés par ContactReveal sur .ct-root : data-js (état masqué initial, jamais en CSS
+   * statique), data-in (entrée, une fois), data-animating (will-change pendant la séquence).
+   * Transform et opacité partout, sauf exception assumée : bordure et anneau des champs au focus.
+   */
+  .contact-section {
+    --motif-strength-contact: 1;
+    --motif-night-zigzag: calc(0.14 * var(--motif-strength-contact));
+    --motif-night-lines: calc(0.2 * var(--motif-strength-contact));
+    --motif-night-points: calc(0.32 * var(--motif-strength-contact));
+  }
+
+  /* Desktop : titre d'une ligne dans sa demi-colonne (≈ 11 fois la taille de police), dans la plage du clamp */
+  .ct-col {
+    container-type: inline-size;
+  }
+
+  .ct-title {
+    font-size: var(--text-display-contact);
+    line-height: var(--text-display-contact--line-height);
+
+    @media (width >= 64rem) {
+      font-size: max(2.4rem, min(var(--text-display-contact), 8.9cqi));
+    }
+  }
+
+  /* ---------- Entrée ---------- */
+  @keyframes ct-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.85);
+    }
+  }
+
+  @keyframes ct-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  .ct-root {
+    --fo-from: translateY(24px);
+  }
+
+  .ct-form-card {
+    @media (width >= 64rem) {
+      --fo-from: translateX(24px);
+    }
+  }
+
+  .ct-root[data-js]:not([data-in]) :is(.ct-a, .ct-pop, .ct-motif) {
+    opacity: 0;
+  }
+
+  .ct-root[data-in] .ct-a {
+    animation: fo-enter var(--fo-dur, 500ms) var(--ease-out-expo) var(--fo-d, 0ms) backwards;
+  }
+
+  .ct-root[data-in] .ct-pop {
+    animation: ct-pop var(--fo-dur, 450ms) var(--ease-overshoot) var(--fo-d, 0ms) backwards;
+  }
+
+  .ct-root[data-in] .ct-motif {
+    animation: ct-fade 800ms var(--ease-soft) backwards;
+  }
+
+  .ct-root[data-animating] :is(.ct-a, .ct-pop) {
+    will-change: transform, opacity;
+  }
+
+  /* ---------- Cartes en verre ---------- */
+  .ct-glass {
+    border: 1px solid color-mix(in oklab, white 16%, transparent);
+    background-image: linear-gradient(160deg, color-mix(in oklab, white 7%, transparent), color-mix(in oklab, white 3%, transparent));
+    backdrop-filter: blur(14px);
+  }
+
+  .ct-form-card {
+    border-color: color-mix(in oklab, white 16%, transparent);
+    background-color: color-mix(in oklab, white 6%, transparent);
+    box-shadow: var(--shadow-form);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .ct-glass,
+    .ct-social {
+      background-color: color-mix(in oklab, var(--color-brand-navy-glow) 70%, var(--color-brand-navy));
+    }
+  }
+
+  /* Lignes d'infos : carré d'icône doré au survol / focus (couleurs seules, aucun déplacement) */
+  .ct-icon {
+    border-color: color-mix(in oklab, white 16%, transparent);
+    background-color: color-mix(in oklab, white 8%, transparent);
+    color: var(--color-text-on-dark);
+    transition:
+      background-color 200ms var(--ease-soft),
+      border-color 200ms var(--ease-soft),
+      color 200ms var(--ease-soft);
+  }
+
+  .ct-row:is(:hover, :focus-within) .ct-icon {
+    border-color: color-mix(in oklab, var(--color-brand-gold) 45%, transparent);
+    background-color: color-mix(in oklab, var(--color-brand-gold) 14%, transparent);
+    color: var(--color-brand-gold-light);
+  }
+
+  .ct-maps {
+    border-color: color-mix(in oklab, white 28%, transparent);
+    transition: background-color 200ms var(--ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      background-color: color-mix(in oklab, white 8%, transparent);
+    }
+  }
+
+  .ct-maps-arrow {
+    transition: transform 200ms var(--ease-soft);
+  }
+
+  .ct-maps:is(:hover, :focus-visible) .ct-maps-arrow {
+    transform: translate(3px, -3px);
+  }
+
+  /* Bouton Copier : icônes en fondu croisé (180 ms), infobulle au-dessus */
+  .ct-copy {
+    border-color: color-mix(in oklab, white 20%, transparent);
+    color: color-mix(in oklab, white 80%, transparent);
+    transition: border-color 180ms var(--ease-soft);
+
+    &[data-status="copied"] {
+      border-color: color-mix(in oklab, var(--color-brand-gold) 60%, transparent);
+    }
+  }
+
+  .ct-copy-idle,
+  .ct-copy-done {
+    transition: opacity 180ms var(--ease-soft);
+  }
+
+  .ct-copy-done {
+    color: var(--color-brand-gold-light);
+    opacity: 0;
+  }
+
+  .ct-copy[data-status="copied"] {
+    .ct-copy-idle {
+      opacity: 0;
+    }
+
+    .ct-copy-done {
+      opacity: 1;
+    }
+  }
+
+  .ct-tooltip {
+    background-color: var(--color-brand-gold-light);
+    color: var(--color-brand-navy);
+    opacity: 0;
+    transform: translate(-50%, 4px);
+    transition:
+      opacity 180ms var(--ease-soft),
+      transform 180ms var(--ease-soft);
+
+    &[data-show] {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  /* Pastilles sociales */
+  .ct-social {
+    border-color: color-mix(in oklab, white 20%, transparent);
+    background-color: color-mix(in oklab, white 10%, transparent);
+    box-shadow: inset 0 1px 0 color-mix(in oklab, white 18%, transparent);
+    backdrop-filter: blur(12px);
+    transition:
+      transform 220ms var(--ease-soft),
+      background-color 220ms var(--ease-soft),
+      border-color 220ms var(--ease-soft);
+
+    /* Survol uniquement sur les vrais liens */
+    &:is(a):is(:hover, :focus-visible) {
+      transform: translateY(-3px);
+      border-color: color-mix(in oklab, var(--color-brand-gold) 50%, transparent);
+      background-color: color-mix(in oklab, white 16%, transparent);
+    }
+
+    /* URL non renseignée : icône visible, désactivée */
+    &[aria-disabled="true"] {
+      cursor: default;
+      opacity: 0.55;
+    }
+  }
+
+  /* ---------- Formulaire ---------- */
+  .ct-chip {
+    border-color: color-mix(in oklab, white 28%, transparent);
+    color: var(--color-text-on-dark);
+    transition:
+      background-color 180ms var(--ease-soft),
+      border-color 180ms var(--ease-soft),
+      color 180ms var(--ease-soft);
+
+    &:hover {
+      border-color: color-mix(in oklab, var(--color-brand-gold) 60%, transparent);
+    }
+
+    &[aria-checked="true"] {
+      border-color: var(--color-brand-gold);
+      background-color: var(--color-brand-gold);
+      color: var(--color-brand-navy);
+      font-weight: 700;
+    }
+  }
+
+  .ct-field {
+    border-color: color-mix(in oklab, white 24%, transparent);
+    background-color: color-mix(in oklab, var(--color-brand-navy) 60%, transparent);
+    transition:
+      border-color 180ms var(--ease-soft),
+      box-shadow 180ms var(--ease-soft);
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--color-brand-gold);
+      box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-brand-gold) 22%, transparent);
+    }
+
+    &[aria-invalid="true"] {
+      border-color: var(--color-error-on-dark);
+    }
+  }
+
+  @keyframes ct-error-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+  }
+
+  .ct-error {
+    animation: ct-error-in 200ms var(--ease-soft);
+  }
+
+  .ct-primary {
+    background-image: linear-gradient(100deg, var(--color-brand-gold-light), var(--color-brand-gold) 50%, var(--color-brand-gold-deep));
+    transition:
+      transform 200ms var(--ease-soft),
+      box-shadow 200ms var(--ease-soft);
+
+    /* Fond #EDB94D au survol (calque en opacité) et reflet unique */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: var(--color-brand-gold-light);
+      opacity: 0;
+      transition: opacity 200ms var(--ease-soft);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 40%;
+      background-image: linear-gradient(90deg, transparent, color-mix(in oklab, white 55%, transparent), transparent);
+      opacity: 0;
+      transform: translateX(-120%) skewX(-20deg);
+      pointer-events: none;
+    }
+
+    &:is(:hover, :focus-visible) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px color-mix(in oklab, var(--color-brand-gold) 28%, transparent);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    &:active {
+      transform: scale(0.985);
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .ct-primary:hover::after {
+      opacity: 1;
+      transform: translateX(330%) skewX(-20deg);
+      transition:
+        transform 700ms var(--ease-soft),
+        opacity 200ms var(--ease-soft);
+    }
+  }
+
+  .ct-secondary {
+    border-color: color-mix(in oklab, white 28%, transparent);
+    transition: background-color 200ms var(--ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      background-color: color-mix(in oklab, white 8%, transparent);
+    }
+  }
+
+  .ct-confirm {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 200ms var(--ease-soft),
+      transform 200ms var(--ease-soft);
+
+    &[data-show] {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity 220ms var(--ease-soft),
+        transform 220ms var(--ease-soft);
+    }
+  }
+
+  /* Animations réduites : aucun transform ; l'entrée passe en fondus WAAPI (ContactReveal), les autres
+     changements d'état sont instantanés (règle globale des animations réduites) */
+  @media (prefers-reduced-motion: reduce) {
+    .ct-root[data-in] :is(.ct-a, .ct-pop, .ct-motif),
+    .ct-error {
+      animation: none !important;
+    }
+
+    .ct-confirm {
+      transform: none;
+    }
+
+    .ct-tooltip,
+    .ct-tooltip[data-show] {
+      transform: translate(-50%, 0);
+    }
+
+    .ct-social:is(a):is(:hover, :focus-visible),
+    .ct-primary:is(:hover, :focus-visible, :active),
+    .ct-maps:is(:hover, :focus-visible) .ct-maps-arrow {
+      transform: none;
     }
   }
 
