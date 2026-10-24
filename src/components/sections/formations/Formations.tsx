@@ -1,20 +1,20 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import type { CSSProperties } from "react";
 
 import { formationDomains, formationPanelId, formationsIntro, formationTabId } from "@/lib/formations";
 
+import { FormationTags } from "./FormationTags";
 import { FormationsCircuit } from "./FormationsCircuit";
 import { FormationsInteractive } from "./FormationsInteractive";
 import { FormationsPublics } from "./FormationsPublics";
 import { reveal } from "./reveal";
 
-/** Panneau de description : après le circuit (ms). */
+/** Panneau de description (sous 1100px) : après le circuit (ms). */
 const PANEL_AT = 1900;
 
 /*
  * Section « Formations » (fond bleu nuit), après « Notre méthode ».
- * Rendue côté serveur : en-tête, circuit, les 5 panneaux, publics et bouton. Seuls l'onglet actif,
+ * Rendue côté serveur : en-tête, circuit, les 5 panneaux mobiles, publics et bouton. Seuls l'onglet actif,
  * l'observateur d'entrée et la parallaxe vivent dans <FormationsInteractive> (unique composant client).
  * Sans JavaScript, tout est visible : onglet 01 actif, piste 01 allumée.
  */
@@ -29,7 +29,7 @@ export function Formations() {
       </p>
       <h2
         id="formations-title"
-        className="fo-a fo-title mt-6 text-display-formations font-extrabold tracking-display-tighter text-text-on-dark max-sm:leading-[1.08] sm:whitespace-nowrap"
+        className="fo-a fo-title mt-6 fo-desk:mt-5 text-display-formations font-extrabold tracking-display-tighter text-text-on-dark max-sm:leading-[1.08] sm:whitespace-nowrap"
         {...reveal(120, 650)}
       >
         {formationsIntro.title} <span className="formations-gradient-text">{formationsIntro.titleHighlight}</span>
@@ -40,8 +40,9 @@ export function Formations() {
     </header>
   );
 
+  // Panneau de description des pastilles (sous 1100px) ; au-delà, le texte est dans l'accordéon.
   const panels = (
-    <div className="fo-a mt-8 grid lg:mt-10" {...reveal(PANEL_AT, 450, "translateY(12px)")}>
+    <div className="fo-a mt-3.5 grid fo-desk:hidden" {...reveal(PANEL_AT, 450, "translateY(12px)")}>
       {formationDomains.map((domain, index) => (
         <div
           key={domain.id}
@@ -50,34 +51,20 @@ export function Formations() {
           aria-labelledby={formationTabId(domain)}
           tabIndex={0}
           data-i={index + 1}
-          className="formations-panel rounded-2xl border border-brand-gold/30 bg-(--glass-bg) p-5.5 [grid-area:1/1] lg:flex lg:items-center lg:justify-between lg:gap-10 lg:px-9 lg:py-7"
+          className="formations-panel rounded-[20px] border border-text-on-dark/12 bg-text-on-dark/5 p-5.5 [grid-area:1/1]"
         >
-          <div>
-            <p className="text-tag font-semibold tracking-eyebrow-wide text-brand-gold uppercase">
-              {domain.num} / {formationsIntro.panelKicker}
-            </p>
-            <h3 className="mt-2 text-formation font-bold text-text-on-dark">{domain.title}</h3>
-            <p className="mt-2 max-w-165 text-base leading-relaxed text-text-on-dark/76">{domain.text}</p>
+          <h3 className="text-formation-sm font-bold text-text-on-dark">{domain.title}</h3>
+          <p className="mt-2 text-formation-body text-text-on-dark/78">{domain.text}</p>
+          <div className="mt-4">
+            <FormationTags tags={domain.tags} />
           </div>
-          <ul className="mt-5 flex flex-wrap gap-2 lg:mt-0 lg:shrink-0 lg:flex-col">
-            {domain.tags.map((tag, tagIndex) => (
-              <li
-                key={tag}
-                className="formations-tag flex h-8.5 items-center gap-2.5 rounded-full border border-brand-gold/45 px-4 text-sm font-medium text-text-on-dark"
-                style={{ "--fo-tag": tagIndex } as CSSProperties}
-              >
-                <span aria-hidden="true" className="size-1.5 rounded-full bg-brand-gold" />
-                {tag}
-              </li>
-            ))}
-          </ul>
         </div>
       ))}
     </div>
   );
 
   const cta = (
-    <div data-fo-target="c" className="mt-12 flex justify-center lg:mt-16">
+    <div data-fo-target="c" className="mt-12 flex justify-center lg:mt-16 fo-desk:mt-12">
       <Link
         href={formationsIntro.cta.href}
         className="fo-c group inline-flex h-14 w-full items-center justify-center gap-2.5 rounded-full bg-brand-gold px-8 text-base font-bold text-brand-navy transition-[background-color,translate,scale] duration-200 ease-out hover:-translate-y-0.5 hover:bg-brand-gold-light focus-visible:bg-brand-gold-light active:scale-98 sm:w-auto"

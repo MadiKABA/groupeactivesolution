@@ -22,6 +22,9 @@
 /* Palier C (cas dégradé, ex. téléphone en paysage) : hauteur < 520px. */
 @custom-variant short (@media (max-height: 32.499rem));
 
+/* Section Formations : accordéon à côté du circuit dès 1100px (pastilles et panneau en dessous). */
+@custom-variant fo-desk (@media (min-width: 68.75rem));
+
 /*
  * Design system — Active Solution Digital Service
  *
@@ -171,6 +174,13 @@
   --text-formation--line-height: 1.25;
   --text-card: 0.90625rem;
   --text-card--line-height: 1.6;
+  /* Formations : texte d'une formation (15px), titre du panneau mobile (22px), mots-clés (13.5px) */
+  --text-formation-body: 0.9375rem;
+  --text-formation-body--line-height: 1.6;
+  --text-formation-sm: 1.375rem;
+  --text-formation-sm--line-height: 1.25;
+  --text-chip: 0.84375rem;
+  --text-chip--line-height: 1;
   /* FAQ : question et réponse (desktop, puis sous 1024px), compteur des filtres */
   --text-question: 1.25rem;
   --text-question--line-height: 1.35;
@@ -1622,11 +1632,73 @@
     width: 900px;
     height: 760px;
     margin: -380px 0 0 -450px;
-    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 13%, transparent), transparent);
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 6%, transparent), transparent);
     transform: translate(calc(var(--px, 0) * 12px), calc(var(--py, 0) * 12px));
   }
 
-  /* Pastilles (sous 1024px) : défilement horizontal sans barre */
+  /*
+   * Voile radial couleur du fond, centré sur le circuit (sous la lueur) : efface le réseau du motif
+   * derrière les pistes. 1000 × 680 pour un circuit de 780 × 480, proportionnel ailleurs.
+   */
+  .formations-veil {
+    left: 50%;
+    top: 50%;
+    width: calc(100% * 1000 / 780);
+    height: calc(100% * 680 / 480);
+    translate: -50% -50%;
+    background-image: radial-gradient(closest-side, var(--color-brand-navy) 60%, transparent 100%);
+  }
+
+  /*
+   * Accordéon desktop : colonne de 480px (4 × 60 + 200 + 4 × 10). Hauteurs fixes des volets et même
+   * transition (240ms, ease-out-expo) pour celui qui s'ouvre et celui qui se ferme : leur somme est
+   * constante à chaque instant, la colonne ne bouge jamais. Le contenu passe de 0fr à 1fr.
+   */
+  .formations-acc {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 480px;
+  }
+
+  .formations-acc-item {
+    display: grid;
+    grid-template-rows: 58px 0fr;
+    height: 60px;
+    transition-property: height, grid-template-rows, background-color, border-color, box-shadow;
+    transition-duration: 240ms, 240ms, 200ms, 200ms, 200ms;
+    transition-timing-function: var(--ease-out-expo), var(--ease-out-expo), ease-out, ease-out, ease-out;
+
+    &[data-open] {
+      grid-template-rows: 58px 1fr;
+      height: 200px;
+    }
+  }
+
+  .formations-acc-region {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .formations-acc-body {
+    opacity: 0;
+    transition: opacity 120ms ease-out;
+  }
+
+  .formations-acc-item[data-open] .formations-acc-body {
+    opacity: 1;
+    transition: opacity 180ms ease-out 80ms;
+  }
+
+  .formations-acc-chevron {
+    transition: rotate 240ms var(--ease-out-expo);
+  }
+
+  .formations-acc-item[data-open] .formations-acc-chevron {
+    rotate: 90deg;
+  }
+
+  /* Pastilles (sous 1100px) : défilement horizontal sans barre */
   .formations-pills {
     scrollbar-width: none;
 
@@ -1742,7 +1814,7 @@
 
   .formations-halo-stop {
     stop-color: var(--color-brand-gold);
-    stop-opacity: 0.35;
+    stop-opacity: 0.14;
 
     & + & {
       stop-opacity: 0;
@@ -1784,7 +1856,7 @@
   }
 
   .formations-track-glow {
-    opacity: calc(var(--fo-on, 0) * 0.7);
+    opacity: calc(var(--fo-on, 0) * 0.35);
   }
 
   .formations-chip {
@@ -1886,7 +1958,7 @@
   }
 
   .formations-node-halo {
-    fill: color-mix(in oklab, var(--color-brand-gold) 22%, transparent);
+    fill: color-mix(in oklab, var(--color-brand-gold) 10%, transparent);
     opacity: var(--fo-on, 0);
     transition: opacity 200ms ease-out;
   }
@@ -1894,12 +1966,13 @@
   .formations-node-base {
     fill: var(--color-navy-raised);
     stroke: color-mix(in oklab, var(--color-text-on-dark) 28%, transparent);
-    stroke-width: 1.5;
+    stroke-width: 2;
   }
 
+  /* Nœud actif : doré à 28 % sur le fond du nœud (pas d'aplat vif) */
   .formations-node-on {
-    fill: var(--color-brand-gold);
-    stroke: var(--color-brand-gold-light);
+    fill: color-mix(in oklab, var(--color-brand-gold) 28%, transparent);
+    stroke: color-mix(in oklab, var(--color-brand-gold-light) 70%, transparent);
     stroke-width: 2;
     opacity: var(--fo-on, 0);
     transition: opacity 200ms ease-out;
@@ -1914,14 +1987,20 @@
   }
 
   .formations-node-num-on {
-    fill: var(--color-brand-navy);
+    fill: var(--color-brand-gold-light);
     opacity: var(--fo-on, 0);
   }
 
+  /* Libellé : doré à 90 % sous le nœud actif (--fo-on hérité de son groupe data-i) */
   .formations-node-label {
     font-size: 14px;
     font-weight: 700;
-    fill: color-mix(in oklab, var(--color-text-on-dark) 76%, transparent);
+    fill: color-mix(
+      in oklab,
+      color-mix(in oklab, var(--color-brand-gold-light) 90%, transparent) calc(var(--fo-on, 0) * 100%),
+      color-mix(in oklab, var(--color-text-on-dark) 76%, transparent)
+    );
+    transition: fill 200ms ease-out;
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -1931,6 +2010,12 @@
 
     .formations-node-in:hover .formations-node {
       transform: scale(1.06);
+    }
+
+    /* Nœud inactif survolé : halo à 40 % (le nœud actif reste à 100 %) */
+    .formations-node-in:hover .formations-node-halo {
+      opacity: max(var(--fo-on, 0), 0.4);
+      transition-duration: 180ms;
     }
   }
 
@@ -1942,6 +2027,8 @@
 
     .formations-node-num {
       font-size: 31px;
+      /* Ligne de base cy + 6 calée pour 16px : à 31px, le numéro est recentré dans le nœud */
+      translate: 0 0.21em;
     }
   }
 

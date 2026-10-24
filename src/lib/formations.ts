@@ -10,7 +10,7 @@ export type FormationDomain = {
   tab: string;
   /** Libellé court sous le nœud du circuit (masqué sur mobile). */
   nodeLabel: string;
-  /** Titre du panneau de description. */
+  /** Titre du panneau de description (mobile). */
   title: string;
   text: string;
   tags: readonly [string, string, string];
@@ -31,7 +31,6 @@ export const formationsIntro = {
   intro:
     "Programmation, robotique, électronique, IoT et intelligence artificielle : des formations pratiques pour les établissements, les organisations et les apprenants.",
   tablistLabel: "Domaines de formation",
-  panelKicker: "Formation",
   publicsLabel: "Pour qui ?",
   cta: { label: "Découvrir nos formations", href: "/formations" },
 } as const;
@@ -106,6 +105,9 @@ export const formationPublics: readonly FormationPublic[] = [
   },
 ];
 
-/** Identifiants partagés par l'onglet et son panneau (pattern WAI-ARIA Tabs). */
+/** Identifiants partagés par la pastille et son panneau (pattern WAI-ARIA Tabs, sous 1100px). */
 export const formationTabId = (domain: FormationDomain) => `formations-tab-${domain.id}`;
 export const formationPanelId = (domain: FormationDomain) => `formations-panel-${domain.id}`;
+/** Identifiants partagés par l'en-tête et la région d'un volet (pattern WAI-ARIA Accordion, dès 1100px). */
+export const formationTriggerId = (domain: FormationDomain) => `formations-trigger-${domain.id}`;
+export const formationRegionId = (domain: FormationDomain) => `formations-region-${domain.id}`;

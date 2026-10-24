@@ -7,6 +7,7 @@ import {
   CIRCUIT_NODE_HALO_RADIUS,
   CIRCUIT_NODE_RADIUS,
   CIRCUIT_NODES,
+  CIRCUIT_NUMBER_OFFSET,
   CIRCUIT_VIEWBOX,
 } from "@/lib/formations-circuit";
 import { formationDomains } from "@/lib/formations";
@@ -99,7 +100,7 @@ export function FormationsCircuit() {
         {/* Nœuds : apparition à la fin de leur piste ; clic (pointeur) = onglet correspondant */}
         {CIRCUIT_NODES.map((node, index) => {
           const domain = formationDomains[index];
-          const number = { x: node.cx, y: node.cy, textAnchor: "middle", dominantBaseline: "central" } as const;
+          const number = { x: node.cx, y: node.cy + CIRCUIT_NUMBER_OFFSET, textAnchor: "middle" } as const;
           const entry = reveal(TRACKS_AT + index * TRACK_STAGGER + TRACK_DRAW, 300, "scale(.8)");
           // Mise à l'échelle autour du centre du nœud (unités du viewBox), libellé compris.
           const origin = { transformOrigin: `${node.cx}px ${node.cy}px` };

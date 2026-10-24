@@ -7,9 +7,11 @@ import { SectionMotifLayers } from "@/components/sections/expertises/SectionMoti
 import { useMediaQuery, usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { formationDomains, formationPanelId } from "@/lib/formations";
 
+import { FormationsAccordion } from "./FormationsAccordion";
 import { FormationsTabs } from "./FormationsTabs";
 
-const DESKTOP_QUERY = "(min-width: 64rem)";
+/** Accordéon desktop (même seuil que la variante `fo-desk` de globals.css). */
+const DESKTOP_QUERY = "(min-width: 68.75rem)";
 const FINE_POINTER_QUERY = "(hover: hover) and (pointer: fine)";
 /** Part visible de chaque cible qui déclenche sa séquence (ou la moitié de l'écran si elle est plus haute). */
 const AMOUNTS = { a: 0.35, b: 0.3, c: 0.6 } as const;
@@ -189,7 +191,7 @@ export function FormationsInteractive({ header, circuit, panels, publics, cta }:
   };
 
   return (
-    <div ref={rootRef} data-active={active + 1} className="formations-root relative pt-24 pb-32 lg:pt-28">
+    <div ref={rootRef} data-active={active + 1} className="formations-root relative pt-24 pb-32 lg:pt-28 fo-desk:pt-18 fo-desk:pb-24">
       {/* Liseré doré du haut */}
       <div aria-hidden="true" className="formations-topline absolute inset-x-0 top-0 h-px" />
 
@@ -203,16 +205,23 @@ export function FormationsInteractive({ header, circuit, panels, publics, cta }:
         <div data-fo-target="a">
           {header}
 
-          <div className="mt-10 lg:mt-14 lg:grid lg:grid-cols-[clamp(300px,32%,396px)_1fr] lg:items-center lg:gap-10">
-            <FormationsTabs active={active} vertical={desktop} onSelect={select} listRef={listRef} />
+          {/* ≥ 1100px : accordéon | circuit. Dessous : circuit, pastilles, panneau (affichage en CSS, sans saut à l'hydratation). */}
+          <div className="mt-10 lg:mt-14 fo-desk:mt-8 fo-desk:flex fo-desk:items-start fo-desk:gap-10">
+            <div className="hidden w-99 shrink-0 fo-desk:block">
+              <FormationsAccordion active={active} onSelect={select} />
+            </div>
 
-            <div className="formations-circuit-col relative mt-6 lg:mt-0" onClick={onCircuitClick}>
+            <div className="formations-circuit-col relative mx-auto max-w-195 fo-desk:max-w-none fo-desk:min-w-0 fo-desk:flex-1 fo-desk:self-center" onClick={onCircuitClick}>
+              <div aria-hidden="true" className="formations-veil pointer-events-none absolute" />
               <div aria-hidden="true" className="formations-glow pointer-events-none absolute" />
               <div className="formations-circuit-wrap relative">{circuit}</div>
             </div>
-          </div>
 
-          {panels}
+            <div className="mt-6 fo-desk:hidden">
+              <FormationsTabs active={active} onSelect={select} listRef={listRef} />
+              {panels}
+            </div>
+          </div>
         </div>
 
         {publics}

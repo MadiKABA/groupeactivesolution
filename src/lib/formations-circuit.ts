@@ -22,18 +22,25 @@ export const CIRCUIT_CHIP = {
 /** Monogramme officiel (public/logos/logo-mark.svg, ratio 1000 × 420), centré sur la puce. */
 export const CIRCUIT_MONOGRAM = { src: "/logos/logo-mark.svg", width: 100, height: 42 } as const;
 
-export const CIRCUIT_NODE_RADIUS = 30;
-export const CIRCUIT_NODE_HALO_RADIUS = 46;
-/** Libellé sous le nœud : cy + 54. */
+/** Cercle de rayon 29 et trait de 2 : bord extérieur à 30 du centre. */
+export const CIRCUIT_NODE_RADIUS = 29;
+export const CIRCUIT_NODE_HALO_RADIUS = 40;
+/** Numéro : cy + 6 (ligne de base) ; libellé : cy + 54. */
+export const CIRCUIT_NUMBER_OFFSET = 6;
 export const CIRCUIT_LABEL_OFFSET = 54;
 
 export type CircuitNode = { cx: number; cy: number; track: string };
 
-/** Nœuds N1 → N5 (même ordre que formationDomains) et leur piste vers la puce. */
+/*
+ * Nœuds N1 → N5 (même ordre que formationDomains) et leur piste vers la puce (diagonales à 45°).
+ * Le circuit occupe tout le viewBox : haut du nœud 01 en y = 0, bas du libellé « Électronique »
+ * (ligne de base 476 + jambage du « q ») en y = 480, bord droit des nœuds de droite en x = 780 ;
+ * nœuds de gauche en cx = 48 pour que le libellé centré « Électronique » commence à x ≥ 0.
+ */
 export const CIRCUIT_NODES: readonly CircuitNode[] = [
-  { cx: 100, cy: 80, track: "M130 80H220L290 150V200H330" },
-  { cx: 100, cy: 240, track: "M130 240H330" },
-  { cx: 100, cy: 400, track: "M130 400H220L290 330V280H330" },
-  { cx: 680, cy: 160, track: "M650 160H540L500 200H450" },
-  { cx: 680, cy: 320, track: "M650 320H540L500 280H450" },
+  { cx: 48, cy: 30, track: "M78 30H100L270 200H330" },
+  { cx: 48, cy: 240, track: "M78 240H330" },
+  { cx: 48, cy: 422, track: "M78 422H128L270 280H330" },
+  { cx: 750, cy: 150, track: "M720 150H560L510 200H450" },
+  { cx: 750, cy: 330, track: "M720 330H560L510 280H450" },
 ];
