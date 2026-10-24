@@ -48,7 +48,8 @@ Vérification complète : `pnpm lint && pnpm typecheck && pnpm build`.
 ```text
 .
 ├── public/
-│   └── logos/            # logos officiels (à ajouter)
+│   ├── logos/            # logos officiels (à ajouter)
+│   └── partners/         # logos officiels des partenaires (à ajouter)
 ├── src/
 │   └── app/
 │       ├── globals.css   # design tokens + styles globaux
@@ -113,6 +114,16 @@ Les fichiers de police sont auto-hébergés au build : aucune requête n'est env
 ## Logos officiels
 
 Les fichiers du logo officiel (deux versions) doivent être déposés dans **`public/logos/`**. Ils ne sont pas encore présents dans le dépôt. Le logo ne doit jamais être redessiné en CSS ni remplacé par du texte ou une icône. Le favicon sera créé à partir de ces fichiers officiels.
+
+## Logos des partenaires
+
+Les logos officiels des partenaires (fournis par le client, jamais redessinés ni téléchargés) se déposent dans **`public/partners/`** sous le nom **`<id>.svg`** (ou `.png` / `.webp`, fond transparent), où `<id>` est l'identifiant du partenaire dans `src/lib/partners.ts`. Renseigner ensuite son entrée :
+
+```ts
+{ id: "simplon", name: "Simplon", logo: { src: "/partners/simplon.svg", width: 280, height: 88 }, logoAlt: "Simplon", website: null, confirmed: true }
+```
+
+`width` / `height` : dimensions intrinsèques du fichier (le logo est contenu dans une boîte de 140 × 44 px). Tant que `logo` vaut `null`, la carte affiche le nom du partenaire. `website` n'est renseigné qu'avec une URL vérifiée : la carte devient alors un lien (nouvel onglet).
 
 ## Conventions de développement
 

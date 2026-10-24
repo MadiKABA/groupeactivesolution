@@ -81,6 +81,8 @@
   --color-gold-ink-end: #a8710f;
   /* Petit texte doré sur blanc (numéro de la question ouverte, FAQ) : 4.7:1, au-dessus de gold-ink-end (4.2:1) */
   --color-gold-ink-strong: #9c690e;
+  /* Petit texte doré sur surface-warm (libellé de la section Partenaires) : 4.7:1, gold-ink-strong n'y fait que 4.4:1 */
+  --color-gold-ink-warm: #96650d;
   /* Traits dorés sur fond clair (couche active, numéro actif) */
   --color-gold-line: #c48a1a;
   /* Face et tranche d'une couche active de la pile */
@@ -91,6 +93,9 @@
 
   /* Bordures */
   --color-border-subtle: #e4e4e7;
+
+  /* Texte secondaire bleuté sur fond clair (section Partenaires) : 7.5:1 sur surface-warm */
+  --color-text-muted: #4a5262;
 
   /* Message d'erreur sur bleu nuit (formulaire de contact) : 14:1 */
   --color-error-on-dark: #ffd9a3;
@@ -179,6 +184,9 @@
   --text-counter--line-height: 1;
   --text-counter-sm: 0.71875rem;
   --text-counter-sm--line-height: 1;
+  /* Partenaires : titre (2.1rem en mobile) */
+  --text-display-partners: clamp(2.1rem, 5vw, 4.5rem);
+  --text-display-partners--line-height: 1.05;
   /* Contact : titre (une ligne dès 640px), libellés (11.5px), e-mail sous 1024px (13.5px), titre du formulaire (24px) */
   --text-display-contact: clamp(2.4rem, 4.6vw, 4rem);
   --text-display-contact--line-height: 1.04;
@@ -238,6 +246,7 @@
   --tracking-display-tighter: -0.035em;
   /* Questions de la FAQ */
   --tracking-question: -0.015em;
+  --tracking-wordmark: -0.01em;
   --tracking-label: 0.2em;
   --tracking-badge: 0.04em;
   --tracking-eyebrow: 0.18em;
@@ -2883,6 +2892,560 @@
     .ct-primary:is(:hover, :focus-visible, :active),
     .ct-maps:is(:hover, :focus-visible) .ct-maps-arrow {
       transform: none;
+    }
+  }
+
+  /*
+   * Section Partenaires (fond clair) — effets validés pour cette section : motif du hero (variante
+   * vivid), cercle AS (halo qui respire, anneaux, sonar, ping), traces dorées tracées à l'entrée,
+   * lumières qui voyagent le long des traces, lueur dorée des cartes au survol / focus.
+   *
+   * --motif-strength-partners : multiplicateur des trois opacités du motif (zigzag 0.27, réseau 0.38,
+   * points 0.54), appliqué une seule fois, identique à toutes les largeurs.
+   *
+   * États posés par PartnersStage sur .pt-root : data-js (scène desktop, état masqué initial), data-in
+   * (entrée), data-visible (boucles), data-focus (une carte en avant), data-animating / data-pulsing
+   * (will-change) ; sur les cartes : data-active, data-flash, data-seen (mobile).
+   * Transform et opacité, sauf exceptions assumées : stroke-dashoffset (tracé des traces),
+   * offset-distance (lumières), filter (logo monochrome → couleurs, flou d'entrée).
+   */
+  .partners-section {
+    --motif-strength-partners: 1;
+    --motif-vivid-zigzag: calc(0.27 * var(--motif-strength-partners));
+    --motif-vivid-lines: calc(0.38 * var(--motif-strength-partners));
+    --motif-vivid-points: calc(0.54 * var(--motif-strength-partners));
+    --focus-ring: var(--color-gold-ink-end);
+
+    .gold-ink-text {
+      background-image: linear-gradient(100deg, var(--color-gold-ink-start), var(--color-gold-ink-end));
+    }
+  }
+
+  /* ---------- Mobile et sans JS : cercle fixe (sticky), trace verticale, cartes empilées ---------- */
+  .pt-scene {
+    --hub: 96px;
+    --r1: 120px;
+    --r2: 160px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pt-traces {
+    display: none;
+  }
+
+  .pt-mtrace {
+    position: absolute;
+    top: calc(var(--hub) / 2);
+    bottom: 38px;
+    left: 50%;
+    width: 1.5px;
+    margin-left: -0.75px;
+    background-color: color-mix(in oklab, var(--color-gold-ink-end) 55%, transparent);
+    transform-origin: top;
+  }
+
+  .pt-hub {
+    position: sticky;
+    top: calc(var(--hdr-h) + 12px);
+    z-index: 2;
+    width: var(--hub);
+    height: var(--hub);
+    margin-bottom: 40px;
+    /* Décor : le halo déborde sur la carte du haut, il ne doit pas capter le survol */
+    pointer-events: none;
+  }
+
+  .pt-core,
+  .pt-halo,
+  .pt-ring,
+  .pt-sonar,
+  .pt-ping {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 999px;
+    translate: -50% -50%;
+  }
+
+  .pt-core {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--hub);
+    height: var(--hub);
+    background-color: var(--color-brand-navy);
+    box-shadow: 0 18px 44px color-mix(in oklab, var(--color-brand-navy) 28%, transparent);
+  }
+
+  .pt-halo {
+    width: calc(var(--r2) * 1.6);
+    height: calc(var(--r2) * 1.6);
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 12%, transparent), transparent);
+    opacity: 0.55;
+  }
+
+  .pt-ring,
+  .pt-sonar,
+  .pt-ping {
+    border: 1px solid color-mix(in oklab, var(--color-gold-line) 35%, transparent);
+  }
+
+  .pt-ring-1,
+  .pt-sonar-1 {
+    width: var(--r1);
+    height: var(--r1);
+  }
+
+  .pt-ring-2,
+  .pt-sonar-2 {
+    width: var(--r2);
+    height: var(--r2);
+    border-color: color-mix(in oklab, var(--color-gold-line) 18%, transparent);
+  }
+
+  .pt-sonar,
+  .pt-ping {
+    opacity: 0;
+  }
+
+  .pt-ping {
+    width: var(--hub);
+    height: var(--hub);
+    border: 2px solid color-mix(in oklab, var(--color-brand-gold) 70%, transparent);
+  }
+
+  /* Fondu sous le cercle : les cartes qui passent dessous disparaissent en douceur */
+  .pt-fade {
+    position: absolute;
+    top: -12px;
+    bottom: -56px;
+    left: 50%;
+    z-index: -1;
+    width: min(360px, 100vw);
+    translate: -50% 0;
+    background-image: linear-gradient(to bottom, var(--color-surface-warm) calc(100% - 56px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  }
+
+  .pt-counter {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 18px);
+    translate: 0 -50%;
+    border-radius: 999px;
+    background-color: var(--color-surface);
+    padding: 0.25rem 0.625rem;
+    box-shadow: 0 4px 14px color-mix(in oklab, var(--color-brand-navy) 10%, transparent);
+    color: var(--color-brand-navy);
+    font-size: 0.78125rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .pt-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+  }
+
+  .pt-item {
+    position: relative;
+    width: min(320px, 100% - 40px);
+    height: 76px;
+  }
+
+  .pt-lights {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* ---------- Desktop (avec JS) : scène de 1248 px réduite par --k ---------- */
+  @media (width >= 64rem) {
+    .pt-root[data-js] {
+      .pt-wrap {
+        height: calc(var(--h) * var(--k, 1));
+
+        /* Voile clair fondu : le réseau du motif ne croise pas les traces ni les cartes */
+        &::before {
+          content: "";
+          position: absolute;
+          inset: -48px -4%;
+          background-image: radial-gradient(closest-side, var(--color-surface-warm) 72%, transparent);
+          pointer-events: none;
+        }
+      }
+
+      .pt-scene {
+        --hub: 112px;
+        --r1: 164px;
+        --r2: 220px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        display: block;
+        width: var(--sw);
+        height: var(--h);
+        margin-left: calc(var(--sw) / -2);
+        transform: scale(var(--k, 1));
+        transform-origin: top center;
+      }
+
+      .pt-traces {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+      }
+
+      .pt-mtrace,
+      .pt-fade,
+      .pt-counter {
+        display: none;
+      }
+
+      .pt-hub {
+        position: absolute;
+        top: var(--cy);
+        left: var(--cx);
+        margin: calc(var(--hub) / -2) 0 0 calc(var(--hub) / -2);
+      }
+
+      .pt-list {
+        position: absolute;
+        inset: 0;
+        display: block;
+      }
+
+      .pt-item {
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        width: var(--w);
+        height: var(--h);
+        margin: calc(var(--h) / -2) 0 0 calc(var(--w) / -2);
+      }
+    }
+  }
+
+  /* ---------- Traces ---------- */
+  .pt-stroke {
+    stroke: color-mix(in oklab, var(--color-gold-ink-end) 50%, transparent);
+    stroke-width: 1.5;
+    stroke-dasharray: 1;
+    transition: opacity 200ms var(--ease-soft);
+
+    &[data-kind="arc"] {
+      stroke: color-mix(in oklab, var(--color-gold-ink-end) 60%, transparent);
+      stroke-width: 1.6;
+    }
+
+    &[data-kind="link"] {
+      stroke: var(--color-gold-ink-end);
+      stroke-width: 2.2;
+    }
+  }
+
+  .pt-hl {
+    stroke: var(--color-gold-ink-end);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    filter: drop-shadow(0 0 4px color-mix(in oklab, var(--color-brand-gold) 60%, transparent));
+    opacity: 0;
+    transition: opacity 200ms var(--ease-soft);
+
+    &[data-on] {
+      opacity: 1;
+    }
+  }
+
+  .pt-root[data-focus] .pt-stroke {
+    opacity: 0.6;
+  }
+
+  .pt-node {
+    fill: var(--color-brand-gold);
+  }
+
+  /* ---------- Cartes ---------- */
+  .pt-card {
+    border-color: color-mix(in oklab, var(--color-brand-navy) 10%, transparent);
+    background-color: color-mix(in oklab, white 90%, transparent);
+    box-shadow: 0 8px 24px color-mix(in oklab, var(--color-brand-navy) 6%, transparent);
+    transition:
+      transform 240ms var(--ease-soft),
+      border-color 240ms var(--ease-soft);
+
+    /* Lueur dorée : seule l'opacité du calque change (jamais box-shadow) */
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -13px -25px;
+      z-index: -1;
+      border-radius: 21px;
+      background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 45%, transparent), transparent);
+      filter: blur(18px);
+      opacity: 0;
+      transition: opacity 240ms var(--ease-soft);
+    }
+  }
+
+  .pt-item {
+    isolation: isolate;
+  }
+
+  img.pt-logo {
+    filter: grayscale(1) contrast(1.05);
+    opacity: 0.72;
+    transition:
+      filter 240ms var(--ease-soft),
+      opacity 240ms var(--ease-soft);
+  }
+
+  .pt-item[data-flash] .pt-card {
+    border-color: color-mix(in oklab, var(--color-gold-line) 65%, transparent);
+    transition-duration: 600ms;
+  }
+
+  .pt-item[data-active] {
+    z-index: 3;
+
+    .pt-card {
+      transform: translateY(-4px);
+      border-color: color-mix(in oklab, var(--color-gold-line) 85%, transparent);
+
+      &::before {
+        opacity: 1;
+      }
+    }
+
+    img.pt-logo {
+      filter: none;
+      opacity: 1;
+    }
+
+    .pt-tooltip {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .pt-tooltip {
+    opacity: 0;
+    transform: translate(-50%, 6px);
+    transition:
+      opacity 200ms var(--ease-soft),
+      transform 200ms var(--ease-soft);
+  }
+
+  /* ---------- Lumières (créées par PartnersStage) ---------- */
+  .pt-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--color-brand-gold);
+    box-shadow: 0 0 12px color-mix(in oklab, var(--color-brand-gold) 70%, transparent);
+    offset-rotate: 0deg;
+
+    &.pt-light-strong {
+      width: 8px;
+      height: 8px;
+      box-shadow: 0 0 16px color-mix(in oklab, var(--color-brand-gold) 85%, transparent);
+    }
+
+    &.pt-light-trail {
+      width: 4px;
+      height: 4px;
+      box-shadow: none;
+    }
+  }
+
+  .pt-root:is([data-animating], [data-pulsing]) :is(.pt-item, .pt-hub) {
+    will-change: transform, opacity;
+  }
+
+  /* ---------- Entrée (une fois) : masquage posé seulement avec JS ---------- */
+  @keyframes pt-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+
+  @keyframes pt-scale-in {
+    from {
+      opacity: 0;
+      transform: scale(var(--from-scale, 0.8));
+    }
+  }
+
+  @keyframes pt-card-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px) scale(0.96);
+    }
+  }
+
+  @keyframes pt-rise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  @keyframes pt-unblur {
+    from {
+      filter: blur(6px);
+    }
+  }
+
+  @keyframes pt-grow-down {
+    from {
+      transform: scaleY(0);
+    }
+  }
+
+  .pt-root[data-js]:not([data-in]) :is(.pt-a, .pt-hub > *, .pt-mtrace) {
+    opacity: 0;
+  }
+
+  .pt-root[data-in] .pt-a {
+    animation: fo-enter var(--fo-dur, 500ms) var(--ease-out-expo) var(--fo-d, 0ms) backwards;
+  }
+
+  .pt-root[data-in] {
+    .pt-core {
+      animation: pt-scale-in 600ms var(--ease-out-expo) 250ms backwards;
+    }
+
+    .pt-ring {
+      --from-scale: 0.9;
+      animation: pt-scale-in 700ms var(--ease-out-expo) 250ms backwards;
+    }
+
+    .pt-ring-2 {
+      animation-delay: 370ms;
+    }
+
+    .pt-halo {
+      animation: fo-enter 700ms var(--ease-out-expo) 250ms backwards;
+    }
+
+    .pt-mtrace {
+      animation: pt-grow-down 800ms var(--ease-out-expo) 450ms backwards;
+    }
+  }
+
+  /* Mobile : chaque carte entre à son arrivée à l'écran */
+  @media (width < 64rem) {
+    .pt-root[data-js] .pt-item:not([data-seen]) {
+      opacity: 0;
+    }
+
+    .pt-root[data-js] .pt-item[data-seen] {
+      animation: pt-rise 450ms var(--ease-out-expo) backwards;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .pt-root[data-js]:not([data-in]) :is(.pt-item, .pt-node) {
+      opacity: 0;
+    }
+
+    .pt-root[data-js]:not([data-in]) .pt-stroke {
+      stroke-dashoffset: 1;
+    }
+
+    .pt-root[data-in] {
+      .pt-stroke {
+        animation: pt-draw 800ms var(--ease-out-expo) var(--d, 450ms) backwards;
+      }
+
+      .pt-node {
+        animation: fo-enter 300ms var(--ease-out-expo) 1150ms backwards;
+      }
+
+      .pt-item {
+        animation: pt-card-in 550ms var(--ease-out-expo) calc(650ms + var(--i) * 80ms) backwards;
+      }
+
+      .pt-logo {
+        animation: pt-unblur 500ms var(--ease-out-expo) calc(650ms + var(--i) * 80ms) backwards;
+      }
+    }
+  }
+
+  /* ---------- Vie ambiante (section visible) : halo qui respire, sonar ---------- */
+  @keyframes pt-breathe {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+
+    50% {
+      transform: scale(1.06);
+      opacity: 0.9;
+    }
+  }
+
+  @keyframes pt-sonar {
+    0% {
+      transform: scale(1);
+      opacity: 0.35;
+    }
+
+    40%,
+    100% {
+      transform: scale(1.25);
+      opacity: 0;
+    }
+  }
+
+  .pt-root[data-js] {
+    .pt-halo {
+      animation: pt-breathe 5s ease-in-out infinite;
+    }
+
+    .pt-sonar-1 {
+      animation: pt-sonar 6s ease-out infinite;
+    }
+
+    .pt-sonar-2 {
+      animation: pt-sonar 6s ease-out 3s infinite;
+    }
+  }
+
+  .pt-root:not([data-visible]) :is(.pt-halo, .pt-sonar) {
+    animation-play-state: paused;
+  }
+
+  /* ---------- Animations réduites : couleur seulement (150 ms), aucune lumière ni boucle ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    .pt-root .pt-a,
+    .pt-root :is(.pt-core, .pt-ring, .pt-halo, .pt-sonar, .pt-mtrace, .pt-stroke, .pt-node, .pt-item, .pt-logo) {
+      animation: none !important;
+    }
+
+    .pt-root .pt-stroke {
+      stroke-dashoffset: 0 !important;
+    }
+
+    .pt-item[data-active] .pt-card {
+      transform: none;
+    }
+
+    .pt-card::before {
+      display: none;
     }
   }
 
