@@ -1,90 +1,80 @@
-/*
- * Section « Des idées aux réalisations » (page d'accueil).
- * Passer provisional à false et renseigner legende et alt une fois les vraies photos validées.
- * Aucune légende, date, lieu, client ni chiffre n'est inventé : la légende vient d'Active Solution.
- */
+// CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
 
-export type RealisationCategorie = "Formation" | "Atelier" | "Projet" | "Événement";
+export type RealisationDomain = "education" | "developpement" | "transformation";
 
-export type RealisationVisuelId = "principale" | "secondaire-1" | "secondaire-2";
+/** Photo paysage 5:3 (2000 × 1200, WebP < 200 Ko) ; les deux photos d'un projet ont le même rapport. */
+export type RealisationPhoto = { src: string; alt: string; width: number; height: number };
 
-export type RealisationVisuel = {
-  id: RealisationVisuelId;
-  /** Nom du fichier attendu dans public/realisations/. */
-  fichier: string;
-  categorie: RealisationCategorie;
-  /** Légende courte (une ligne), fournie par Active Solution. */
-  legende?: string;
-  alt: string;
-  /** Points focaux (object-position) : cadres desktop et mobile (4:3 et 4:5). */
-  focalDesktop: string;
-  focalMobile: string;
-  /** true tant que la photo, la catégorie et la légende ne sont pas validées. */
-  provisional: boolean;
+export type Realisation = {
+  id: string;
+  index: "01" | "02" | "03";
+  domain: RealisationDomain;
+  domainLabel: string;
+  name: string;
+  caption: string;
+  /** 0 à 2 photos ; le projet n'est « photographié » que si ses 2 fichiers existent (vérifié côté serveur). */
+  photos: RealisationPhoto[];
+  /** Phrase de la tuile illustrée (mode bento, tant que la photo manque). */
+  illustrationText: string;
+  href?: string;
 };
 
 export const realisationsIntro = {
   eyebrow: "Réalisations",
-  /** Mots du titre, révélés un à un ; le dernier est en dégradé doré. Retour à la ligne après le 2e sous 640px. */
-  titleWords: ["Des", "idées", "aux", "réalisations."],
+  /** Titre en deux parties : la seconde est en dégradé doré. */
+  title: "Des idées aux",
+  titleHighlight: "réalisations.",
   intro: "Un aperçu de nos activités sur le terrain : formations, ateliers et projets numériques.",
-  // Destination à confirmer : /realisations n'existe pas encore.
+  /** Rendu seulement si la route existe (src/app/realisations/page.tsx) et qu'au moins une vraie photo est présente. */
   link: { label: "Voir toutes nos réalisations", href: "/realisations" },
+  sceneLabel: "Réalisations en images",
+  skipLabel: "Passer la galerie",
+  illustrationBadge: "Illustration",
 } as const;
 
-/** Texte alternatif générique, à remplacer par une description de la photo réelle. */
-export const genericAlt = (categorie: RealisationCategorie) =>
-  `Photo de réalisation, catégorie ${categorie.toLowerCase()} (description à compléter)`;
+export const realisationsClosing = {
+  text: "Chaque idée ouvre de nouvelles",
+  highlight: "possibilités.",
+} as const;
 
-/** Texte de la pastille tant que la légende n'est pas validée (développement uniquement). */
-export const PROVISIONAL_CAPTION = "[Légende à valider]";
+const PENDING_NAME = "[Nom du projet à valider]";
+const PENDING_CAPTION = "[Légende à valider]";
+const PENDING_ALT = "[Texte alternatif à valider]";
 
-export const realisationVisuels: readonly [RealisationVisuel, RealisationVisuel, RealisationVisuel] = [
+const photo = (file: string): RealisationPhoto => ({ src: `/realisations/${file}`, alt: PENDING_ALT, width: 2000, height: 1200 });
+
+export const realisations: readonly Realisation[] = [
   {
-    id: "principale",
-    fichier: "principale.webp",
-    categorie: "Formation",
-    legende: "",
-    alt: genericAlt("Formation"),
-    focalDesktop: "50% 50%",
-    focalMobile: "50% 50%",
-    provisional: true,
+    id: "projet-1",
+    index: "01",
+    domain: "education",
+    domainLabel: "Éducation numérique",
+    name: PENDING_NAME,
+    caption: PENDING_CAPTION,
+    photos: [photo("projet-1-a.webp"), photo("projet-1-b.webp")],
+    illustrationText: "Transmettre les compétences. Préparer l'avenir.",
   },
   {
-    id: "secondaire-1",
-    fichier: "secondaire-1.webp",
-    categorie: "Atelier",
-    legende: "",
-    alt: genericAlt("Atelier"),
-    focalDesktop: "50% 50%",
-    focalMobile: "50% 50%",
-    provisional: true,
+    id: "projet-2",
+    index: "02",
+    domain: "developpement",
+    domainLabel: "Développement digital",
+    name: PENDING_NAME,
+    caption: PENDING_CAPTION,
+    photos: [photo("projet-2-a.webp"), photo("projet-2-b.webp")],
+    illustrationText: "Transformer les idées en solutions.",
   },
   {
-    id: "secondaire-2",
-    fichier: "secondaire-2.webp",
-    categorie: "Projet",
-    legende: "",
-    alt: genericAlt("Projet"),
-    focalDesktop: "50% 50%",
-    focalMobile: "50% 50%",
-    provisional: true,
+    id: "projet-3",
+    index: "03",
+    domain: "transformation",
+    domainLabel: "Transformation digitale",
+    name: PENDING_NAME,
+    caption: PENDING_CAPTION,
+    photos: [photo("projet-3-a.webp"), photo("projet-3-b.webp")],
+    illustrationText: "Faire évoluer les organisations.",
   },
 ];
 
-/**
- * Chemin public d'un visuel. Formats attendus (WebP, < 220 Ko, sujet dans la moitié centrale
- * de la largeur : le recadrage mobile 4:5 en retire environ 43 %) :
- * principale 1800 × 1300, secondaire-1 et secondaire-2 1400 × 1000.
- */
-export const realisationImagePath = (visuel: RealisationVisuel) => `/realisations/${visuel.fichier}`;
-
-/**
- * Légende affichée : la légende validée ; en développement, un repère tant que le visuel est
- * provisoire ; rien en production tant qu'il n'est pas validé et légendé.
- */
-export function captionFor(visuel: RealisationVisuel): string | null {
-  if (!visuel.provisional && visuel.legende) return visuel.legende;
-  if (visuel.provisional && process.env.NODE_ENV !== "production") return PROVISIONAL_CAPTION;
-  return null;
-}
+/** Annonce vocale au changement de projet (scène). */
+export const projectAnnouncement = (position: number, total: number, name: string) => `Projet ${position} sur ${total} : ${name}`;

@@ -66,9 +66,13 @@
   /* contraste ≈ 7.7:1 sur blanc */
   --color-text-on-dark: #ffffff;
 
-  /* Emplacements photo sur fond sombre (Réalisations, développement uniquement) : jamais une fausse photo */
+  /* Fonds bleu nuit des tuiles illustrées et du cadre photo (Réalisations) */
   --color-placeholder-start: #16335c;
   --color-placeholder-end: #0e2244;
+  /* Dégradés des tuiles illustrées du bento (Réalisations) : fin de la tuile 01, tuile 02 */
+  --color-tile-mid: #12294a;
+  --color-tile-light: #1a3a66;
+  --color-tile-deep: #102848;
 
   /* Dorés pour fond clair (section Méthode) */
   /* Dégradé de texte des grands titres sur fond clair uniquement (≥ 24px gras), jamais pour du petit texte.
@@ -169,6 +173,26 @@
   --text-counter--line-height: 1;
   --text-counter-sm: 0.71875rem;
   --text-counter-sm--line-height: 1;
+  /* Réalisations : titre sous 640px (38px), index (15px), pastille « Illustration » (10.5px), légendes
+     des tuiles (17px, 14px), titre de la barre compacte (22px, puis 28 à 40px), numéro du projet, phrase de fin */
+  --text-display-mobile: 2.375rem;
+  --text-display-mobile--line-height: 1.08;
+  --text-index: 0.9375rem;
+  --text-index--line-height: 1;
+  --text-badge-xs: 0.65625rem;
+  --text-badge-xs--line-height: 1;
+  --text-legend: 1.0625rem;
+  --text-legend--line-height: 1.35;
+  --text-legend-sm: 0.875rem;
+  --text-legend-sm--line-height: 1.4;
+  --text-bar-title-sm: 1.375rem;
+  --text-bar-title-sm--line-height: 1.15;
+  --text-bar-title: clamp(1.75rem, 2.8vw, 2.5rem);
+  --text-bar-title--line-height: 1.1;
+  --text-numeral-xl: clamp(4.5rem, 8vw, 7.5rem);
+  --text-numeral-xl--line-height: 1;
+  --text-closing: clamp(1.625rem, 3.2vw, 2.5rem);
+  --text-closing--line-height: 1.15;
   /* FAQ : onglets (15.5px), titre du bloc contact sous 1024px (21px), texte du bloc contact (15px) */
   --text-faq-tab: 0.96875rem;
   --text-faq-tab--line-height: 1;
@@ -236,6 +260,9 @@
   /* Cartes blanches sur fond clair (étapes de la Méthode) */
   --shadow-card: 0 1px 2px color-mix(in oklab, var(--color-brand-navy) 4%, transparent),
   0 24px 44px -28px color-mix(in oklab, var(--color-brand-navy) 22%, transparent);
+  /* Tuiles du bento et cadre de la scène (Réalisations) */
+  --shadow-tile: 0 40px 80px -28px color-mix(in oklab, black 70%, transparent);
+  --shadow-scene: 0 44px 90px -26px color-mix(in oklab, black 70%, transparent);
   /* Bloc contact sombre de la FAQ */
   --shadow-aside: 0 40px 80px -40px color-mix(in oklab, var(--color-brand-navy) 60%, transparent);
   /* Bandeau d'appel à l'action sombre sur fond clair */
@@ -254,23 +281,6 @@
   --animate-motif-band-inner: motif-band-inner 8s ease-in-out infinite;
   --animate-text-shine: text-shine 1.2s ease-out 1 both;
   --animate-pulse-ring: pulse-ring 2.2s ease-out infinite;
-
-  /* Dérive lente de la lueur dorée de la section Réalisations (transform uniquement) */
-  @keyframes glow-drift {
-
-    0%,
-    100% {
-      transform: translate(0, 0);
-    }
-
-    33% {
-      transform: translate(20px, -20px);
-    }
-
-    66% {
-      transform: translate(-20px, 20px);
-    }
-  }
 
   @keyframes pulse-ring {
     from {
@@ -676,18 +686,34 @@
   }
 
   /*
-   * Section Réalisations (fond bleu nuit) — effets validés pour cette section : filet haut,
-   * lueurs radiales, grille dorée (projecteur au curseur).
+   * Section Réalisations (fond bleu nuit) — effets validés pour cette section : liseré haut, motif du
+   * hero (variante nuit), halo bleu en haut à gauche, halo doré derrière le contenu, mots du titre et
+   * de la phrase de fin en dégradé doré, tuiles illustrées du bento (construction, projecteur au
+   * pointeur), scène à bandes panoramiques (rideaux, parallaxe interne, projecteur), ligne dorée de fin.
    *
-   * --motif-grid-strength : intensité de la grille, appliquée UNE SEULE FOIS sur son conteneur
-   * (.realisations-grid), identique à toutes les largeurs. Lignes de 1px à 8 % de doré :
-   *   0.6 = presque invisible · 0.85 = valeur choisie (écart ≈ 15/255) · 1.1 = très visible
+   * --motif-strength-realisations : multiplicateur des trois opacités du motif nuit (zigzag 0.14,
+   * réseau 0.20, points 0.32), appliqué une seule fois, identique à toutes les largeurs.
+   *
+   * États posés par RealisationsController — .rz-root : data-js (état masqué initial), data-in-a|c
+   * (entrées), data-inview (boucles), data-pinned (barre compacte) ; .rz-stage : --p, --c1, --c2,
+   * --t0..2, --y, data-active, data-photo, data-arrived ; tuiles : data-active (tactile), --sx, --sy,
+   * --mx, --my (pointeur fin).
+   *
+   * Transform, opacité et clip-path partout, sauf exception assumée : stroke-dashoffset des tracés
+   * d'illustration (ponctuel).
    */
   .realisations-section {
-    --motif-grid-strength: 0.85;
+    --motif-strength-realisations: 1;
+    --motif-night-zigzag: calc(0.14 * var(--motif-strength-realisations));
+    --motif-night-lines: calc(0.2 * var(--motif-strength-realisations));
+    --motif-night-points: calc(0.32 * var(--motif-strength-realisations));
   }
 
-  /* Lueur bleue en haut à gauche (900 × 760, décalée de -260px / -240px) */
+  .rz-topline {
+    background-image: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-brand-gold) 50%, transparent), transparent);
+  }
+
+  /* Halo bleu en haut à gauche (900 × 760, décalé de -260px / -240px) */
   .realisations-glow-blue {
     left: -260px;
     top: -240px;
@@ -696,92 +722,710 @@
     background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-navy-glow) 38%, transparent), transparent);
   }
 
-  /* Lueur dorée derrière la photo principale (1100 × 760), centrée par marges négatives sur son centre */
-  .realisations-glow-gold {
+  /* Halo doré derrière le contenu (1100 × 760) */
+  .rz-glow-gold {
     left: 50%;
-    top: 37.5cqw;
+    top: 50%;
     width: 1100px;
     height: 760px;
     margin: -380px 0 0 -550px;
-
-    @media (width >=64rem) {
-      /* Centre des 8 colonnes : (8 colonnes + 7 gaps de 20px) / 2 */
-      left: calc((100% - 11 * 1.25rem) / 3 + 3.5 * 1.25rem);
-      top: calc(23cqw + 0.625rem);
-    }
     background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 11%, transparent), transparent);
   }
 
-  /* Grille : bande droite (260px, cellules de 48px ; 760px et 64px en desktop), estompée vers la gauche */
-  .realisations-grid {
-    --grid-cell: 48px;
-    width: 260px;
-    opacity: var(--motif-grid-strength, 0.85);
-    mask-image: linear-gradient(to left, black, transparent 92%);
+  .rz-gradient-text {
+    background-image: linear-gradient(100deg, var(--color-brand-gold-light), var(--color-brand-gold) 50%, var(--color-brand-gold-deep));
+    background-clip: text;
+    color: transparent;
+  }
 
-    @media (width >=64rem) {
-      --grid-cell: 64px;
-      width: 760px;
+  /* ---------- Entrées (une fois par cible, état masqué posé seulement avec JS) ---------- */
+  @keyframes rz-title {
+    from {
+      clip-path: inset(0 0 100% 0);
+      transform: translateY(28px);
     }
   }
 
-  /* Lignes de 1px et un point de 2px à une intersection sur quatre, alignés sur le bord droit */
-  .realisations-grid-lines {
-    --grid-line: color-mix(in oklab, var(--color-brand-gold) 8%, transparent);
-    --grid-dot: color-mix(in oklab, var(--color-brand-gold) 40%, transparent);
-    background-image:
-      radial-gradient(circle at 1px 1px, var(--grid-dot) 1px, transparent 1.5px),
-      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-    background-size:
-      calc(2 * var(--grid-cell)) calc(2 * var(--grid-cell)),
-      var(--grid-cell) var(--grid-cell),
-      var(--grid-cell) var(--grid-cell);
-    background-position: right top;
+  @keyframes rz-curtain {
+    from {
+      clip-path: inset(0 0 100% 0);
+    }
   }
 
-  /* Couche lumineuse de la grille (reflet, projecteur) : même motif, plus marqué */
-  .realisations-grid-bright {
-    --grid-line: color-mix(in oklab, var(--color-brand-gold) 32%, transparent);
-    --grid-dot: color-mix(in oklab, var(--color-brand-gold) 80%, transparent);
+  @keyframes rz-reveal-up {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
   }
 
-  /* Projecteur : rayon de 280px autour du curseur (--sx, --sy, mis à jour par rAF) */
-  .realisations-spotlight {
-    mask-image: radial-gradient(280px circle at var(--sx, -999px) var(--sy, -999px), black, transparent);
+  @keyframes rz-line {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  .rz-root[data-js]:not([data-in-a]) .rz-a,
+  .rz-root[data-js]:not([data-in-c]) :is(.rz-closing, .rz-closing-line) {
     opacity: 0;
-    transition: opacity 0.4s ease-out;
+  }
 
-    &[data-on="true"] {
+  .rz-root[data-in-a] .rz-a {
+    animation: fo-enter var(--fo-dur, 500ms) var(--ease-out-expo) var(--fo-d, 0ms) backwards;
+  }
+
+  .rz-root[data-in-a] .rz-a.rz-title {
+    animation-name: rz-title;
+  }
+
+  .rz-root[data-in-a] .rz-tile.rz-a {
+    animation: rz-curtain 800ms var(--ease-out-expo) var(--tile-at, 0ms) backwards;
+  }
+
+  .rz-root[data-in-c] .rz-closing {
+    animation: rz-curtain 600ms var(--ease-out-expo) backwards;
+  }
+
+  /* Ligne de fin : de la phrase jusqu'au bord droit de l'écran (sort du conteneur, coupée par la section) */
+  .rz-closing-line {
+    margin-right: calc((100% - 100vw) / 2);
+    background-image: linear-gradient(90deg, var(--color-brand-gold), color-mix(in oklab, var(--color-brand-gold) 15%, transparent));
+  }
+
+  .rz-root[data-in-c] .rz-closing-line {
+    animation: rz-line 900ms var(--ease-out-expo) 600ms backwards;
+  }
+
+  /* ---------- Bento : tuiles (lignes de 280px en desktop) ---------- */
+  .rz-tile {
+    --mx: 0;
+    --my: 0;
+    aspect-ratio: 7 / 5;
+    border-color: color-mix(in oklab, var(--color-brand-gold) 32%, transparent);
+    box-shadow: var(--shadow-tile);
+    background-image: linear-gradient(135deg, var(--color-placeholder-start), var(--color-placeholder-end) 55%, var(--color-tile-mid));
+    transition:
+      translate 240ms var(--ease-soft),
+      border-color 240ms var(--ease-soft);
+
+    @media (width >= 64rem) {
+      aspect-ratio: auto;
+    }
+  }
+
+  .rz-tile[data-rz-tile="1"] {
+    background-image: linear-gradient(160deg, var(--color-tile-light), var(--color-placeholder-end) 60%, var(--color-tile-deep));
+  }
+
+  .rz-tile-halo {
+    top: -35%;
+    right: -25%;
+    width: 75%;
+    aspect-ratio: 1;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 16%, transparent), transparent);
+  }
+
+  .rz-tile-spot {
+    display: none;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 20%, transparent), transparent);
+    opacity: 0;
+    transition: opacity 300ms var(--ease-soft);
+  }
+
+  /* L'illustration (ou la photo) suit le pointeur de ±6px */
+  .rz-art {
+    transform: translate3d(calc(var(--mx) * 6px), calc(var(--my) * 6px), 0);
+  }
+
+  .rz-art-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .rz-index {
+    color: var(--color-brand-gold-light);
+    opacity: 0.8;
+    transition: opacity 240ms var(--ease-soft);
+  }
+
+  .rz-legend {
+    border-color: color-mix(in oklab, white 16%, transparent);
+    background-color: color-mix(in oklab, white 9%, transparent);
+    backdrop-filter: blur(14px);
+    transition: background-color 240ms var(--ease-soft);
+  }
+
+  /* Sur photo : voile sombre en haut, sous l'index (lisible sur une photo claire) */
+  .rz-tile[data-photo] .rz-art::after {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 40%;
+    background-image: linear-gradient(to bottom, color-mix(in oklab, var(--color-brand-navy) 70%, transparent), transparent);
+  }
+
+  .rz-tile[data-photo] .rz-index {
+    padding: 0.375rem 0.625rem;
+    border-radius: 999px;
+    background-color: color-mix(in oklab, var(--color-brand-navy) 90%, transparent);
+  }
+
+  /* Sur photo : pastille bleu nuit presque opaque, le texte reste lisible sur n'importe quelle image (≥ 4.5:1) */
+  .rz-tile[data-photo] .rz-legend {
+    background-color: color-mix(in oklab, var(--color-brand-navy) 90%, transparent);
+  }
+
+  /* Illustrations : traits (opacité × 1.4 à l'état actif), nœuds, blocs, formes */
+  .rz-lines,
+  .rz-links {
+    opacity: 0.72;
+    transition: opacity 240ms var(--ease-soft);
+  }
+
+  .rz-draw {
+    fill: none;
+    stroke: color-mix(in oklab, var(--color-brand-gold) 53%, transparent);
+    stroke-width: 1.5;
+    stroke-dasharray: 1;
+  }
+
+  .rz-curve {
+    stroke: color-mix(in oklab, var(--color-brand-gold) 62%, transparent);
+    stroke-width: 2;
+  }
+
+  .rz-dashed {
+    fill: none;
+    stroke: color-mix(in oklab, var(--color-brand-gold) 62%, transparent);
+    stroke-width: 1.5;
+    stroke-dasharray: 2 6;
+  }
+
+  .rz-dot-white {
+    fill: color-mix(in oklab, white 55%, transparent);
+  }
+
+  .rz-scatter {
+    transition: transform 400ms var(--ease-soft);
+  }
+
+  .rz-node {
+    fill: var(--color-brand-gold);
+    opacity: var(--o, 1);
+  }
+
+  .rz-ring {
+    fill: none;
+    stroke: var(--color-brand-gold-light);
+    stroke-width: 2;
+  }
+
+  .rz-block {
+    fill: color-mix(in oklab, var(--color-brand-gold) 16%, transparent);
+    stroke: color-mix(in oklab, var(--color-brand-gold) 70%, transparent);
+    stroke-width: 1.5;
+  }
+
+  .rz-block-outline {
+    fill: none;
+    stroke: color-mix(in oklab, white 28%, transparent);
+    stroke-width: 1.5;
+    transition: stroke 240ms var(--ease-soft);
+  }
+
+  .rz-block-dashed {
+    fill: none;
+    stroke: var(--color-brand-gold-light);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 5;
+  }
+
+  .rz-block-gold {
+    fill: color-mix(in oklab, var(--color-brand-gold) 30%, transparent);
+    stroke: var(--color-brand-gold-light);
+    stroke-width: 1.5;
+  }
+
+  .rz-shape,
+  .rz-ghost {
+    fill: color-mix(in oklab, white 4%, transparent);
+    stroke: color-mix(in oklab, white 55%, transparent);
+    stroke-width: 1.5;
+  }
+
+  .rz-shape [data-gold],
+  .rz-shape[data-gold] {
+    fill: color-mix(in oklab, var(--color-brand-gold) 20%, transparent);
+    stroke: var(--color-brand-gold);
+  }
+
+  .rz-ghost {
+    fill: none;
+    stroke: color-mix(in oklab, white 25%, transparent);
+    stroke-dasharray: 3 5;
+  }
+
+  .rz-center {
+    fill: var(--color-brand-gold-light);
+    stroke: none;
+  }
+
+  /* Construction, déclenchée à l'ouverture de la tuile (--tile-at + --d) */
+  @keyframes rz-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+
+  @keyframes rz-wipe {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+  }
+
+  @keyframes rz-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+  }
+
+  @keyframes rz-slide {
+    from {
+      opacity: 0;
+      transform: translateY(-24px);
+    }
+  }
+
+  @keyframes rz-node-on {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+  }
+
+  @keyframes rz-twinkle {
+    from {
+      opacity: calc(var(--o, 1) * 0.55);
+    }
+
+    to {
+      opacity: var(--o, 1);
+    }
+  }
+
+  @keyframes rz-float {
+    to {
+      transform: translateY(-5px);
+    }
+  }
+
+  @keyframes rz-lit {
+    from {
+      opacity: 0.15;
+    }
+  }
+
+  @keyframes rz-lit-again {
+    from {
+      opacity: 0.15;
+    }
+  }
+
+  @keyframes rz-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  :is(.rz-pop, .rz-slide, .rz-node, .rz-bounce, .rz-float) {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .rz-root[data-in-a] .rz-tile {
+    .rz-draw {
+      animation: rz-draw 600ms var(--ease-out-expo) calc(var(--tile-at) + var(--d)) backwards;
+    }
+
+    .rz-links {
+      animation: rz-wipe 700ms var(--ease-out-expo) calc(var(--tile-at) + 300ms) backwards;
+    }
+
+    .rz-pop {
+      animation: rz-pop 300ms var(--ease-out-expo) calc(var(--tile-at) + var(--d)) backwards;
+    }
+
+    .rz-slide {
+      animation: rz-slide 450ms var(--ease-out-expo) calc(var(--tile-at) + var(--d)) backwards;
+    }
+
+    .rz-bounce {
+      animation: rz-slide 520ms var(--ease-overshoot) calc(var(--tile-at) + var(--d)) backwards;
+    }
+
+    .rz-node {
+      animation:
+        rz-node-on 300ms var(--ease-out-expo) calc(var(--tile-at) + var(--d)) backwards,
+        rz-twinkle 3.2s ease-in-out calc(var(--tile-at) + var(--d) + 300ms + var(--tw, 0s)) infinite alternate;
+    }
+
+    .rz-float {
+      animation: rz-float 2.6s ease-in-out calc(var(--tile-at) + 1200ms) infinite alternate;
+    }
+
+    .rz-shape {
+      animation: rz-lit 300ms var(--ease-out-expo) calc(var(--tile-at) + var(--d)) backwards;
+    }
+
+    .rz-ghost {
+      animation: rz-fade 400ms var(--ease-soft) calc(var(--tile-at) + var(--d)) backwards;
+    }
+  }
+
+  /* Boucles en pause hors écran ou onglet masqué (la construction, elle, se termine) */
+  .rz-root:not([data-inview="true"]) .rz-tile {
+    .rz-node {
+      animation-play-state: running, paused;
+    }
+
+    .rz-float {
+      animation-play-state: paused;
+    }
+  }
+
+  /* État actif : survol (pointeur fin) ou tuile la plus visible (tactile) */
+  .rz-tile[data-active] {
+    translate: 0 -2px;
+    border-color: color-mix(in oklab, var(--color-brand-gold) 55%, transparent);
+
+    .rz-tile-spot {
+      display: block;
+      top: 45%;
+      left: 50%;
+      opacity: 0.8;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .rz-tile[data-active] {
+    .rz-index,
+    .rz-lines,
+    .rz-links {
+      opacity: 1;
+    }
+
+    .rz-legend {
+      background-color: color-mix(in oklab, white 14%, transparent);
+    }
+
+    &[data-photo] .rz-legend {
+      background-color: color-mix(in oklab, var(--color-brand-navy) 94%, transparent);
+    }
+
+    .rz-scatter {
+      transform: translateX(6px);
+    }
+
+    .rz-block-outline {
+      stroke: color-mix(in oklab, var(--color-brand-gold) 70%, transparent);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .rz-tile:hover {
+      translate: 0 -2px;
+      border-color: color-mix(in oklab, var(--color-brand-gold) 55%, transparent);
+
+      .rz-index,
+      .rz-lines,
+      .rz-links {
+        opacity: 1;
+      }
+
+      .rz-legend {
+        background-color: color-mix(in oklab, white 14%, transparent);
+      }
+
+      &[data-photo] .rz-legend {
+        background-color: color-mix(in oklab, var(--color-brand-navy) 94%, transparent);
+      }
+
+      .rz-scatter {
+        transform: translateX(6px);
+      }
+
+      .rz-block-outline {
+        stroke: color-mix(in oklab, var(--color-brand-gold) 70%, transparent);
+      }
+    }
+
+    /* Tuile 03 : l'illumination des formes rejoue une fois au survol */
+    .rz-root[data-in-a] .rz-tile:hover .rz-shape {
+      animation: rz-lit-again 300ms var(--ease-out-expo) calc(var(--d) - 300ms) backwards;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .rz-tile-spot {
+      display: block;
+      transform: translate3d(var(--sx, -999px), var(--sy, -999px), 0);
+    }
+
+    .rz-tile:hover .rz-tile-spot {
       opacity: 1;
     }
   }
 
-  /* Dérive de la lueur et will-change : desktop avec souris uniquement, section à l'écran */
-  [data-immersive="true"] .realisations-glow-gold {
-    animation: glow-drift 14s ease-in-out infinite;
+  /* ---------- Scène (mode A) : affichée seulement avec JS, mouvements autorisés et 600px de haut ---------- */
+  .rz-scene {
+    display: none;
   }
 
-  [data-immersive="true"][data-paused="false"] :is(.realisations-glow-gold, .realisation-parallax) {
-    will-change: transform;
-  }
+  @media (min-height: 600px) and (prefers-reduced-motion: no-preference) {
+    .rz-root[data-js] .rz-scene {
+      display: block;
+    }
 
-  /* Bento desktop : deux lignes de photos de 23cqw (280px pour 1216px de contenu) */
-  .realisations-bento {
-    container-type: inline-size;
-  }
-
-  .realisations-bento-grid {
-    @media (width >=64rem) {
-      grid-template-rows: 23cqw 23cqw;
+    .rz-root[data-js] .rz-stacked {
+      display: none;
     }
   }
 
-  /* Emplacement photo (développement) : dégradé bleu nuit et hachures dorées à 7 % */
-  .realisation-placeholder {
-    background-image:
-      repeating-linear-gradient(135deg, color-mix(in oklab, var(--color-brand-gold) 7%, transparent) 0 1px, transparent 1px 14px),
-      linear-gradient(135deg, var(--color-placeholder-start), var(--color-placeholder-end));
+  /* Piste : hauteur de la scène + 3 × 120svh de défilement */
+  .rz-track {
+    height: calc(100svh - var(--hdr-h) + 360svh);
+  }
+
+  .rz-stage {
+    --p: 0;
+    --c1: 0;
+    --c2: 0;
+    --t0: 0;
+    --t1: 0;
+    --t2: 0;
+    --y: 0;
+  }
+
+  .rz-bar {
+    opacity: 0;
+    transition: opacity 250ms var(--ease-soft);
+  }
+
+  .rz-root[data-pinned] .rz-bar {
+    opacity: 1;
+  }
+
+  .rz-frame {
+    box-shadow: var(--shadow-scene);
+    background-color: var(--color-placeholder-end);
+  }
+
+  /* Bande : 2 photos côte à côte (200 % du cadre) ; rideau par clip-path, panoramique par translateX */
+  .rz-strip {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    width: 200%;
+    clip-path: inset(calc((1 - var(--c)) * 100%) 0 0 0);
+    transform: translate3d(calc(var(--t) * -50%), 0, 0);
+  }
+
+  .rz-strip[data-k="0"] {
+    --t: var(--t0);
+    --c: 1;
+  }
+
+  .rz-strip[data-k="1"] {
+    --t: var(--t1);
+    --c: var(--c1);
+  }
+
+  .rz-strip[data-k="2"] {
+    --t: var(--t2);
+    --c: var(--c2);
+  }
+
+  .rz-root[data-js] .rz-stage:not([data-arrived]) .rz-strip[data-k="0"] {
+    clip-path: inset(100% 0 0 0);
+  }
+
+  .rz-stage[data-arrived] .rz-strip[data-k="0"] {
+    animation: rz-reveal-up 800ms var(--ease-out-expo) backwards;
+  }
+
+  /* Chaque photo est rognée à sa moitié de bande : la photo B ne déborde jamais sur la photo A */
+  .rz-shot {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  /* Parallaxe interne : agrandie à 1.16 (8 % de marge par côté), décalée de (i − t) × 6 % et de ±2 % en y */
+  .rz-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: translate3d(calc((var(--i) - var(--t)) * 6%), calc(var(--y) * 1%), 0) scale(1.16);
+  }
+
+  .rz-frame-spot {
+    display: none;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, white 12%, transparent), transparent);
+    opacity: 0;
+    transition: opacity 300ms var(--ease-soft);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .rz-frame-spot {
+      display: block;
+    }
+
+    .rz-frame[data-spot] .rz-frame-spot {
+      opacity: 1;
+    }
+
+    .rz-rail-item:not([data-on]):hover {
+      border-color: color-mix(in oklab, white 24%, transparent);
+      background-color: color-mix(in oklab, white 8%, transparent);
+    }
+  }
+
+  /* Informations du projet actif (data-on posé sur les éléments du projet courant) */
+  .rz-info {
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 250ms var(--ease-soft),
+      visibility 0s linear 250ms;
+
+    &[data-on] {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 250ms var(--ease-soft) 80ms;
+    }
+  }
+
+  .rz-number {
+    color: transparent;
+    -webkit-text-stroke: 1.5px color-mix(in oklab, white 25%, transparent);
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 300ms var(--ease-soft),
+      transform 300ms var(--ease-out-expo);
+
+    &[data-on] {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .rz-rail-item {
+    border-color: color-mix(in oklab, white 12%, transparent);
+    background-color: color-mix(in oklab, white 4%, transparent);
+    color: color-mix(in oklab, white 70%, transparent);
+    transition:
+      background-color 200ms var(--ease-soft),
+      border-color 200ms var(--ease-soft),
+      color 200ms var(--ease-soft);
+
+    &[data-on] {
+      border-color: color-mix(in oklab, var(--color-brand-gold) 55%, transparent);
+      background-color: color-mix(in oklab, var(--color-brand-gold) 12%, transparent);
+      color: var(--color-text-on-dark);
+    }
+  }
+
+  .rz-rail-bar {
+    transform: scaleY(0);
+    transition: transform 300ms var(--ease-out-expo);
+  }
+
+  .rz-rail-item[data-on] .rz-rail-bar {
+    transform: scaleY(1);
+  }
+
+  /* Rail desktop : 3 entrées de hauteur fixe, légende de l'entrée active sous son bouton ; les entrées
+     suivantes descendent de --rail-detail en transform (aucun décalage de mise en page) */
+  .rz-rail {
+    --rail-h: 4.75rem;
+    --rail-gap: 0.75rem;
+    --rail-detail: 7rem;
+    height: calc(3 * var(--rail-h) + 2 * var(--rail-gap) + var(--rail-detail));
+  }
+
+  .rz-rail-entry {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    transform: translateY(calc(var(--i) * (var(--rail-h) + var(--rail-gap)) + var(--shift, 0px)));
+    transition: transform 400ms var(--ease-out-expo);
+
+    > .rz-rail-item {
+      height: var(--rail-h);
+    }
+  }
+
+  .rz-stage[data-active="0"] .rz-rail-entry:is([data-rz-k="1"], [data-rz-k="2"]),
+  .rz-stage[data-active="1"] .rz-rail-entry[data-rz-k="2"] {
+    --shift: var(--rail-detail);
+  }
+
+  .rz-rail-detail {
+    position: absolute;
+    inset-inline: 0;
+    top: var(--rail-h);
+    height: var(--rail-detail);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 250ms var(--ease-soft),
+      visibility 0s linear 250ms;
+  }
+
+  .rz-rail-entry[data-on] .rz-rail-detail {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 250ms var(--ease-soft) 120ms;
+  }
+
+  .rz-dot {
+    background-color: color-mix(in oklab, white 30%, transparent);
+    transition: background-color 200ms var(--ease-soft);
+  }
+
+  .rz-stage[data-photo="0"] .rz-dot[data-dot="0"],
+  .rz-stage[data-photo="1"] .rz-dot[data-dot="1"] {
+    background-color: var(--color-brand-gold);
+  }
+
+  .rz-progress {
+    transform: scaleY(var(--p));
+  }
+
+  /* Animations réduites : aucune animation de mouvement ; fondus en JS (WAAPI) */
+  @media (prefers-reduced-motion: reduce) {
+    .rz-root[data-in-a] .rz-a,
+    .rz-root[data-in-c] :is(.rz-closing, .rz-closing-line),
+    .rz-root .rz-tile,
+    .rz-root .rz-tile * {
+      animation: none;
+    }
+
+    .rz-tile[data-active],
+    .rz-tile:hover {
+      translate: none;
+    }
+
+    .rz-tile[data-active] .rz-scatter,
+    .rz-tile:hover .rz-scatter {
+      transform: none;
+    }
   }
 
   /* Tuile du motif sur fond sombre : traits dorés seuls (0.055 à 0.095 avant l'opacité du conteneur) */
