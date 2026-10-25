@@ -9162,6 +9162,11 @@
     position: relative;
     padding-top: var(--spacing-section);
 
+    /* Première fiche : son titre affleure sous le hero (un padding complet laissait une bande vide) */
+    .sv-hero + & {
+      padding-top: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+    }
+
     &:last-of-type {
       padding-bottom: var(--spacing-section);
     }
