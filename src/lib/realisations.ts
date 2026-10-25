@@ -48,7 +48,7 @@ export const realisations: readonly Realisation[] = [
     id: "projet-1",
     index: "01",
     domain: "education",
-    domainLabel: "Éducation numérique",
+    domainLabel: "Formation",
     name: PENDING_NAME,
     caption: PENDING_CAPTION,
     photos: [photo("projet-1-a.webp"), photo("projet-1-b.webp")],

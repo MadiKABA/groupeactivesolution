@@ -129,7 +129,7 @@ Photos des deux arches : **`public/about/hero-enseigner.jpg`** et **`public/abou
 
 Tokens utilisés : `brand-navy`, `brand-gold`, `brand-gold-light` (survol du bouton), `navy-deep` (ombres des battants), `text-on-dark`, `text-on-dark-soft`, `text-on-dark-strong`, `placeholder-start|end` (repli).
 
-Sitemap : `src/app/sitemap.ts` (`/`, `/a-propos`). Aucun `robots.txt`.
+Sitemap : `src/app/sitemap.ts` (`/`, `/a-propos`, `/services`). Aucun `robots.txt`.
 
 ### Section « Notre histoire » (`#histoire`)
 
@@ -166,6 +166,15 @@ Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les q
 - **Ils nous font confiance** : `src/components/sections/trust/TrustBand.tsx` réutilise **à l'identique** la section Partenaires de l'accueil (`Partners`, classes `pt-*`), avec les textes de **`src/content/trust.ts`**. Activée page par page dans `trustContent.showOn` (seulement `/a-propos`) ; la page rend `<TrustBand page="/a-propos" />` à la fin de son `<main>`. Partenaires lus dans `src/lib/partners.ts` ; en production, rien n'est rendu sans partenaire `confirmed: true`. Logos : voir « Logos des partenaires » ci-dessous.
 - Entrées animées par `src/components/ui/InViewReveal.tsx` (client, un seul IntersectionObserver, compteur des chiffres) ; contrôle avant production : `scripts/check-impact.mjs`.
 - Test du compteur : `pnpm test:impact [url]` (serveur lancé avant, défaut `http://localhost:3000/a-propos`, `CHROME_PATH` si besoin) lit le texte visible des quatre repères après 4 s et le compare aux valeurs de `impact.ts` (sans dépendance : Chrome piloté par le protocole DevTools).
+
+## Page Services
+
+Route `/services` (`src/app/services/page.tsx`) : hero (`src/components/services/ServicesHero.tsx`, CSS `sv-*` dans `globals.css`), données structurées (`ServicesJsonLd.tsx`, via `src/components/seo/JsonLd.tsx`) et trois fiches provisoires `#former`, `#creer`, `#transformer` (titre et phrase seulement ; fiches détaillées à venir). Anciennes ancres conservées : `#developpement-digital` → `#creer`, `#transformation-digitale` → `#transformer`.
+
+- **Données partagées** : les noms, phrases et ancres des trois expertises viennent de **`src/lib/expertises.ts`**, source unique de l'accueil (section Expertises) et de `/services` (champs `anchor`, `anchorAliases`, `servicesAlt`). Textes du hero : `src/lib/services.ts`.
+- **Photos des vignettes** : déposer **`public/images/services/education`**, **`developpement`** et **`transformation`** en `.avif`, `.webp` ou `.jpg` (premier format trouvé, détecté au build : rebuilder après l'ajout), environ 120 Ko, sans texte ni logo incrusté. Cadrage : `education` en portrait **1:2** (ex. 800 × 1600), les deux autres en carré **1:1** (ex. 1000 × 1000), sujet centré. Renseigner ensuite `servicesAlt` (description factuelle de la photo) dans `expertises.ts`. Sans photo, la vignette garde son fond de couleur.
+- **Mouvement** : entrée en CSS pur, parallaxe au pointeur (`MosaicParallax.tsx`, souris uniquement), profondeur au défilement en CSS (`animation-timeline`, si le navigateur la gère) ; rien avec les animations réduites.
+- Sitemap : `/services` ajouté. À fournir : image Open Graph 1200 × 630.
 
 ## Logos des partenaires
 

@@ -18,7 +18,7 @@ export type HeroSlide = {
 export const heroSlides: readonly HeroSlide[] = [
   {
     line: "Former les talents,",
-    label: "Éducation numérique",
+    label: "Formation",
     icon: GraduationCap,
     image: "/hero/education.webp",
     alt: "Apprenants en séance de formation au numérique",

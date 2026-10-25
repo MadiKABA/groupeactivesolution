@@ -1,6 +1,8 @@
 import { Code2, GraduationCap, Settings2, type LucideIcon } from "lucide-react";
 
 export type ExpertiseSlug = "education" | "developpement" | "transformation";
+/** Ancre de la fiche de l'expertise sur la page /services. */
+export type ExpertiseAnchor = "former" | "creer" | "transformer";
 
 export type Expertise = {
   slug: ExpertiseSlug;
@@ -18,6 +20,14 @@ export type Expertise = {
   /** Points focaux (object-position) : cadre desktop presque carré, cadre mobile large et bas. */
   focalDesktop: string;
   focalMobile: string;
+  /** Page /services : ancre de la fiche et anciennes ancres qui y mènent encore. */
+  anchor: ExpertiseAnchor;
+  anchorAliases: readonly string[];
+  /**
+   * Texte alternatif de la vignette du hero de /services (photo distincte de celle de l'accueil).
+   * Vide tant que la photo n'a pas été vue : décrire ensuite ce qu'elle montre réellement.
+   */
+  servicesAlt: string;
 };
 
 export const expertisesIntro = {
@@ -27,7 +37,7 @@ export const expertisesIntro = {
     "Nous connectons l'éducation, la technologie et la stratégie pour transformer les idées en compétences et en solutions concrètes.",
 } as const;
 
-// Destinations à confirmer : /formations et /services n'existent pas encore.
+// Destination à confirmer : /formations n'existe pas encore.
 export const expertises: readonly Expertise[] = [
   {
     slug: "education",
@@ -43,6 +53,9 @@ export const expertises: readonly Expertise[] = [
     alt: "Jeunes apprenants en atelier de programmation et de robotique",
     focalDesktop: "50% 45%",
     focalMobile: "50% 40%",
+    anchor: "former",
+    anchorAliases: [],
+    servicesAlt: "", // TODO : à rédiger quand la photo sera déposée
   },
   {
     slug: "developpement",
@@ -60,10 +73,13 @@ export const expertises: readonly Expertise[] = [
       "Solutions SaaS",
     ],
     idealFor: ["Entreprises", "Organisations", "Entrepreneurs"],
-    link: { label: "Découvrir nos solutions", href: "/services#developpement" },
+    link: { label: "Découvrir nos solutions", href: "/services#creer" },
     alt: "Interface d'application web et mobile en cours de développement",
     focalDesktop: "50% 50%",
     focalMobile: "50% 45%",
+    anchor: "creer",
+    anchorAliases: ["developpement-digital"],
+    servicesAlt: "", // TODO : à rédiger quand la photo sera déposée
   },
   {
     slug: "transformation",
@@ -75,12 +91,25 @@ export const expertises: readonly Expertise[] = [
       "Nous accompagnons les équipes dans l'adoption des outils numériques et l'amélioration de leurs processus.",
     services: ["Conseil", "Digitalisation des processus", "Formation des équipes", "Intégration d'outils"],
     idealFor: ["Entreprises", "Institutions", "Organisations"],
-    link: { label: "Transformer votre organisation", href: "/services#transformation" },
+    link: { label: "Transformer votre organisation", href: "/services#transformer" },
     alt: "Équipe accompagnée dans l'adoption de nouveaux outils numériques",
     focalDesktop: "50% 45%",
     focalMobile: "50% 35%",
+    anchor: "transformer",
+    anchorAliases: ["transformation-digitale"],
+    servicesAlt: "", // TODO : à rédiger quand la photo sera déposée
   },
 ];
 
 /** Chemin public attendu pour la photo d'une expertise (carré 1600 × 1600, WebP < 220 Ko, sujet centré). */
 export const expertiseImagePath = (slug: ExpertiseSlug) => `/expertises/${slug}.webp`;
+
+/** Libellé accessible des vignettes du hero de /services (« Formations : voir la fiche »). */
+export const servicesTileLinkLabel = "voir la fiche";
+
+/**
+ * Photo de la vignette du hero de /services, sans extension : `public/images/services/<slug>`
+ * en .avif, .webp ou .jpg (détectée au build). Cadrage : portrait 1:2 pour la première, carré 1:1
+ * pour les deux autres ; environ 120 Ko ; ni texte, ni chiffre, ni logo incrusté.
+ */
+export const servicesImageBase = (slug: ExpertiseSlug) => `/images/services/${slug}`;
