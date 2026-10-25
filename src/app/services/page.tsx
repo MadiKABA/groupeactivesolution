@@ -42,30 +42,10 @@ export default function ServicesPage() {
   }
 
   return (
-    <main className="bg-surface-warm">
+    <main>
       <ServicesJsonLd />
+      {/* TODO : fiches détaillées #former, #creer, #transformer à venir (cibles du bouton et des vignettes). */}
       <ServicesHero photos={photos} />
-
-      {expertises.map((expertise) => (
-        // TODO : fiche détaillée à venir (tâche distincte) ; seuls le nom et la phrase validés sont affichés.
-        <section
-          key={expertise.slug}
-          id={expertise.anchor}
-          aria-labelledby={`${expertise.anchor}-title`}
-          className="sv-target"
-        >
-          {/* Anciennes ancres : mènent au début de la même fiche */}
-          {expertise.anchorAliases.map((alias) => (
-            <span key={alias} id={alias} aria-hidden="true" className="sv-target-alias" />
-          ))}
-          <div className="site-container">
-            <h2 id={`${expertise.anchor}-title`} className="sv-target-title">
-              {expertise.name}
-            </h2>
-            <p className="sv-target-text">{expertise.description}</p>
-          </div>
-        </section>
-      ))}
     </main>
   );
 }

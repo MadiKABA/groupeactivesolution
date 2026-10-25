@@ -169,9 +169,9 @@ Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les q
 
 ## Page Services
 
-Route `/services` (`src/app/services/page.tsx`) : hero (`src/components/services/ServicesHero.tsx`, CSS `sv-*` dans `globals.css`), données structurées (`ServicesJsonLd.tsx`, via `src/components/seo/JsonLd.tsx`) et trois fiches provisoires `#former`, `#creer`, `#transformer` (titre et phrase seulement ; fiches détaillées à venir). Anciennes ancres conservées : `#developpement-digital` → `#creer`, `#transformation-digitale` → `#transformer`.
+Route `/services` (`src/app/services/page.tsx`) : hero seul (`src/components/services/ServicesHero.tsx`, CSS `sv-*` dans `globals.css`) et données structurées (`ServicesJsonLd.tsx`, via `src/components/seo/JsonLd.tsx`). Les fiches `#former`, `#creer`, `#transformer` (cibles du bouton et des vignettes) sont à venir : en attendant, ces ancres n'existent pas.
 
-- **Données partagées** : les noms, phrases et ancres des trois expertises viennent de **`src/lib/expertises.ts`**, source unique de l'accueil (section Expertises) et de `/services` (champs `anchor`, `anchorAliases`, `servicesAlt`). Textes du hero : `src/lib/services.ts`.
+- **Données partagées** : les noms, phrases et ancres des trois expertises viennent de **`src/lib/expertises.ts`**, source unique de l'accueil (section Expertises) et de `/services` (champs `anchor`, `servicesAlt`). Textes du hero : `src/lib/services.ts`.
 - **Photos des vignettes** : déposer **`public/images/services/education`**, **`developpement`** et **`transformation`** en `.avif`, `.webp` ou `.jpg` (premier format trouvé, détecté au build : rebuilder après l'ajout), environ 120 Ko, sans texte ni logo incrusté. Cadrage : `education` en portrait **1:2** (ex. 800 × 1600), les deux autres en carré **1:1** (ex. 1000 × 1000), sujet centré. Renseigner ensuite `servicesAlt` (description factuelle de la photo) dans `expertises.ts`. Sans photo, la vignette garde son fond de couleur.
 - **Mouvement** : entrée en CSS pur, parallaxe au pointeur (`MosaicParallax.tsx`, souris uniquement), profondeur au défilement en CSS (`animation-timeline`, si le navigateur la gère) ; rien avec les animations réduites.
 - Sitemap : `/services` ajouté. À fournir : image Open Graph 1200 × 630.

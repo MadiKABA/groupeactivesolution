@@ -293,8 +293,6 @@
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
   --radius-hero: 1.75rem;
-  /* coins bas du hero de /services en desktop (28px en mobile : radius-hero) */
-  --radius-hero-lg: 2.25rem;
   /* cadre image du hero */
 
   /* Ombres discrètes teintées du bleu nuit */
@@ -8802,8 +8800,8 @@
     --focus-ring: var(--color-brand-gold);
     position: relative;
     isolation: isolate;
+    /* Rectangle à bords droits ; overflow contient le motif, le halo et l'effet de profondeur */
     overflow: hidden;
-    border-radius: 0 0 var(--radius-hero) var(--radius-hero);
     background-color: var(--color-brand-navy);
     color: var(--color-text-on-dark);
     /* Compense le header fixe (72px, 90px en xl) */
@@ -8815,7 +8813,6 @@
       display: flex;
       flex-direction: column;
       height: var(--sv-hero-h);
-      border-radius: 0 0 var(--radius-hero-lg) var(--radius-hero-lg);
     }
   }
 
@@ -9150,47 +9147,6 @@
     .sv-tile:hover .sv-tile-pill {
       color: var(--color-brand-gold);
     }
-  }
-
-  /* ---------- Fiches (cibles des ancres, provisoires) ---------- */
-  .sv-target,
-  .sv-target-alias {
-    scroll-margin-top: calc(var(--hdr-h) + 1rem);
-  }
-
-  .sv-target {
-    position: relative;
-    padding-top: var(--spacing-section);
-
-    /* Première fiche : son titre affleure sous le hero (un padding complet laissait une bande vide) */
-    .sv-hero + & {
-      padding-top: clamp(1rem, 0.5rem + 2vw, 2.5rem);
-    }
-
-    &:last-of-type {
-      padding-bottom: var(--spacing-section);
-    }
-  }
-
-  .sv-target-alias {
-    position: absolute;
-    top: 0;
-  }
-
-  .sv-target-title {
-    font-size: var(--text-h2);
-    line-height: var(--text-h2--line-height);
-    font-weight: var(--font-weight-extrabold);
-    letter-spacing: var(--tracking-display);
-    color: var(--color-text-primary);
-  }
-
-  .sv-target-text {
-    max-width: 40rem;
-    margin-top: 1rem;
-    font-size: var(--text-lg);
-    line-height: var(--text-lg--line-height);
-    color: var(--color-text-secondary);
   }
 
   /* ---------- Mouvement (seulement sans préférence de mouvement réduit) ---------- */

@@ -20,9 +20,8 @@ export type Expertise = {
   /** Points focaux (object-position) : cadre desktop presque carré, cadre mobile large et bas. */
   focalDesktop: string;
   focalMobile: string;
-  /** Page /services : ancre de la fiche et anciennes ancres qui y mènent encore. */
+  /** Page /services : ancre de la fiche de l'expertise. */
   anchor: ExpertiseAnchor;
-  anchorAliases: readonly string[];
   /**
    * Texte alternatif de la vignette du hero de /services (photo distincte de celle de l'accueil).
    * Vide tant que la photo n'a pas été vue : décrire ensuite ce qu'elle montre réellement.
@@ -54,7 +53,6 @@ export const expertises: readonly Expertise[] = [
     focalDesktop: "50% 45%",
     focalMobile: "50% 40%",
     anchor: "former",
-    anchorAliases: [],
     servicesAlt: "", // TODO : à rédiger quand la photo sera déposée
   },
   {
@@ -78,7 +76,6 @@ export const expertises: readonly Expertise[] = [
     focalDesktop: "50% 50%",
     focalMobile: "50% 45%",
     anchor: "creer",
-    anchorAliases: ["developpement-digital"],
     servicesAlt: "", // TODO : à rédiger quand la photo sera déposée
   },
   {
@@ -96,7 +93,6 @@ export const expertises: readonly Expertise[] = [
     focalDesktop: "50% 45%",
     focalMobile: "50% 35%",
     anchor: "transformer",
-    anchorAliases: ["transformation-digitale"],
     servicesAlt: "", // TODO : à rédiger quand la photo sera déposée
   },
 ];
