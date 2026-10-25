@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { reveal } from "@/components/sections/formations/reveal";
 import { confirmedPartners, partners as allPartners, partnersIntro, type Partner } from "@/lib/partners";
@@ -17,7 +17,19 @@ const strokeDelay = (kind: "trace" | "arc" | "link", index: number) => (kind ===
  * layout(), cercle AS, liste des cartes) ; PartnersStage (client) pose les états et les lumières.
  * Un seul DOM : scène positionnée en desktop (avec JS), liste empilée sinon.
  */
-export function Partners({ list = allPartners }: { list?: readonly Partner[] }) {
+export type PartnersTexts = Record<"eyebrow" | "title" | "titleHighlight" | "intro" | "listLabel", string>;
+
+export function Partners({
+  list = allPartners,
+  texts = partnersIntro,
+  introSuffix,
+}: {
+  list?: readonly Partner[];
+  /** Textes de l'en-tête (accueil : partnersIntro ; bande TrustBand : src/content/trust.ts). */
+  texts?: PartnersTexts;
+  /** Ajout après l'introduction (marqueur « [À valider] » en développement). */
+  introSuffix?: ReactNode;
+}) {
   const confirmed = confirmedPartners(list);
   const plan = layout(confirmed.length);
   const shown = confirmed.slice(0, plan.shown);
@@ -30,14 +42,15 @@ export function Partners({ list = allPartners }: { list?: readonly Partner[] }) 
           <p className="flex items-center gap-3 text-tag font-bold tracking-eyebrow text-gold-ink-warm uppercase">
             <span aria-hidden="true" className="pt-a h-0.5 w-9 origin-left bg-gold-line" {...reveal(0, 500, "scaleX(0)")} />
             <span className="pt-a" {...reveal(0, 450)}>
-              {partnersIntro.eyebrow}
+              {texts.eyebrow}
             </span>
           </p>
           <h2 id={titleId} className="pt-a mt-5 text-display-partners font-extrabold tracking-display text-brand-navy" {...reveal(80, 600)}>
-            {partnersIntro.title} <span className="gold-ink-text">{partnersIntro.titleHighlight}</span>
+            {texts.title} <span className="gold-ink-text">{texts.titleHighlight}</span>
           </h2>
           <p className="pt-a mt-5 max-w-140 text-base leading-relaxed text-text-muted lg:text-lg" {...reveal(180, 550)}>
-            {partnersIntro.intro}
+            {texts.intro}
+            {introSuffix && <> {introSuffix}</>}
           </p>
         </header>
 
@@ -84,7 +97,7 @@ export function Partners({ list = allPartners }: { list?: readonly Partner[] }) 
             </div>
 
             {plan.cards.length > 0 && (
-              <ul aria-label={partnersIntro.listLabel} className="pt-list">
+              <ul aria-label={texts.listLabel} className="pt-list">
                 {plan.cards.map((box, index) => (
                   <PartnerCard key={shown[index]?.id ?? "more"} index={index} box={box} partner={shown[index] ?? null} overflow={plan.overflow} />
                 ))}

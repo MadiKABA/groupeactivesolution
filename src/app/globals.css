@@ -8265,3 +8265,518 @@
     }
   }
 }
+
+/*
+ * Section « Notre impact » (page À propos, #impact) — classes `im-*`.
+ * Fond bleu nuit, grille technique blanche à 4 % (pas de 48px) et halo doré ≤ 10 % en haut à
+ * droite (dérive lente seulement quand la section est à l'écran, data-visible). Quatre repères
+ * sans carte : règle dorée dessinée par segments (un par colonne), losanges, traits verticaux,
+ * chiffres révélés avec compteur (InViewReveal). Mobile : trait vertical à gauche.
+ * Entrée : état masqué seulement avec data-js (jamais avec les animations réduites).
+ */
+@layer components {
+  .im {
+    --im-ease: cubic-bezier(0.22, 0.7, 0.2, 1);
+    /* Apparition des losanges : léger dépassement */
+    --im-pop: cubic-bezier(0.34, 1.5, 0.64, 1);
+    --im-gap: 2.5rem;
+    --im-row-gap: 2.875rem;
+    --im-start: 600ms;
+    --im-step: 400ms;
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background-color: var(--color-brand-navy);
+    color: var(--color-text-on-dark);
+  }
+
+  .im-root {
+    position: relative;
+    padding-block: 4.5rem 3.5rem;
+
+    @media (width >=48rem) {
+      padding-block: 5.5rem 6rem;
+    }
+
+    @media (width >=64rem) {
+      padding-block: 6rem 6.5rem;
+    }
+  }
+
+  .im-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, var(--color-brand-white) 4%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--color-brand-white) 4%, transparent) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: center top;
+  }
+
+  /* Halo doré (10 % au centre) ; dérive de ±20px sur 18 s, suspendue hors écran */
+  .im-halo {
+    position: absolute;
+    top: -14rem;
+    right: -12rem;
+    width: 44rem;
+    height: 44rem;
+    background-image: radial-gradient(closest-side, color-mix(in oklab, var(--color-brand-gold) 10%, transparent), transparent);
+    animation: im-drift 18s ease-in-out infinite alternate;
+    animation-play-state: paused;
+  }
+
+  .im-root[data-visible] .im-halo {
+    animation-play-state: running;
+  }
+
+  /* ---------- En-tête ---------- */
+  .im-head {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: 3.25rem;
+
+    @media (width >=64rem) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 25rem);
+      align-items: end;
+      column-gap: 4rem;
+      margin-bottom: 4.5rem;
+    }
+  }
+
+  .im-label {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    font-size: var(--text-xs);
+    line-height: var(--text-xs--line-height);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--tracking-eyebrow);
+    text-transform: uppercase;
+    color: var(--color-brand-gold);
+  }
+
+  .im-label-line {
+    flex: none;
+    width: 2.5rem;
+    height: 1px;
+    background-color: var(--color-brand-gold);
+    transform-origin: left center;
+  }
+
+  .im-label-text {
+    display: block;
+  }
+
+  .im-title {
+    margin-top: 1.25rem;
+    font-size: 2.125rem;
+    line-height: 1.1;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    hyphens: manual;
+
+    @media (width >=48rem) {
+      font-size: clamp(2.5rem, 3.5vw, 3.125rem);
+    }
+  }
+
+  .im-title-line {
+    display: block;
+    overflow: clip;
+    padding-block: 0.06em;
+    margin-block: -0.06em;
+  }
+
+  .im-title-part {
+    display: inline-block;
+  }
+
+  .im-accent {
+    color: var(--color-brand-gold);
+  }
+
+  .im-intro {
+    max-width: 25rem;
+    font-size: var(--text-base);
+    line-height: 1.7;
+    color: var(--color-text-on-dark-soft);
+    text-wrap: pretty;
+
+    @media (width >=64rem) {
+      padding-bottom: 0.375rem;
+    }
+  }
+
+  /* ---------- Repères ---------- */
+  /* Mobile : liste verticale ; 2 × 2 dès 768px ; 4 colonnes dès 1024px */
+  .im-list {
+    --im-seg-from: 1 0;
+    display: grid;
+    row-gap: var(--im-row-gap);
+
+    @media (width >=48rem) {
+      --im-seg-from: 0 1;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--im-gap);
+      row-gap: 3.5rem;
+    }
+
+    @media (width >=64rem) {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .im-item {
+    /* Rang dans la ligne (dégradé de la règle) */
+    --c: 0;
+    position: relative;
+    padding-left: 1.75rem;
+
+    @media (width >=48rem) {
+      padding-top: 3.25rem;
+      padding-left: 0;
+
+      &:nth-child(2n) {
+        --c: 1;
+      }
+    }
+
+    @media (width >=64rem) {
+      --c: var(--i);
+
+      &:nth-child(2n) {
+        --c: var(--i);
+      }
+    }
+  }
+
+  /* Segment de règle : vertical à gauche en mobile (doré à 55 %), horizontal en haut au-delà */
+  .im-seg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: calc(100% + var(--im-row-gap));
+    background-color: color-mix(in oklab, var(--color-brand-gold) 55%, transparent);
+    transform-origin: top center;
+
+    @media (width >=48rem) {
+      width: calc(100% + var(--im-gap));
+      height: 2px;
+      background-color: transparent;
+      /* La règle s'estompe vers la droite : chaque segment reprend l'opacité où s'arrête le précédent */
+      background-image: linear-gradient(90deg,
+          color-mix(in oklab, var(--color-brand-gold) calc(100% - var(--c) * 20%), transparent),
+          color-mix(in oklab, var(--color-brand-gold) calc(80% - var(--c) * 20%), transparent));
+      transform-origin: left center;
+    }
+  }
+
+  .im-item:last-child .im-seg {
+    height: 100%;
+
+    @media (width >=48rem) {
+      height: 2px;
+      width: 100%;
+    }
+  }
+
+  @media (48rem <=width < 64rem) {
+    .im-item:nth-child(2n) .im-seg {
+      width: 100%;
+    }
+  }
+
+  .im-diamond {
+    position: absolute;
+    top: 2.5rem;
+    left: 1px;
+    width: 0.75rem;
+    height: 0.75rem;
+    translate: -50% -50%;
+    rotate: 45deg;
+    background-color: var(--color-brand-gold);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-brand-gold) 20%, transparent);
+    transition: scale 250ms var(--im-ease);
+
+    @media (width >=48rem) {
+      top: 1px;
+      left: 0.5rem;
+    }
+  }
+
+  /* Petit trait vertical du losange vers le chiffre (desktop et tablette) */
+  .im-tick {
+    display: none;
+
+    @media (width >=48rem) {
+      position: absolute;
+      top: 0.875rem;
+      left: calc(0.5rem - 0.75px);
+      display: block;
+      width: 1.5px;
+      height: 1.5rem;
+      background-image: linear-gradient(180deg, color-mix(in oklab, var(--color-brand-gold) 70%, transparent), transparent);
+      transform-origin: top center;
+      transition: scale 250ms var(--im-ease);
+    }
+  }
+
+  .im-num {
+    display: flex;
+    align-items: flex-start;
+    font-size: 5.25rem;
+    line-height: 0.95;
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-brand-white);
+    transition: translate 250ms var(--im-ease);
+
+    @media (width >=48rem) {
+      font-size: clamp(5.25rem, 8.2vw, 7.375rem);
+    }
+  }
+
+  /* Chiffres à chasse fixe ; pendant le compteur, InViewReveal fige la largeur de la valeur finale
+     (min-width mesurée une fois) : le « + » et la mise en page ne bougent pas */
+  .im-count {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .im-suffix {
+    margin-left: 0.04em;
+    padding-top: 0.12em;
+    font-size: 50%;
+    line-height: 1;
+    color: var(--color-brand-gold);
+  }
+
+  .im-caption {
+    display: block;
+    margin-top: 0.875rem;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .im-word {
+    color: var(--color-brand-gold);
+  }
+
+  .im-note {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: var(--text-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-on-dark-soft);
+  }
+
+  .im-desc {
+    max-width: 22rem;
+    margin-top: 0.625rem;
+    font-size: var(--text-card);
+    line-height: 1.6;
+    color: var(--color-text-on-dark-soft);
+    text-wrap: pretty;
+  }
+
+  .im-updated {
+    margin-top: 3.5rem;
+    font-size: var(--text-tag);
+    line-height: var(--text-tag--line-height);
+    color: var(--color-text-on-dark-soft);
+
+    @media (width >=64rem) {
+      margin-top: 4.5rem;
+    }
+  }
+
+  /* Survol (souris, dès 768px) : losange agrandi, trait allongé de 8px, chiffre relevé de 4px */
+  @media (width >=48rem) and (hover: hover) and (pointer: fine) {
+    .im-item:hover {
+      .im-diamond {
+        scale: 1.25;
+      }
+
+      .im-tick {
+        scale: 1 1.3333;
+      }
+
+      .im-num {
+        translate: 0 -4px;
+      }
+    }
+  }
+
+  /* ---------- Entrée (une fois) ---------- */
+  .im-root[data-js]:not([data-in]) {
+    :is(.im-label-text, .im-intro, .im-num, .im-caption, .im-desc, .im-updated) {
+      opacity: 0;
+    }
+
+    .im-label-line {
+      scale: 0 1;
+    }
+
+    .im-title-part {
+      translate: 0 105%;
+    }
+
+    .im-seg {
+      scale: var(--im-seg-from);
+    }
+
+    .im-diamond {
+      scale: 0;
+    }
+
+    .im-tick {
+      scale: 1 0;
+    }
+  }
+
+  .im-root[data-in] {
+    .im-label-line {
+      animation: im-scale-x 500ms var(--im-ease) backwards;
+    }
+
+    .im-label-text {
+      animation: im-rise 450ms var(--im-ease) 150ms backwards;
+    }
+
+    .im-title-part {
+      animation: im-line 850ms var(--im-ease) calc(200ms + var(--i, 0) * 120ms) backwards;
+    }
+
+    .im-intro {
+      animation: im-fade 600ms var(--im-ease) 500ms backwards;
+    }
+
+    /* Règle : segments linéaires bout à bout (1.6 s au total), losange au passage du trait */
+    .im-seg {
+      animation: im-grow var(--im-step) linear calc(var(--im-start) + var(--i, 0) * var(--im-step)) backwards;
+    }
+
+    .im-diamond {
+      animation: im-pop 380ms var(--im-pop) calc(var(--im-start) + var(--i, 0) * var(--im-step)) backwards;
+    }
+
+    .im-tick {
+      animation: im-drop 300ms var(--im-ease) calc(var(--im-start) + var(--i, 0) * var(--im-step) + 200ms) backwards;
+    }
+
+    .im-num {
+      animation: im-num 500ms var(--im-ease) calc(var(--im-start) + var(--i, 0) * var(--im-step) + 250ms) backwards;
+    }
+
+    .im-caption {
+      animation: im-rise 500ms var(--im-ease) calc(var(--im-start) + var(--i, 0) * var(--im-step) + 350ms) backwards;
+    }
+
+    .im-desc {
+      animation: im-rise 500ms var(--im-ease) calc(var(--im-start) + var(--i, 0) * var(--im-step) + 450ms) backwards;
+    }
+
+    .im-updated {
+      animation: im-fade 600ms var(--im-ease) calc(var(--im-start) + 4 * var(--im-step) + 600ms) backwards;
+    }
+  }
+
+  .im-root[data-animating] {
+    :is(.im-seg, .im-title-part, .im-diamond, .im-caption, .im-desc) {
+      will-change: transform, opacity;
+    }
+
+    .im-num {
+      will-change: transform, opacity, filter;
+    }
+  }
+
+  @keyframes im-rise {
+    from {
+      opacity: 0;
+      translate: 0 12px;
+    }
+  }
+
+  @keyframes im-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes im-line {
+    from {
+      translate: 0 105%;
+    }
+  }
+
+  @keyframes im-scale-x {
+    from {
+      scale: 0 1;
+    }
+  }
+
+  @keyframes im-grow {
+    from {
+      scale: var(--im-seg-from);
+    }
+  }
+
+  @keyframes im-pop {
+    from {
+      scale: 0;
+    }
+  }
+
+  @keyframes im-drop {
+    from {
+      scale: 1 0;
+    }
+  }
+
+  @keyframes im-num {
+    from {
+      opacity: 0;
+      translate: 0 24px;
+      filter: blur(6px);
+    }
+  }
+
+  @keyframes im-drift {
+    from {
+      translate: -20px 20px;
+    }
+
+    to {
+      translate: 20px -20px;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :is(.im-seg, .im-diamond, .im-tick, .im-label-line) {
+      forced-color-adjust: none;
+      background: CanvasText;
+      box-shadow: none;
+    }
+
+    .im-bg {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .im *,
+    .im *::before,
+    .im *::after {
+      transition-delay: 0s !important;
+      animation: none !important;
+    }
+  }
+}
+

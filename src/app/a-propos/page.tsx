@@ -7,6 +7,8 @@ import { ABOUT_DESCRIPTION, AboutJsonLd } from "@/components/about/AboutJsonLd";
 import { ConvictionsSection } from "@/components/about/convictions/ConvictionsSection";
 import { TeamSection } from "@/components/about/equipe/TeamSection";
 import { HistorySection } from "@/components/about/history/HistorySection";
+import { ImpactSection } from "@/components/about/impact/ImpactSection";
+import { TrustBand } from "@/components/sections/trust/TrustBand";
 import { aboutArches, type AboutArchId } from "@/lib/about";
 import { SITE_URL } from "@/lib/site";
 
@@ -49,6 +51,9 @@ export default function AboutPage() {
       <HistorySection />
       <ConvictionsSection />
       <TeamSection />
+      <ImpactSection />
+      {/* Bande activée pour cette page dans src/content/trust.ts (showOn) ; rien sans partenaire confirmé */}
+      <TrustBand page="/a-propos" />
     </main>
   );
 }

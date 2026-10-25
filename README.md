@@ -40,7 +40,8 @@ L'application est alors disponible sur http://localhost:3000.
 | `pnpm start` | Démarre le build de production |
 | `pnpm lint` | Analyse ESLint |
 | `pnpm typecheck` | Génère les types de routes (`next typegen`) puis lance `tsc --noEmit` |
-| `pnpm check:content` | Liste les contenus de « Notre histoire », « Nos convictions » et « Notre équipe » encore marqués `needsValidation: true` |
+| `pnpm test:impact` | Vérifie dans Chrome que les chiffres de « Notre impact » affichent exactement les valeurs des données (serveur lancé avant) |
+| `pnpm check:content` | Liste les contenus de « Notre histoire », « Nos convictions », « Notre équipe », « Notre impact » et de la bande « Ils nous font confiance » encore marqués `needsValidation: true` |
 | `pnpm build:prod` | `check:content` puis `next build` : échoue tant qu'un contenu reste à valider |
 
 Vérification complète : `pnpm lint && pnpm typecheck && pnpm build`.
@@ -158,6 +159,13 @@ Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les q
 - Photo réelle de l'atelier : la déposer dans `public/equipe/` et renseigner `workshopPhoto` (`src`, `alt` factuel, `width`, `height`) : elle remplace l'illustration (l'étiquette « Illustration provisoire » disparaît).
 
 À fournir ou confirmer : légendes des photos (`caption`) et descriptions (`description`, utilisées en `aria-label`) dans `src/lib/about.ts` ; « Depuis 2021 » (aussi `foundingDate` du JSON-LD) ; URL directes Facebook et TikTok ; coordonnées Google Maps de Liberté 1 ; image Open Graph 1200 × 630 ; téléphone et e-mail.
+
+### Section « Notre impact » (`#impact`) et bande « Ils nous font confiance »
+
+- **Notre impact** : `src/components/about/impact/ImpactSection.tsx` (serveur), styles `im-*`, données dans **`src/content/impact.ts`**. Les valeurs (4+, 10+, 5, 4) viennent du propriétaire ; phrases, introduction et date sont provisoires (`needsValidation`). Quand un chiffre change, mettre à jour `updatedAt` (date affichée dans `<time>`). Le champ `note` (ex. « dont 4 écoles ») ne s'affiche qu'avec `confirmed: true`.
+- **Ils nous font confiance** : `src/components/sections/trust/TrustBand.tsx` réutilise **à l'identique** la section Partenaires de l'accueil (`Partners`, classes `pt-*`), avec les textes de **`src/content/trust.ts`**. Activée page par page dans `trustContent.showOn` (seulement `/a-propos`) ; la page rend `<TrustBand page="/a-propos" />` à la fin de son `<main>`. Partenaires lus dans `src/lib/partners.ts` ; en production, rien n'est rendu sans partenaire `confirmed: true`. Logos : voir « Logos des partenaires » ci-dessous.
+- Entrées animées par `src/components/ui/InViewReveal.tsx` (client, un seul IntersectionObserver, compteur des chiffres) ; contrôle avant production : `scripts/check-impact.mjs`.
+- Test du compteur : `pnpm test:impact [url]` (serveur lancé avant, défaut `http://localhost:3000/a-propos`, `CHROME_PATH` si besoin) lit le texte visible des quatre repères après 4 s et le compare aux valeurs de `impact.ts` (sans dépendance : Chrome piloté par le protocole DevTools).
 
 ## Logos des partenaires
 
