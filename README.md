@@ -40,6 +40,8 @@ L'application est alors disponible sur http://localhost:3000.
 | `pnpm start` | Démarre le build de production |
 | `pnpm lint` | Analyse ESLint |
 | `pnpm typecheck` | Génère les types de routes (`next typegen`) puis lance `tsc --noEmit` |
+| `pnpm check:content` | Liste les contenus de « Notre histoire » encore marqués `needsValidation: true` |
+| `pnpm build:prod` | `check:content` puis `next build` : échoue tant qu'un contenu reste à valider |
 
 Vérification complète : `pnpm lint && pnpm typecheck && pnpm build`.
 
@@ -73,31 +75,32 @@ Tous les tokens sont centralisés dans **`src/app/globals.css`**, via la directi
 
 | Token | Valeur | Usage |
 |---|---|---|
-| `brand-navy` | `#272332` | Couleur principale sombre |
-| `brand-gold` | `#C39631` | Accent |
+| `brand-navy` | `#07172E` | Bleu nuit, couleur principale sombre |
+| `brand-gold` | `#E3A93F` | Doré, accent |
 | `brand-white` | `#FFFFFF` | Blanc de référence |
 
 ### Couleurs secondaires
 
 | Token | Valeur | Usage |
 |---|---|---|
-| `brand-navy-soft` | bleu nuit + 12 % de blanc (≈ `#413D4B`) | Fonds sombres secondaires |
-| `brand-gold-hover` | doré + 15 % de noir (≈ `#A6802A`) | Survol des actions dorées |
+| `brand-navy-soft` | bleu nuit + 12 % de blanc | Fonds sombres secondaires |
+| `brand-gold-light` | `#EDB94D` | Dégradé du logo, survol des boutons dorés |
+| `gold-ink-strong` | `#9C690E` | Seul doré autorisé en petit texte sur blanc (4.7:1) |
 | `surface` | `#FFFFFF` | Surface principale |
 | `surface-muted` | `#F6F6F7` | Fonds secondaires |
-| `text-primary` | `#272332` | Texte principal |
+| `text-primary` | `#07172E` | Texte principal |
 | `text-secondary` | `#52525B` | Texte secondaire (≈ 7.7:1 sur blanc) |
 | `text-on-dark` | `#FFFFFF` | Texte sur fond sombre |
 | `border-subtle` | `#E4E4E7` | Bordures discrètes |
 
 Les variantes sont calculées avec `color-mix()` à partir des couleurs de référence (Tailwind génère un repli hexadécimal pour les anciens navigateurs).
 
-La palette par défaut de Tailwind est volontairement désactivée : seules les couleurs de la charte existent. Le doré sur blanc (≈ 2.7:1) ne doit pas servir pour du texte courant ; sur un bouton doré, le texte est bleu nuit.
+La palette par défaut de Tailwind est volontairement désactivée : seules les couleurs de la charte existent. Le doré sur blanc (≈ 2.1:1) ne doit pas servir pour du texte courant ; sur un bouton doré, le texte est bleu nuit.
 
 ### Autres tokens
 
 - **Typographie** : `text-sm` (0.875rem), `text-base` (1rem), `text-lg` (1.125rem), `text-h3`, `text-h2`, `text-h1` (tailles fluides `clamp()`), chacune avec sa hauteur de ligne ; graisses `font-normal` à `font-extrabold` (400–800) ; `leading-tight|snug|normal`.
-- **Géométrie** : `rounded-sm|md|lg|xl`, `shadow-sm|md|lg` (ombres discrètes teintées de bleu nuit), `max-w-site` (76rem), `py-section` (espacement vertical fluide).
+- **Géométrie** : `rounded-sm|md|lg|xl`, `shadow-sm|md|lg` (ombres discrètes teintées de bleu nuit), `max-w-site` (105.25rem, soit 1684px, avec les marges de `site-container`), `py-section` (espacement vertical fluide).
 - **Interactions** : `ease-standard`, `ease-emphasized`, durées `--duration-fast|base|slow` (`duration-(--duration-fast)`).
 - **Accessibilité** : focus visible global (`--focus-ring`), prise en compte de `prefers-reduced-motion`.
 
@@ -114,6 +117,29 @@ Les fichiers de police sont auto-hébergés au build : aucune requête n'est env
 ## Logos officiels
 
 Les fichiers du logo officiel (deux versions) doivent être déposés dans **`public/logos/`**. Ils ne sont pas encore présents dans le dépôt. Le logo ne doit jamais être redessiné en CSS ni remplacé par du texte ou une icône. Le favicon sera créé à partir de ces fichiers officiels.
+
+## Page À propos
+
+Route `/a-propos` (`src/app/a-propos/page.tsx`) : hero « Notre manifeste » (`src/components/about/AboutHero.tsx`, CSS `about-*` dans `globals.css`), données structurées (`AboutJsonLd.tsx`) et textes (`src/lib/about.ts`).
+
+Photos des deux arches : **`public/about/hero-enseigner.jpg`** et **`public/about/hero-batir.jpg`** (JPEG ; rebuild après remplacement). Tant qu'un fichier manque, l'arche affiche un fond dégradé bleu nuit, sans erreur de build. Le sujet doit être au centre de la photo : c'est la zone visible quand les portes s'ouvrent. Cadrage réglé dans `globals.css` par `--photo-pos` (`15% 50%` pour « Enseigner », `25% 50%` pour « Bâtir »).
+
+**Portes à deux battants** : au repos, chaque arche montre sa photo entière ; au survol (souris uniquement), les deux battants pivotent vers l'intérieur et révèlent une vitre dépolie avec une phrase décorative. Une invitation en boucle (battants entrouverts, fente de lumière) tourne sur tous les appareils ; sur écran tactile, les arches ne s'ouvrent jamais complètement. Avec les animations réduites, l'ouverture est instantanée. Tout est en CSS (classes `about-*`), sans JavaScript.
+
+Tokens utilisés : `brand-navy`, `brand-gold`, `brand-gold-light` (survol du bouton), `navy-deep` (ombres des battants), `text-on-dark`, `text-on-dark-soft`, `text-on-dark-strong`, `placeholder-start|end` (repli).
+
+Sitemap : `src/app/sitemap.ts` (`/`, `/a-propos`). Aucun `robots.txt`.
+
+### Section « Notre histoire » (`#histoire`)
+
+Composants dans `src/components/about/history/` (section serveur, accordéon client, archive agrandie chargée à la demande), styles `hs-*` dans `globals.css`, contenus dans **`src/content/history.ts`** (provisoires).
+
+- Tout contenu non validé porte `needsValidation: true` : le marqueur « [À valider] » s'affiche en développement seulement, et `pnpm build:prod` échoue en listant les contenus concernés.
+- Photos et archives : déposer les fichiers dans **`public/histoire/`**, puis renseigner `src` (et `alt`, légende) dans `history.ts` ; tant que `src` vaut `null`, un placeholder rayé « Photo à fournir » s'affiche.
+  - Photo de panneau : **1600 × 900 minimum**, sujet principal **à droite** (la moitié gauche est couverte par le verre), WebP ou JPEG.
+  - Archive : **800 × 600**, orientation libre (affichée entière dans l'archive agrandie).
+
+À fournir ou confirmer : légendes des photos (`caption`) et descriptions (`description`, utilisées en `aria-label`) dans `src/lib/about.ts` ; « Depuis 2021 » (aussi `foundingDate` du JSON-LD) ; URL directes Facebook et TikTok ; coordonnées Google Maps de Liberté 1 ; image Open Graph 1200 × 630 ; téléphone et e-mail.
 
 ## Logos des partenaires
 

@@ -73,7 +73,7 @@ export function Header() {
         />
 
         {/* Grille 1fr / auto / 1fr : le menu est centré sur la page, pas entre le logo et le CTA. */}
-        <div className="mx-auto flex h-18 max-w-site items-center justify-between gap-8 px-6 transition-[height] duration-300 ease-out md:px-10 xl:grid xl:h-22.5 xl:grid-cols-[1fr_auto_1fr] xl:group-data-[scrolled=true]/header:h-18 xl:px-28">
+        <div className="site-container flex h-18 items-center justify-between gap-8 transition-[height] duration-300 ease-out xl:grid xl:h-22.5 xl:grid-cols-[1fr_auto_1fr] xl:group-data-[scrolled=true]/header:h-18">
           <motion.div
             variants={entry}
             custom={{ index: 0, reduce }}

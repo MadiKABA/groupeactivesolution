@@ -1,14 +1,11 @@
 "use client";
 
 import { Send } from "lucide-react";
-import { motion } from "motion/react";
 import Link from "next/link";
 
 import { ButtonShine } from "@/components/ui/ButtonShine";
 
 import { ctaLink } from "./navigation";
-
-const MotionLink = motion.create(Link);
 
 type CtaLinkProps = {
   className?: string;
@@ -17,12 +14,11 @@ type CtaLinkProps = {
 
 export function CtaLink({ className = "", onClick }: CtaLinkProps) {
   return (
-    <MotionLink
+    // Apparence (fond, survol, pression) : `.btn-gold` de globals.css, partagée avec le hero À propos.
+    <Link
       href={ctaLink.href}
       onClick={onClick}
-      whileHover={{ y: -1 }}
-      whileTap={{ scale: 0.97 }}
-      className={`group relative inline-flex h-11.25 overflow-hidden items-center justify-center gap-2.5 rounded-full bg-brand-gold px-6.5 text-sm font-semibold whitespace-nowrap text-brand-navy transition-[background-color,box-shadow] duration-(--duration-base) ease-standard hover:bg-brand-gold-light hover:shadow-gold ${className}`}
+      className={`btn-gold group inline-flex h-11.25 items-center justify-center gap-2.5 rounded-full px-6.5 text-sm font-semibold whitespace-nowrap ${className}`}
     >
       <Send
         aria-hidden="true"
@@ -30,6 +26,6 @@ export function CtaLink({ className = "", onClick }: CtaLinkProps) {
       />
       {ctaLink.label}
       <ButtonShine />
-    </MotionLink>
+    </Link>
   );
 }

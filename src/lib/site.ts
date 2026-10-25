@@ -4,7 +4,12 @@
  * Coordonnées du site : source UNIQUE (aucun numéro, e-mail ni lien WhatsApp en dur dans un composant).
  * NUMÉRO ISSU DE L'ANCIEN SITE (+221 76 809 51 59) : À CONFIRMER comme numéro WhatsApp valide avant publication.
  */
-const ADDRESS = "Liberté 1, Dakar, Sénégal";
+const STREET = "Liberté 1";
+const CITY = "Dakar";
+const ADDRESS = `${STREET}, ${CITY}, Sénégal`;
+
+/** URL publique du site (metadataBase, URL absolues du JSON-LD). */
+export const SITE_URL = "https://www.groupactivesolution.com";
 
 export const SITE_CONTACT = {
   whatsappNumber: "221768095159",
@@ -13,18 +18,23 @@ export const SITE_CONTACT = {
   email: "contact@groupactivesolution.com",
   address: {
     display: ADDRESS,
+    // Champs du PostalAddress (JSON-LD) : ni rue précise ni code postal connus, ne pas en inventer.
+    street: STREET,
+    locality: CITY,
+    countryCode: "SN",
     mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`,
   },
 } as const;
 
 export type SocialId = "linkedin" | "facebook" | "instagram" | "tiktok";
-export type SocialLink = { id: SocialId; label: string; href: string };
+/** `canonical` : URL directe du profil, seule admise dans `sameAs` (JSON-LD) ; pas un lien court de partage. */
+export type SocialLink = { id: SocialId; label: string; href: string; canonical?: boolean };
 
 // Source unique des réseaux (ordre d'affichage). Un futur réseau sans URL (href vide) s'affiche en icône désactivée.
 export const SOCIALS: readonly SocialLink[] = [
-  { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/actives-solutions/" },
+  { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/actives-solutions/", canonical: true },
   { id: "facebook", label: "Facebook", href: "https://www.facebook.com/share/1HX8JAow32/" },
-  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/active_solution_groupe" },
+  { id: "instagram", label: "Instagram", href: "https://www.instagram.com/active_solution_groupe", canonical: true },
   { id: "tiktok", label: "TikTok", href: "https://vm.tiktok.com/ZS9UKhCFqLhBk-yJHdC/" },
 ];
 
