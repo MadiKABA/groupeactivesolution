@@ -40,7 +40,7 @@ L'application est alors disponible sur http://localhost:3000.
 | `pnpm start` | Démarre le build de production |
 | `pnpm lint` | Analyse ESLint |
 | `pnpm typecheck` | Génère les types de routes (`next typegen`) puis lance `tsc --noEmit` |
-| `pnpm check:content` | Liste les contenus de « Notre histoire » et de « Nos convictions » encore marqués `needsValidation: true` |
+| `pnpm check:content` | Liste les contenus de « Notre histoire », « Nos convictions » et « Notre équipe » encore marqués `needsValidation: true` |
 | `pnpm build:prod` | `check:content` puis `next build` : échoue tant qu'un contenu reste à valider |
 
 Vérification complète : `pnpm lint && pnpm typecheck && pnpm build`.
@@ -147,6 +147,15 @@ Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les q
 - Liens profonds : `#conviction-partager`, `#conviction-utilite`, `#conviction-ensemble`, `#conviction-accessible` ouvrent directement l'onglet (et mènent au panneau sans JavaScript).
 - Photos : déposer les fichiers dans **`public/convictions/`**, puis renseigner `photo.src`, `alt` (description factuelle) et `caption` dans `convictions.ts` ; tant que `src` vaut `null`, un placeholder rayé « Photo à fournir » s'affiche.
   - Photo de panneau : **940 × 560 minimum**, orientation paysage, sujet principal bien visible et centré (recadrée en 470 × 280 en desktop, 16/10 ou 2/1 en dessous), WebP ou JPEG.
+
+### Section « Notre équipe » (`#equipe`)
+
+« L'établi » : un objet dessiné par savoir-faire (Former, Développer, Conseiller, Accompagner). Section serveur `src/components/about/equipe/TeamSection.tsx` (les quatre cartes sont dans le HTML initial), objets SVG `TeamObjects.tsx`, interaction client `TeamWorkbench.tsx`, styles `eq-*` dans `globals.css`, contenus dans **`src/content/equipe.ts`** (provisoires).
+
+- Même règle `needsValidation` (`scripts/check-equipe.mjs`).
+- Liens profonds : `#equipe-former`, `#equipe-developper`, `#equipe-conseiller`, `#equipe-accompagner`.
+- « Qui s'en occupe » : renseigner `members` (`name` = nom ou initiales acceptés par la personne, `role`, `photo` facultative) ; liste vide → emplacement visible en développement seulement.
+- Photo réelle de l'atelier : la déposer dans `public/equipe/` et renseigner `workshopPhoto` (`src`, `alt` factuel, `width`, `height`) : elle remplace l'illustration (l'étiquette « Illustration provisoire » disparaît).
 
 À fournir ou confirmer : légendes des photos (`caption`) et descriptions (`description`, utilisées en `aria-label`) dans `src/lib/about.ts` ; « Depuis 2021 » (aussi `foundingDate` du JSON-LD) ; URL directes Facebook et TikTok ; coordonnées Google Maps de Liberté 1 ; image Open Graph 1200 × 630 ; téléphone et e-mail.
 
