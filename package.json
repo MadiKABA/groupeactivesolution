@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:prod": "node scripts/check-history.mjs && next build",
-    "check:content": "node scripts/check-history.mjs",
+    "build:prod": "node scripts/check-history.mjs && node scripts/check-convictions.mjs && next build",
+    "check:content": "node scripts/check-history.mjs && node scripts/check-convictions.mjs",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit"

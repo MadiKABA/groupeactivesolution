@@ -40,7 +40,7 @@ L'application est alors disponible sur http://localhost:3000.
 | `pnpm start` | Démarre le build de production |
 | `pnpm lint` | Analyse ESLint |
 | `pnpm typecheck` | Génère les types de routes (`next typegen`) puis lance `tsc --noEmit` |
-| `pnpm check:content` | Liste les contenus de « Notre histoire » encore marqués `needsValidation: true` |
+| `pnpm check:content` | Liste les contenus de « Notre histoire » et de « Nos convictions » encore marqués `needsValidation: true` |
 | `pnpm build:prod` | `check:content` puis `next build` : échoue tant qu'un contenu reste à valider |
 
 Vérification complète : `pnpm lint && pnpm typecheck && pnpm build`.
@@ -138,6 +138,15 @@ Composants dans `src/components/about/history/` (section serveur, accordéon cli
 - Photos et archives : déposer les fichiers dans **`public/histoire/`**, puis renseigner `src` (et `alt`, légende) dans `history.ts` ; tant que `src` vaut `null`, un placeholder rayé « Photo à fournir » s'affiche.
   - Photo de panneau : **1600 × 900 minimum**, sujet principal **à droite** (la moitié gauche est couverte par le verre), WebP ou JPEG.
   - Archive : **800 × 600**, orientation libre (affichée entière dans l'archive agrandie).
+
+### Section « Nos convictions » (`#convictions`)
+
+Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les quatre convictions sont dans le HTML initial), onglets client `ConvictionsTabs.tsx`, styles `cv-*` dans `globals.css`, contenus dans **`src/content/convictions.ts`** (provisoires).
+
+- Même règle que « Notre histoire » : `needsValidation: true` affiche « [À valider] » en développement seulement, et `pnpm build:prod` échoue (`scripts/check-convictions.mjs`) tant qu'il en reste un.
+- Liens profonds : `#conviction-partager`, `#conviction-utilite`, `#conviction-ensemble`, `#conviction-accessible` ouvrent directement l'onglet (et mènent au panneau sans JavaScript).
+- Photos : déposer les fichiers dans **`public/convictions/`**, puis renseigner `photo.src`, `alt` (description factuelle) et `caption` dans `convictions.ts` ; tant que `src` vaut `null`, un placeholder rayé « Photo à fournir » s'affiche.
+  - Photo de panneau : **940 × 560 minimum**, orientation paysage, sujet principal bien visible et centré (recadrée en 470 × 280 en desktop, 16/10 ou 2/1 en dessous), WebP ou JPEG.
 
 À fournir ou confirmer : légendes des photos (`caption`) et descriptions (`description`, utilisées en `aria-label`) dans `src/lib/about.ts` ; « Depuis 2021 » (aussi `foundingDate` du JSON-LD) ; URL directes Facebook et TikTok ; coordonnées Google Maps de Liberté 1 ; image Open Graph 1200 × 630 ; téléphone et e-mail.
 

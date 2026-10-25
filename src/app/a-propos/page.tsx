@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 
 import { AboutHero } from "@/components/about/AboutHero";
 import { ABOUT_DESCRIPTION, AboutJsonLd } from "@/components/about/AboutJsonLd";
+import { ConvictionsSection } from "@/components/about/convictions/ConvictionsSection";
 import { HistorySection } from "@/components/about/history/HistorySection";
 import { aboutArches, type AboutArchId } from "@/lib/about";
 import { SITE_URL } from "@/lib/site";
@@ -45,6 +46,7 @@ export default function AboutPage() {
       <AboutHero photos={photos} />
       {/* Cible du bouton du hero ; scroll-margin-top : règle globale des section[id]. */}
       <HistorySection />
+      <ConvictionsSection />
     </main>
   );
 }
