@@ -15,7 +15,7 @@ export const footerTagline = {
 } as const;
 
 export const footerServices: readonly FooterLink[] = [
-  { label: "Formation", href: "/#expertise-education" },
+  { label: "Formations", href: "/#expertise-education" },
   { label: "Développement digital", href: "/#expertise-developpement" },
   { label: "Transformation digitale", href: "/#expertise-transformation" },
 ];

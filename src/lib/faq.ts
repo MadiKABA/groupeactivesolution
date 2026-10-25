@@ -63,7 +63,7 @@ export const faqItems: readonly FaqItem[] = [
     status: "ready",
     answer: [
       { text: "Nous intervenons dans trois domaines : " },
-      { text: "la formation et l'éducation numérique", strong: true },
+      { text: "les formations", strong: true },
       { text: ", " },
       { text: "le développement de solutions numériques", strong: true },
       { text: " et " },

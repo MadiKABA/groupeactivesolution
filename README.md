@@ -1,6 +1,6 @@
 # Active Solution Digital Service — site web
 
-Socle technique de la refonte du site institutionnel d'**Active Solution Digital Service** (Dakar, Sénégal), acteur de la formation et de l'éducation numérique, du développement de solutions digitales et de la transformation numérique des organisations.
+Socle technique de la refonte du site institutionnel d'**Active Solution Digital Service** (Dakar, Sénégal), acteur des formations, du développement de solutions digitales et de la transformation numérique des organisations.
 
 Cette première phase pose uniquement les fondations : configuration du projet, charte graphique (design tokens) et typographie. Aucune page de contenu n'est encore développée.
 

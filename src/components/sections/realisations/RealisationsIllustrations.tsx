@@ -10,7 +10,7 @@ import type { RealisationDomain } from "@/lib/realisations";
 
 const at = (delay: number, extra?: Record<string, string | number>) => ({ "--d": `${delay}ms`, ...extra }) as CSSProperties;
 
-/* ---------- 01 · Formation : points épars reliés à une grille de nœuds ---------- */
+/* ---------- 01 · Formations : points épars reliés à une grille de nœuds ---------- */
 const DY = 40;
 const SCATTERED = [
   [70, 150, 4],
