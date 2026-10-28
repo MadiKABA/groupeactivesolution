@@ -1,8 +1,6 @@
 // CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
 // Coordonnées, réseaux et besoins : src/lib/site.ts (source unique).
 
-import { SITE_CONTACT } from "./site";
-
 export const contactIntro = {
   eyebrow: "Contact",
   /** Titre en deux parties : la seconde est en dégradé doré. */
@@ -21,9 +19,6 @@ export const contactHero = {
   replyLabel: "Réponse sous",
   replyValue: "24\u00a0h",
 } as const;
-
-/** Coordonnées en une phrase, affichée sous la section (texte réel pour les moteurs de réponse). */
-export const contactSummary = `Pour contacter Active Solution Digital Service à Dakar : téléphone ou WhatsApp au ${SITE_CONTACT.phone.display}, e-mail ${SITE_CONTACT.email}, adresse ${SITE_CONTACT.address.display}.`;
 
 export const contactInfoLabels = {
   phone: "Téléphone",

@@ -1,7 +1,7 @@
 import { reveal } from "@/components/sections/formations/reveal";
 import { WhatsAppIcon } from "@/components/ui/icons/WhatsAppIcon";
 import { SocialIcon } from "@/components/ui/icons/SocialIcons";
-import { contactForm, contactInfoLabels, contactIntro, contactSummary } from "@/lib/contact";
+import { contactForm, contactInfoLabels, contactIntro } from "@/lib/contact";
 import { getMailtoUrl, getWhatsAppUrl, SOCIALS } from "@/lib/site";
 
 import { CardMotif } from "./CardMotif";
@@ -107,11 +107,6 @@ export function Contact() {
               </div>
             </div>
           </div>
-
-          {/* Coordonnées en une phrase factuelle (lisible par les moteurs de réponse), visible */}
-          <p className="ct-a mt-10 max-w-320 text-sm leading-relaxed text-text-slate lg:mt-12" {...reveal(500, 450)}>
-            {contactSummary}
-          </p>
         </div>
       </ContactReveal>
     </section>
