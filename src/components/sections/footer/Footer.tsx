@@ -7,7 +7,7 @@ import Image from "next/image";
 
 import { reveal } from "@/components/sections/formations/reveal";
 import { SocialIcon } from "@/components/ui/icons/SocialIcons";
-import { MotifPattern } from "@/components/ui/MotifPattern";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { footerLabels, footerLegal, footerNavigation, footerServices, footerTagline, type FooterLink } from "@/lib/footer";
 import { SITE_CONTACT, SOCIALS } from "@/lib/site";
 
@@ -30,13 +30,6 @@ async function CurrentYear() {
   return <>{new Date().getFullYear()}</>;
 }
 
-/** Points du motif (en % du cadre du motif, en haut à droite). */
-const MOTIF_POINTS = [
-  { x: 30, y: 34 },
-  { x: 62, y: 18 },
-  { x: 84, y: 52 },
-] as const;
-
 function LinkColumn({ title, links, delay }: { title: string; links: readonly FooterLink[]; delay: number }) {
   return (
     <nav aria-label={title} className="ft-col ft-a" {...reveal(delay, 550)}>
@@ -57,7 +50,7 @@ function LinkColumn({ title, links, delay }: { title: string; links: readonly Fo
 /*
  * Footer du site (fond bleu nuit profond). Rendu côté serveur : marque, réseaux (site.ts), colonnes
  * Services et Navigation, coordonnées (site.ts), liens légaux seulement si la page existe, copyright.
- * Décor statique : filet doré, motif sombre en haut à droite, anneaux concentriques (FooterRings).
+ * Décor statique : filet doré, zigzag doré en haut à droite, anneaux concentriques (FooterRings).
  * Seuls composants client : FooterLive (révélation du contenu à l'entrée) et BackToTop.
  */
 export function Footer() {
@@ -73,12 +66,7 @@ export function Footer() {
       <FooterLive />
 
       <div aria-hidden="true" className="ft-decor">
-        <div className="ft-motif">
-          <MotifPattern className="text-brand-gold" />
-          {MOTIF_POINTS.map((point) => (
-            <span key={`${point.x}-${point.y}`} className="ft-motif-point" style={{ left: `${point.x}%`, top: `${point.y}%` }} />
-          ))}
-        </div>
+        <WaveMotif tone="dark" mask="tr" />
         <div className="ft-topline" />
       </div>
 

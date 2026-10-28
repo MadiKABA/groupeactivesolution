@@ -14,3 +14,12 @@ export const servicesHero = {
   /** Nom accessible de la mosaïque (sommaire de la page). */
   mosaicLabel: "Nos expertises",
 } as const;
+
+/** Bande CTA finale de /services (CtaGlassBand) : textes fournis, à ne pas modifier sans validation. */
+export const servicesCta = {
+  title: "Envie de former vos équipes, digitaliser votre activité ou donner à vos élèves",
+  titleHighlight: "les clés du numérique de demain ?",
+  support: "Chaque projet commence par une écoute de vos besoins.",
+  // TODO : /contact quand la page existera ; en attendant, section Contact de l'accueil.
+  cta: { label: "Parlons de votre projet", href: "/#contact" },
+} as const;

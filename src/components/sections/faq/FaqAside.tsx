@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 import { reveal } from "@/components/sections/formations/reveal";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { WhatsAppIcon } from "@/components/ui/icons/WhatsAppIcon";
 import { faqContact } from "@/lib/faq";
 import { getWhatsAppUrl } from "@/lib/site";
@@ -25,7 +26,7 @@ export function FaqAside() {
       className="faq-aside fq-s relative mt-8 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy p-6 text-text-on-dark shadow-aside [--focus-ring:var(--color-brand-gold-light)] lg:sticky lg:top-[calc(var(--hdr-h)+2rem)] lg:mt-0 lg:w-100 lg:flex-none lg:p-7"
       {...reveal(0, 700)}
     >
-      <div aria-hidden="true" className="faq-aside-motif section-motif-tile-night pointer-events-none absolute inset-0" />
+      <WaveMotif tone="dark" mask="bl" />
       <div aria-hidden="true" className="faq-spot pointer-events-none absolute top-0 left-0 size-65 rounded-full" />
 
       <div className="fq-s faq-scene relative hidden lg:block" data-inview="false" {...reveal(STEPS.scene, 450, "none")}>

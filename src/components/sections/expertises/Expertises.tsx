@@ -2,10 +2,10 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { expertiseImagePath, expertises, expertisesIntro } from "@/lib/expertises";
 
 import { ExpertisesScroller } from "./ExpertisesScroller";
-import { SectionMotif } from "./SectionMotif";
 
 /*
  * Section « Nos expertises » (fond clair). Rendue côté serveur ; seule la partie
@@ -26,8 +26,8 @@ export function Expertises() {
       aria-labelledby="expertises-title"
       className="expertises-section relative isolate overflow-x-clip bg-surface-warm pt-16 lg:pt-10"
     >
-      {/* Motif sur toute la section ; le padding bas est porté par la scène (sticky jusqu'au bout) */}
-      <SectionMotif />
+      {/* Zigzag doré sur tout le fond ; le padding bas est porté par la scène (sticky jusqu'au bout) */}
+      <WaveMotif tone="light" mask="full" />
       {/* Contenu au-dessus du motif, sans fond opaque */}
       <div className="relative z-10 mx-auto max-w-site px-6 md:px-10 xl:px-28">
         <SectionHeader

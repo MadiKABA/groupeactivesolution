@@ -4,7 +4,6 @@ import Link from "next/link";
 import { formationDomains, formationPanelId, formationsIntro, formationTabId } from "@/lib/formations";
 
 import { FormationTags } from "./FormationTags";
-import { FormationsCircuit } from "./FormationsCircuit";
 import { FormationsInteractive } from "./FormationsInteractive";
 import { FormationsPublics } from "./FormationsPublics";
 import { reveal } from "./reveal";
@@ -14,8 +13,9 @@ const PANEL_AT = 1900;
 
 /*
  * Section « Formations » (fond bleu nuit), après « Notre méthode ».
- * Rendue côté serveur : en-tête, circuit, les 5 panneaux mobiles, publics et bouton. Seuls l'onglet actif,
- * l'observateur d'entrée et la parallaxe vivent dans <FormationsInteractive> (unique composant client).
+ * Rendue côté serveur : en-tête, les 5 panneaux mobiles, publics et bouton. L'onglet actif, le circuit
+ * (aligné sur les onglets en desktop), l'observateur d'entrée et la parallaxe vivent dans
+ * <FormationsInteractive> (unique composant client).
  * Sans JavaScript, tout est visible : onglet 01 actif, piste 01 allumée.
  */
 export function Formations() {
@@ -85,7 +85,7 @@ export function Formations() {
       aria-labelledby="formations-title"
       className="formations-section relative isolate overflow-x-clip bg-brand-navy text-text-on-dark [--focus-ring:var(--color-brand-gold-light)]"
     >
-      <FormationsInteractive header={header} circuit={<FormationsCircuit />} panels={panels} publics={<FormationsPublics />} cta={cta} />
+      <FormationsInteractive header={header} panels={panels} publics={<FormationsPublics />} cta={cta} />
     </section>
   );
 }

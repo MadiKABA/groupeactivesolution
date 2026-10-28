@@ -1,9 +1,8 @@
 "use client";
 
-import { useMotionValue } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
-import { SectionMotifLayers } from "@/components/sections/expertises/SectionMotif";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { countByCategory, FAQ_PANEL_ID, faqCategories, faqItems, faqItemsOf, faqTabId } from "@/lib/faq";
 
@@ -35,9 +34,8 @@ const TIMING = {
 const EASE_OUT_EXPO = "cubic-bezier(.16,1,.3,1)";
 const EASE_OVERSHOOT = "cubic-bezier(.34,1.56,.64,1)";
 
-/** Profondeur au pointeur et parallaxe (px) ; lissage par image. */
+/** Profondeur au pointeur (px) ; lissage par image. */
 const DEPTH = { net: 10, rings: 3, mark: 6 } as const;
-const PARALLAX = 20;
 const SPOT_RADIUS = 130;
 const LERP = { depth: 0.08, spot: 0.1 } as const;
 
@@ -94,7 +92,7 @@ type FaqInteractiveProps = {
 /**
  * Seul composant client de la section : catégorie affichée, question ouverte, indicateur d'onglet,
  * un IntersectionObserver (en-tête + colonnes, aside, scène du « ? », section) et une boucle rAF
- * (parallaxe du motif, profondeur du « ? », projecteur de l'aside ; desktop à pointeur fin).
+ * (profondeur du « ? », projecteur de l'aside ; desktop à pointeur fin).
  * États posés en attributs : data-js, data-in-a|s (entrées), data-swapped, data-inview, data-pulse, data-spot.
  */
 export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps) {
@@ -102,7 +100,6 @@ export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps)
   const listRef = useRef<HTMLUListElement>(null);
   const tablistRef = useRef<HTMLDivElement>(null);
   const indicatorRef = useRef<HTMLSpanElement>(null);
-  const motifRef = useRef<HTMLDivElement>(null);
   const reduce = usePrefersReducedMotion();
   // Onglet sélectionné (immédiat), catégorie affichée (après la sortie des cartes), question ouverte.
   const [selected, setSelected] = useState(0);
@@ -130,7 +127,7 @@ export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps)
       element: scene.querySelector<SVGGElement>(name === "mark" ? ".fqm-depth" : `.fqm-${name}`),
       depth: DEPTH[name],
     }));
-    const moving = [motifRef.current, spot, ...layers.map((layer) => layer.element)];
+    const moving = [spot, ...layers.map((layer) => layer.element)];
 
     const startSide = (offset: number) => {
       if (root.hasAttribute("data-in-s")) return;
@@ -171,17 +168,9 @@ export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps)
     let visible = false;
     let sceneIn = false;
     let raf = 0;
-    let scrollDirty = false;
-    const state = { par: 0, parTo: 0, mx: 0, my: 0, mxTo: 0, myTo: 0, sx: 0, sy: 0, sxTo: 0, syTo: 0 };
+    const state = { mx: 0, my: 0, mxTo: 0, myTo: 0, sx: 0, sy: 0, sxTo: 0, syTo: 0 };
 
-    const readScroll = () => {
-      const rect = root.getBoundingClientRect();
-      const screen = window.innerHeight;
-      const progress = Math.min(1, Math.max(0, (screen - rect.top) / (screen + rect.height)));
-      state.parTo = (progress * 2 - 1) * PARALLAX;
-    };
     const write = () => {
-      if (motifRef.current) motifRef.current.style.transform = `translate3d(0, ${state.par.toFixed(2)}px, 0)`;
       for (const { element, depth } of layers) {
         element?.style.setProperty("transform", `translate(${(state.mx * depth).toFixed(2)}px, ${(state.my * depth).toFixed(2)}px)`);
       }
@@ -189,27 +178,18 @@ export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps)
     };
     const frame = () => {
       raf = 0;
-      if (scrollDirty) {
-        scrollDirty = false;
-        readScroll();
-      }
       const step = (from: number, to: number, amount: number) => (Math.abs(to - from) < 0.01 ? to : from + (to - from) * amount);
-      state.par = step(state.par, state.parTo, LERP.depth);
       state.mx = step(state.mx, state.mxTo, LERP.depth);
       state.my = step(state.my, state.myTo, LERP.depth);
       state.sx = step(state.sx, state.sxTo, LERP.spot);
       state.sy = step(state.sy, state.syTo, LERP.spot);
       write();
       const settled =
-        state.par === state.parTo && state.mx === state.mxTo && state.my === state.myTo && state.sx === state.sxTo && state.sy === state.syTo;
+        state.mx === state.mxTo && state.my === state.myTo && state.sx === state.sxTo && state.sy === state.syTo;
       if (!settled) raf = requestAnimationFrame(frame);
     };
     const kick = () => {
       if (!raf && visible && live()) raf = requestAnimationFrame(frame);
-    };
-    const onScroll = () => {
-      scrollDirty = true;
-      kick();
     };
     const onPointerMove = (event: PointerEvent) => {
       if (!live() || event.pointerType !== "mouse") return;
@@ -238,17 +218,13 @@ export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps)
     // Active ou coupe la boucle selon la visibilité et le contexte (largeur, pointeur, préférences).
     const sync = () => {
       const on = visible && live();
-      window.removeEventListener("scroll", onScroll);
       if (on) {
-        window.addEventListener("scroll", onScroll, { passive: true });
-        readScroll();
-        if (!motifRef.current?.style.transform) state.par = state.parTo;
         write();
       } else if (!live()) {
         // Hors desktop à pointeur fin : aucun décalage résiduel.
         cancelAnimationFrame(raf);
         raf = 0;
-        Object.assign(state, { par: 0, parTo: 0, mx: 0, my: 0, mxTo: 0, myTo: 0 });
+        Object.assign(state, { mx: 0, my: 0, mxTo: 0, myTo: 0 });
         moving.forEach((element) => element?.style.removeProperty("transform"));
         asideEl.removeAttribute("data-spot");
       }
@@ -291,7 +267,6 @@ export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps)
     return () => {
       observer.disconnect();
       cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", onScroll);
       queries.forEach((query) => query.removeEventListener("change", sync));
       document.removeEventListener("visibilitychange", syncScene);
       asideEl.removeEventListener("pointermove", onPointerMove);
@@ -479,11 +454,9 @@ export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps)
       <div aria-hidden="true" className="faq-topline absolute inset-x-0 top-0 h-px" />
       <div aria-hidden="true" className="faq-glow pointer-events-none absolute" />
 
-      {/* Motif clair (variante vivid) sur toute la section, plus grand qu'elle pour la parallaxe ; intensité --motif-strength-faq */}
+      {/* Zigzag doré (fond clair, statique) sur tout le fond */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
-        <div ref={motifRef} className="faq-motif absolute -inset-10">
-          <MotifLayer reduce={reduce} />
-        </div>
+        <WaveMotif tone="light" mask="full" />
       </div>
 
       {/* Contenu ; marges identiques au header et aux autres sections */}
@@ -514,10 +487,4 @@ export function FaqInteractive({ header, aside, fallback }: FaqInteractiveProps)
       </div>
     </div>
   );
-}
-
-/** Motif statique dans sa couche (la parallaxe déplace le conteneur entier). */
-function MotifLayer({ reduce }: { reduce: boolean }) {
-  const still = useMotionValue(0);
-  return <SectionMotifLayers tone="vivid" leftY={still} rightY={still} reduce={reduce} willChange={false} />;
 }

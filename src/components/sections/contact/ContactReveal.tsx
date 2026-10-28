@@ -1,10 +1,8 @@
 "use client";
 
-import { useMotionValue } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 
-import { SectionMotifLayers } from "@/components/sections/expertises/SectionMotif";
-import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 
 /** Durée totale de la séquence d'entrée (ms) : will-change retiré ensuite. */
 const SEQUENCE = 1600;
@@ -12,12 +10,10 @@ const SEQUENCE = 1600;
 /**
  * Entrée de la section Contact : état masqué posé au montage (data-js, jamais en CSS statique),
  * un seul IntersectionObserver (25 %, une fois, puis déconnecté) qui pose data-in. Rend aussi le
- * motif statique (variante nuit, --motif-strength-contact).
+ * zigzag doré statique (WaveMotif).
  */
 export function ContactReveal({ children }: { children: ReactNode }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const reduce = usePrefersReducedMotion();
-  const still = useMotionValue(0);
 
   useLayoutEffect(() => {
     rootRef.current?.setAttribute("data-js", "");
@@ -59,7 +55,7 @@ export function ContactReveal({ children }: { children: ReactNode }) {
   return (
     <div ref={rootRef} className="ct-root relative pt-18 pb-20 lg:pt-28 lg:pb-30">
       <div aria-hidden="true" className="ct-motif pointer-events-none absolute inset-0 z-0 overflow-clip">
-        <SectionMotifLayers tone="night" leftY={still} rightY={still} reduce={reduce} willChange={false} />
+        <WaveMotif tone="dark" mask="full" />
       </div>
       {children}
     </div>

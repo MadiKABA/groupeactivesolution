@@ -21,7 +21,7 @@ import { HeroVisual } from "./HeroVisual";
 // Amplitudes de parallaxe, en px.
 const FRAME_SHIFT = 10;
 const MOTIF_SHIFT = 18;
-const MOTIF_SCROLL = 60;
+const MOTIF_SCROLL = 24;
 
 /** Orchestration du hero : état du carrousel, parallaxe et pauses automatiques. */
 export function HeroStage({ imagesAvailable }: { imagesAvailable: readonly boolean[] }) {
@@ -95,7 +95,6 @@ export function HeroStage({ imagesAvailable }: { imagesAvailable: readonly boole
             offsetX={parallax ? motifX : pointerX}
             offsetY={parallax ? motifY : pointerY}
             scrollY={motifScroll}
-            reduce={reduce}
           />
         </motion.div>
 

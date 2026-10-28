@@ -1,13 +1,14 @@
 "use client";
 
-import { useMotionValue } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 
-import { SectionMotifLayers } from "@/components/sections/expertises/SectionMotif";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { useMediaQuery, usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { formationDomains, formationPanelId } from "@/lib/formations";
+import { FREE_CIRCUIT, tabsCircuit } from "@/lib/formations-circuit";
 
 import { FormationsAccordion } from "./FormationsAccordion";
+import { FormationsCircuit } from "./FormationsCircuit";
 import { FormationsTabs } from "./FormationsTabs";
 
 /** Accordéon desktop (même seuil que la variante `fo-desk` de globals.css). */
@@ -28,7 +29,6 @@ const SETTLE = 0.001;
 
 type FormationsInteractiveProps = {
   header: ReactNode;
-  circuit: ReactNode;
   panels: ReactNode;
   publics: ReactNode;
   cta: ReactNode;
@@ -36,19 +36,26 @@ type FormationsInteractiveProps = {
 
 const delayOf = (element: Element) => Number(element.getAttribute("data-d") ?? 0);
 
+/** Mesure du menu desktop pour le circuit : largeur de la colonne, haut et hauteur du menu (depuis le haut du circuit). */
+type TabsMeasure = { width: number; top: number; height: number };
+const sameMeasure = (a: TabsMeasure | null, b: TabsMeasure) =>
+  a !== null && a.width === b.width && a.top === b.top && a.height === b.height;
+
 /**
  * Seul composant client de la section : onglet actif (`data-active`), un IntersectionObserver
  * pour trois cibles (en-tête + composition, publics, bouton) et la section (pause des boucles),
  * parallaxe au pointeur. Les états d'entrée sont des attributs posés directement sur la racine
  * (`data-js`, `data-in-a|b|c`, `data-lit`, `data-inview`) : aucun re-rendu pendant les animations.
  */
-export function FormationsInteractive({ header, circuit, panels, publics, cta }: FormationsInteractiveProps) {
+export function FormationsInteractive({ header, panels, publics, cta }: FormationsInteractiveProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const accRef = useRef<HTMLDivElement>(null);
+  const circuitRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [tabs, setTabs] = useState<TabsMeasure | null>(null);
   const desktop = useMediaQuery(DESKTOP_QUERY);
   const reduce = usePrefersReducedMotion();
-  const still = useMotionValue(0);
 
   // JS actif : l'état masqué initial n'existe qu'à partir d'ici (sans JS ou avant hydratation, tout est visible).
   useLayoutEffect(() => {
@@ -184,6 +191,25 @@ export function FormationsInteractive({ header, circuit, panels, publics, cta }:
     list.scrollTo({ left: Math.max(0, left - pad), behavior: reduce ? "auto" : "smooth" });
   }, [active, desktop, reduce]);
 
+  // Desktop : colonne de nœuds 01 → 03 à la hauteur du menu, mesurée à chaque changement de taille du menu
+  // ou de la colonne (y compris pendant l'ouverture d'un volet, image par image si le menu varie).
+  useEffect(() => {
+    const acc = accRef.current;
+    const wrap = circuitRef.current;
+    if (!desktop || !acc || !wrap) return;
+    const observer = new ResizeObserver(() => {
+      const origin = wrap.getBoundingClientRect().top;
+      const box = acc.getBoundingClientRect();
+      const next = { width: wrap.clientWidth, top: Math.round(box.top - origin), height: Math.round(box.height) };
+      setTabs((previous) => (sameMeasure(previous, next) ? previous : next));
+    });
+    observer.observe(wrap);
+    observer.observe(acc);
+    return () => observer.disconnect();
+  }, [desktop]);
+
+  const geometry = desktop && tabs ? tabsCircuit(tabs.width, tabs.top, tabs.height) : FREE_CIRCUIT;
+
   // Clic sur un nœud du circuit (pointeur) : sélectionne l'onglet correspondant.
   const onCircuitClick = (event: MouseEvent<HTMLDivElement>) => {
     const node = (event.target as Element).closest("[data-node]");
@@ -195,9 +221,9 @@ export function FormationsInteractive({ header, circuit, panels, publics, cta }:
       {/* Liseré doré du haut */}
       <div aria-hidden="true" className="formations-topline absolute inset-x-0 top-0 h-px" />
 
-      {/* Motif du hero, variante nuit, sur toute la section ; intensité --motif-strength-formations */}
+      {/* Zigzag doré (fond sombre, statique) sur tout le fond */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
-        <SectionMotifLayers tone="night" leftY={still} rightY={still} reduce={reduce} willChange={false} />
+        <WaveMotif tone="dark" mask="full" />
       </div>
 
       {/* Contenu ; marges identiques au header et aux autres sections */}
@@ -206,15 +232,22 @@ export function FormationsInteractive({ header, circuit, panels, publics, cta }:
           {header}
 
           {/* ≥ 1100px : accordéon | circuit. Dessous : circuit, pastilles, panneau (affichage en CSS, sans saut à l'hydratation). */}
+          {/* Dès 1100px, le circuit a la hauteur du menu (nœuds 01 → 03 répartis du haut au bas des onglets) */}
           <div className="mt-10 lg:mt-14 fo-desk:mt-8 fo-desk:flex fo-desk:items-start fo-desk:gap-10">
-            <div className="hidden w-99 shrink-0 fo-desk:block">
+            <div ref={accRef} className="hidden w-99 shrink-0 fo-desk:block">
               <FormationsAccordion active={active} onSelect={select} />
             </div>
 
-            <div className="formations-circuit-col relative mx-auto max-w-195 fo-desk:max-w-none fo-desk:min-w-0 fo-desk:flex-1 fo-desk:self-center" onClick={onCircuitClick}>
-              <div aria-hidden="true" className="formations-veil pointer-events-none absolute" />
-              <div aria-hidden="true" className="formations-glow pointer-events-none absolute" />
-              <div className="formations-circuit-wrap relative">{circuit}</div>
+            <div className="formations-circuit-col relative mx-auto max-w-195 fo-desk:max-w-none fo-desk:min-w-0 fo-desk:flex-1" onClick={onCircuitClick}>
+              {/* Halo centré sur la puce (centre de la colonne sous 1100px) */}
+              <div
+                aria-hidden="true"
+                className="formations-glow pointer-events-none absolute"
+                style={geometry.layout === "tabs" ? { left: geometry.chip.x + geometry.chip.width / 2, top: geometry.chip.y + geometry.chip.height / 2 } : undefined}
+              />
+              <div ref={circuitRef} className="formations-circuit-wrap relative">
+                <FormationsCircuit geometry={geometry} />
+              </div>
             </div>
 
             <div className="mt-6 fo-desk:hidden">

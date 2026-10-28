@@ -5,7 +5,7 @@ import { animate, motion, useMotionValue, useSpring } from "motion/react";
 import Link from "next/link";
 import type { PointerEvent } from "react";
 
-import { SectionMotifLayers } from "@/components/sections/expertises/SectionMotif";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { EASE } from "@/lib/motion";
 import { methodeCta } from "@/lib/methode";
 
@@ -32,7 +32,6 @@ type MethodeCtaProps = {
  * magnétique (±6px).
  */
 export function MethodeCta({ revealed, reduce, immersive }: MethodeCtaProps) {
-  const still = useMotionValue(0);
   const glowX = useMotionValue(0);
   const glowY = useMotionValue(0);
   const glowOpacity = useMotionValue(0);
@@ -76,14 +75,12 @@ export function MethodeCta({ revealed, reduce, immersive }: MethodeCtaProps) {
       onPointerLeave={onBannerLeave}
       className="relative mx-auto mt-8 flex md:mt-6 lg:mt-10 w-full max-w-246 flex-col gap-6 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy px-6 py-7 text-text-on-dark shadow-cta [--focus-ring:var(--color-brand-gold)] lg:min-h-32 lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:px-10 lg:py-5"
     >
-      {/* Motif du hero, variante sombre, faible et estompé vers la droite */}
-      <div aria-hidden="true" className="methode-cta-motif pointer-events-none absolute inset-0">
-        <SectionMotifLayers tone="dark" leftY={still} rightY={still} reduce={reduce} willChange={false} />
-      </div>
+      {/* Zigzag doré (fond sombre, statique) en coin bas droit du bandeau, loin du texte et du bouton */}
+      <WaveMotif tone="dark" mask="br" />
       {/* Lueur dorée en haut à droite */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 -right-24 size-80 bg-radial from-brand-gold/28 to-transparent to-70%"
+        className="pointer-events-none absolute -top-32 -right-24 size-80 bg-radial from-brand-gold/20 to-transparent to-70%"
       />
 
       {/* Lueur de 240px qui suit le curseur, visible seulement dans l'anneau de 1px de la bordure */}

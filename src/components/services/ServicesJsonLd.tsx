@@ -55,7 +55,8 @@ function servicesJsonLd() {
         url: PAGE_URL,
         inLanguage: "fr",
         isPartOf: { "@id": WEBSITE_ID },
-        about: expertises.map((expertise) => ({ "@id": `${PAGE_URL}#${expertise.anchor}` })),
+        about: { "@id": ORG_ID },
+        hasPart: expertises.map((expertise) => ({ "@id": `${PAGE_URL}#${expertise.anchor}` })),
         breadcrumb: { "@id": `${PAGE_URL}#breadcrumb` },
       },
       {
@@ -66,14 +67,25 @@ function servicesJsonLd() {
           { "@type": "ListItem", position: 2, name: "Services", item: PAGE_URL },
         ],
       },
-      ...expertises.map((expertise) => ({
+      // Contenu des fiches visibles ; domaines en catalogue sans prix (aucun prix, avis ni note).
+      ...expertises.map(({ anchor, name, fiche }) => ({
         "@type": "Service",
-        "@id": `${PAGE_URL}#${expertise.anchor}`,
-        name: expertise.name,
-        description: expertise.description,
-        url: `${PAGE_URL}#${expertise.anchor}`,
+        "@id": `${PAGE_URL}#${anchor}`,
+        name,
+        description: fiche.paragraph,
+        serviceType: fiche.serviceType,
+        url: `${PAGE_URL}#${anchor}`,
         provider: { "@id": ORG_ID },
         areaServed,
+        audience: { "@type": "Audience", audienceType: fiche.audienceType },
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: `${name} : domaines`,
+          itemListElement: fiche.domains.map((domain) => ({
+            "@type": "Offer",
+            itemOffered: { "@type": "Service", name: domain.label },
+          })),
+        },
       })),
     ],
   };

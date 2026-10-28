@@ -1,10 +1,8 @@
 "use client";
 
-import { useMotionValue } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, type MouseEvent, type ReactNode } from "react";
 
-import { SectionMotifLayers } from "@/components/sections/expertises/SectionMotif";
-import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { projectAnnouncement, realisations } from "@/lib/realisations";
 
 const FINE_QUERY = "(hover: hover) and (pointer: fine)";
@@ -43,8 +41,6 @@ type Mode = "scene" | "bento";
  */
 export function RealisationsController({ mode, children }: { mode: Mode; children: ReactNode }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const reduce = usePrefersReducedMotion();
-  const still = useMotionValue(0);
   /** Défilement vers un projet / une photo (scène), renseigné par l'effet de la scène. */
   const goTo = useRef<(k: number | null, photo: number | null) => void>(() => {});
 
@@ -404,9 +400,9 @@ export function RealisationsController({ mode, children }: { mode: Mode; childre
         <div className="realisations-glow-blue absolute" />
       </div>
 
-      {/* Motif du hero, variante nuit, sur toute la section ; intensité --motif-strength-realisations */}
+      {/* Zigzag doré (fond sombre, statique) sur tout le fond */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
-        <SectionMotifLayers tone="night" leftY={still} rightY={still} reduce={reduce} willChange={false} />
+        <WaveMotif tone="dark" mask="full" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-site px-6 md:px-10 xl:px-28">{children}</div>

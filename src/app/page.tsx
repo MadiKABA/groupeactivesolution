@@ -9,7 +9,7 @@ import { Realisations } from "@/components/sections/realisations/Realisations";
 
 export default function Home() {
   return (
-    <main>
+    <main data-page="home">
       <Hero />
       <Expertises />
       <Realisations />
@@ -17,7 +17,7 @@ export default function Home() {
       <Formations />
       <Faq />
       <Contact />
-      <Partners />
+      <Partners motifMask="full" />
     </main>
   );
 }

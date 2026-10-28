@@ -1,6 +1,6 @@
 import { ArrowDown } from "lucide-react";
 
-import { MotifPattern } from "@/components/ui/MotifPattern";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { expertises, type ExpertiseSlug } from "@/lib/expertises";
 import { servicesHero } from "@/lib/services";
 
@@ -17,14 +17,9 @@ export function ServicesHero({ photos = {} }: { photos?: Partial<Record<Expertis
 
   return (
     <section aria-labelledby="services-hero-title" className="sv-hero">
-      {/*
-        Motif textile de l'accueil (tuile de 160px, traits fins) en SVG inline : une image de fond
-        deviendrait l'élément LCP à la place du titre.
-      */}
-      <div aria-hidden="true" className="sv-motif">
-        <div className="sv-motif-tile">
-          <MotifPattern className="text-brand-gold" tileScale={160 / 96} strokeWidth={0.6} />
-        </div>
+      {/* Zigzag doré en SVG inline (une image de fond deviendrait l'élément LCP à la place du titre) : coin haut droit, hors du texte */}
+      <div aria-hidden="true" className="sv-wave pointer-events-none absolute inset-0 -z-10">
+        <WaveMotif tone="dark" mask="tr" hero />
       </div>
 
       <div className="sv-grid site-container">

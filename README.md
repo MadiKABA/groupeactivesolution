@@ -169,12 +169,21 @@ Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les q
 
 ## Page Services
 
-Route `/services` (`src/app/services/page.tsx`) : hero seul (`src/components/services/ServicesHero.tsx`, CSS `sv-*` dans `globals.css`) et données structurées (`ServicesJsonLd.tsx`, via `src/components/seo/JsonLd.tsx`). Les fiches `#former`, `#creer`, `#transformer` (cibles du bouton et des vignettes) sont à venir : en attendant, ces ancres n'existent pas.
+Route `/services` (`src/app/services/page.tsx`) : hero (`src/components/services/ServicesHero.tsx`, CSS `sv-*`), puis `<div id="expertises">` avec les trois fiches `#former`, `#creer`, `#transformer` (`src/components/services/fiches/`, CSS `xp-*`), données structurées (`ServicesJsonLd.tsx`, via `src/components/seo/JsonLd.tsx`). Anciennes ancres : `#developpement-digital` → `#creer`, `#transformation-digitale` → `#transformer`.
 
-- **Données partagées** : les noms, phrases et ancres des trois expertises viennent de **`src/lib/expertises.ts`**, source unique de l'accueil (section Expertises) et de `/services` (champs `anchor`, `servicesAlt`). Textes du hero : `src/lib/services.ts`.
+- **Fiches** (Server Components) : `ExpertiseSection` (titre `ExpertiseHeading`, « Pour qui », façon de faire, lien de fin), `DomainGrid` (cartes non cliquables dès 768px : 3 par ligne en desktop, 3 + 2 avec 5 domaines, 2 colonnes en tablette ; pastilles de texte en mobile), `ExpertisePhoto`, `SectionBackdrop` (zigzag `WaveMotif` partagé, `src/components/ui/WaveMotif.tsx`, vers le coin bas droit). Thème clair ou sombre et côté de la photo lus dans les données.
+- **Navigation entre fiches** : pas de barre collée ; on passe d'une fiche à l'autre par les vignettes du hero, le bouton « Découvrir nos expertises » et les liens internes (dont ceux de l'accueil vers `/services#former|creer|transformer`). `scroll-padding-top` (page seulement, `--hdr-h` + 16px) : titre et focus jamais sous le header. Après une ancre, `FicheFocus` (seul îlot client des fiches, sans rendu) donne le focus au `<h2>` de la fiche (`tabindex="-1"`) ; défilement doux par la règle globale, seulement sans mouvement réduit.
+- **Animations** : entrées au défilement en CSS (`animation-timeline: view()`), seulement si le navigateur les gère et sans mouvement réduit ; sinon rendu statique complet. Dérive du zigzag et halo qui respire sur la fiche sombre uniquement.
+- **Liens de fin de fiche** : `/ecole` et `/contact` n'existent pas encore → `/#formations` et `/#contact` (à remplacer dans `expertises.ts`).
+
+- **Données partagées** : les noms, phrases et ancres des trois expertises viennent de **`src/lib/expertises.ts`**, source unique de l'accueil (section Expertises) et de `/services` (champs `anchor`, `anchorAliases`, `servicesAlt` et `fiche` : accroche, paragraphe, public, façon de faire, domaines avec nom d'icône lucide, lien, photo, thème, côté de la photo). Textes du hero : `src/lib/services.ts`.
 - **Photos des vignettes** : déposer **`public/images/services/education`**, **`developpement`** et **`transformation`** en `.avif`, `.webp` ou `.jpg` (premier format trouvé, détecté au build : rebuilder après l'ajout), environ 120 Ko, sans texte ni logo incrusté. Cadrage : `education` en portrait **1:2** (ex. 800 × 1600), les deux autres en carré **1:1** (ex. 1000 × 1000), sujet centré. Renseigner ensuite `servicesAlt` (description factuelle de la photo) dans `expertises.ts`. Sans photo, la vignette garde son fond de couleur.
 - **Mouvement** : entrée en CSS pur, parallaxe au pointeur (`MosaicParallax.tsx`, souris uniquement), profondeur au défilement en CSS (`animation-timeline`, si le navigateur la gère) ; rien avec les animations réduites.
+- **Photos des fiches** : `public/images/services/fiche-education`, `fiche-developpement`, `fiche-transformation` (`.avif`, `.webp` ou `.jpg`, détectées au build), image maîtresse ≈ 1600 × 1600, sujet centré (recadrée en 9/10 desktop, 16/9 tablette, 10/7 mobile), 100 à 150 Ko. Renseigner ensuite `fiche.photo.alt` et `objectPosition`. Sans photo : dégradé bleu nuit et zigzag.
 - Sitemap : `/services` ajouté. À fournir : image Open Graph 1200 × 630.
+- **Structure finale** : header, hero, trois fiches, bande CTA `#contact-cta`, section Partenaires, footer (layout). Aucune section Questions-réponses.
+- **Bande CTA** : `src/components/services/CtaGlassBand.tsx` (Server Component, props : `title`, `titleHighlight`, `support`, `cta { label, href }`), textes dans `servicesCta` de `src/lib/services.ts`, CSS `cg-*`. Fond bleu nuit à bords droits, filet doré en haut, trois lueurs en `radial-gradient` (doré via `--motif-halo`, bleu `brand-navy-glow`), zigzag `WaveMotif` dans les deux coins bas. **Verre : un seul panneau avec `backdrop-filter`, presque transparent** (blanc 2,5 %, bordure 8 %), repli plein sans support. Entrées et dérive en CSS (`animation-timeline: view()`), état final sans support ou en mouvement réduit. Bouton : `/#contact` tant que `/contact` n'existe pas.
+- **Partenaires** : le composant `Partners` de l'accueil, rendu tel quel (mêmes textes `partnersIntro`, fond clair : jonction directe avec la bande sombre).
 
 ## Logos des partenaires
 
@@ -196,3 +205,8 @@ Les logos officiels des partenaires (fournis par le client, jamais redessinés n
 - Ne jamais inventer de coordonnées, partenaires, témoignages ou réalisations.
 
 Voir `CLAUDE.md` pour le détail des conventions.
+
+
+## Motifs de fond
+
+Un seul motif de fond par section (accueil et `/services`) : le zigzag ondulé doré `WaveMotif`, avec une opacité par section (valeurs d'origine, d'avant les réductions), pilotée par les variables `--motif-zigzag-*` de `:root` dans `src/app/globals.css` (un seul endroit à modifier). Pas de réseau de points ni de couche décorative superposée. Les halos dorés diffus sont pondérés par `--motif-halo` (1 = valeurs d'origine).

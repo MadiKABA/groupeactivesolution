@@ -1,10 +1,8 @@
 "use client";
 
-import { useMotionValue } from "motion/react";
 import { useEffect, useLayoutEffect, useRef, type CSSProperties, type ReactNode } from "react";
 
-import { SectionMotifLayers } from "@/components/sections/expertises/SectionMotif";
-import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
+import { WaveMotif, type WaveMask } from "@/components/ui/WaveMotif";
 import { SCENE_WIDTH } from "@/lib/partners-layout";
 
 const DESKTOP_QUERY = "(min-width: 64rem)";
@@ -46,6 +44,8 @@ type StageProps = {
   count: number;
   height: number;
   children: ReactNode;
+  /** Masque du zigzag : coin bas droit par défaut, tout le fond sur l'accueil. */
+  motifMask?: WaveMask;
 };
 
 /**
@@ -54,10 +54,8 @@ type StageProps = {
  * le focus et la carte active en mobile. Un IntersectionObserver pour l'entrée, un pour la visibilité,
  * un seul setInterval pour les impulsions ambiantes (effacé hors écran ou onglet masqué).
  */
-export function PartnersStage({ regime, routes, count, height, children }: StageProps) {
+export function PartnersStage({ regime, routes, count, height, children, motifMask = "br" }: StageProps) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const reduce = usePrefersReducedMotion();
-  const still = useMotionValue(0);
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -351,9 +349,9 @@ export function PartnersStage({ regime, routes, count, height, children }: Stage
 
   return (
     <div ref={rootRef} data-regime={regime} style={{ "--h": `${height}px` } as CSSProperties} className="pt-root relative pt-16 pb-16 lg:pt-28 lg:pb-30">
-      {/* Motif du hero, variante claire (vivid) ; intensité --motif-strength-partners */}
+      {/* Zigzag doré (fond clair, statique) : coin bas droit, tout le fond sur l'accueil */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
-        <SectionMotifLayers tone="vivid" leftY={still} rightY={still} reduce={reduce} willChange={false} />
+        <WaveMotif tone="light" mask={motifMask} />
       </div>
       <div className="relative z-10 mx-auto max-w-site px-5 md:px-10 xl:px-28">{children}</div>
     </div>

@@ -3,7 +3,7 @@
 import { motion, MotionConfig, useMotionValue, useScroll, useSpring, useTransform, type Transition } from "motion/react";
 import { memo, useEffect, useMemo, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent } from "react";
 
-import { SectionMotifLayers } from "@/components/sections/expertises/SectionMotif";
+import { WaveMotif } from "@/components/ui/WaveMotif";
 import { WordsTitle } from "@/components/ui/WordsTitle";
 import { useMediaQuery, usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { EASE } from "@/lib/motion";
@@ -18,7 +18,6 @@ import { MethodeStepCard } from "./MethodeStepCard";
  * de re-rendre titre, motif, cartes et bandeau à chaque changement d'étape (tâches longues en 4x).
  */
 const Title = memo(WordsTitle);
-const Motif = memo(SectionMotifLayers);
 const StepCard = memo(MethodeStepCard);
 const Cta = memo(MethodeCta);
 
@@ -157,11 +156,9 @@ export function MethodeClient() {
   const [mobileActive, setMobileActive] = useState(0);
   const timeline = useMemo(() => buildTimeline(desktop, reduce), [desktop, reduce]);
 
-  // Défilement : un seul useScroll ; motif ±10px, lueur ±20px (desktop avec souris).
+  // Défilement : un seul useScroll ; lueur ±20px (desktop avec souris).
   const { scrollYProgress } = useScroll({ target: rootRef, offset: ["start end", "end start"] });
   const centered = (value: number) => value * 2 - 1;
-  const motifLeftY = useTransform(scrollYProgress, (v) => (immersive ? -centered(v) * 10 : 0));
-  const motifRightY = useTransform(scrollYProgress, (v) => (immersive ? centered(v) * 10 : 0));
   const glowY = useTransform(scrollYProgress, (v) => (immersive ? centered(v) * 20 : 0));
 
   // Inclinaison de la pile et profondeur des couches : pointeur normalisé (-1 → 1) sur ressorts.
@@ -356,8 +353,8 @@ export function MethodeClient() {
           transition={at(0, 0.8)}
         />
 
-        {/* Motif du hero (variante claire) sur toute la section ; intensité --motif-strength-methode */}
-        <div aria-hidden="true" className="methode-motif pointer-events-none absolute inset-0 z-0 overflow-clip">
+        {/* Zigzag doré (fond clair, statique) sur tout le fond de la section */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
           <motion.div
             data-reveal
             className="absolute inset-0"
@@ -365,7 +362,7 @@ export function MethodeClient() {
             animate={headerOn ? { opacity: 1 } : undefined}
             transition={reduce ? { duration: 0.4 } : { duration: 1.2, ease: "easeOut" }}
           >
-            <Motif tone="light" leftY={motifLeftY} rightY={motifRightY} reduce={reduce} willChange={false} />
+            <WaveMotif tone="light" mask="full" />
           </motion.div>
         </div>
 

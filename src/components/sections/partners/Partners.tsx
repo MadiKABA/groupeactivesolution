@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 
 import { reveal } from "@/components/sections/formations/reveal";
+import type { WaveMask } from "@/components/ui/WaveMotif";
 import { confirmedPartners, partners as allPartners, partnersIntro, type Partner } from "@/lib/partners";
 import { layout, SCENE_WIDTH } from "@/lib/partners-layout";
 
@@ -23,12 +24,15 @@ export function Partners({
   list = allPartners,
   texts = partnersIntro,
   introSuffix,
+  motifMask,
 }: {
   list?: readonly Partner[];
   /** Textes de l'en-tête (accueil : partnersIntro ; bande TrustBand : src/content/trust.ts). */
   texts?: PartnersTexts;
   /** Ajout après l'introduction (marqueur « [À valider] » en développement). */
   introSuffix?: ReactNode;
+  /** Masque du zigzag (accueil : `full`, tout le fond) ; coin bas droit par défaut. */
+  motifMask?: WaveMask;
 }) {
   const confirmed = confirmedPartners(list);
   const plan = layout(confirmed.length);
@@ -37,7 +41,7 @@ export function Partners({
 
   return (
     <section id="partenaires" aria-labelledby={titleId} className="partners-section relative isolate overflow-x-clip bg-surface-warm text-brand-navy">
-      <PartnersStage regime={plan.regime} routes={plan.routes} count={plan.cards.length} height={plan.height}>
+      <PartnersStage regime={plan.regime} routes={plan.routes} count={plan.cards.length} height={plan.height} motifMask={motifMask}>
         <header>
           <p className="flex items-center gap-3 text-tag font-bold tracking-eyebrow text-gold-ink-warm uppercase">
             <span aria-hidden="true" className="pt-a h-0.5 w-9 origin-left bg-gold-line" {...reveal(0, 500, "scaleX(0)")} />

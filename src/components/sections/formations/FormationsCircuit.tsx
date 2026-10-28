@@ -1,14 +1,12 @@
 import type { CSSProperties } from "react";
 
 import {
-  CIRCUIT_CHIP,
   CIRCUIT_LABEL_OFFSET,
   CIRCUIT_MONOGRAM,
   CIRCUIT_NODE_HALO_RADIUS,
   CIRCUIT_NODE_RADIUS,
-  CIRCUIT_NODES,
   CIRCUIT_NUMBER_OFFSET,
-  CIRCUIT_VIEWBOX,
+  type CircuitGeometry,
 } from "@/lib/formations-circuit";
 import { formationDomains } from "@/lib/formations";
 
@@ -20,21 +18,24 @@ const TRACKS_AT = 1000;
 const TRACK_STAGGER = 150;
 const TRACK_DRAW = 500;
 
-const { x, y, width, height, rx, inner, pinXs, pinLength, haloRadius } = CIRCUIT_CHIP;
-const chipCx = x + width / 2;
-const chipCy = y + height / 2;
-
 /**
  * Circuit décoratif (aria-hidden) : puce au monogramme, 5 pistes et 5 nœuds. Aucun état React :
  * l'onglet actif (`data-active`), l'allumage (`data-lit`) et l'entrée (`data-in-a`) sont posés sur
  * l'ancêtre `.formations-root` et lus par le CSS (globals.css, « Section Formations »).
- * Chaque élément lié à une étape porte `data-i` (1 → 5).
+ * Chaque élément lié à une étape porte `data-i` (1 → 5). Géométrie fournie par FormationsInteractive :
+ * FREE_CIRCUIT sous 1100px, tabsCircuit() (pistes alignées sur les onglets, `data-layout="tabs"`) au-delà.
  */
-export function FormationsCircuit() {
+export function FormationsCircuit({ geometry }: { geometry: CircuitGeometry }) {
+  const { viewBox, chip, nodes, layout } = geometry;
+  const { x, y, width, height, rx, inner, pinXs, pinLength, haloRadius } = chip;
+  const chipCx = x + width / 2;
+  const chipCy = y + height / 2;
+
   return (
     <svg
-      viewBox={`0 0 ${CIRCUIT_VIEWBOX.width} ${CIRCUIT_VIEWBOX.height}`}
+      viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
       aria-hidden="true"
+      data-layout={layout}
       className="formations-circuit block h-auto w-full overflow-visible"
     >
       <defs>
@@ -43,7 +44,7 @@ export function FormationsCircuit() {
           <stop offset="1" className="formations-halo-stop" stopOpacity="0" />
         </radialGradient>
         <filter id="formations-track-blur" x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur stdDeviation="5" />
+          <feGaussianBlur stdDeviation="2.5" />
         </filter>
       </defs>
 
@@ -54,8 +55,8 @@ export function FormationsCircuit() {
         </g>
 
         {/* Pistes : base (dessinée à l'entrée), doublon flouté et tracé doré de la piste active */}
-        {CIRCUIT_NODES.map((node, index) => (
-          <g key={node.track} data-i={index + 1}>
+        {nodes.map((node, index) => (
+          <g key={formationDomains[index].id} data-i={index + 1}>
             <path className="fo-a formations-track" d={node.track} pathLength={1} {...reveal(TRACKS_AT + index * TRACK_STAGGER, TRACK_DRAW)} />
             <path className="formations-track-glow" d={node.track} pathLength={1} filter="url(#formations-track-blur)" />
             <path className="formations-track-on" d={node.track} pathLength={1} />
@@ -79,26 +80,26 @@ export function FormationsCircuit() {
             width={CIRCUIT_MONOGRAM.width}
             height={CIRCUIT_MONOGRAM.height}
           />
-          {CIRCUIT_NODES.map((node, index) => (
-            <rect key={node.track} data-i={index + 1} className="fo-loop formations-ring" x={x} y={y} width={width} height={height} rx={rx} />
+          {nodes.map((node, index) => (
+            <rect key={formationDomains[index].id} data-i={index + 1} className="fo-loop formations-ring" x={x} y={y} width={width} height={height} rx={rx} />
           ))}
         </g>
 
         {/* Impulsion : un point par piste, seul celui de la piste active circule (offset-path) */}
-        {CIRCUIT_NODES.map((node, index) => (
+        {nodes.map((node, index) => (
           <g
-            key={node.track}
+            key={formationDomains[index].id}
             data-i={index + 1}
             className="fo-loop formations-pulse"
             style={{ offsetPath: `path("${node.track}")` } as CSSProperties}
           >
-            <circle className="formations-pulse-halo" r={13} />
+            <circle className="formations-pulse-halo" r={9} />
             <circle className="formations-pulse-dot" r={6} />
           </g>
         ))}
 
         {/* Nœuds : apparition à la fin de leur piste ; clic (pointeur) = onglet correspondant */}
-        {CIRCUIT_NODES.map((node, index) => {
+        {nodes.map((node, index) => {
           const domain = formationDomains[index];
           const number = { x: node.cx, y: node.cy + CIRCUIT_NUMBER_OFFSET, textAnchor: "middle" } as const;
           const entry = reveal(TRACKS_AT + index * TRACK_STAGGER + TRACK_DRAW, 300, "scale(.8)");
@@ -106,7 +107,7 @@ export function FormationsCircuit() {
           const origin = { transformOrigin: `${node.cx}px ${node.cy}px` };
           return (
             <g
-              key={node.track}
+              key={formationDomains[index].id}
               data-i={index + 1}
               data-node={index}
               className="fo-a formations-node-in"
