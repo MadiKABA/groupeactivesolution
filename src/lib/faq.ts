@@ -1,5 +1,7 @@
 // CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
 
+import { ROUTES } from "./routes";
+
 export type FaqCategory = { id: string; label: string };
 
 /** Segment de réponse : `strong` met le passage en gras (bleu nuit, 700), sans HTML libre. */
@@ -29,7 +31,7 @@ export const faqContact = {
   title: "Vous ne trouvez pas votre réponse ?",
   text: "Parlez-nous de votre projet ou de votre besoin de formation.",
   whatsapp: { label: "Écrire sur WhatsApp", ariaLabel: "Écrire sur WhatsApp (s'ouvre dans un nouvel onglet)" },
-  cta: { label: "Nous contacter", href: "/contact" },
+  cta: { label: "Nous contacter", href: ROUTES.contact },
 } as const;
 
 export const faqCategories: readonly FaqCategory[] = [

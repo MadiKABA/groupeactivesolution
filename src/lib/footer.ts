@@ -1,10 +1,12 @@
 // CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
 
+import { ROUTES } from "./routes";
+
 /*
  * Textes et liens du footer. Les coordonnées et les réseaux viennent de `site.ts` (source unique).
  * Ancres : la navigation du header pointe vers des routes qui n'existent pas encore (/services,
  * /realisations, /formations…) ; le footer renvoie donc aux sections de la page d'accueil
- * (ids existants : expertise-*, realisations, methode, formations, faq, contact).
+ * (ids existants : expertise-*, realisations, methode, formations, faq ; le contact est la page /contact).
  */
 
 export type FooterLink = { label: string; href: string };
@@ -25,7 +27,7 @@ export const footerNavigation: readonly FooterLink[] = [
   { label: "Méthode", href: "/#methode" },
   { label: "Formations", href: "/#formations" },
   { label: "FAQ", href: "/#faq" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: ROUTES.contact },
 ];
 
 /** Chaque lien n'est rendu que si la page existe (src/app/<route>/page.tsx) : contenu juridique à fournir. */

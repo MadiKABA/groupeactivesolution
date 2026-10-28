@@ -1,12 +1,12 @@
 import { useId } from "react";
 
 /*
- * Zigzag ondulé doré : seul motif de fond du site (accueil et /services). SVG inline, sans JavaScript.
+ * Zigzag ondulé doré : seul motif de fond du site (accueil, /services ; trait bleu nuit sur /contact). SVG inline, sans JavaScript.
  * Trait de 1 px, mailles 64 × 32 (mobile) et 96 × 48 (≥ 1024px). Opacité : `--motif-zigzag`
  * (`--motif-zigzag-hero` avec `hero`), couleurs et masques : classes `wave-*` de globals.css.
  * À poser dans un conteneur positionné (le motif remplit son parent, derrière le contenu).
  */
-export type WaveTone = "light" | "dark";
+export type WaveTone = "light" | "dark" | "navy";
 export type WaveMask = "tl" | "tr" | "bl" | "br" | "l" | "r" | "full";
 export type WaveMesh = "auto" | "small" | "large";
 
@@ -17,7 +17,7 @@ export function WaveMotif({
   hero = false,
   className = "",
 }: {
-  /** `light` : fond clair (doré de trait, gold-line) ; `dark` : fond bleu nuit (doré de la marque). */
+  /** `light` : fond clair (doré de trait, gold-line) ; `dark` : fond bleu nuit (doré de la marque) ; `navy` : trait bleu nuit sur fond clair (/contact). */
   tone: WaveTone;
   /** Coin ou bord où le motif reste visible, effacé partout ailleurs ; `full` : tout le fond, sans masque (accueil). */
   mask: WaveMask;

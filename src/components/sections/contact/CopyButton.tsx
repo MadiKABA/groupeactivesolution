@@ -27,7 +27,7 @@ function legacyCopy(value: string): boolean {
 }
 
 /**
- * Bouton « Copier » (44 × 44) : Clipboard API, repli execCommand, sinon « Copie impossible ».
+ * Bouton « Copier » (46 × 46) : Clipboard API, repli execCommand, sinon « Copie impossible ».
  * Succès : coche dorée en fondu croisé, infobulle « Copié ✓ » (position absolue : aucun décalage)
  * et annonce « Copié dans le presse-papiers » pour les lecteurs d'écran.
  */
@@ -53,7 +53,7 @@ export function CopyButton({ value, label }: { value: string; label: string }) {
   const message = status === "copied" ? contactCopy.copied : status === "failed" ? contactCopy.failed : "";
   return (
     <span className="relative inline-flex shrink-0">
-      <button type="button" aria-label={label} onClick={copy} data-status={status} className="ct-copy relative flex size-11 cursor-pointer items-center justify-center rounded-lg border">
+      <button type="button" aria-label={label} onClick={copy} data-status={status} className="ct-copy relative flex size-11.5 cursor-pointer items-center justify-center rounded-full border">
         <Copy aria-hidden="true" className="ct-copy-idle absolute size-4.5" />
         <Check aria-hidden="true" className="ct-copy-done absolute size-4.5" />
       </button>

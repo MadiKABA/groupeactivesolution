@@ -3,6 +3,8 @@
  * Textes à valider par Active Solution : ne pas les enrichir (ni durées, ni livrables, ni garanties).
  */
 
+import { ROUTES } from "./routes";
+
 export type MethodeSegment = { texte: string; fort?: boolean };
 
 export type MethodeEtape = {
@@ -74,9 +76,9 @@ export const methodeEtapes: readonly MethodeEtape[] = [
 export const methodeCta = {
   title: "Créons ensemble votre prochain projet numérique.",
   text: "Contactez-nous pour discuter de votre projet, d'une collaboration ou simplement échanger.",
-  // Section « Contact » de la page d'accueil (ancre).
+  // Page Contact.
   label: "Nous contacter",
-  href: "#contact",
+  href: ROUTES.contact,
 } as const;
 
 /**

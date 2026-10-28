@@ -1,5 +1,7 @@
 import { Code2, GraduationCap, Settings2, type LucideIcon } from "lucide-react";
 
+import { ROUTES } from "./routes";
+
 export type ExpertiseSlug = "education" | "developpement" | "transformation";
 /** Ancre de la fiche de l'expertise sur la page /services. */
 export type ExpertiseAnchor = "former" | "creer" | "transformer";
@@ -65,7 +67,7 @@ export const expertisesIntro = {
     "Nous connectons l'éducation, la technologie et la stratégie pour transformer les idées en compétences et en solutions concrètes.",
 } as const;
 
-// Destinations à confirmer : /formations, /ecole et /contact n'existent pas encore (fiches : sections de l'accueil).
+// Destinations à confirmer : /formations et /ecole n'existent pas encore (fiches : sections de l'accueil).
 export const expertises = [
   {
     slug: "education",
@@ -144,8 +146,7 @@ export const expertises = [
         { label: "Solutions SaaS", icon: "Cloud" },
         { label: "Intégration de l'IA et automatisation", icon: "Zap" },
       ],
-      // TODO : /contact quand la page existera ; en attendant, section Contact de l'accueil.
-      link: { label: "Discuter de votre projet", href: "/#contact" },
+      link: { label: "Discuter de votre projet", href: ROUTES.contact },
       photo: { alt: "", objectPosition: "50% 50%" }, // TODO : alt factuel quand la photo sera déposée
       theme: "sombre",
       photoSide: "gauche",
@@ -183,8 +184,7 @@ export const expertises = [
         { label: "Optimisation des processus internes", icon: "RefreshCw" },
         { label: "Exploitation des données pour la décision", icon: "LineChart" },
       ],
-      // TODO : /contact quand la page existera ; en attendant, section Contact de l'accueil.
-      link: { label: "Discuter de votre projet", href: "/#contact" },
+      link: { label: "Discuter de votre projet", href: ROUTES.contact },
       photo: { alt: "", objectPosition: "50% 50%" }, // TODO : alt factuel quand la photo sera déposée
       theme: "clair",
       photoSide: "droite",

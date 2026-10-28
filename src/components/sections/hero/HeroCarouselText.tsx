@@ -8,6 +8,7 @@ import { useId, useRef, type KeyboardEvent } from "react";
 import { ButtonShine } from "@/components/ui/ButtonShine";
 import type { HeroCarousel } from "@/hooks/useHeroCarousel";
 import { HERO_EASE, HERO_ENTRY_DELAY, heroSlides, type HeroSlide } from "@/lib/hero-slides";
+import { ROUTES } from "@/lib/routes";
 
 const MotionLink = motion.create(Link);
 
@@ -220,7 +221,7 @@ export function HeroCarouselText({ carousel, reduce }: HeroCarouselTextProps) {
         </MotionLink>
 
         <MotionLink
-          href="/contact"
+          href={ROUTES.contact}
           whileTap={{ scale: 0.97 }}
           className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full border border-brand-gold px-7 text-sm font-semibold whitespace-nowrap text-text-on-dark transition-colors duration-300 ease-standard hover:text-brand-navy xs:h-11.25"
         >

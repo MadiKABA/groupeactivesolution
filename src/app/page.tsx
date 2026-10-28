@@ -1,4 +1,4 @@
-import { Contact } from "@/components/sections/contact/Contact";
+import { ContactHashRedirect } from "@/components/contact/ContactHashRedirect";
 import { Expertises } from "@/components/sections/expertises/Expertises";
 import { Faq } from "@/components/sections/faq/Faq";
 import { Formations } from "@/components/sections/formations/Formations";
@@ -10,13 +10,13 @@ import { Realisations } from "@/components/sections/realisations/Realisations";
 export default function Home() {
   return (
     <main data-page="home">
+      <ContactHashRedirect />
       <Hero />
       <Expertises />
       <Realisations />
       <Methode />
       <Formations />
       <Faq />
-      <Contact />
       <Partners motifMask="full" />
     </main>
   );

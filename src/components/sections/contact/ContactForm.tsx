@@ -118,23 +118,23 @@ export function ContactForm() {
   const invalid = (key: Field) => (errors[key] ? { "aria-invalid": true as const, "aria-describedby": `${ids[key]}-error` } : {});
   const error = (key: Field) =>
     errors[key] ? (
-      <p id={`${ids[key]}-error`} className="ct-error mt-2 text-sm font-semibold text-error-on-dark">
+      <p id={`${ids[key]}-error`} className="ct-error mt-2 text-sm font-semibold text-error-on-light">
         {errors[key]}
       </p>
     ) : null;
 
   return (
-    <form noValidate onSubmit={onSubmit} className="flex flex-1 flex-col justify-between gap-5.5">
+    <form noValidate onSubmit={onSubmit} className="flex flex-1 flex-col gap-5.5">
       <div className="ct-a" {...field(0)}>
-        <h3 className="text-h3-lg font-extrabold text-text-on-dark">{contactForm.title}</h3>
-        <p className="mt-1.5 text-nav leading-relaxed text-text-on-dark/72">{contactForm.text}</p>
+        <h3 className="text-h3-lg font-extrabold text-brand-navy">{contactForm.title}</h3>
+        <p className="mt-1.5 text-nav leading-relaxed text-text-slate">{contactForm.text}</p>
       </div>
 
-      <fieldset className="ct-a" {...field(1)}>
-        <legend id={ids.need} className="text-label-xs font-bold tracking-category text-text-on-dark/72 uppercase">
+      <fieldset className="ct-a ct-chips" {...field(1)}>
+        <legend id={ids.need} className="text-label-xs font-bold tracking-category text-text-slate uppercase">
           {contactForm.needLegend}
         </legend>
-        <div ref={groupRef} className="mt-3 flex flex-wrap gap-2.5">
+        <div ref={groupRef} className="ct-chip-list mt-3">
           <div role="radiogroup" aria-labelledby={ids.need} {...invalid("need")} className="contents">
             {CONTACT_NEEDS.map((label, index) => {
               const checked = need === index;
@@ -150,7 +150,7 @@ export function ContactForm() {
                   tabIndex={checked || (need === null && index === 0) ? 0 : -1}
                   onClick={() => choose(index)}
                   onKeyDown={(event) => onRadioKey(event, index)}
-                  className="ct-chip h-11 cursor-pointer rounded-full border px-4.5 text-sm font-semibold"
+                  className="ct-chip cursor-pointer rounded-full border font-semibold"
                 >
                   {label}
                 </button>
@@ -162,7 +162,7 @@ export function ContactForm() {
       </fieldset>
 
       <div className="ct-a" {...field(2)}>
-        <label htmlFor={ids.name} className="text-label-xs font-bold tracking-category text-text-on-dark/72 uppercase">
+        <label htmlFor={ids.name} className="text-label-xs font-bold tracking-category text-text-slate uppercase">
           {contactForm.nameLabel}
         </label>
         <input
@@ -176,13 +176,13 @@ export function ContactForm() {
             refresh(need, event.target.value, message);
           }}
           {...invalid("name")}
-          className="ct-field mt-2 h-13 w-full rounded-[14px] border px-4 text-base text-text-on-dark"
+          className="ct-field mt-2 h-13 w-full rounded-2xl border px-4 text-base"
         />
         {error("name")}
       </div>
 
-      <div className="ct-a" {...field(3)}>
-        <label htmlFor={ids.message} className="text-label-xs font-bold tracking-category text-text-on-dark/72 uppercase">
+      <div className="ct-a flex flex-1 flex-col" {...field(3)}>
+        <label htmlFor={ids.message} className="text-label-xs font-bold tracking-category text-text-slate uppercase">
           {contactForm.messageLabel}
         </label>
         <textarea
@@ -195,27 +195,27 @@ export function ContactForm() {
             refresh(need, name, event.target.value);
           }}
           {...invalid("message")}
-          className="ct-field mt-2 block min-h-30 w-full resize-y rounded-[14px] border px-4 py-3 text-base leading-relaxed text-text-on-dark"
+          className="ct-field mt-2 block min-h-30 w-full flex-1 resize-y rounded-2xl border px-4 py-3 text-base leading-relaxed"
         />
         {error("message")}
       </div>
 
       <div className="ct-a flex flex-col gap-3" {...field(4)}>
-        <p id={ids.summary} role="alert" aria-live="assertive" className="text-sm font-semibold text-error-on-dark empty:hidden">
+        <p id={ids.summary} role="alert" aria-live="assertive" className="text-sm font-semibold text-error-on-light empty:hidden">
           {count > 0 ? contactForm.errors.summary(count) : ""}
         </p>
-        <button type="submit" className="ct-primary relative flex h-14 w-full cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-2xl text-base font-extrabold text-brand-navy">
+        <button type="submit" className="ct-primary relative flex h-14.5 w-full cursor-pointer items-center justify-center gap-2.5 overflow-hidden rounded-2xl text-base font-extrabold text-brand-navy">
           <WhatsAppIcon className="relative size-5.5" />
           <span className="relative">{contactForm.whatsapp}</span>
         </button>
-        <button type="button" onClick={() => send("email")} className="ct-secondary h-12 w-full cursor-pointer rounded-2xl border text-base font-semibold text-text-on-dark">
+        <button type="button" onClick={() => send("email")} className="ct-secondary h-13.5 w-full cursor-pointer rounded-2xl border text-base font-semibold">
           {contactForm.email}
         </button>
         {/* Confirmation : hauteur réservée (aucun décalage), annoncée poliment */}
-        <p role="status" aria-live="polite" data-show={confirmShown ? "" : undefined} className="ct-confirm min-h-5 text-sm font-semibold text-brand-gold-light">
+        <p role="status" aria-live="polite" data-show={confirmShown ? "" : undefined} className="ct-confirm min-h-5 text-sm font-semibold text-gold-ink-strong">
           {confirm ? contactForm.confirm[confirm] : ""}
         </p>
-        <p className="text-tag leading-relaxed text-text-on-dark/68">{contactForm.notice}</p>
+        <p className="text-tag leading-relaxed text-text-slate">{contactForm.notice}</p>
       </div>
     </form>
   );

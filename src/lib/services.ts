@@ -1,5 +1,7 @@
 // CONTENU PROVISOIRE : textes du hero de /services, à valider. Les noms des expertises viennent de expertises.ts.
 
+import { ROUTES } from "./routes";
+
 export const servicesHero = {
   /** Trois lignes du h1, lues d'un seul tenant ; `highlight` est le mot en doré de la 2e ligne. */
   title: {
@@ -20,6 +22,5 @@ export const servicesCta = {
   title: "Envie de former vos équipes, digitaliser votre activité ou donner à vos élèves",
   titleHighlight: "les clés du numérique de demain ?",
   support: "Chaque projet commence par une écoute de vos besoins.",
-  // TODO : /contact quand la page existera ; en attendant, section Contact de l'accueil.
-  cta: { label: "Parlons de votre projet", href: "/#contact" },
+  cta: { label: "Parlons de votre projet", href: ROUTES.contact },
 } as const;

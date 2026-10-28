@@ -1,9 +1,10 @@
 import { reveal } from "@/components/sections/formations/reveal";
 import { WhatsAppIcon } from "@/components/ui/icons/WhatsAppIcon";
 import { SocialIcon } from "@/components/ui/icons/SocialIcons";
-import { contactForm, contactInfoLabels, contactIntro } from "@/lib/contact";
+import { contactForm, contactInfoLabels, contactIntro, contactSummary } from "@/lib/contact";
 import { getMailtoUrl, getWhatsAppUrl, SOCIALS } from "@/lib/site";
 
+import { CardMotif } from "./CardMotif";
 import { ContactForm } from "./ContactForm";
 import { ContactInfoBlock } from "./ContactInfoBlock";
 import { ContactReveal } from "./ContactReveal";
@@ -16,25 +17,25 @@ const SOCIAL_STAGGER = 70;
 const NOSCRIPT_STYLE = ".ct-form-js{display:none!important}.ct-form-fallback{display:flex!important}";
 
 /*
- * Section « Contact » (fond bleu nuit), après la FAQ. Rendue côté serveur : titre, coordonnées
- * (liens fonctionnels sans JS), réseaux renseignés, carte du formulaire. Composants client :
- * ContactReveal (entrée), ContactForm, CopyButton.
+ * Section « Contact » de la page /contact (fond blanc cassé à motif bleu nuit), entre le hero et le
+ * footer. Rendue côté serveur : titre, coordonnées (liens fonctionnels sans JS), réseaux renseignés,
+ * carte du formulaire. Composants client : ContactReveal (entrée), ContactForm, CopyButton.
  */
 export function Contact() {
   return (
-    <section id="contact" aria-labelledby="contact-title" className="contact-section relative isolate overflow-x-clip bg-brand-navy text-text-on-dark [--focus-ring:var(--color-brand-gold-light)]">
+    <section id="contact" aria-labelledby="contact-title" className="ct-section relative isolate overflow-x-clip bg-surface-cream text-brand-navy">
       <ContactReveal>
-        <div className="relative z-10 mx-auto max-w-site px-5 md:px-10 xl:px-28">
-          <div className="mx-auto grid max-w-160 gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-x-18">
-            {/* Colonne gauche (conteneur de taille : le titre tient sur une ligne dans la colonne) */}
+        <div className="site-container relative z-10">
+          {/* Deux colonnes égales (bas alignés), sur toute la largeur de site-container : mêmes bords que le header */}
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-x-14">
             <div className="ct-col flex flex-col gap-7">
-              <p className="flex items-center gap-3 text-tag font-bold tracking-eyebrow text-brand-gold uppercase">
-                <span aria-hidden="true" className="ct-a h-0.5 w-9 origin-left bg-brand-gold" {...reveal(0, 500, "scaleX(0)")} />
+              <p className="flex items-center gap-3 text-tag font-bold tracking-eyebrow text-gold-ink-warm uppercase">
+                <span aria-hidden="true" className="ct-a h-0.5 w-9 origin-left bg-gold-line" {...reveal(0, 500, "scaleX(0)")} />
                 <span className="ct-a" {...reveal(0, 450)}>
                   {contactIntro.eyebrow}
                 </span>
               </p>
-              <h2 id="contact-title" className="ct-title font-extrabold tracking-display text-text-on-dark sm:whitespace-nowrap">
+              <h2 id="contact-title" className="ct-title font-extrabold tracking-display text-brand-navy">
                 {/* Mots en inline-block (retour à la ligne entre les mots en mobile) ; « projet. » 140 ms après */}
                 {contactIntro.title.split(" ").map((word) => (
                   <span key={word}>
@@ -44,22 +45,23 @@ export function Contact() {
                   </span>
                 ))}
                 <span className="ct-a inline-block" {...reveal(220, 600)}>
-                  <span className="rz-gradient-text">{contactIntro.titleHighlight}</span>
+                  <span className="text-gold-ink-deep">{contactIntro.titleHighlight}</span>
                 </span>
               </h2>
-              <p className="ct-a max-w-130 text-base leading-relaxed text-text-on-dark/76 lg:text-lg" {...reveal(180, 550)}>
+              <p className="ct-a max-w-130 text-base leading-relaxed text-text-slate lg:text-lg" {...reveal(180, 550)}>
                 {contactIntro.intro}
               </p>
 
-              <div className="flex flex-1 flex-col gap-4">
+              <div className="flex flex-1 flex-col gap-7">
                 <ContactInfoBlock />
                 {/* Toujours affichée : un réseau sans URL est une icône désactivée (jamais un lien mort). Sous 480px, libellé au-dessus et pastilles sur toute la largeur */}
-                <div className="ct-glass ct-a flex flex-col items-start gap-3 rounded-2xl px-4.5 py-4 xs:flex-row xs:items-center xs:justify-between xs:gap-4 lg:px-6 lg:py-4.5" {...reveal(400, 550)}>
-                  <p className="text-label-xs font-bold tracking-category whitespace-nowrap text-text-on-dark/72 uppercase">{contactInfoLabels.follow}</p>
+                <div className="ct-glass ct-a flex flex-col items-start gap-3 rounded-hero px-4.5 py-4 xs:flex-row xs:items-center xs:justify-between xs:gap-4 lg:px-6 lg:py-4.5" {...reveal(400, 550)}>
+                  <CardMotif />
+                  <h3 className="text-label-xs font-bold tracking-category whitespace-nowrap text-text-slate uppercase">{contactInfoLabels.follow}</h3>
                   <ul className="flex w-full justify-between xs:w-auto xs:justify-start xs:gap-2.5 lg:gap-3">
                     {SOCIALS.map((social, index) => {
                       const icon = <SocialIcon id={social.id} className="size-5.5" />;
-                      const pill = "ct-social flex size-13 items-center justify-center rounded-full border text-text-on-dark lg:size-14";
+                      const pill = "ct-social flex size-13 items-center justify-center rounded-full border lg:size-14";
                       return (
                         <li key={social.id} className="ct-pop" {...reveal(SOCIALS_AT + index * SOCIAL_STAGGER, 450)}>
                           {social.href.trim() ? (
@@ -79,8 +81,9 @@ export function Contact() {
               </div>
             </div>
 
-            {/* Colonne droite : formulaire (liens directs sans JS) */}
-            <div className="ct-form-card ct-a flex flex-col rounded-hero border px-5 py-6 lg:p-9" {...reveal(220, 600)}>
+            {/* Colonne droite : formulaire de la hauteur de la colonne gauche (liens directs sans JS) */}
+            <div className="ct-form-card ct-a flex flex-col rounded-hero border px-5 py-6 lg:px-8 lg:py-11" {...reveal(220, 600)}>
+              <CardMotif />
               <noscript>
                 <style>{NOSCRIPT_STYLE}</style>
               </noscript>
@@ -88,7 +91,7 @@ export function Contact() {
                 <ContactForm />
               </div>
               <div className="ct-form-fallback hidden flex-1 flex-col justify-center gap-3">
-                <h3 className="text-h3-lg font-extrabold text-text-on-dark">{contactForm.title}</h3>
+                <h3 className="text-h3-lg font-extrabold text-brand-navy">{contactForm.title}</h3>
                 <a
                   href={getWhatsAppUrl()}
                   target="_blank"
@@ -98,12 +101,17 @@ export function Contact() {
                   <WhatsAppIcon className="size-5.5" />
                   {contactForm.fallbackWhatsapp}
                 </a>
-                <a href={getMailtoUrl()} className="ct-secondary flex h-12 items-center justify-center rounded-2xl border text-base font-semibold text-text-on-dark">
+                <a href={getMailtoUrl()} className="ct-secondary flex h-12 items-center justify-center rounded-2xl border text-base font-semibold">
                   {contactForm.fallbackEmail}
                 </a>
               </div>
             </div>
           </div>
+
+          {/* Coordonnées en une phrase factuelle (lisible par les moteurs de réponse), visible */}
+          <p className="ct-a mt-10 max-w-320 text-sm leading-relaxed text-text-slate lg:mt-12" {...reveal(500, 450)}>
+            {contactSummary}
+          </p>
         </div>
       </ContactReveal>
     </section>

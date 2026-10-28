@@ -144,7 +144,7 @@ export const history: HistoryContent = {
       shortTitle: "Aujourd'hui",
       title: "Une histoire qui continue de s'écrire.",
       text: "Aujourd'hui, Active Solution poursuit son développement avec la volonté de renforcer son impact et de contribuer à l'évolution de l'écosystème numérique africain.",
-      cta: { label: "La suite reste à construire", href: "/#contact" },
+      cta: { label: "La suite reste à construire", href: "/contact" },
       photo: PHOTO_TODO,
       archives: [],
       needsValidation: true,

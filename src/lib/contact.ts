@@ -1,6 +1,8 @@
 // CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
 // Coordonnées, réseaux et besoins : src/lib/site.ts (source unique).
 
+import { SITE_CONTACT } from "./site";
+
 export const contactIntro = {
   eyebrow: "Contact",
   /** Titre en deux parties : la seconde est en dégradé doré. */
@@ -8,6 +10,20 @@ export const contactIntro = {
   titleHighlight: "projet.",
   intro: "Formation, application, site web ou transformation digitale : décrivez-nous votre besoin, nous vous répondons directement.",
 } as const;
+
+/** Hero de la page /contact (titre en mots ; « Parlons-en. » en doré). */
+export const contactHero = {
+  // Espace insécable avant le « ? ».
+  title: "Une idée, un besoin, une question\u00a0?",
+  titleHighlight: "Parlons-en.",
+  lead: "Écrivez-nous ou contactez-nous directement : nous lisons chaque message et revenons vers vous.",
+  cta: "Écrire un message",
+  replyLabel: "Réponse sous",
+  replyValue: "24\u00a0h",
+} as const;
+
+/** Coordonnées en une phrase, affichée sous la section (texte réel pour les moteurs de réponse). */
+export const contactSummary = `Pour contacter Active Solution Digital Service à Dakar : téléphone ou WhatsApp au ${SITE_CONTACT.phone.display}, e-mail ${SITE_CONTACT.email}, adresse ${SITE_CONTACT.address.display}.`;
 
 export const contactInfoLabels = {
   phone: "Téléphone",

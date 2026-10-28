@@ -10,7 +10,7 @@ const SEQUENCE = 1600;
 /**
  * Entrée de la section Contact : état masqué posé au montage (data-js, jamais en CSS statique),
  * un seul IntersectionObserver (25 %, une fois, puis déconnecté) qui pose data-in. Rend aussi le
- * zigzag doré statique (WaveMotif).
+ * zigzag bleu nuit statique sur tout le fond (WaveMotif, 4.5 %).
  */
 export function ContactReveal({ children }: { children: ReactNode }) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -53,9 +53,9 @@ export function ContactReveal({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <div ref={rootRef} className="ct-root relative pt-18 pb-20 lg:pt-28 lg:pb-30">
+    <div ref={rootRef} className="ct-root relative pt-16 pb-18 lg:pt-28 lg:pb-30">
       <div aria-hidden="true" className="ct-motif pointer-events-none absolute inset-0 z-0 overflow-clip">
-        <WaveMotif tone="dark" mask="full" />
+        <WaveMotif tone="navy" mask="full" />
       </div>
       {children}
     </div>

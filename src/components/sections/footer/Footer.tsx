@@ -70,7 +70,7 @@ export function Footer() {
         <div className="ft-topline" />
       </div>
 
-      <div className="ft-inner mx-auto max-w-site px-5 md:px-10 xl:px-28">
+      <div className="ft-inner site-container">
         <div className="ft-top">
           <div className="ft-brand ft-a" {...reveal(200, 550)}>
             <Image src={LOGO.src} alt={footerLabels.logoAlt} width={LOGO.width} height={LOGO.height} className="ft-logo" />
