@@ -6,6 +6,7 @@ import { Hero } from "@/components/sections/hero/Hero";
 import { Partners } from "@/components/sections/partners/Partners";
 import { Methode } from "@/components/sections/methode/Methode";
 import { Realisations } from "@/components/sections/realisations/Realisations";
+import { ImpactSection } from "@/components/about/impact/ImpactSection";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <Methode />
       <Formations />
       <Faq />
+      <ImpactSection />
       <Partners motifMask="full" />
     </main>
   );

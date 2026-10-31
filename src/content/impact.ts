@@ -46,7 +46,7 @@ export type ImpactContent = {
 
 export const impactContent: ImpactContent = {
   intro: {
-    label: "05 — Notre impact",
+    label: "Notre impact",
     titleLines: ["L'expérience,", "en quatre "],
     titleAccent: "repères.",
     paragraph:
