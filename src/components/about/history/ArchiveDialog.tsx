@@ -6,6 +6,7 @@ import { useEffect, useId, useRef, type PointerEvent } from "react";
 import { createPortal } from "react-dom";
 
 import type { HistoryArchive } from "@/content/history";
+import { showPlaceholders } from "@/lib/flags";
 
 import { ValidationMark } from "./ValidationMark";
 
@@ -126,7 +127,7 @@ export function ArchiveDialog({ open, archives, index, onIndexChange, onClose }:
         <div className="hs-dialog-body">
           <div className="hs-dialog-media">
             <span aria-hidden="true" className="hs-ph">
-              <span className="hs-ph-label">Archive à fournir</span>
+              {showPlaceholders && <span className="hs-ph-label">Archive à fournir</span>}
             </span>
             {archive.src && (
               <Image

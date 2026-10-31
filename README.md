@@ -46,6 +46,37 @@ L'application est alors disponible sur http://localhost:3000.
 
 Vérification complète : `pnpm lint && pnpm typecheck && pnpm build`.
 
+## Déploiement sur Vercel
+
+Le site est déployé sur Vercel (framework Next.js détecté automatiquement, `pnpm install` et `pnpm build` par défaut, Node ≥ 20.9). Aucune variable secrète : le formulaire de contact ouvre WhatsApp ou la messagerie et ne stocke rien.
+
+### Variables d'environnement
+
+Modèle commenté : **`.env.example`**. Toutes sont des variables `NEXT_PUBLIC_` : **elles sont intégrées au moment du build**, un changement de valeur sur Vercel n'a d'effet qu'après un nouveau déploiement (*Deployments → … → Redeploy*).
+
+| Variable | Relecture du contenu | Lancement officiel | Rôle |
+|---|---|---|---|
+| `NEXT_PUBLIC_SHOW_PLACEHOLDERS` | `true` | `false` (ou supprimée) | Affiche les repères de contenu provisoire : « [À valider] », cadres « Photo à fournir » / « Image à fournir » / « Archive à fournir », emplacements « Qui s'en occupe » et partenaires à valider. Toujours actifs avec `pnpm dev`. Logique unique dans `src/lib/flags.ts` (`showPlaceholders`). |
+| `NEXT_PUBLIC_ALLOW_INDEXING` | `false` | `true` | Tout sauf `true` : `noindex, nofollow` sur toutes les pages, `robots.txt` en `Disallow: /` sans sitemap, `sitemap.xml` vide, en-tête `X-Robots-Tag: noindex, nofollow` (`next.config.ts`). À `true` : SEO normal (metadata, sitemap, canonical, JSON-LD). |
+| `NEXT_PUBLIC_SITE_URL` | URL `https://<projet>.vercel.app` | `https://www.groupactivesolution.com` | Base des URL absolues : `metadataBase`, canonical, Open Graph, JSON-LD, sitemap (`SITE_URL` de `src/lib/site.ts`). Absente : domaine officiel. |
+
+Le JSON-LD reste rendu pendant la relecture : il est sans effet tant que les pages sont en `noindex`.
+
+### Relecture du contenu
+
+Le lien Vercel est partagé tel quel (aucune protection par mot de passe : vérifier dans *Settings → Deployment Protection* que « Vercel Authentication » est désactivée pour la production). La liste des contenus attendus est dans **`CONTENU-A-REMPLACER.md`**. Chaque push sur `main` redéploie le site.
+
+### Checklist de mise en ligne
+
+1. Tous les contenus de `CONTENU-A-REMPLACER.md` intégrés ; `pnpm check:content` ne liste plus rien (sinon `pnpm build:prod` échoue).
+2. Vérifier qu'aucun texte entre crochets (« [Nom du projet à valider] », « [Archive à fournir] »…) ne reste dans `src/lib/` et `src/content/` : ce sont des textes de données, affichés même sans placeholders.
+3. Vercel → *Settings → Domains* : ajouter `www.groupactivesolution.com` (et `groupactivesolution.com` redirigé vers `www`), puis configurer les DNS indiqués par Vercel chez le registraire.
+4. Vercel → *Settings → Environment Variables* (Production) : `NEXT_PUBLIC_SHOW_PLACEHOLDERS=false`, `NEXT_PUBLIC_ALLOW_INDEXING=true`, `NEXT_PUBLIC_SITE_URL=https://www.groupactivesolution.com`.
+5. Conseillé : *Settings → Build and Deployment → Build Command* = `pnpm build:prod`, pour que le déploiement échoue s'il reste un contenu à valider.
+6. Redéployer (*Deployments → Redeploy*, sans réutiliser le cache de build).
+7. Contrôler : `https://www.groupactivesolution.com/robots.txt` affiche `Allow: /` et la ligne `Sitemap`, `/sitemap.xml` liste les pages, le code source des pages contient `<meta name="robots" content="index, follow">`, aucun en-tête `X-Robots-Tag`, aucun « [À valider] » visible.
+8. Déclarer le site et le sitemap dans Google Search Console.
+
 ## Structure
 
 ```text
@@ -129,13 +160,13 @@ Photos des deux arches : **`public/about/hero-enseigner.jpg`** et **`public/abou
 
 Tokens utilisés : `brand-navy`, `brand-gold`, `brand-gold-light` (survol du bouton), `navy-deep` (ombres des battants), `text-on-dark`, `text-on-dark-soft`, `text-on-dark-strong`, `placeholder-start|end` (repli).
 
-Sitemap : `src/app/sitemap.ts` (`/`, `/a-propos`, `/services`). Aucun `robots.txt`.
+Sitemap : `src/app/sitemap.ts` (`/`, `/a-propos`, `/services`, `/contact`) et `src/app/robots.ts`, tous deux pilotés par `NEXT_PUBLIC_ALLOW_INDEXING` (voir « Déploiement sur Vercel »).
 
 ### Section « Notre histoire » (`#histoire`)
 
 Composants dans `src/components/about/history/` (section serveur, accordéon client, archive agrandie chargée à la demande), styles `hs-*` dans `globals.css`, contenus dans **`src/content/history.ts`** (provisoires).
 
-- Tout contenu non validé porte `needsValidation: true` : le marqueur « [À valider] » s'affiche en développement seulement, et `pnpm build:prod` échoue en listant les contenus concernés.
+- Tout contenu non validé porte `needsValidation: true` : le marqueur « [À valider] » s'affiche seulement avec les placeholders (`NEXT_PUBLIC_SHOW_PLACEHOLDERS=true`, toujours en `pnpm dev`), et `pnpm build:prod` échoue en listant les contenus concernés.
 - Photos et archives : déposer les fichiers dans **`public/histoire/`**, puis renseigner `src` (et `alt`, légende) dans `history.ts` ; tant que `src` vaut `null`, un placeholder rayé « Photo à fournir » s'affiche.
   - Photo de panneau : **1600 × 900 minimum**, sujet principal **à droite** (la moitié gauche est couverte par le verre), WebP ou JPEG.
   - Archive : **800 × 600**, orientation libre (affichée entière dans l'archive agrandie).
@@ -144,7 +175,7 @@ Composants dans `src/components/about/history/` (section serveur, accordéon cli
 
 Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les quatre convictions sont dans le HTML initial), onglets client `ConvictionsTabs.tsx`, styles `cv-*` dans `globals.css`, contenus dans **`src/content/convictions.ts`** (provisoires).
 
-- Même règle que « Notre histoire » : `needsValidation: true` affiche « [À valider] » en développement seulement, et `pnpm build:prod` échoue (`scripts/check-convictions.mjs`) tant qu'il en reste un.
+- Même règle que « Notre histoire » : `needsValidation: true` affiche « [À valider] » seulement avec les placeholders, et `pnpm build:prod` échoue (`scripts/check-convictions.mjs`) tant qu'il en reste un.
 - Liens profonds : `#conviction-partager`, `#conviction-utilite`, `#conviction-ensemble`, `#conviction-accessible` ouvrent directement l'onglet (et mènent au panneau sans JavaScript).
 - Photos : déposer les fichiers dans **`public/convictions/`**, puis renseigner `photo.src`, `alt` (description factuelle) et `caption` dans `convictions.ts` ; tant que `src` vaut `null`, un placeholder rayé « Photo à fournir » s'affiche.
   - Photo de panneau : **940 × 560 minimum**, orientation paysage, sujet principal bien visible et centré (recadrée en 470 × 280 en desktop, 16/10 ou 2/1 en dessous), WebP ou JPEG.
@@ -155,7 +186,7 @@ Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les q
 
 - Même règle `needsValidation` (`scripts/check-equipe.mjs`).
 - Liens profonds : `#equipe-former`, `#equipe-developper`, `#equipe-conseiller`, `#equipe-accompagner`.
-- « Qui s'en occupe » : renseigner `members` (`name` = nom ou initiales acceptés par la personne, `role`, `photo` facultative) ; liste vide → emplacement visible en développement seulement.
+- « Qui s'en occupe » : renseigner `members` (`name` = nom ou initiales acceptés par la personne, `role`, `photo` facultative) ; liste vide → emplacement visible seulement avec les placeholders.
 - Photo réelle de l'atelier : la déposer dans `public/equipe/` et renseigner `workshopPhoto` (`src`, `alt` factuel, `width`, `height`) : elle remplace l'illustration (l'étiquette « Illustration provisoire » disparaît).
 
 À fournir ou confirmer : légendes des photos (`caption`) et descriptions (`description`, utilisées en `aria-label`) dans `src/lib/about.ts` ; « Depuis 2021 » (aussi `foundingDate` du JSON-LD) ; URL directes Facebook et TikTok ; coordonnées Google Maps de Liberté 1 ; image Open Graph 1200 × 630 ; téléphone et e-mail.
@@ -163,7 +194,7 @@ Section serveur `src/components/about/convictions/ConvictionsSection.tsx` (les q
 ### Section « Notre impact » (`#impact`) et bande « Ils nous font confiance »
 
 - **Notre impact** : `src/components/about/impact/ImpactSection.tsx` (serveur), styles `im-*`, données dans **`src/content/impact.ts`**. Les valeurs (4+, 10+, 5, 4) viennent du propriétaire ; phrases, introduction et date sont provisoires (`needsValidation`). Quand un chiffre change, mettre à jour `updatedAt` (date affichée dans `<time>`). Le champ `note` (ex. « dont 4 écoles ») ne s'affiche qu'avec `confirmed: true`.
-- **Ils nous font confiance** : `src/components/sections/trust/TrustBand.tsx` réutilise **à l'identique** la section Partenaires de l'accueil (`Partners`, classes `pt-*`), avec les textes de **`src/content/trust.ts`**. Activée page par page dans `trustContent.showOn` (seulement `/a-propos`) ; la page rend `<TrustBand page="/a-propos" />` à la fin de son `<main>`. Partenaires lus dans `src/lib/partners.ts` ; en production, rien n'est rendu sans partenaire `confirmed: true`. Logos : voir « Logos des partenaires » ci-dessous.
+- **Ils nous font confiance** : `src/components/sections/trust/TrustBand.tsx` réutilise **à l'identique** la section Partenaires de l'accueil (`Partners`, classes `pt-*`), avec les textes de **`src/content/trust.ts`**. Activée page par page dans `trustContent.showOn` (seulement `/a-propos`) ; la page rend `<TrustBand page="/a-propos" />` à la fin de son `<main>`. Partenaires lus dans `src/lib/partners.ts` ; sans placeholders, rien n'est rendu sans partenaire `confirmed: true`. Logos : voir « Logos des partenaires » ci-dessous.
 - Entrées animées par `src/components/ui/InViewReveal.tsx` (client, un seul IntersectionObserver, compteur des chiffres) ; contrôle avant production : `scripts/check-impact.mjs`.
 - Test du compteur : `pnpm test:impact [url]` (serveur lancé avant, défaut `http://localhost:3000/a-propos`, `CHROME_PATH` si besoin) lit le texte visible des quatre repères après 4 s et le compare aux valeurs de `impact.ts` (sans dépendance : Chrome piloté par le protocole DevTools).
 

@@ -1,5 +1,7 @@
-/** Marqueur « [À valider] » d'un contenu provisoire, affiché en développement uniquement. */
+import { showPlaceholders } from "@/lib/flags";
+
+/** Marqueur « [À valider] » d'un contenu provisoire, affiché seulement avec les placeholders (src/lib/flags.ts). */
 export function ValidationMark({ pending }: { pending: boolean }) {
-  if (!pending || process.env.NODE_ENV === "production") return null;
+  if (!pending || !showPlaceholders) return null;
   return <span className="hs-todo">[À valider]</span>;
 }

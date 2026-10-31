@@ -3,6 +3,7 @@ import type { CSSProperties } from "react";
 
 import { ValidationMark } from "@/components/about/history/ValidationMark";
 import { convictionsContent, type Conviction } from "@/content/convictions";
+import { showPlaceholders } from "@/lib/flags";
 
 import { ConvictionsTabs } from "./ConvictionsTabs";
 
@@ -63,10 +64,13 @@ function PanelPhoto({ conviction, eager }: { conviction: Conviction; eager: bool
             className="cv-photo-img"
           />
         ) : (
-          <div role="img" aria-label={photo.alt} className="cv-ph">
-            <span aria-hidden="true" className="cv-ph-label">
-              Photo à fournir
-            </span>
+          // Sans placeholders : fond rayé décoratif seul, sans « Photo à venir » annoncé.
+          <div {...(showPlaceholders ? { role: "img", "aria-label": photo.alt } : { "aria-hidden": true })} className="cv-ph">
+            {showPlaceholders && (
+              <span aria-hidden="true" className="cv-ph-label">
+                Photo à fournir
+              </span>
+            )}
           </div>
         )}
       </div>

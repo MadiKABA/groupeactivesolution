@@ -5,6 +5,7 @@ import { CONTACT_DESCRIPTION, ContactJsonLd } from "@/components/contact/Contact
 import { ContactHero } from "@/components/contact/ContactHero";
 import { Contact } from "@/components/sections/contact/Contact";
 import { ROUTES } from "@/lib/routes";
+import { pageRobots } from "@/lib/flags";
 import { SITE_URL } from "@/lib/site";
 
 // Écriture manuscrite du « 24 h » du hero, chargée sur cette page uniquement.
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
   title: { absolute: title },
   description,
   alternates: { canonical: ROUTES.contact },
-  robots: { index: true, follow: true },
+  robots: pageRobots,
   // TODO : image Open Graph 1200 × 630 à fournir (aucune image de partage dans public/), puis l'ajouter ici.
   openGraph: {
     type: "website",

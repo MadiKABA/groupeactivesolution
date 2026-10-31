@@ -6,6 +6,7 @@ import Image, { getImageProps } from "next/image";
 import { useEffect } from "react";
 
 import type { HeroCarousel } from "@/hooks/useHeroCarousel";
+import { showPlaceholders } from "@/lib/flags";
 import { formatSlideCount, HERO_EASE, HERO_SLIDE_DURATION, heroSlides } from "@/lib/hero-slides";
 
 const IMAGE_SIZES = "(min-width: 1024px) 50vw, 100vw";
@@ -50,14 +51,17 @@ const slideVariants: Variants = {
 const WIPE_DURATION = 0.9;
 const KEN_BURNS_TOTAL = WIPE_DURATION + HERO_SLIDE_DURATION / 1000;
 
+// Sans placeholders : le même fond, sans libellé.
 function ImagePlaceholder({ path }: { path: string }) {
   return (
     <div className="flex size-full items-center justify-center bg-brand-navy-soft p-6 text-center">
-      <p className="rounded-md border border-dashed border-brand-gold px-4 py-3 text-sm text-text-on-dark">
-        Image à fournir
-        <br />
-        <span className="text-text-on-dark/70">public{path}</span>
-      </p>
+      {showPlaceholders && (
+        <p className="rounded-md border border-dashed border-brand-gold px-4 py-3 text-sm text-text-on-dark">
+          Image à fournir
+          <br />
+          <span className="text-text-on-dark/70">public{path}</span>
+        </p>
+      )}
     </div>
   );
 }

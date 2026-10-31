@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/sections/footer/Footer";
+import { pageRobots } from "@/lib/flags";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const manrope = Manrope({
@@ -17,6 +19,8 @@ const siteDescription =
   "Active Solution accompagne les organisations dans la formation numérique, le développement de solutions digitales et la transformation digitale.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  robots: pageRobots,
   title: {
     default: siteName,
     template: `%s | ${siteName}`,

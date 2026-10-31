@@ -8,6 +8,7 @@ import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, ty
 
 import type { HistoryArchive, HistoryChapter } from "@/content/history";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
+import { showPlaceholders } from "@/lib/flags";
 
 import { ValidationMark } from "./ValidationMark";
 
@@ -190,7 +191,7 @@ export function HistoryAccordion({ chapters }: { chapters: readonly HistoryChapt
               <div aria-hidden={chapter.photo.src ? undefined : true} className="hs-photo">
                 <div className="hs-photo-media">
                   <div className="hs-ph">
-                    <span className="hs-ph-label">Photo à fournir</span>
+                    {showPlaceholders && <span className="hs-ph-label">Photo à fournir</span>}
                   </div>
                   {chapter.photo.src && (
                     <Image
@@ -341,7 +342,7 @@ function ArchiveCard({ archive, focusable, onOpen }: ArchiveCardProps) {
       >
         <span className="arc-media">
           <span aria-hidden="true" className="hs-ph hs-ph--small">
-            <span className="hs-ph-label">Archive à fournir</span>
+            {showPlaceholders && <span className="hs-ph-label">Archive à fournir</span>}
           </span>
           {archive.src && (
             <Image src={archive.src} alt={archive.alt} fill sizes="160px" className="arc-img" onError={hideOnError} />

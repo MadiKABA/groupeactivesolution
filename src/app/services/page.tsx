@@ -10,6 +10,7 @@ import { ServicesHero } from "@/components/services/ServicesHero";
 import { SERVICES_DESCRIPTION, ServicesJsonLd } from "@/components/services/ServicesJsonLd";
 import { expertises, servicesFicheImageBase, servicesImageBase, type ExpertiseSlug } from "@/lib/expertises";
 import { servicesCta } from "@/lib/services";
+import { pageRobots } from "@/lib/flags";
 import { SITE_URL } from "@/lib/site";
 
 const title = "Formation et développement digital à Dakar | Active Solution";
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   title: { absolute: title },
   description,
   alternates: { canonical: "/services" },
-  robots: { index: true, follow: true },
+  robots: pageRobots,
   // TODO : image Open Graph 1200 × 630 (ex. public/og/services.jpg) à fournir, puis l'ajouter ici.
   openGraph: {
     type: "website",

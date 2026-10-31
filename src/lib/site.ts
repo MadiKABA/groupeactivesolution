@@ -8,8 +8,11 @@ const STREET = "Liberté 1";
 const CITY = "Dakar";
 const ADDRESS = `${STREET}, ${CITY}, Sénégal`;
 
-/** URL publique du site (metadataBase, URL absolues du JSON-LD). */
-export const SITE_URL = "https://www.groupactivesolution.com";
+/**
+ * URL publique du site (metadataBase, canonical, Open Graph, JSON-LD, sitemap), sans barre finale.
+ * NEXT_PUBLIC_SITE_URL : URL *.vercel.app pendant la relecture ; par défaut, le domaine officiel.
+ */
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.groupactivesolution.com").replace(/\/+$/, "");
 
 export const SITE_CONTACT = {
   whatsappNumber: "221768095159",

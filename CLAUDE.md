@@ -61,7 +61,8 @@ Après tout changement pertinent : `pnpm lint && pnpm typecheck && pnpm build`. 
 - Chaque page exporte ses `metadata` : `metadataBase` (`SITE_URL` de `src/lib/site.ts`), `title`, `description` ≤ 160 caractères (comptés) décrivant seulement ce que la page contient, `alternates.canonical`, `robots`, `openGraph` (`siteName` « Active Solution », `locale` `fr_SN`), `twitter` `summary_large_image`. Image Open Graph 1200 × 630 seulement si le fichier existe dans `public/`.
 - JSON-LD rendu par un composant serveur (`<script type="application/ld+json">`, `<` échappé en `\u003c`), en `@graph` avec des `@id` stables (`${SITE_URL}/#organization`, `/#website`). Coordonnées lues dans `SITE_CONTACT` ; `sameAs` = uniquement les réseaux `canonical: true` (URL directe du profil, jamais un lien court de partage) ; `logo` uniquement s'il existe dans `public/logos/`.
 - Un seul `h1` par page ; les informations de base (nom, ville, pays, année, activités) en texte clair dans le HTML, jamais de contenu caché.
-- Sitemap : `src/app/sitemap.ts` (`/`, `/a-propos`, `/services`, `/contact`), à compléter à chaque nouvelle page publiée. Pas de `robots.txt` ni de `llms.txt` ; ne pas en créer ni modifier les règles des robots sans accord.
+- Sitemap : `src/app/sitemap.ts` (`/`, `/a-propos`, `/services`, `/contact`), à compléter à chaque nouvelle page publiée. `src/app/robots.ts` (créé le 2026-10-31 avec accord) ; pas de `llms.txt` ; ne pas modifier les règles des robots sans accord.
+- Indexation : `allowIndexing` de `src/lib/flags.ts` (`NEXT_PUBLIC_ALLOW_INDEXING === "true"`). Sinon : `robots` des pages = `pageRobots` (noindex, nofollow), `robots.txt` en `Disallow: /` sans sitemap, sitemap vide, `X-Robots-Tag` dans `next.config.ts`. Une nouvelle page utilise `robots: pageRobots`, jamais `{ index: true }` en dur. `SITE_URL` lit `NEXT_PUBLIC_SITE_URL` (défaut : domaine officiel).
 - Pas de `geo.region` / `geo.placename` ni de coordonnées tant qu'elles ne sont pas confirmées.
 - **Jamais inventés** : coordonnées GPS (`geo` du JSON-LD seulement avec latitude/longitude relevées sur Google Maps), rue précise ou code postal, URL de réseaux sociaux, chiffres, légendes ou textes alternatifs de photos qu'on n'a pas vues.
 
@@ -80,6 +81,7 @@ Après tout changement pertinent : `pnpm lint && pnpm typecheck && pnpm build`. 
 
 ## Données de l'entreprise
 
+- Contenus provisoires : un seul interrupteur, `showPlaceholders` de `src/lib/flags.ts` (`NEXT_PUBLIC_SHOW_PLACEHOLDERS === "true"` ou `pnpm dev`). Aucun autre fichier ne lit `NODE_ENV` pour afficher un placeholder. Ci-dessous, « en développement » = avec placeholders, « en production » = sans. Avec placeholders, le rendu (visuels et textes) est exactement celui du développement : n'ajouter aucun libellé ni texte de relecture. Inventaire pour la rédaction : `CONTENU-A-REMPLACER.md`, à tenir à jour.
 - Ne jamais inventer de coordonnées (adresse, téléphone, e-mail, réseaux sociaux).
 - `src/lib/site.ts` est la source unique des coordonnées (`SITE_CONTACT` : WhatsApp, téléphone, e-mail, adresse ; `SOCIALS`, `CONTACT_NEEDS`, `getWhatsAppUrl()`, `getMailtoUrl()`) : aucune coordonnée en dur dans un composant. Un réseau social sans URL reste affiché en icône désactivée (`<span aria-disabled>`, jamais de lien mort ni de `href="#"`). Le numéro WhatsApp (repris de l'ancien site) est à confirmer avant publication.
 - Ne jamais inventer de partenaires, clients, témoignages, chiffres ou réalisations.

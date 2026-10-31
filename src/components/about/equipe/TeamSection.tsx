@@ -2,12 +2,12 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 
 import { ValidationMark } from "@/components/about/history/ValidationMark";
+import { showPlaceholders } from "@/lib/flags";
 import { teamContent, type TeamMember, type TeamSkill } from "@/content/equipe";
 
 import { TeamObject } from "./TeamObjects";
 import { TeamWorkbench } from "./TeamWorkbench";
 
-const isDev = process.env.NODE_ENV !== "production";
 
 /*
  * Sans JavaScript : les quatre panneaux s'empilent et restent lisibles, la scène reste visible,
@@ -77,9 +77,9 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-/** « Qui s'en occupe » : membres confirmés, sinon emplacement signalé en développement seulement. */
+/** « Qui s'en occupe » : membres confirmés, sinon emplacement signalé avec les placeholders seulement. */
 function Members({ skill, members }: { skill: TeamSkill; members: readonly TeamMember[] }) {
-  if (members.length === 0 && !isDev) return null;
+  if (members.length === 0 && !showPlaceholders) return null;
   return (
     <div className="eq-who">
       <p className="eq-who-label">Qui s&apos;en occupe</p>
@@ -208,7 +208,7 @@ export function TeamSection() {
             <PanelBody key={skill.id} skill={skill} />
           ))}
           devLabel={
-            isDev && !workshopPhoto ? "Illustration provisoire · remplaçable par une photo de l'atelier" : null
+            showPlaceholders && !workshopPhoto ? "Illustration provisoire · remplaçable par une photo de l'atelier" : null
           }
         />
       </div>

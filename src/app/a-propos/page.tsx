@@ -10,6 +10,7 @@ import { HistorySection } from "@/components/about/history/HistorySection";
 import { ImpactSection } from "@/components/about/impact/ImpactSection";
 import { TrustBand } from "@/components/sections/trust/TrustBand";
 import { aboutArches, type AboutArchId } from "@/lib/about";
+import { pageRobots } from "@/lib/flags";
 import { SITE_URL } from "@/lib/site";
 
 const title = "À propos d'Active Solution | Agence digitale et formation à Dakar";
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   title: { absolute: title },
   description,
   alternates: { canonical: "/a-propos" },
-  robots: { index: true, follow: true },
+  robots: pageRobots,
   // TODO : image Open Graph 1200 × 630 (ex. public/og/a-propos.jpg) à fournir, puis l'ajouter ici.
   openGraph: {
     type: "website",
