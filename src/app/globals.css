@@ -12996,3 +12996,226 @@
     }
   }
 }
+
+/*
+ * ---------- CTA final (/formations/ecole) ----------
+ * Fond blanc pur, sans motif. Repère 1280 × 580 : trois cercles dorés discrets centrés en (1046, 268),
+ * entièrement dans la section (aucun rognage) ; tailles en `--u` (1px du repère, rapporté à la largeur
+ * de la section, plafonnée à `max-w-site`). Animations Motion (cta-motion.tsx). Classes `fc-*`.
+ */
+@layer components {
+  .fc {
+    --fc-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --fc-hover-dur: 220ms;
+    --u: calc(min(100cqw, var(--container-site)) / 1280);
+    container-type: inline-size;
+    --focus-ring: var(--color-brand-gold);
+
+    & :focus-visible {
+      outline: 2px solid var(--color-brand-gold);
+      outline-offset: 4px;
+    }
+  }
+
+  /*
+   * SVG rogné sur le grand cercle (342 unités). Mobile : rayon ≈ 100px, en haut à droite à 24px des bords,
+   * derrière le repère. Dès 768px : 342u, haut à 97u, bord droit du grand cercle sur la marge du header
+   * (`--site-gutter`, au moins 64u), jamais sous la colonne de texte (≤ 60 %).
+   */
+  .fc-rings {
+    position: absolute;
+    z-index: -1;
+    top: 24px;
+    right: var(--site-gutter);
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+
+    @media (width >=48rem) {
+      top: calc(97 * var(--u));
+      right: max(var(--site-gutter), calc(63 * var(--u)));
+      width: calc(342 * var(--u));
+      height: calc(342 * var(--u));
+    }
+  }
+
+  .fc-ring {
+    fill: none;
+    stroke: var(--color-brand-gold);
+  }
+
+  .fc-dot {
+    fill: var(--color-brand-gold);
+  }
+
+  .fc-root {
+    position: relative;
+    padding-block: 4rem;
+
+    @media (width >=48rem) {
+      padding-block: 6rem 4.25rem;
+    }
+  }
+
+  .fc-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .fc-mark-line {
+    display: block;
+    flex: none;
+    width: 48px;
+    height: 1px;
+    background-color: var(--color-brand-gold);
+    transform-origin: left center;
+  }
+
+  .fc-title {
+    margin: 1.4rem 0 0;
+    font-size: clamp(1.375rem, 4.4vw, 2.875rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .fc-line {
+    display: block;
+    overflow: clip;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+    white-space: nowrap;
+  }
+
+  .fc-line-inner {
+    display: block;
+  }
+
+  /* Doré lisible sur blanc (gros texte), comme « Notre rôle » */
+  .fc-gold {
+    color: var(--color-gold-ink-strong);
+  }
+
+  .fc-text {
+    max-width: 560px;
+    margin: 1.4rem 0 0;
+    font-size: 1rem;
+    line-height: 1.6;
+
+    @media (width >=48rem) {
+      max-width: min(560px, 60%);
+      font-size: 1.125rem;
+    }
+  }
+
+  .fc-cta-wrap {
+    margin-top: 2rem;
+  }
+
+  .fc-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 56px;
+    padding: 0 32px;
+    border: 1px solid var(--color-brand-gold);
+    border-radius: 12px;
+    background-color: var(--color-brand-navy);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-brand-white);
+    transition:
+      transform var(--fc-hover-dur) var(--fc-ease),
+      background-color var(--fc-hover-dur) var(--fc-ease);
+
+    @media (width < 48rem) {
+      width: 100%;
+    }
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-2px);
+      background-color: var(--color-brand-navy-glow);
+    }
+  }
+
+  .fc-arrow {
+    width: 1.125rem;
+    height: 1.125rem;
+    flex: none;
+    color: var(--color-brand-gold);
+    transition: transform var(--fc-hover-dur) var(--fc-ease);
+
+    a:hover > &,
+    a:focus-visible > & {
+      transform: translateX(4px);
+    }
+  }
+
+  /* Filet doré (bord haut du bloc) et ligne de renvoi */
+  .fc-more {
+    margin-top: 3.6rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid color-mix(in oklab, var(--color-brand-gold) 50%, transparent);
+
+    @media (width >=48rem) {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+  }
+
+  .fc-more-label {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+  }
+
+  .fc-more-list {
+    display: grid;
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+
+    @media (width >=48rem) {
+      display: flex;
+      gap: 40px;
+      margin: 0;
+    }
+  }
+
+  .fc-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-brand-navy);
+  }
+
+  .fc-more-text {
+    padding-bottom: 4px;
+    box-shadow: inset 0 -1px 0 var(--color-brand-gold);
+
+    .fc-more-link:hover &,
+    .fc-more-link:focus-visible & {
+      box-shadow: inset 0 -2px 0 var(--color-brand-gold);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fc *,
+    .fc {
+      transition-property: none;
+    }
+  }
+}
