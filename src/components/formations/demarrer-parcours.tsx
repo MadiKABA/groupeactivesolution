@@ -6,7 +6,6 @@ import {
   m,
   useInView,
   useMotionValueEvent,
-  useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
@@ -16,6 +15,7 @@ import Image from "next/image";
 import { useRef, useState } from "react";
 
 import { demarrerIntro, demarrerSteps, type DemarrerStep } from "@/content/formations-ecole-demarrer";
+import { useReducedMotionSafe } from "@/lib/use-reduced-motion-safe";
 
 /*
  * « Comment démarrer » : repère, titre, introduction, plan des quatre étapes et tracé doré.
@@ -45,7 +45,7 @@ function StepNumber({ value, className = "" }: { value: string; className?: stri
 }
 
 export function DemarrerParcours() {
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReducedMotionSafe();
   const planRef = useRef<HTMLOListElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const headerInView = useInView(headerRef, { once: true, amount: 0.4 });

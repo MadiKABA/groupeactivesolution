@@ -35,7 +35,7 @@ function Corner({ position }: { position: "tr" | "bl" }) {
   );
 }
 
-function Panel({ niveau, index }: { niveau: Niveau; index: number }) {
+function Panel({ niveau }: { niveau: Niveau }) {
   const facts = FACT_LABELS.map(([key, label]) => ({ label, value: niveau.facts[key] })).filter(
     (fact) => fact.value !== null || showPlaceholders,
   );
@@ -51,7 +51,6 @@ function Panel({ niveau, index }: { niveau: Niveau; index: number }) {
               src={niveau.photo.src}
               alt={niveau.photo.alt}
               fill
-              loading={index === 0 ? "eager" : "lazy"}
               sizes="(min-width: 1536px) 940px, (min-width: 768px) 62vw, 100vw"
               className="nv-photo"
             />
@@ -122,11 +121,17 @@ export function FormationsEcoleNiveaux() {
         <div className="formations-glow nv-glow absolute" />
       </div>
 
+      {/* Sans JavaScript : les trois panneaux sont affichés. Couche `base` : seule façon de passer devant
+          le `[hidden] { display: none !important }` du preflight de Tailwind (important dans une couche). */}
+      <noscript>
+        <style>{"@layer base{.nv .nv-panel[hidden]{display:block!important}}"}</style>
+      </noscript>
+
       <NiveauxTabs
         header={header}
         items={niveaux.map(({ id, number, label, verb }) => ({ id, number, label, verb }))}
-        panels={niveaux.map((niveau, index) => (
-          <Panel key={niveau.id} niveau={niveau} index={index} />
+        panels={niveaux.map((niveau) => (
+          <Panel key={niveau.id} niveau={niveau} />
         ))}
       />
     </section>

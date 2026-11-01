@@ -12932,10 +12932,6 @@
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-
-    @media (width >=56.25rem) {
-      display: none;
-    }
   }
 
   /* Résumé dans l'index, texte complet dans les blocs */
@@ -12945,9 +12941,20 @@
     }
   }
 
+  /*
+   * Dès 900px, type et texte complet ne sont visibles que dans l'aperçu (aria-hidden) : masqués à l'écran
+   * mais gardés pour les lecteurs d'écran (jamais `display: none`).
+   */
+  .tr-entry-type,
   .tr-entry-detail {
     @media (width >=56.25rem) {
-      display: none;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      margin: 0;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
     }
   }
 

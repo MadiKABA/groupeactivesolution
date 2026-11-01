@@ -1,8 +1,10 @@
 "use client";
 
-import { LazyMotion, domAnimation, m, useReducedMotion, type Transition } from "motion/react";
+import { LazyMotion, domAnimation, m, type TargetAndTransition, type Transition } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+
+import { useReducedMotionSafe } from "@/lib/use-reduced-motion-safe";
 
 /*
  * CTA final de /formations/ecole : entrée unique (repère, titre, texte, bouton, cercles tracés, renvoi).
@@ -37,9 +39,12 @@ export function CtaMotion({
   cta: CtaLink;
   links: readonly CtaLink[];
 }) {
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReducedMotionSafe();
   const tween = (duration: number, delay = 0): Transition => (reduce ? { duration: 0 } : { duration, delay, ease: EASE });
-  const rise = (y: number) => (reduce ? false : { opacity: 0, y });
+  const rise = (y: number) => ({ opacity: 0, y });
+  // Mouvement réduit : état final appliqué tout de suite (durée 0), sans attendre l'entrée dans la vue
+  const reveal = (target: TargetAndTransition, viewport: { once: boolean; amount: number } = VIEWPORT) =>
+    reduce ? { animate: target } : { whileInView: target, viewport };
   const ringsEnd = 0.3 + 0.9 + 0.12 * (RINGS.length - 1);
 
   return (
@@ -56,9 +61,8 @@ export function CtaMotion({
               r={ring.r}
               strokeWidth={1}
               style={{ opacity: ring.opacity }}
-              initial={reduce ? false : { pathLength: 0 }}
-              whileInView={{ pathLength: 1 }}
-              viewport={VIEWPORT}
+              initial={{ pathLength: 0 }}
+              {...reveal({ pathLength: 1 })}
               transition={tween(0.9, 0.3 + i * 0.12)}
             />
           ))}
@@ -68,9 +72,8 @@ export function CtaMotion({
             cy={CY}
             r={4}
             data-reveal=""
-            initial={reduce ? false : { opacity: 0, scale: 0.6 }}
-            whileInView={{ opacity: 0.7, scale: 1 }}
-            viewport={VIEWPORT}
+            initial={{ opacity: 0, scale: 0.6 }}
+            {...reveal({ opacity: 0.7, scale: 1 })}
             transition={tween(0.4, ringsEnd)}
           />
         </svg>
@@ -79,9 +82,8 @@ export function CtaMotion({
             className="fc-mark-line"
             aria-hidden="true"
             data-reveal=""
-            initial={reduce ? false : { scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            viewport={VIEWPORT}
+            initial={{ scaleX: 0 }}
+            {...reveal({ scaleX: 1 })}
             transition={tween(0.5)}
           />
           {eyebrow}
@@ -93,8 +95,7 @@ export function CtaMotion({
                 className={i === 1 ? "fc-line-inner fc-gold" : "fc-line-inner"}
                 data-reveal=""
                 initial={rise(24)}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={VIEWPORT}
+                {...reveal({ opacity: 1, y: 0 })}
                 transition={tween(0.65, 0.08 + i * 0.08)}
               >
                 {line}
@@ -106,8 +107,7 @@ export function CtaMotion({
           className="fc-text"
           data-reveal=""
           initial={rise(12)}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={VIEWPORT}
+          {...reveal({ opacity: 1, y: 0 })}
           transition={tween(0.5, 0.3)}
         >
           {text}
@@ -116,8 +116,7 @@ export function CtaMotion({
           className="fc-cta-wrap"
           data-reveal=""
           initial={rise(12)}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={VIEWPORT}
+          {...reveal({ opacity: 1, y: 0 })}
           transition={tween(0.5, 0.42)}
         >
           <Link href={cta.href} className="fc-cta">
@@ -130,9 +129,8 @@ export function CtaMotion({
           <m.div
             className="fc-more"
             data-reveal=""
-            initial={reduce ? false : { opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={VIEWPORT}
+            initial={{ opacity: 0 }}
+            {...reveal({ opacity: 1 })}
             transition={tween(0.5, ringsEnd)}
           >
             <p className="fc-more-label">Vous êtes plutôt concerné par :</p>

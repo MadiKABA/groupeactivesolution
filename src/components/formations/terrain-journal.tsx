@@ -6,15 +6,17 @@ import {
   m,
   useInView,
   useMotionValueEvent,
-  useReducedMotion,
   useScroll,
   useSpring,
+  type TargetAndTransition,
   type Transition,
 } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+
+import { useReducedMotionSafe } from "@/lib/use-reduced-motion-safe";
 
 /*
  * « Sur le terrain » : aperçu fixe (sticky en CSS dès 1024px de large et 720px de haut) de l'intervention
@@ -78,9 +80,10 @@ function GlassLink({
   ) : null;
 }
 
-function Media({ item }: { item: TerrainItem }) {
+// `decorative` : copie de l'aperçu (aria-hidden), alt vide ; la description reste sur l'image de la liste
+function Media({ item, decorative }: { item: TerrainItem; decorative?: boolean }) {
   return item.photo ? (
-    <Image src={item.photo.src} alt={item.photo.alt} fill sizes={MEDIA_SIZES} className="tr-photo-img" />
+    <Image src={item.photo.src} alt={decorative ? "" : item.photo.alt} fill sizes={MEDIA_SIZES} className="tr-photo-img" />
   ) : (
     <div className="tr-placeholder" aria-hidden="true">
       <svg viewBox="0 0 96 96" focusable="false">
@@ -102,7 +105,7 @@ export function TerrainJournal({
   allHref: string | null;
   showDisabledLinks: boolean;
 }) {
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReducedMotionSafe();
   const count = items.length;
   const listRef = useRef<HTMLUListElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -153,7 +156,10 @@ export function TerrainJournal({
   });
 
   const tween = (duration: number, delay = 0): Transition => (reduce ? { duration: 0 } : { duration, delay, ease: EASE });
-  const rise = (y: number) => (reduce ? false : { opacity: 0, y });
+  const rise = (y: number) => ({ opacity: 0, y });
+  // Mouvement réduit : état final appliqué tout de suite (durée 0), sans attendre l'entrée dans la vue
+  const reveal = (target: TargetAndTransition, viewport: { once: boolean; amount: number } = VIEWPORT) =>
+    reduce ? { animate: target } : { whileInView: target, viewport };
   const shown = (index: number) => index === active && (reduce || previewInView);
 
   return (
@@ -165,9 +171,8 @@ export function TerrainJournal({
               className="tr-mark-line"
               aria-hidden="true"
               data-reveal=""
-              initial={reduce ? false : { scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={VIEWPORT}
+              initial={{ scaleX: 0 }}
+              {...reveal({ scaleX: 1 })}
               transition={tween(0.5)}
             />
             {intro.eyebrow}
@@ -179,8 +184,7 @@ export function TerrainJournal({
                   className={i === 1 ? "tr-line-inner tr-gold" : "tr-line-inner"}
                   data-reveal=""
                   initial={rise(24)}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={VIEWPORT}
+                  {...reveal({ opacity: 1, y: 0 })}
                   transition={tween(0.65, 0.08 + i * 0.08)}
                 >
                   {line}
@@ -192,8 +196,7 @@ export function TerrainJournal({
             className="tr-intro"
             data-reveal=""
             initial={rise(12)}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={VIEWPORT}
+            {...reveal({ opacity: 1, y: 0 })}
             transition={tween(0.5, 0.3)}
           >
             {intro.text}
@@ -209,7 +212,7 @@ export function TerrainJournal({
                   key={item.slug}
                   className="tr-feature-meta"
                   data-reveal={index === 0 ? "" : undefined}
-                  initial={reduce ? false : { opacity: 0 }}
+                  initial={{ opacity: 0 }}
                   animate={{ opacity: shown(index) ? 1 : 0 }}
                   transition={tween(0.35)}
                 >
@@ -229,7 +232,7 @@ export function TerrainJournal({
                     key={item.slug}
                     className="tr-photo-reveal"
                     data-reveal={index === 0 ? "" : undefined}
-                    initial={reduce ? false : { opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+                    initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
                     animate={on ? { opacity: 1, clipPath: "inset(0 0% 0 0)" } : { opacity: 0, clipPath: "inset(0 100% 0 0)" }}
                     transition={
                       reduce
@@ -242,12 +245,12 @@ export function TerrainJournal({
                     <m.div
                       className="tr-photo-zoom"
                       data-reveal={index === 0 ? "" : undefined}
-                      initial={reduce ? false : { scale: 1.04 }}
+                      initial={{ scale: 1.04 }}
                       animate={{ scale: on ? 1 : 1.04 }}
                       transition={tween(on ? 0.9 : 0, on ? 0 : 0.35)}
                     >
                       <div className="tr-photo-hover">
-                        <Media item={item} />
+                        <Media item={item} decorative />
                       </div>
                     </m.div>
                   </m.div>
@@ -261,7 +264,7 @@ export function TerrainJournal({
                   key={item.slug}
                   className="tr-preview-text"
                   data-reveal={index === 0 ? "" : undefined}
-                  initial={reduce ? false : { opacity: 0 }}
+                  initial={{ opacity: 0 }}
                   animate={{ opacity: shown(index) ? 1 : 0 }}
                   transition={tween(0.35)}
                 >
@@ -294,9 +297,8 @@ export function TerrainJournal({
                   data-lit={reduce || lit >= index ? "" : undefined}
                   className="tr-entry"
                   data-reveal=""
-                  initial={reduce ? false : { opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.4 }}
+                  initial={{ opacity: 0, y: 16 }}
+                  {...reveal({ opacity: 1, y: 0 }, { once: true, amount: 0.4 })}
                   transition={tween(0.5, index * 0.12)}
                   onMouseEnter={() => setActive(index)}
                   onFocus={() => setActive(index)}

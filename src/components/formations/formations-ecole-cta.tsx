@@ -12,12 +12,12 @@ import { ROUTES } from "@/lib/routes";
  */
 
 const CANDIDATES = [
-  { href: "/formations/developpement", label: "Apprendre le développement web et mobile", file: "src/app/formations/developpement/page.tsx" },
-  { href: "/formations/organisations", label: "Pour les organisations", file: "src/app/formations/organisations/page.tsx" },
+  { href: "/formations/developpement", label: "Apprendre le développement web et mobile", segment: "developpement" },
+  { href: "/formations/organisations", label: "Pour les organisations", segment: "organisations" },
 ] as const;
 
 export function FormationsEcoleCta() {
-  const links: CtaLink[] = CANDIDATES.filter((link) => existsSync(path.join(process.cwd(), link.file))).map(
+  const links: CtaLink[] = CANDIDATES.filter((link) => existsSync(path.join(process.cwd(), "src/app/formations", link.segment, "page.tsx"))).map(
     ({ href, label }) => ({ href, label }),
   );
 

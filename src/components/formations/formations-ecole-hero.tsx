@@ -14,8 +14,6 @@ import { ROUTES } from "@/lib/routes";
  * les classes `fh-*` n'y ajoutent que la taille du titre (3 lignes) et la séquence d'entrée.
  */
 
-const PAGE = "/formations/ecole";
-
 type Level = {
   id: "primaire" | "college" | "lycee";
   label: string;
@@ -80,7 +78,8 @@ export function FormationsEcoleHero() {
           <ul className="fh-stairs">
             {levels.map((level, index) => (
               <li key={level.id} className="fh-step" style={{ "--i": index } as CSSProperties}>
-                <Link href={`${PAGE}#${level.id}`} aria-label={level.ariaLabel} className="fh-frame">
+                {/* Ancre native (pas `Link`) : `hashchange` est émis et NiveauxTabs ouvre le niveau */}
+                <a href={`#${level.id}`} aria-label={level.ariaLabel} className="fh-frame">
                   {level.photo && (
                     <Image
                       src={level.photo.src}
@@ -98,7 +97,7 @@ export function FormationsEcoleHero() {
                   <span className="fh-tag" aria-hidden="true">
                     {level.label}
                   </span>
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
