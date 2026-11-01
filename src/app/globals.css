@@ -495,6 +495,8 @@
   --motif-zigzag-formations-hero: 0.05;
   /* « Nos programmes par niveau » (/formations/ecole) : zigzag de la section Formations de l'accueil, un peu plus marqué (0.14 contre 0.111) */
   --motif-zigzag-niveaux: 0.14;
+  /* « Comment démarrer » (/formations/ecole) : zigzag bleu nuit sur fond blanc, à peine visible */
+  --motif-zigzag-demarrer: 0.045;
   /* Facteur appliqué aux zigzags des sections de l'accueil (main[data-page="home"], hors hero et footer) :
      -12 % (0.14 → 0.123, 0.51 → 0.449, 0.27 → 0.238, 0.17 → 0.15, 0.05 → 0.044) */
   --motif-zigzag-home: 0.88;
@@ -678,6 +680,10 @@
 
   .wave-motif.wave-motif--niveaux {
     --wave-opacity: var(--motif-zigzag-niveaux);
+  }
+
+  .wave-motif.wave-motif--demarrer {
+    --wave-opacity: var(--motif-zigzag-demarrer);
   }
 
   .wave-svg {
@@ -12041,6 +12047,455 @@
     .nv-root {
       animation-name: none;
       transition-property: none;
+    }
+  }
+}
+
+/*
+ * ---------- « Comment démarrer » (/formations/ecole) ----------
+ * Fond blanc, zigzag bleu nuit `wave-motif--demarrer`. Animations Motion (demarrer-parcours.tsx) ;
+ * ici seulement la mise en page et les ombres statiques. Dès 1024px : plan 1152 × 578 du repère
+ * 1280 × 976, positions et tailles en `--u` (1px du repère, rapporté à la largeur du plan).
+ * Dessous : plaques empilées, ligne verticale à gauche. Classes `dm-*`.
+ */
+@layer components {
+  .dm {
+    --dm-border: color-mix(in oklab, var(--color-brand-navy) 6%, transparent);
+    --dm-shadow: 0 8px 24px color-mix(in oklab, var(--color-brand-navy) 8%, transparent), 0 2px 6px color-mix(in oklab, var(--color-brand-navy) 5%, transparent);
+    --dm-shadow-strong: 0 10px 28px color-mix(in oklab, var(--color-brand-navy) 10%, transparent), 0 2px 8px color-mix(in oklab, var(--color-brand-navy) 6%, transparent);
+    --dm-shadow-hover: 0 16px 36px color-mix(in oklab, var(--color-brand-navy) 12%, transparent), 0 4px 10px color-mix(in oklab, var(--color-brand-navy) 7%, transparent);
+    --dm-shadow-mobile: 0 4px 12px color-mix(in oklab, var(--color-brand-navy) 4%, transparent), 0 1px 3px color-mix(in oklab, var(--color-brand-navy) 2.5%, transparent);
+    --focus-ring: var(--color-brand-navy);
+
+    & :focus-visible {
+      outline: 2px solid var(--color-brand-gold);
+      outline-offset: 4px;
+    }
+  }
+
+  .dm-root {
+    padding-block: 4rem;
+
+    @media (width >=64rem) {
+      padding-block: 3.5rem 4rem;
+    }
+  }
+
+  /* ---------- En-tête ---------- */
+  .dm-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .dm-mark-line {
+    display: block;
+    flex: none;
+    width: 48px;
+    height: 1px;
+    background-color: var(--color-brand-gold);
+    transform-origin: left center;
+  }
+
+  .dm-title {
+    margin: 1.5rem 0 0;
+    font-size: clamp(1.3125rem, 5.8vw, 2.875rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  /* Masque de chaque ligne (marge pour les jambages, compensée) */
+  .dm-line {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+    white-space: nowrap;
+  }
+
+  .dm-line-inner {
+    display: block;
+  }
+
+  .dm-gold {
+    color: var(--color-gold-ink-strong);
+  }
+
+  .dm-intro {
+    max-width: 780px;
+    margin: 1.25rem 0 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  /* ---------- Plan ---------- */
+  .dm-plan {
+    position: relative;
+    margin-top: 2.5rem;
+    padding-left: 2.75rem;
+
+    @media (width >=64rem) {
+      padding-left: 0;
+      container-type: inline-size;
+    }
+  }
+
+  .dm-trace {
+    display: none;
+
+    @media (width >=64rem) {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+  }
+
+  .dm-trace-path {
+    fill: none;
+    stroke: var(--color-brand-gold);
+    stroke-width: 1.5;
+  }
+
+  .dm-node {
+    fill: var(--color-brand-white);
+    stroke: var(--color-brand-gold);
+    stroke-width: 1.5;
+  }
+
+  .dm-node-on {
+    fill: var(--color-brand-gold);
+  }
+
+  /* Mobile et tablette : ligne verticale à x ≈ 20 */
+  .dm-rail {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background-color: var(--color-brand-gold);
+    transform-origin: top center;
+
+    @media (width >=64rem) {
+      display: none;
+    }
+  }
+
+  .dm-steps {
+    display: grid;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media (width >=64rem) {
+      --u: calc(100cqw / 1152);
+      display: block;
+      position: relative;
+      aspect-ratio: 1152 / 578;
+    }
+  }
+
+  .dm-step {
+    position: relative;
+    border: 1px solid var(--dm-border);
+    border-radius: 12px;
+    background-color: var(--color-brand-white);
+    box-shadow: var(--dm-shadow-mobile);
+
+    @media (width >=64rem) {
+      position: absolute;
+      box-shadow: var(--dm-shadow);
+    }
+  }
+
+  /* Ombre plus marquée au survol : calque en opacité (aucune animation de box-shadow) */
+  .dm-step-shadow {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    box-shadow: var(--dm-shadow-hover);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 300ms cubic-bezier(0.22, 1, 0.36, 1);
+
+    @media (hover: hover) and (pointer: fine) {
+      .dm-step:hover > & {
+        opacity: 1;
+      }
+    }
+  }
+
+  /* Nœud du rail, en face de chaque plaque (mobile et tablette) */
+  .dm-step-node {
+    position: absolute;
+    top: 1.75rem;
+    left: calc(-2.75rem + 20px - 5px);
+    width: 11px;
+    height: 11px;
+    border: 1.5px solid var(--color-brand-gold);
+    border-radius: 50%;
+    background-color: var(--color-brand-gold);
+
+    @media (width >=64rem) {
+      display: none;
+    }
+  }
+
+  @media (width >=64rem) {
+    .dm-step-1 {
+      left: 0;
+      top: 0;
+      width: calc(340 * var(--u));
+      height: calc(196 * var(--u));
+    }
+
+    .dm-step-2 {
+      left: calc(376 * var(--u));
+      top: calc(4 * var(--u));
+      width: calc(400 * var(--u));
+      height: calc(384 * var(--u));
+      box-shadow: var(--dm-shadow-strong);
+    }
+
+    .dm-step-3 {
+      left: calc(832 * var(--u));
+      top: 0;
+      width: calc(320 * var(--u));
+      height: calc(352 * var(--u));
+    }
+
+    .dm-step-4 {
+      left: 0;
+      top: calc(428 * var(--u));
+      width: 100%;
+      height: calc(150 * var(--u));
+    }
+  }
+
+  /* ---------- Contenu des plaques ---------- */
+  .dm-head {
+    padding: 1rem 1.25rem 0;
+
+    @media (width >=64rem) {
+      padding: calc(16 * var(--u)) calc(24 * var(--u)) 0;
+    }
+  }
+
+  .dm-number {
+    display: block;
+    font-size: 4.5rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: color-mix(in oklab, var(--color-brand-navy) 10%, transparent);
+
+    @media (width >=64rem) {
+      font-size: clamp(4.5rem, calc(100 * var(--u)), 6.25rem);
+    }
+  }
+
+  .dm-h3 {
+    position: relative;
+    margin: -2.25rem 0 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+
+    @media (width >=64rem) {
+      margin-top: calc(-46 * var(--u));
+      font-size: clamp(1.375rem, calc(30 * var(--u)), 1.875rem);
+    }
+  }
+
+  .dm-subtitle {
+    margin: 0.375rem 0 0;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .dm-keywords {
+    margin: 0.75rem 0 1.5rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    @media (width >=64rem) {
+      margin-bottom: 0;
+      font-size: 0.75rem;
+    }
+  }
+
+  .dm-text {
+    margin: 0;
+    padding: 0.75rem 1.25rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .dm-list {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 1rem 1.25rem 1.5rem;
+    list-style: none;
+
+    & li {
+      position: relative;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+  }
+
+  /* Étape 02 : image en haut, numéro blanc qui déborde légèrement du bandeau */
+  .dm-media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+
+    @media (width >=64rem) {
+      aspect-ratio: auto;
+      height: calc(190 * var(--u));
+    }
+  }
+
+  .dm-media-reveal {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 11px 11px 0 0;
+  }
+
+  .dm-media-zoom {
+    position: absolute;
+    inset: 0;
+  }
+
+  .dm-photo {
+    object-fit: cover;
+  }
+
+  .dm-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background-color: var(--color-brand-navy-glow);
+
+    & svg {
+      width: 84px;
+      height: 84px;
+      fill: none;
+      stroke: var(--color-brand-gold);
+      stroke-width: 1.5;
+    }
+  }
+
+  .dm-placeholder-dot {
+    fill: var(--color-brand-gold);
+    stroke: none;
+  }
+
+  .dm-number-on-image {
+    position: absolute;
+    left: 1.25rem;
+    bottom: -0.18em;
+    color: color-mix(in oklab, var(--color-brand-white) 22%, transparent);
+
+    @media (width >=64rem) {
+      left: calc(24 * var(--u));
+    }
+  }
+
+  .dm-body {
+    padding: 1.25rem 1.25rem 0;
+
+    & .dm-h3 {
+      margin-top: 0;
+    }
+
+    & .dm-text {
+      padding-inline: 0;
+    }
+
+    @media (width >=64rem) {
+      position: absolute;
+      top: calc(210 * var(--u));
+      inset-inline: calc(24 * var(--u));
+      padding: 0;
+
+      & .dm-h3 {
+        font-size: clamp(1.5rem, calc(34 * var(--u)), 2.125rem);
+      }
+
+      & .dm-text {
+        padding: calc(10 * var(--u)) 0 0;
+        font-size: clamp(0.9375rem, calc(16 * var(--u)), 1rem);
+      }
+    }
+  }
+
+  @media (width >=64rem) {
+    /* Étape 03 : titre sur une ligne, liste à x 32 / y 154 de la plaque, pas de 50, trait de 32 depuis l'axe */
+    .dm-step-3 .dm-h3 {
+      font-size: clamp(1.25rem, calc(24 * var(--u)), 1.5rem);
+      white-space: nowrap;
+    }
+
+    .dm-step-3 .dm-list {
+      position: absolute;
+      top: calc(154 * var(--u));
+      left: calc(32 * var(--u));
+      gap: calc(26 * var(--u));
+      padding: 0;
+
+      & li {
+        font-size: clamp(0.875rem, calc(15 * var(--u)), 0.9375rem);
+        line-height: calc(24 * var(--u));
+      }
+
+      & li::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: calc(-48 * var(--u));
+        width: calc(32 * var(--u));
+        height: 1.5px;
+        margin-top: -0.75px;
+        background-color: var(--color-brand-gold);
+      }
+    }
+
+    /* Étape 04 : titre à gauche, paragraphe à x 496 / y 40, largeur 620 */
+    .dm-step-4 .dm-head {
+      padding: calc(12 * var(--u)) calc(24 * var(--u)) 0;
+    }
+
+    .dm-step-4 .dm-text {
+      position: absolute;
+      top: calc(40 * var(--u));
+      left: calc(496 * var(--u));
+      width: calc(620 * var(--u));
+      padding: 0;
+      font-size: clamp(0.9375rem, calc(16 * var(--u)), 1rem);
+    }
+
+    .dm-step-1 .dm-subtitle,
+    .dm-step-3 .dm-subtitle,
+    .dm-step-4 .dm-subtitle {
+      font-size: clamp(0.9375rem, calc(16 * var(--u)), 1rem);
     }
   }
 }

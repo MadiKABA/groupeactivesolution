@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { FormationsEcoleDemarrer } from "@/components/formations/formations-ecole-demarrer";
 import { FormationsEcoleHero } from "@/components/formations/formations-ecole-hero";
 import { FormationsEcoleNiveaux } from "@/components/formations/formations-ecole-niveaux";
 import { FormationsEcoleRole } from "@/components/formations/formations-ecole-role";
@@ -48,6 +49,7 @@ export default function FormationsEcolePage() {
       <FormationsEcoleHero />
       <FormationsEcoleRole />
       <FormationsEcoleNiveaux />
+      <FormationsEcoleDemarrer />
     </main>
   );
 }
