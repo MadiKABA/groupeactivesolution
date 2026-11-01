@@ -4,6 +4,7 @@ import { FormationsEcoleDemarrer } from "@/components/formations/formations-ecol
 import { FormationsEcoleHero } from "@/components/formations/formations-ecole-hero";
 import { FormationsEcoleNiveaux } from "@/components/formations/formations-ecole-niveaux";
 import { FormationsEcoleRole } from "@/components/formations/formations-ecole-role";
+import { FormationsEcoleTerrain } from "@/components/formations/formations-ecole-terrain";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageRobots } from "@/lib/flags";
 import { SITE_URL } from "@/lib/site";
@@ -50,6 +51,7 @@ export default function FormationsEcolePage() {
       <FormationsEcoleRole />
       <FormationsEcoleNiveaux />
       <FormationsEcoleDemarrer />
+      <FormationsEcoleTerrain />
     </main>
   );
 }

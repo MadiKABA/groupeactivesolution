@@ -12499,3 +12499,500 @@
     }
   }
 }
+
+/*
+ * ---------- « Sur le terrain » (/formations/ecole) ----------
+ * Fond de la section Formations de l'accueil (bleu nuit, liseré, halo, zigzag `wave-motif--niveaux`).
+ * Dès 900px : aperçu de l'entrée active (634) à gauche, index (458) à droite ; l'aperçu est sticky dès
+ * 1024px de large et 720px de haut (header + 32px). Dessous : blocs complets en une colonne.
+ * Aucun overflow hidden sur la section ni ses parents. Classes `tr-*`.
+ */
+@layer components {
+  .tr {
+    --tr-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --tr-hover-dur: 220ms;
+    --focus-ring: var(--color-brand-gold);
+
+    & :focus-visible {
+      outline: 2px solid var(--color-brand-gold);
+      outline-offset: 4px;
+    }
+  }
+
+  .tr-glow {
+    --px: 0;
+    --py: 0;
+  }
+
+  .tr-root {
+    padding-block: 4rem;
+
+    @media (width >=64rem) {
+      padding-block: 3.5rem 4rem;
+    }
+  }
+
+  /* ---------- En-tête ---------- */
+  .tr-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .tr-mark-line {
+    display: block;
+    flex: none;
+    width: 48px;
+    height: 1px;
+    background-color: var(--color-brand-gold);
+    transform-origin: left center;
+  }
+
+  .tr-title {
+    margin: 1.5rem 0 0;
+    font-size: clamp(1.5rem, 4.6vw, 2.875rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+  }
+
+  .tr-line {
+    display: block;
+    overflow: clip;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+
+    @media (width >=48rem) {
+      white-space: nowrap;
+    }
+  }
+
+  .tr-line-inner {
+    display: block;
+  }
+
+  .tr-gold {
+    color: var(--color-brand-gold);
+  }
+
+  .tr-intro {
+    max-width: 640px;
+    margin: 1.25rem 0 0;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  /* ---------- Colonnes ---------- */
+  .tr-layout {
+    display: grid;
+    gap: 3rem;
+    margin-top: 2.5rem;
+
+    @media (width >=56.25rem) {
+      grid-template-columns: minmax(0, 634fr) minmax(0, 458fr);
+      align-items: start;
+      column-gap: clamp(2.5rem, 5.2vw, 3.75rem);
+    }
+  }
+
+  /* ---------- Aperçu (décoratif) ---------- */
+  .tr-preview {
+    display: none;
+
+    @media (width >=56.25rem) {
+      display: block;
+    }
+  }
+
+  @media (width >=64rem) and (height >=45rem) {
+    .tr-preview {
+      position: sticky;
+      top: calc(var(--hdr-h) + 32px);
+    }
+  }
+
+  /* Couches superposées dans une seule cellule : hauteur de la plus haute, aucun saut */
+  .tr-preview-stack {
+    display: grid;
+
+    & > * {
+      grid-area: 1 / 1;
+    }
+  }
+  .tr-feature-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .tr-date {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand-gold);
+  }
+
+  .tr-type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .tr-photo {
+    position: relative;
+    margin-top: 1.5rem;
+    aspect-ratio: 16 / 9;
+    border-radius: 4px;
+  }
+
+  /* Contour doré à 35 % au-dessus de l'image */
+  .tr-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid color-mix(in oklab, var(--color-brand-gold) 35%, transparent);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+
+  .tr-photo-reveal {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+    border-radius: inherit;
+  }
+
+  .tr-photo-zoom,
+  .tr-photo-hover {
+    position: absolute;
+    inset: 0;
+  }
+
+
+  .tr-photo-img {
+    object-fit: cover;
+  }
+
+  .tr-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background-color: var(--color-brand-navy-glow);
+
+    & svg {
+      width: 96px;
+      height: 96px;
+      fill: none;
+      stroke: var(--color-brand-gold);
+      stroke-width: 1.5;
+    }
+  }
+
+  .tr-placeholder-dot {
+    fill: var(--color-brand-gold);
+    stroke: none;
+  }
+
+  .tr-preview-text {
+    padding-top: 1.5rem;
+  }
+
+  .tr-feature-title {
+    margin: 0;
+    font-size: clamp(1.625rem, 2.7vw, 2.125rem);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  .tr-feature-text {
+    margin: 0.75rem 0 1.5rem;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+  }
+
+  /* ---------- Bouton en verre (seul backdrop-filter de la section) ---------- */
+  .tr-glass {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.625rem;
+    min-height: 44px;
+    padding: 0 24px;
+    border: 1px solid var(--color-brand-gold);
+    border-radius: 10px;
+    background-color: color-mix(in oklab, var(--color-brand-white) 8%, transparent);
+    backdrop-filter: blur(10px);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-brand-white);
+    transition:
+      transform var(--tr-hover-dur) var(--tr-ease),
+      background-color var(--tr-hover-dur) var(--tr-ease);
+
+    @supports not (backdrop-filter: blur(1px)) {
+      background-color: color-mix(in oklab, var(--color-brand-navy) 88%, transparent);
+    }
+
+    @media (width < 48rem) {
+      width: 100%;
+    }
+
+    &:is(a):hover,
+    &:is(a):focus-visible {
+      transform: translateY(-2px);
+      background-color: color-mix(in oklab, var(--color-brand-white) 14%, transparent);
+    }
+  }
+
+  .tr-glass-compact {
+    padding: 0 18px;
+    font-size: 0.875rem;
+  }
+
+  .tr-glass-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .tr-glass-arrow {
+    width: 1rem;
+    height: 1rem;
+    flex: none;
+    color: var(--color-brand-gold);
+    transition: transform var(--tr-hover-dur) var(--tr-ease);
+
+    a:hover > &,
+    a:focus-visible > & {
+      transform: translateX(4px);
+    }
+  }
+
+  /* ---------- Liste ---------- */
+  .tr-list {
+    position: relative;
+    margin: 0;
+    padding: 0 0 0 2rem;
+    list-style: none;
+
+    @media (width >=56.25rem) {
+      padding-left: 0;
+      margin-top: -26px;
+    }
+  }
+
+  /* Fil à 24px à gauche des entrées (gouttière en desktop), du premier au dernier nœud */
+  .tr-wire {
+    position: absolute;
+    left: calc(2rem - 24px - 0.75px);
+    width: 1.5px;
+    background-color: var(--color-brand-gold);
+    transform-origin: top center;
+
+    @media (width >=56.25rem) {
+      left: calc(-24px - 0.75px);
+    }
+  }
+
+  .tr-entry {
+    position: relative;
+    opacity: 0.72;
+    transition: opacity 300ms var(--tr-ease);
+
+    & + &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      inset-inline: 0;
+      height: 1px;
+      background-color: color-mix(in oklab, var(--color-brand-gold) 50%, transparent);
+    }
+
+    &[data-active] {
+      opacity: 1;
+    }
+  }
+
+  .tr-entry-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr);
+    column-gap: 20px;
+    padding-block: 26px;
+
+    @media (width < 56.25rem) {
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: 1rem;
+    }
+    transition: transform var(--tr-hover-dur) var(--tr-ease);
+
+    @media (hover: hover) and (pointer: fine) {
+      .tr-entry:hover & {
+        transform: translateX(6px);
+      }
+    }
+  }
+
+  /* Nœud devant la date (centre à 22px du haut du jour), trait de 14px vers l'entrée */
+  .tr-node {
+    position: absolute;
+    top: calc(26px + 22px);
+
+    @media (width < 56.25rem) {
+      top: calc(26px + 12px);
+    }
+
+    left: -24px;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    border: 1.5px solid var(--color-brand-gold);
+    border-radius: 50%;
+    background-color: var(--color-brand-navy);
+    transition: transform 300ms var(--tr-ease), opacity 300ms var(--tr-ease);
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 1px);
+      width: 14px;
+      height: 1px;
+      background-color: var(--color-brand-gold);
+      transform-origin: left center;
+      transition: transform var(--tr-hover-dur) var(--tr-ease);
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -6px;
+      border: 1px solid var(--color-brand-gold);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 300ms var(--tr-ease);
+    }
+
+    [data-lit] & {
+      background-color: var(--color-brand-gold);
+    }
+
+    [data-active] & {
+      transform: scale(1.25);
+    }
+
+    [data-active] &::after {
+      opacity: 1;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .tr-entry:hover &::before {
+        transform: scaleX(1.6);
+      }
+    }
+  }
+
+  .tr-entry-date {
+    display: flex;
+    flex-direction: column;
+
+    @media (width < 56.25rem) {
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+  }
+
+  /* Mobile et tablette étroite : image 16/10 en tête de bloc */
+  .tr-entry-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 4px;
+    overflow: clip;
+    outline: 1px solid color-mix(in oklab, var(--color-brand-gold) 35%, transparent);
+    outline-offset: -1px;
+
+    @media (width >=56.25rem) {
+      display: none;
+    }
+  }
+
+  .tr-entry-type {
+    margin: 0 0 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    @media (width >=56.25rem) {
+      display: none;
+    }
+  }
+
+  /* Résumé dans l'index, texte complet dans les blocs */
+  .tr-entry-resume {
+    @media (width < 56.25rem) {
+      display: none;
+    }
+  }
+
+  .tr-entry-detail {
+    @media (width >=56.25rem) {
+      display: none;
+    }
+  }
+
+  .tr-day {
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--color-brand-gold);
+  }
+
+  .tr-month {
+    margin-top: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tr-entry-title {
+    margin: 0;
+    font-size: clamp(1.25rem, 1.9vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .tr-entry-text {
+    margin: 0.375rem 0 0.875rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .tr-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    margin-top: 1rem;
+    font-weight: 600;
+    color: var(--color-brand-gold);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tr-root *,
+    .tr-root {
+      transition-property: none;
+    }
+  }
+}
