@@ -3,13 +3,27 @@ import { ROUTES } from "@/lib/routes";
 export type NavLink = {
   label: string;
   href: string;
+  /** Sous-menu : l'entrée devient un bouton qui l'ouvre (elle ne navigue pas). */
+  children?: readonly NavChild[];
 };
+
+export type NavChild = {
+  label: string;
+  href: string;
+};
+
+const formationsMenu: readonly NavChild[] = [
+  { label: "Pour les écoles", href: "/formations/ecole" },
+  { label: "Apprendre le développement web et mobile", href: "/formations/developpement" },
+  { label: "Pour les organisations", href: "/formations/organisations" },
+];
 
 export const navLinks: readonly NavLink[] = [
   { label: "Accueil", href: "/" },
   { label: "Nos services", href: "/services" },
   { label: "Réalisations", href: "/realisations" },
-  { label: "Formations", href: "/formations" },
+  // `href` sert seulement à l'état actif (toute page sous /formations).
+  { label: "Formations", href: "/formations", children: formationsMenu },
   { label: "À propos", href: "/a-propos" },
   { label: "Contact", href: ROUTES.contact },
 ];

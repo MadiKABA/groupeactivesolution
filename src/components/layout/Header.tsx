@@ -17,6 +17,7 @@ import { useState, type FocusEvent } from "react";
 import { CtaLink } from "./CtaLink";
 import { Logo } from "./Logo";
 import { MobileMenu } from "./MobileMenu";
+import { NavDropdown } from "./NavDropdown";
 import { isActivePath, navLinks } from "./navigation";
 
 const SCROLL_THRESHOLD = 20;
@@ -99,6 +100,16 @@ export function Header() {
                 const active = index === activeIndex;
                 const highlighted = active || index === hoveredIndex;
                 const dimmed = hoveredIndex !== null && index !== hoveredIndex;
+                const stateClass = `${highlighted ? "text-brand-gold" : "text-text-on-dark"} ${dimmed ? "opacity-70" : ""}`;
+                const itemClass = `relative rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard ${stateClass}`;
+                const underline = index === underlinedIndex && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    aria-hidden="true"
+                    transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 32 }}
+                    className="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-brand-gold"
+                  />
+                );
                 return (
                   <motion.li
                     key={link.href}
@@ -107,25 +118,27 @@ export function Header() {
                     initial="hidden"
                     animate="visible"
                   >
-                    <Link
-                      href={link.href}
-                      aria-current={active ? "page" : undefined}
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onFocus={() => setHoveredIndex(index)}
-                      className={`relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard ${highlighted ? "text-brand-gold" : "text-text-on-dark"} ${dimmed ? "opacity-70" : ""}`}
-                    >
-                      {link.label}
-                      {index === underlinedIndex && (
-                        <motion.span
-                          layoutId="nav-underline"
-                          aria-hidden="true"
-                          transition={
-                            reduce ? { duration: 0 } : { type: "spring", stiffness: 400, damping: 32 }
-                          }
-                          className="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-brand-gold"
-                        />
-                      )}
-                    </Link>
+                    {link.children ? (
+                      <NavDropdown
+                        label={link.label}
+                        items={link.children}
+                        pathname={pathname}
+                        className={`flex items-center gap-1.5 ${itemClass}`}
+                        underline={underline}
+                        onHighlight={() => setHoveredIndex(index)}
+                      />
+                    ) : (
+                      <Link
+                        href={link.href}
+                        aria-current={active ? "page" : undefined}
+                        onMouseEnter={() => setHoveredIndex(index)}
+                        onFocus={() => setHoveredIndex(index)}
+                        className={`block ${itemClass}`}
+                      >
+                        {link.label}
+                        {underline}
+                      </Link>
+                    )}
                   </motion.li>
                 );
               })}

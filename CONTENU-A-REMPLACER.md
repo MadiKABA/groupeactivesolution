@@ -47,9 +47,17 @@ Envoyez les textes dans un document (en indiquant la page et la section) et les 
 
 Il n'y a pas encore de page « Réalisations » : seule la section de l'accueil existe (voir ci-dessus). Une page dédiée et le lien « Voir toutes nos réalisations » pourront être ajoutés quand les projets et leurs photos seront disponibles. Contenu de cette future page : **à fournir**.
 
-## 4. Formations
+## 4. Formations pour les écoles (`/formations/ecole`)
 
-Il n'y a pas encore de page « Formations » : seule la section de l'accueil existe (voir ci-dessus). Les liens « Découvrir nos formations » et « Formations » du carrousel mènent à une adresse `/formations` qui n'existe pas encore. Contenu de cette future page (programmes, durées, public, modalités, tarifs éventuels) : **à fournir**.
+La page est publiée avec son seul hero (`/ecole` et `/formations` y redirigent en 301). Le sous-menu « Formations » du header pointe aussi vers `/formations/developpement` et `/formations/organisations`, pages à créer (404 en attendant). Le titre, la description et le bouton sont définitifs (fournis avec la maquette).
+
+| Section | Provisoire | Attendu | Où |
+|---|---|---|---|
+| Hero : 3 cadres (Primaire, Collège, Lycée) | Fond bleu nuit et repère doré, sans photo | 3 photos verticales 3:4 (au moins 900 × 1200, WebP < 200 Ko) : une classe de primaire, de collège et de lycée en atelier numérique, avec une courte description de chacune | `public/images/formations/` puis le champ `photo` de `src/components/formations/formations-ecole-hero.tsx` |
+| Programmes par niveau (`#primaire`, `#college`, `#lycee`) | Absents : les cadres du hero visent des ancres qui n'existent pas encore | Pour chaque niveau : objectifs, contenus, durée, matériel fourni, modalités | `src/app/formations/ecole/page.tsx` |
+| Image de partage (Open Graph) | Aucune | Image 1200 × 630 | `public/` |
+
+Le bouton « Planifier une séance pilote » mène à la page Contact (`/contact`).
 
 ## 5. À propos (`/a-propos`)
 
@@ -84,3 +92,12 @@ Il n'y a pas encore de page « Formations » : seule la section de l'accueil exi
 | Pages légales | Textes des CGU, des mentions légales et de la politique de confidentialité (les liens apparaîtront dans le pied de page quand les pages existeront) : **à fournir** | — |
 | Image de partage | Image affichée quand on partage un lien du site (WhatsApp, LinkedIn…) : **1200 × 630**, JPEG ou PNG, 300 Ko max, une par page si possible (accueil, services, à propos, contact) | `public/og/` |
 | Icône d'onglet (favicon) | À créer à partir du logo officiel : fichier source du logo en haute définition (SVG) si disponible | `public/logos/` |
+
+## /formations/ecole — « Nos programmes par niveau »
+
+| Élément | Attendu | Où |
+|---|---|---|
+| Exemples d'activités | Confirmer les exemples des trois niveaux (Primaire, Collège, Lycée) | `src/content/formations-ecole-niveaux.ts` |
+| Classes, durée, effectif | Valeurs par niveau : **à fournir** (rien n'est affiché en production tant qu'elles manquent) | `src/content/formations-ecole-niveaux.ts` |
+| Photo Primaire | Image générée par IA (filigrane « Meta AI ») : **remplacer par une vraie photo** | `public/images/formations/ecole/niveau-primaire.webp` |
+| Photo Lycée | Source en 735 × 417 : version plus grande (≥ 1600 px de large) souhaitée | `public/images/formations/ecole/niveau-lycee.webp` |

@@ -10,6 +10,15 @@ const nextConfig: NextConfig = {
     qualities: [75, 78, 80],
   },
   partialPrefetching: true,
+  // /ecole et /formations (sans page propre) mènent à /formations/ecole.
+  // 301 demandé : `statusCode`, pas `permanent`, qui renvoie 308.
+  async redirects() {
+    return [
+      { source: "/ecole", destination: "/formations/ecole", statusCode: 301 },
+      { source: "/ecole/:path*", destination: "/formations/ecole", statusCode: 301 },
+      { source: "/formations", destination: "/formations/ecole", statusCode: 301 },
+    ];
+  },
   // Relecture du contenu (NEXT_PUBLIC_ALLOW_INDEXING différent de "true") : aucune page indexée.
   async headers() {
     if (allowIndexing) return [];

@@ -286,6 +286,12 @@
   /* Accroche des fiches de /services (34px en mobile, 52px en desktop) */
   --text-display-expertise: clamp(2.125rem, 1.4rem + 2.3vw, 3.25rem);
   --text-display-expertise--line-height: 1.08;
+  /* Titre du hero de /formations/ecole, exactement 3 lignes : proportionnel à la colonne de texte
+     (conteneur `.fh-text`) ; la ligne la plus longue, « consomment pas le numérique, », mesure 14.86em
+     en Manrope 800 → 15.8 laisse ≈ 6 % de marge (≈ 20px à 360px, ≈ 38px à 1440px, 52px au plus).
+     `text-display-services` ne tient pas en 3 lignes dans cette colonne. */
+  --text-display-formations-hero: clamp(1.125rem, 100cqi / 15.8, 3.25rem);
+  --text-display-formations-hero--line-height: 1.18;
 
   /* Graisses alignées sur celles chargées pour Manrope (layout.tsx) */
   --font-weight-*: initial;
@@ -417,6 +423,24 @@
     }
   }
 
+  /* Hero de /formations/ecole : entrée des lignes, textes et cadres, tracé du trait doré */
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+      transform: translateY(var(--fh-shift, 12px));
+    }
+  }
+
+  @keyframes hero-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
   /* Largeur de contenu (`max-w-site`) et rythme vertical des sections (`py-section`) */
   /* 1684px : avec les marges `px-6 md:px-10 xl:px-28` (112px), aligne header, hero et sections. */
   --container-site: 105.25rem;
@@ -467,6 +491,10 @@
   /* Page Contact (trait bleu nuit, fond clair) : fond de la section et cartes */
   --motif-zigzag-contact: 0.045;
   --motif-zigzag-contact-card: 0.085;
+  /* Hero de /formations/ecole : tout le fond, très discret */
+  --motif-zigzag-formations-hero: 0.05;
+  /* « Nos programmes par niveau » (/formations/ecole) : zigzag de la section Formations de l'accueil, un peu plus marqué (0.14 contre 0.111) */
+  --motif-zigzag-niveaux: 0.14;
   /* Facteur appliqué aux zigzags des sections de l'accueil (main[data-page="home"], hors hero et footer) :
      -12 % (0.14 → 0.123, 0.51 → 0.449, 0.27 → 0.238, 0.17 → 0.15, 0.05 → 0.044) */
   --motif-zigzag-home: 0.88;
@@ -642,6 +670,14 @@
 
   .ct-card-motif .wave-motif--navy {
     --wave-opacity: var(--motif-zigzag-contact-card);
+  }
+
+  .fh .wave-motif {
+    --wave-opacity: var(--motif-zigzag-formations-hero);
+  }
+
+  .wave-motif.wave-motif--niveaux {
+    --wave-opacity: var(--motif-zigzag-niveaux);
   }
 
   .wave-svg {
@@ -10475,5 +10511,1536 @@
     height: auto;
     margin-top: -0.75rem;
     color: color-mix(in oklab, var(--color-text-on-dark) 85%, transparent);
+  }
+}
+
+/*
+ * Hero de /formations/ecole — exception validée (voir CLAUDE.md) : fond du hero de l'accueil
+ * (`hero-backdrop`, `hero-grain`) et zigzag statique à `--motif-zigzag-formations-hero`, escalier de
+ * trois cadres (Primaire, Collège, Lycée) relié par un trait doré tracé à l'entrée, CTA en verre
+ * (`.glass`) à contour doré. Server Component : tout est en CSS (transform, opacity, tracé SVG),
+ * en `animation-fill-mode: backwards` pour que le survol reprenne la main après l'entrée.
+ * Séquence (≈ 1,2 s, puis le trait sur 1,1 s) : lignes du titre, description, CTA, cadres, trait.
+ * Aucune animation en boucle ni liée au défilement.
+ */
+@layer components {
+  .fh {
+    --focus-ring: var(--color-brand-gold);
+    --fh-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --fh-line-dur: 650ms;
+    --fh-line-step: 80ms;
+    --fh-fade-dur: 450ms;
+    --fh-desc-delay: 300ms;
+    --fh-cta-delay: 420ms;
+    --fh-step-delay: 480ms;
+    --fh-step-gap: 120ms;
+    --fh-trail-delay: 800ms;
+    --fh-trail-dur: 1100ms;
+    --fh-hover-dur: 220ms;
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
+    padding-top: calc(var(--hdr-h) + 2.25rem);
+    background-color: var(--color-brand-navy);
+    color: var(--color-text-on-dark);
+
+    @media (width >=64rem) {
+      padding-top: calc(var(--hdr-h) + 3.5rem);
+    }
+  }
+
+  /* Fond fixe : aucune animation */
+  .fh-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .fh-grid {
+    position: relative;
+    display: grid;
+    row-gap: 2.5rem;
+    padding-bottom: 3.5rem;
+
+    @media (width >=48rem) {
+      row-gap: 3rem;
+      padding-bottom: 4.5rem;
+    }
+
+    @media (width >=64rem) {
+      grid-template-columns: 52fr 48fr;
+      column-gap: 4rem;
+      /* Haut du titre = haut du cadre Lycée */
+      align-items: start;
+      padding-bottom: 5rem;
+    }
+  }
+
+  .fh-text {
+    min-width: 0;
+    /* référence de taille du titre (`cqi`) */
+    container-type: inline-size;
+  }
+
+  /*
+   * ---------- Bloc de gauche : styles du hero de /services ----------
+   * Titre `sv-title` (graisse, espacement, couleur ; taille propre pour tenir en 3 lignes), description
+   * `sv-subtitle`, bouton `sv-cta` + `sv-cta-icon`. Ici seulement : l'interligne du titre (1.18, plus
+   * aéré que les 1.08 de /services), des écarts plus serrés entre titre, description et bouton, et
+   * l'entrée `fh-*` (déclarée après celle de /services, elle la remplace).
+   */
+  .fh-title {
+    margin: 0;
+    font-size: var(--text-display-formations-hero);
+    line-height: var(--text-display-formations-hero--line-height);
+  }
+
+  .fh-gold {
+    color: var(--color-brand-gold);
+  }
+
+  .fh-line {
+    --fh-shift: 24px;
+    display: block;
+    white-space: nowrap;
+    animation: hero-fade var(--fh-line-dur) var(--fh-ease) backwards;
+
+    &:nth-child(2) {
+      animation-delay: var(--fh-line-step);
+    }
+
+    &:nth-child(3) {
+      animation-delay: calc(var(--fh-line-step) * 2);
+    }
+  }
+
+  .fh-desc {
+    --fh-shift: 12px;
+    animation: hero-fade var(--fh-fade-dur) var(--fh-ease) var(--fh-desc-delay) backwards;
+
+    /* Écart sous le titre (/services : 16, 20 puis 28px) */
+    margin-top: 1rem;
+
+    @media (width >=48rem) {
+      margin-top: 1.25rem;
+    }
+
+    @media (width >=64rem) {
+      margin-top: 1.5rem;
+    }
+  }
+
+  .fh-cta {
+    --fh-shift: 12px;
+    animation: hero-fade var(--fh-fade-dur) var(--fh-ease) var(--fh-cta-delay) backwards;
+
+    /* Écart sous la description (/services : 24, 28 puis 36px) */
+    margin-top: 1.5rem;
+
+    @media (width >=48rem) {
+      margin-top: 1.75rem;
+    }
+
+    @media (width >=64rem) {
+      margin-top: 2rem;
+    }
+  }
+
+  /* Flèche vers la droite (lien vers une autre page) : glisse vers la droite au survol, pas vers le bas */
+  @media (prefers-reduced-motion: no-preference) and (hover: hover) {
+    .fh-cta:hover .sv-cta-icon {
+      translate: 3px 0;
+    }
+  }
+
+  /* ---------- Visuel : rangée de 3 cadres sous 768px, escalier au-delà ---------- */
+  .fh-visual {
+    position: relative;
+    min-width: 0;
+
+    /* Repère 100 × 77.333 (viewBox du trait) : cadres de 40 × 53.333 unités, pas de 30 et de 12 unités ;
+       la boîte s'arrête au bas de Primaire et commence au haut de Lycée (même hauteur de référence) */
+    @media (width >=48rem) {
+      width: 100%;
+      aspect-ratio: 300 / 232;
+      align-self: start;
+    }
+
+    /* Tablette : sous le texte, hauteur proportionnelle à la largeur disponible */
+    @media (width >=48rem) and (width < 64rem) {
+      max-width: min(34rem, 100%);
+      justify-self: center;
+    }
+  }
+
+  .fh-stairs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.625rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media (width >=48rem) {
+      display: block;
+      position: absolute;
+      inset: 0;
+    }
+  }
+
+  .fh-step {
+    --fh-shift: 24px;
+    position: relative;
+    z-index: 1;
+    animation: hero-fade var(--fh-line-dur) var(--fh-ease) backwards;
+    animation-delay: calc(var(--fh-step-delay) + var(--i) * var(--fh-step-gap));
+
+    /* Primaire en bas à gauche, Lycée en haut à droite (top : 24, 12, 0 unités sur 77.333) */
+    @media (width >=48rem) {
+      position: absolute;
+      width: 40%;
+      left: calc(var(--i) * 30%);
+      top: calc((2 - var(--i)) * 15.5172%);
+    }
+
+    &:has(.fh-frame:hover),
+    &:has(.fh-frame:focus-visible) {
+      z-index: 2;
+    }
+  }
+
+  .fh-frame {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 4;
+    min-height: 2.75rem;
+    overflow: hidden;
+    border: 1px solid color-mix(in oklab, var(--color-brand-gold) 35%, transparent);
+    border-radius: 14px;
+    background-color: var(--color-placeholder-end);
+    transition:
+      transform var(--fh-hover-dur) var(--fh-ease),
+      opacity var(--fh-hover-dur) var(--fh-ease);
+
+    @media (width >=64rem) {
+      box-shadow: var(--shadow-photo);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-brand-gold);
+      outline-offset: 4px;
+      transform: translateY(-6px) scale(1.02);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        transform: translateY(-6px) scale(1.02);
+      }
+    }
+  }
+
+  /* Les deux autres cadres s'effacent légèrement */
+  .fh-stairs:has(.fh-frame:focus-visible) .fh-frame:not(:focus-visible) {
+    opacity: 0.85;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .fh-stairs:has(.fh-frame:hover) .fh-frame:not(:hover) {
+      opacity: 0.85;
+    }
+  }
+
+  .fh-photo {
+    object-fit: cover;
+  }
+
+  /* Repère circulaire doré */
+  .fh-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 34%;
+    translate: -50% -50%;
+    fill: none;
+    stroke: var(--color-brand-gold);
+    stroke-width: 1.5;
+    stroke-opacity: 0.7;
+  }
+
+  .fh-mark-dot {
+    fill: var(--color-brand-gold);
+    stroke: none;
+  }
+
+  .fh-tag {
+    position: absolute;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    border: 1px solid color-mix(in oklab, var(--color-brand-gold) 35%, transparent);
+    border-radius: 9999px;
+    background-color: color-mix(in oklab, var(--color-brand-navy) 85%, transparent);
+    font-size: var(--text-2xs);
+    line-height: var(--text-2xs--line-height);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--tracking-badge);
+    color: var(--color-text-on-dark);
+    white-space: nowrap;
+
+    @media (width >=48rem) {
+      bottom: 0.75rem;
+      left: 0.75rem;
+      font-size: var(--text-tag);
+      line-height: var(--text-tag--line-height);
+    }
+  }
+
+  /* Trait doré : deux segments (sous Collège puis sous Lycée), 1,1 s au total */
+  .fh-trail {
+    display: none;
+
+    @media (width >=48rem) {
+      display: block;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      fill: none;
+      stroke: var(--color-brand-gold);
+      /* unités du viewBox (100 de large) : ≈ 1.5px à 1440px */
+      stroke-width: 0.28;
+      stroke-linecap: round;
+    }
+
+    & path {
+      stroke-dasharray: 1;
+      animation: hero-draw calc(var(--fh-trail-dur) * 0.45) var(--fh-ease) var(--fh-trail-delay) backwards;
+    }
+
+    & path + path {
+      animation-duration: calc(var(--fh-trail-dur) * 0.55);
+      animation-delay: calc(var(--fh-trail-delay) + var(--fh-trail-dur) * 0.45);
+    }
+  }
+
+  /* Animations réduites : rien ne bouge, tout est affiché tout de suite */
+  @media (prefers-reduced-motion: reduce) {
+    .fh-line,
+    .fh-desc,
+    .fh-cta,
+    .fh-step,
+    .fh-trail path {
+      animation: none;
+    }
+
+    .fh-frame {
+      transition: none;
+    }
+  }
+}
+
+/*
+ * Sous-menu « Formations » du header (NavDropdown, bureau) et du tiroir mobile (MobileMenu) :
+ * fermés par défaut par l'attribut `hidden` ; à l'affichage, apparition en opacity + translateY
+ * seulement (200ms, CSS), rien sous prefers-reduced-motion. Le panneau bureau commence au bas du
+ * bouton (padding-top transparent) pour que le survol ne se perde pas, aligné sur son bord gauche.
+ */
+@keyframes nav-sub-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@layer components {
+  .nav-sub {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    width: max-content;
+    max-width: 22rem;
+    padding-top: 1.75rem;
+    animation: nav-sub-in 200ms var(--ease-standard);
+  }
+
+  /* Rayon des cadres du hero de /formations/ecole (14px) */
+  .nav-sub-list {
+    display: grid;
+    gap: 0.25rem;
+    margin: 0;
+    padding: 0.625rem;
+    list-style: none;
+    border: 1px solid color-mix(in oklab, var(--color-brand-gold) 35%, transparent);
+    border-radius: 14px;
+    background-color: var(--color-brand-navy);
+    box-shadow: var(--shadow-lg);
+    white-space: normal;
+  }
+
+  .nav-sub-link {
+    display: flex;
+    min-height: 2.75rem;
+    align-items: center;
+    padding: 0.625rem 1rem;
+    border-radius: 10px;
+    font-size: var(--text-nav);
+    line-height: var(--text-nav--line-height);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-on-dark);
+    transition:
+      color 200ms var(--ease-standard),
+      background-color 200ms var(--ease-standard);
+
+    &:hover,
+    &:focus-visible {
+      color: var(--color-brand-gold);
+      background-color: color-mix(in oklab, white 5%, transparent);
+    }
+
+    &[aria-current="page"] {
+      color: var(--color-brand-gold);
+    }
+  }
+
+  .nav-sub-chevron {
+    flex-shrink: 0;
+    transition: transform 200ms var(--ease-standard);
+
+    [aria-expanded="true"] > & {
+      transform: rotate(180deg);
+    }
+  }
+
+  /* Tiroir mobile : entrées dépliées sous « Formations » */
+  .nav-sub-mobile {
+    margin: 0 0 0.5rem;
+    padding: 0.25rem 0 0.25rem 0.75rem;
+    list-style: none;
+    border-left: 1px solid color-mix(in oklab, var(--color-brand-gold) 35%, transparent);
+    animation: nav-sub-in 200ms var(--ease-standard);
+
+    & .nav-sub-link {
+      padding-inline: 0.75rem;
+      font-size: var(--text-base);
+      line-height: var(--text-base--line-height);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-sub,
+    .nav-sub-mobile {
+      animation: none;
+    }
+
+    .nav-sub-chevron,
+    .nav-sub-link {
+      transition: none;
+    }
+  }
+}
+
+/*
+ * /formations/ecole, section 2 « Notre rôle » (classes `ro-*`) : fond blanc, titres bleu nuit, doré pour
+ * les traits, repères et grands textes (`gold-ink-strong` pour le texte sur blanc). Desktop (≥ 1024px) :
+ * maquette 1280 × 840 dans `.ro-canvas` (aspect-ratio), positions en %, tailles en `cqw` de la section ;
+ * bandes obliques (clip-path sur le conteneur de la bande) au dégradé du hero, photo, voile bleu nuit et
+ * texte blanc. Entrée unique : `data-reveal` posé par RoleReveal (armed → in → done) ; sans lui, tout
+ * est visible.
+ */
+@keyframes ro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ro-shift, 0));
+  }
+}
+
+@keyframes ro-scale-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes ro-clip {
+  from {
+    clip-path: var(--ro-from);
+  }
+}
+
+@keyframes ro-zoom {
+  from {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes ro-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@layer components {
+  .ro {
+    --ro-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --ro-mark-dur: 500ms;
+    --ro-line-dur: 650ms;
+    --ro-line-step: 80ms;
+    --ro-fade-dur: 500ms;
+    --ro-band-dur: 800ms;
+    --ro-band-step: 150ms;
+    --ro-zoom-dur: 1200ms;
+    --ro-draw-dur: 700ms;
+    --ro-item-step: 120ms;
+    --ro-hover-dur: 400ms;
+    /* 1px de la maquette (1280 de large) ; référence : largeur de la section */
+    --ro-u: calc(100cqw / 1280);
+    /* Marges du header et du hero (`site-container`) : bandes, traits et textes s'y alignent */
+    --ro-inline: max(var(--site-gutter), (100% - var(--container-site)) / 2 + var(--site-gutter));
+    position: relative;
+    overflow-x: clip;
+    container-type: inline-size;
+    padding-bottom: var(--spacing-section);
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+
+    @media (width >=64rem) {
+      padding-bottom: 2.5rem;
+    }
+  }
+
+  .ro-canvas {
+    position: relative;
+
+    @media (width >=64rem) {
+      aspect-ratio: 1280 / 840;
+    }
+  }
+
+  /* Arc fin, bleu nuit à 8 % */
+  .ro-arc {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 21.875%;
+    aspect-ratio: 280 / 240;
+    fill: none;
+    stroke: color-mix(in oklab, var(--color-brand-navy) 8%, transparent);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+    pointer-events: none;
+
+    & circle {
+      vector-effect: non-scaling-stroke;
+    }
+  }
+
+  /* ---------- En-tête : repère (top 56), titre (top 100), sous-titre (top 236) ---------- */
+  .ro-header {
+    position: relative;
+    padding-top: var(--spacing-section);
+
+    @media (width >=64rem) {
+      position: absolute;
+      top: 6.667%;
+      inset-inline: 0;
+      padding-top: 0;
+    }
+  }
+
+  .ro-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    font-size: var(--text-tag);
+    line-height: 1.3;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+
+    @media (width >=64rem) {
+      font-size: max(0.75rem, 13 * var(--ro-u));
+    }
+  }
+
+  .ro-mark-line {
+    display: block;
+    flex: none;
+    width: 48px;
+    height: 1px;
+    background-color: var(--color-brand-gold);
+    transform-origin: left;
+  }
+
+  .ro-title {
+    margin: 1.25rem 0 0;
+    font-size: clamp(1.625rem, 7.4cqw, 2.75rem);
+    line-height: 1.12;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+
+    @media (width >=64rem) {
+      margin-top: calc(27 * var(--ro-u));
+      font-size: calc(52 * var(--ro-u));
+      white-space: nowrap;
+    }
+  }
+
+  /* Une ligne par masque (marge pour accents et jambages, compensée) */
+  .ro-line {
+    display: block;
+    overflow: hidden;
+    padding-block: 0.08em;
+    margin-block: -0.08em;
+  }
+
+  .ro-line-inner {
+    display: block;
+  }
+
+  /* Doré lisible sur blanc (≈ 4.7:1) */
+  .ro-title-gold {
+    color: var(--color-gold-ink-strong);
+  }
+
+  .ro-sub {
+    max-width: 720px;
+    margin: 1.25rem 0 0;
+    font-size: var(--text-lg);
+    line-height: 1.6;
+
+    @media (width >=64rem) {
+      max-width: calc(720 * var(--ro-u));
+      margin-top: calc(19.5 * var(--ro-u));
+      font-size: max(0.9375rem, 18 * var(--ro-u));
+    }
+  }
+
+  /* ---------- Engagements ---------- */
+  .ro-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+    margin: 2.5rem 0 0;
+    padding: 0 var(--site-gutter);
+    list-style: none;
+
+    /* Desktop : calque aligné sur les marges du header (x de la maquette : 64 → 1216, soit 1152) */
+    @media (width >=64rem) {
+      display: block;
+      position: absolute;
+      inset-block: 0;
+      inset-inline: var(--ro-inline);
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  /* Mobile : image et texte dans la même cellule, texte en bas sur le voile */
+  .ro-item {
+    display: grid;
+    /* minmax(0, 1fr) : sans lui, la colonne prend la largeur de la phrase et déborde à droite */
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "stack";
+
+    @media (width >=64rem) {
+      display: block;
+    }
+  }
+
+  .ro-band {
+    grid-area: stack;
+    position: relative;
+    aspect-ratio: 16 / 10;
+    clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
+    transition: opacity var(--ro-hover-dur) var(--ro-ease);
+
+    @media (width >=64rem) {
+      position: absolute;
+      top: var(--ro-by);
+      left: var(--ro-bx);
+      width: var(--ro-bw);
+      height: var(--ro-bh);
+      aspect-ratio: auto;
+      clip-path: var(--ro-poly);
+    }
+  }
+
+  .ro-band-inner {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background-color: var(--color-brand-navy);
+  }
+
+  .ro-photo {
+    object-fit: cover;
+    object-position: var(--ro-pos);
+    transition: transform var(--ro-hover-dur) var(--ro-ease);
+  }
+
+  /* Voile bleu nuit (92 % → 62 % à mi-hauteur → 12 % en haut) ; en mobile, palier de 62 % plus haut
+     (60 %) : le bloc de texte occupe plus de la moitié basse du bandeau */
+  .ro-veil {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(0deg,
+        color-mix(in oklab, var(--color-brand-navy) 92%, transparent) 0%,
+        color-mix(in oklab, var(--color-brand-navy) 62%, transparent) var(--ro-veil-mid, 60%),
+        color-mix(in oklab, var(--color-brand-navy) 12%, transparent) 100%);
+
+    @media (width >=64rem) {
+      --ro-veil-mid: 50%;
+    }
+  }
+
+  /* Repère tant que la photo manque : cercle de 68px, point de 8px */
+  .ro-placeholder {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 68px;
+    translate: -50% -50%;
+    fill: none;
+    stroke: var(--color-brand-gold);
+    stroke-width: 1.5;
+  }
+
+  .ro-placeholder-dot {
+    fill: var(--color-brand-gold);
+    stroke: none;
+  }
+
+  .ro-copy {
+    grid-area: stack;
+    align-self: end;
+    position: relative;
+    z-index: 2;
+    padding: 1.25rem;
+    color: var(--color-text-on-dark);
+
+    @media (width >=64rem) {
+      position: absolute;
+      top: var(--ro-ty);
+      left: var(--ro-tx);
+      width: var(--ro-tw);
+      padding: 0;
+    }
+  }
+
+  .ro-number {
+    display: block;
+    font-size: 4.5rem;
+    line-height: 1;
+    font-weight: var(--font-weight-extrabold);
+    color: color-mix(in oklab, var(--color-brand-white) 20%, transparent);
+    user-select: none;
+
+    @media (width >=64rem) {
+      font-size: calc(110 * var(--ro-u));
+    }
+  }
+
+  .ro-item-title {
+    position: relative;
+    margin: -2.25rem 0 0;
+    font-size: 1.5rem;
+    line-height: 1.15;
+    font-weight: var(--font-weight-bold);
+
+    @media (width >=64rem) {
+      margin-top: calc(-54 * var(--ro-u));
+      font-size: max(1.25rem, 30 * var(--ro-u));
+    }
+  }
+
+  .ro-item-text {
+    margin: 0.375rem 0 0;
+    font-size: var(--text-base);
+    line-height: 1.5;
+
+    @media (width >=64rem) {
+      margin-top: 0.4em;
+      font-size: max(0.875rem, 15 * var(--ro-u));
+    }
+  }
+
+  .ro-item-line {
+    display: block;
+    width: 54px;
+    height: 3px;
+    margin-top: 0.75rem;
+    background-color: var(--color-brand-gold);
+    transform-origin: left;
+    transition: transform var(--ro-hover-dur) var(--ro-ease);
+
+    @media (width >=64rem) {
+      width: calc(54 * var(--ro-u));
+      margin-top: calc(14 * var(--ro-u));
+    }
+  }
+
+  /*
+   * Maquette 1280 × 840, marges de 64 → 1216 : x en % de la largeur entre les marges ((x − 64) / 1152),
+   * y en % de la hauteur (y / 840). Bandes de 360 sur 1152 à y = 540, 36 d'écart, bords obliques
+   * parallèles (pente 0.225). Boîte de la bande (bx, by, bw, bh), découpe dans cette boîte, image, texte.
+   */
+  .ro-item--1 {
+    --ro-bx: 0%;
+    --ro-by: 41.905%;
+    --ro-bw: 34.896%;
+    --ro-bh: 49.048%;
+    --ro-poly: polygon(0% 9.709%, 100% 0%, 78.109% 95.146%, 0% 100%);
+    --ro-pos: 35% 40%;
+    /* 32px au moins du bord gauche de la bande (2.778 % ne fait que 26 à 29px entre 1024 et 1280px) */
+    --ro-tx: max(2.778%, 2rem);
+    --ro-ty: 61.905%;
+    --ro-tw: 22.569%;
+  }
+
+  .ro-item--2 {
+    --ro-bx: 30.295%;
+    --ro-by: 35.714%;
+    --ro-bw: 40.017%;
+    --ro-bh: 53.333%;
+    --ro-poly: polygon(20.39% 6.696%, 100% 0%, 79.393% 94.643%, 0% 100%);
+    --ro-pos: 50% 0%;
+    --ro-tx: 38.194%;
+    --ro-ty: 59.524%;
+    --ro-tw: 23.438%;
+  }
+
+  .ro-item--3 {
+    --ro-bx: 65.191%;
+    --ro-by: 29.762%;
+    --ro-bw: 34.809%;
+    --ro-bh: 56.19%;
+    --ro-poly: polygon(24.439% 8.051%, 100% 1.695%, 100% 96.186%, 0% 100%);
+    --ro-pos: 62% 50%;
+    --ro-tx: 74.306%;
+    --ro-ty: 57.143%;
+    --ro-tw: 21.701%;
+  }
+
+  /* Révélation : de gauche à droite (1, 2), de droite à gauche (3, desktop seulement) */
+  .ro-item {
+    --ro-from: inset(0 100% 0 0);
+
+    @media (width >=64rem) {
+      &.ro-item--3 {
+        --ro-from: inset(0 0 0 100%);
+      }
+    }
+  }
+
+  .ro-diagonals {
+    display: none;
+
+    @media (width >=64rem) {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: var(--ro-inline);
+      z-index: 1;
+      /* largeur explicite : un SVG positionné ignore left + right et garde sa largeur intrinsèque */
+      width: calc(100% - 2 * var(--ro-inline));
+      height: 100%;
+      fill: none;
+      stroke: var(--color-brand-gold);
+      stroke-width: 1.5;
+      pointer-events: none;
+
+      & line {
+        vector-effect: non-scaling-stroke;
+        stroke-dasharray: 1;
+      }
+    }
+  }
+
+  /* Signature (top 790) */
+  .ro-signature {
+    margin-top: 2.5rem;
+    font-size: var(--text-base);
+    line-height: 1.4;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.14em;
+
+    @media (width >=64rem) {
+      position: absolute;
+      top: 94.048%;
+      inset-inline: 0;
+      margin-top: 0;
+      font-size: max(1rem, 20 * var(--ro-u));
+    }
+  }
+
+  .ro-signature-gold {
+    color: var(--color-gold-ink-strong);
+  }
+
+  /* ---------- Survol d'un engagement (souris) ---------- */
+  @media (hover: hover) and (pointer: fine) {
+    .ro-item:hover .ro-photo {
+      transform: scale(1.04);
+    }
+
+    .ro-item:hover .ro-item-line {
+      transform: scaleX(1.6);
+    }
+
+    .ro-list:has(.ro-item:hover) .ro-item:not(:hover) .ro-band {
+      opacity: 0.9;
+    }
+  }
+
+  /* ---------- Entrée unique (seulement si RoleReveal a armé la section) ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .ro[data-reveal="armed"] {
+      & .ro-mark-line,
+      & .ro-item-line {
+        transform: scaleX(0);
+      }
+
+      & .ro-line-inner,
+      & .ro-sub,
+      & .ro-number,
+      & .ro-item-title,
+      & .ro-item-text,
+      & .ro-signature {
+        opacity: 0;
+      }
+
+      & .ro-band-inner {
+        clip-path: var(--ro-from);
+      }
+
+      & .ro-diagonals line {
+        stroke-dashoffset: 1;
+      }
+    }
+
+    .ro[data-reveal="in"] {
+      & .ro-mark-line {
+        animation: ro-scale-x var(--ro-mark-dur) var(--ro-ease) backwards;
+      }
+
+      & .ro-line-inner {
+        --ro-shift: 24px;
+        will-change: transform, opacity;
+        animation: ro-rise var(--ro-line-dur) var(--ro-ease) 100ms backwards;
+      }
+
+      & .ro-line + .ro-line .ro-line-inner {
+        animation-delay: calc(100ms + var(--ro-line-step));
+      }
+
+      & .ro-sub {
+        --ro-shift: 12px;
+        animation: ro-rise var(--ro-fade-dur) var(--ro-ease) 350ms backwards;
+      }
+
+      & .ro-band-inner {
+        will-change: clip-path;
+        animation: ro-clip var(--ro-band-dur) var(--ro-ease) calc(300ms + var(--i) * var(--ro-band-step)) backwards;
+      }
+
+      & .ro-photo {
+        will-change: transform;
+        animation: ro-zoom var(--ro-zoom-dur) var(--ro-ease) calc(300ms + var(--i) * var(--ro-band-step)) backwards;
+      }
+
+      & .ro-diagonals line {
+        animation: ro-draw var(--ro-draw-dur) var(--ro-ease) 1100ms backwards;
+      }
+
+      & .ro-number,
+      & .ro-item-title,
+      & .ro-item-text {
+        --ro-shift: 16px;
+        animation: ro-rise var(--ro-fade-dur) var(--ro-ease) calc(800ms + var(--i) * var(--ro-item-step)) backwards;
+      }
+
+      & .ro-item-line {
+        animation: ro-scale-x 400ms var(--ro-ease) calc(1250ms + var(--i) * var(--ro-item-step)) backwards;
+      }
+
+      & .ro-signature {
+        animation: ro-rise var(--ro-fade-dur) var(--ro-ease) 1400ms backwards;
+      }
+    }
+  }
+
+  /* Animations réduites : aucune animation ni transition, rien de caché */
+  @media (prefers-reduced-motion: reduce) {
+    .ro-band,
+    .ro-photo,
+    .ro-item-line {
+      transition: none;
+    }
+  }
+}
+
+/*
+ * ---------- « Nos programmes par niveau » (/formations/ecole) ----------
+ * Fond de la section Formations de l'accueil (bleu nuit, `formations-topline`, `formations-glow`,
+ * zigzag `wave-motif--niveaux`). Dès 768px : repère 1280 × 920 à l'échelle (menu de trois marches en
+ * `cqw` de sa colonne de 482, panneau de 670 × 640 ; colonnes 482fr / 670fr). Dessous : accordéon.
+ * Entrée unique quand `NiveauxTabs` pose `data-inview` (masquage initial seulement avec `data-js` et
+ * sans préférence de mouvement réduit). Courbe unique, transform / opacity / clip-path seulement.
+ */
+@layer components {
+  .nv {
+    --nv-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --nv-line-dur: 650ms;
+    --nv-line-step: 80ms;
+    --nv-step-gap: 120ms;
+    --nv-wire-dur: 900ms;
+    --nv-out-dur: 150ms;
+    --nv-in-dur: 350ms;
+    --nv-media-dur: 500ms;
+    /* Ombre statique du panneau (moitié en mobile) */
+    --nv-shadow: 0 14px 34px color-mix(in oklab, black 28%, transparent), 0 3px 10px color-mix(in oklab, black 20%, transparent);
+    --nv-shadow-mobile: 0 7px 17px color-mix(in oklab, black 14%, transparent), 0 2px 5px color-mix(in oklab, black 10%, transparent);
+    --focus-ring: var(--color-brand-gold);
+  }
+
+  .nv-anchor {
+    position: absolute;
+    top: 0;
+    scroll-margin-top: var(--hdr-h);
+  }
+
+  .nv-glow {
+    --px: 0;
+    --py: 0;
+  }
+
+  .nv-root {
+    position: relative;
+    padding-block: 4rem 4.5rem;
+
+    @media (width >=48rem) {
+      padding-block: clamp(2.5rem, 4.4vw, 3.5rem) clamp(3rem, 5vw, 4rem);
+    }
+
+    & :focus-visible {
+      outline: 2px solid var(--color-brand-gold);
+      outline-offset: 4px;
+    }
+  }
+
+  /* ---------- En-tête ---------- */
+  .nv-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-brand-gold);
+  }
+
+  .nv-eyebrow-line {
+    width: 48px;
+    height: 1px;
+    flex: none;
+    background-color: var(--color-brand-gold);
+    transform-origin: left center;
+  }
+
+  .nv-title {
+    margin: 1.5rem 0 0;
+    font-size: clamp(1.625rem, 4.4vw, 2.875rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--color-brand-white);
+  }
+
+  .nv-line {
+    display: block;
+
+    @media (width >=48rem) {
+      white-space: nowrap;
+    }
+  }
+
+  .nv-gold {
+    color: var(--color-brand-gold);
+  }
+
+  /* ---------- Mise en page ---------- */
+  .nv-layout {
+    margin-top: 2rem;
+
+    @media (width >=48rem) {
+      display: grid;
+      grid-template-columns: minmax(0, 482fr) minmax(0, 670fr);
+      align-items: start;
+      margin-top: clamp(2rem, 4.2vw, 3.3rem);
+    }
+  }
+
+  .nv-menu {
+    display: none;
+
+    @media (width >=48rem) {
+      display: block;
+      position: relative;
+      container-type: inline-size;
+    }
+  }
+
+  /* Fil en escalier : repère de la colonne (x -26 → 42, y 0 → 420), à gauche des marches */
+  .nv-wire {
+    position: absolute;
+    left: -5.39cqw;
+    top: 0;
+    width: 14.11cqw;
+    height: auto;
+    overflow: visible;
+    fill: var(--color-brand-gold);
+
+    & polyline {
+      fill: none;
+      stroke: var(--color-brand-gold);
+      stroke-width: 1.5;
+      stroke-dasharray: 1;
+    }
+  }
+
+  .nv-tablist {
+    display: flex;
+    flex-direction: column;
+    gap: 15.77cqw;
+    padding-top: 9.13cqw;
+  }
+
+  /* Marche de 300 × 84 (colonne de 482), décalée de 28 à chaque niveau */
+  .nv-step {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+    width: 62.24cqw;
+    min-height: 17.43cqw;
+    margin-left: calc(var(--i) * 5.81cqw);
+    padding: 3.32cqw 4.56cqw;
+    border: 1px solid color-mix(in oklab, var(--color-brand-gold) 50%, transparent);
+    border-radius: 12px;
+    background-color: color-mix(in oklab, var(--color-brand-navy) 60%, transparent);
+    color: color-mix(in oklab, var(--color-brand-white) 80%, transparent);
+    text-align: left;
+    cursor: pointer;
+    transition: transform 220ms var(--nv-ease);
+
+    &[aria-selected="true"] {
+      border-color: var(--color-brand-gold);
+      background-color: color-mix(in oklab, var(--color-brand-navy-glow) 55%, transparent);
+      color: var(--color-brand-white);
+      cursor: default;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &[aria-selected="false"]:hover {
+        transform: translateX(6px);
+        border-color: color-mix(in oklab, var(--color-brand-gold) 85%, transparent);
+      }
+    }
+  }
+
+  .nv-step-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand-gold);
+  }
+
+  .nv-step-verb {
+    font-size: clamp(1.125rem, 5.39cqw, 1.625rem);
+    font-weight: 700;
+    line-height: 1.15;
+  }
+
+  /* ---------- Panneau ---------- */
+  .nv-stage {
+    @media (width >=48rem) {
+      display: grid;
+      container-type: inline-size;
+      border-radius: 16px;
+      background-color: color-mix(in oklab, var(--color-brand-navy) 90%, transparent);
+      background-image: radial-gradient(ellipse 80% 40% at 50% 0%, color-mix(in oklab, var(--color-brand-navy-glow) 55%, transparent), transparent);
+      box-shadow: var(--nv-shadow);
+      overflow: clip;
+    }
+  }
+
+  .nv-item {
+    display: grid;
+    gap: 0.75rem;
+
+    & + & {
+      margin-top: 0.75rem;
+    }
+
+    @media (width >=48rem) {
+      display: contents;
+    }
+  }
+
+  .nv-acc-heading {
+    @media (width >=48rem) {
+      display: none;
+    }
+  }
+
+  .nv-acc {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 1rem;
+    width: 100%;
+    min-height: 3.75rem;
+    padding: 0.75rem 1.125rem;
+    border: 1px solid color-mix(in oklab, var(--color-brand-gold) 50%, transparent);
+    border-radius: 12px;
+    background-color: color-mix(in oklab, var(--color-brand-navy) 60%, transparent);
+    color: color-mix(in oklab, var(--color-brand-white) 80%, transparent);
+    text-align: left;
+    cursor: pointer;
+
+    &[aria-expanded="true"] {
+      border-color: var(--color-brand-gold);
+      background-color: color-mix(in oklab, var(--color-brand-navy-glow) 55%, transparent);
+      color: var(--color-brand-white);
+    }
+
+    & .nv-step-label {
+      grid-column: 1;
+    }
+  }
+
+  .nv-acc-verb {
+    grid-column: 1;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .nv-acc-chevron {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--color-brand-gold);
+    transition: transform 220ms var(--nv-ease);
+
+    [aria-expanded="true"] > & {
+      transform: rotate(180deg);
+    }
+  }
+
+  .nv-panel {
+    position: relative;
+    border-radius: 16px;
+    background-color: color-mix(in oklab, var(--color-brand-navy) 90%, transparent);
+    background-image: radial-gradient(ellipse 80% 40% at 50% 0%, color-mix(in oklab, var(--color-brand-navy-glow) 55%, transparent), transparent);
+    box-shadow: var(--nv-shadow-mobile);
+    overflow: clip;
+
+    @media (width >=48rem) {
+      grid-area: 1 / 1;
+      /* Hauteur commune aux trois niveaux (repère 670 × 512 ; plancher de 512px pour le contenu le plus long) */
+      min-height: max(76cqw, 32rem);
+      border-radius: 0;
+      background-color: transparent;
+      background-image: none;
+      box-shadow: none;
+    }
+
+    &[data-leaving] {
+      opacity: 0;
+      transition: opacity var(--nv-out-dur) var(--nv-ease);
+    }
+  }
+
+  /* Angles dorés 64 × 64 (haut droit, bas gauche), au-dessus de l'image */
+  .nv-corner {
+    position: absolute;
+    z-index: 2;
+    width: 64px;
+    height: 64px;
+    fill: none;
+    stroke: var(--color-brand-gold);
+    stroke-width: 1.5;
+    pointer-events: none;
+  }
+
+  .nv-corner-tr {
+    top: 0;
+    right: 0;
+  }
+
+  .nv-corner-bl {
+    bottom: 0;
+    left: 0;
+    transform: rotate(180deg);
+  }
+
+  /* Bandeau 670 × 270 (16/10 en mobile), bord bas incliné */
+  .nv-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+
+    @media (width >=48rem) {
+      aspect-ratio: 670 / 270;
+    }
+  }
+
+  .nv-media-reveal {
+    position: absolute;
+    inset: 0;
+    clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+    background-color: var(--color-placeholder-end);
+  }
+
+  .nv-photo {
+    object-fit: cover;
+  }
+
+  .nv-placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    background-color: var(--color-brand-navy-glow);
+
+    & svg {
+      width: 84px;
+      height: 84px;
+      fill: none;
+      stroke: var(--color-brand-gold);
+      stroke-width: 1.5;
+    }
+  }
+
+  .nv-placeholder-dot {
+    fill: var(--color-brand-gold);
+    stroke: none;
+  }
+
+  .nv-tag {
+    position: absolute;
+    left: 1.25rem;
+    bottom: -22px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 0.875rem;
+    border: 1px solid var(--color-brand-gold);
+    border-radius: 999px;
+    background-color: var(--color-brand-navy);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-brand-white);
+
+    @media (width >=48rem) {
+      left: 2rem;
+    }
+  }
+
+  /* Haut : 36px sous l'image (l'étiquette en dépasse de 22) ; bas : 40px au moins (24 en mobile) */
+  .nv-body {
+    padding: 2.25rem 1.25rem 1.75rem;
+
+    @media (width >=48rem) {
+      padding: clamp(1.75rem, 5.37cqw, 2.25rem) clamp(1.5rem, 5.97cqw, 2.5rem) 2.5rem;
+    }
+  }
+
+  .nv-h3 {
+    margin: 0;
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--color-brand-white);
+
+    @media (width >=48rem) {
+      font-size: clamp(1.375rem, 4.18cqw, 1.75rem);
+    }
+  }
+
+  .nv-intent {
+    margin: 0.875rem 0 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--color-brand-white);
+
+    @media (width >=48rem) {
+      font-size: 1.0625rem;
+    }
+  }
+
+  .nv-examples {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.625rem 1.5rem;
+    margin: 1.25rem 0 0;
+    padding: 0;
+    list-style: none;
+
+    & li {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-brand-white);
+    }
+
+    & li::before {
+      content: "";
+      width: 18px;
+      height: 2px;
+      flex: none;
+      background-color: var(--color-brand-gold);
+    }
+  }
+
+  .nv-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 2.5rem;
+    margin: 1.5rem 0 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid color-mix(in oklab, var(--color-brand-gold) 60%, transparent);
+
+    & dt {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-brand-gold);
+    }
+
+    & dd {
+      margin: 0.25rem 0 0;
+      font-size: 0.9375rem;
+      color: var(--color-brand-white);
+    }
+  }
+
+  /* ---------- Animations ---------- */
+  @keyframes nv-rise {
+    from {
+      opacity: 0;
+      transform: translateY(var(--nv-shift, 16px));
+    }
+  }
+
+  @keyframes nv-grow {
+    from {
+      transform: scaleX(0);
+    }
+  }
+
+  @keyframes nv-draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+  }
+
+  @keyframes nv-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes nv-unveil {
+    from {
+      clip-path: inset(0 100% 0 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+
+    /* Avant l'entrée (JavaScript actif seulement) */
+    .nv-root[data-js]:not([data-inview]) {
+
+      & .nv-eyebrow-line {
+        transform: scaleX(0);
+      }
+
+      & .nv-line,
+      & .nv-step,
+      & .nv-wire,
+      & .nv-stage {
+        opacity: 0;
+      }
+
+      & .nv-wire polyline {
+        stroke-dashoffset: 1;
+      }
+    }
+
+    .nv-root[data-inview] {
+      & .nv-eyebrow-line {
+        animation: nv-grow 500ms var(--nv-ease) backwards;
+      }
+
+      & .nv-line {
+        --nv-shift: 24px;
+        animation: nv-rise var(--nv-line-dur) var(--nv-ease) calc(80ms + var(--nv-line-step) * var(--n, 0)) backwards;
+      }
+
+      & .nv-line + .nv-line {
+        --n: 1;
+      }
+
+      & .nv-step {
+        animation: nv-rise 500ms var(--nv-ease) calc(240ms + var(--i) * var(--nv-step-gap)) backwards;
+      }
+
+      & .nv-wire {
+        animation: nv-fade 200ms var(--nv-ease) 400ms backwards;
+      }
+
+      & .nv-wire polyline {
+        animation: nv-draw var(--nv-wire-dur) var(--nv-ease) 400ms backwards;
+      }
+
+      & .nv-stage {
+        animation: nv-rise 500ms var(--nv-ease) 700ms backwards;
+      }
+    }
+
+    /* Changement de niveau : nouveau contenu (350 ms, 16px) et image révélée de gauche à droite (500 ms) */
+    .nv-root[data-switched] .nv-panel:not([hidden], [data-leaving]) {
+      animation: nv-rise var(--nv-in-dur) var(--nv-ease) backwards;
+
+      & .nv-media-reveal {
+        animation: nv-unveil var(--nv-media-dur) var(--nv-ease) backwards;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nv-root *,
+    .nv-root {
+      animation-name: none;
+      transition-property: none;
+    }
   }
 }

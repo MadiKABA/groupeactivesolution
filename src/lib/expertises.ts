@@ -67,7 +67,7 @@ export const expertisesIntro = {
     "Nous connectons l'éducation, la technologie et la stratégie pour transformer les idées en compétences et en solutions concrètes.",
 } as const;
 
-// Destinations à confirmer : /formations et /ecole n'existent pas encore (fiches : sections de l'accueil).
+// Destinations à confirmer (fiches : sections de l'accueil) ; /ecole et /formations redirigent vers /formations/ecole.
 export const expertises = [
   {
     slug: "education",
@@ -100,8 +100,7 @@ export const expertises = [
         { label: "Intelligence artificielle", icon: "Sparkles" },
         { label: "Culture numérique et innovation", icon: "Lightbulb" },
       ],
-      // TODO : « Voir la page École » vers /ecole quand la page existera ; en attendant, section Formations de l'accueil.
-      link: { label: "Découvrir les programmes", href: "/#formations" },
+      link: { label: "Voir la page École", href: "/formations/ecole" },
       photo: { alt: "", objectPosition: "50% 50%" }, // TODO : alt factuel quand la photo sera déposée
       theme: "clair",
       photoSide: "droite",

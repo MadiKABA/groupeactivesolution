@@ -1,9 +1,9 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { motion, type Variants } from "motion/react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { CtaLink } from "./CtaLink";
 import { isActivePath, navLinks } from "./navigation";
@@ -30,6 +30,9 @@ const DESKTOP_QUERY = "(min-width: 80rem)";
 export function MobileMenu({ pathname }: { pathname: string }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [open, setOpen] = useState(false);
+  // Sous-menu déplié (libellé de l'entrée parente), un seul à la fois.
+  const [openSub, setOpenSub] = useState<string | null>(null);
+  const subId = useId();
 
   const openMenu = () => {
     dialogRef.current?.showModal();
@@ -88,17 +91,51 @@ export function MobileMenu({ pathname }: { pathname: string }) {
             </button>
           </div>
 
-          <nav aria-label="Navigation principale" className="mt-6">
+          {/* Défilement si le sous-menu déplié dépasse la hauteur de l'écran */}
+          <nav aria-label="Navigation principale" className="mt-6 min-h-0 overflow-y-auto">
             <ul className="flex flex-col gap-1">
               {navLinks.map((link) => {
                 const active = isActivePath(pathname, link.href);
+                const itemClass = `rounded-md py-3 text-lg font-medium transition-colors duration-(--duration-base) ease-standard hover:text-brand-gold ${active ? "text-brand-gold" : "text-text-on-dark"}`;
+                if (link.children) {
+                  const expanded = openSub === link.label;
+                  const listId = `${subId}-${link.label}`;
+                  return (
+                    <motion.li key={link.href} variants={item}>
+                      <button
+                        type="button"
+                        aria-expanded={expanded}
+                        aria-controls={listId}
+                        onClick={() => setOpenSub(expanded ? null : link.label)}
+                        className={`flex w-full items-center justify-between ${itemClass}`}
+                      >
+                        {link.label}
+                        <ChevronDown aria-hidden="true" className="nav-sub-chevron size-5" />
+                      </button>
+                      <ul id={listId} hidden={!expanded} className="nav-sub-mobile">
+                        {link.children.map((child) => (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              onClick={closeMenu}
+                              aria-current={pathname === child.href ? "page" : undefined}
+                              className="nav-sub-link"
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </motion.li>
+                  );
+                }
                 return (
                   <motion.li key={link.href} variants={item}>
                     <Link
                       href={link.href}
                       onClick={closeMenu}
                       aria-current={active ? "page" : undefined}
-                      className={`block rounded-md py-3 text-lg font-medium transition-colors duration-(--duration-base) ease-standard hover:text-brand-gold ${active ? "text-brand-gold" : "text-text-on-dark"}`}
+                      className={`block ${itemClass}`}
                     >
                       {link.label}
                     </Link>
