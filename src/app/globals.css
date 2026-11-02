@@ -493,6 +493,10 @@
   --motif-zigzag-contact-card: 0.085;
   /* Hero de /formations/ecole : tout le fond, très discret */
   --motif-zigzag-formations-hero: 0.05;
+  /* Voile bleu nuit sur les photos de l'arche de /formations/metiers-du-numerique (haut, milieu, bas) */
+  --arche-voile-haut: 18%;
+  --arche-voile-milieu: 28%;
+  --arche-voile-bas: 50%;
   /* « Nos programmes par niveau » (/formations/ecole) : zigzag de la section Formations de l'accueil, un peu plus marqué (0.14 contre 0.111) */
   --motif-zigzag-niveaux: 0.14;
   /* « Comment démarrer » (/formations/ecole) : zigzag bleu nuit sur fond blanc, à peine visible */
@@ -6406,6 +6410,7 @@
 
     @media (width >=48rem) {
       max-width: none;
+      margin-inline: 0;
       justify-content: flex-start;
       gap: 0.4375rem;
     }
@@ -13224,5 +13229,355 @@
     .fc {
       transition-property: none;
     }
+  }
+}
+
+/*
+ * Hero de /formations/metiers-du-numerique (classes `mh-*`). Fond du hero de l'accueil (`hero-backdrop`),
+ * texte en CSS pur (keyframes `hero-fade` partagées), arche pilotée par Motion (metiers-arche.tsx).
+ * Repère 1280 × 800 : arche 400 × 533, haut aligné sur le haut du titre, bas sur le bas du bouton.
+ */
+@layer components {
+  .mh {
+    --focus-ring: var(--color-brand-gold);
+    --mh-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --mh-line-dur: 650ms;
+    --mh-line-step: 80ms;
+    --mh-fade-dur: 450ms;
+    --mh-desc-delay: 300ms;
+    --mh-cta-delay: 420ms;
+    position: relative;
+    isolation: isolate;
+    overflow-x: clip;
+    padding-top: calc(var(--hdr-h) + 2.25rem);
+    background-color: var(--color-brand-navy);
+    color: var(--color-text-on-dark);
+
+    @media (width >=48rem) {
+      padding-top: var(--hdr-h);
+    }
+  }
+
+  .mh-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .mh-grid {
+    position: relative;
+    display: grid;
+    row-gap: 2.5rem;
+    padding-bottom: 3.5rem;
+
+    @media (width >=48rem) {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      column-gap: clamp(2.5rem, 3.75vw, 3.5rem);
+      align-items: start;
+      align-content: stretch;
+      padding-block: 3rem;
+    }
+
+    @media (width >=64rem) {
+      min-height: min(55rem, max(42.5rem, calc(100svh - var(--hdr-h))));
+    }
+  }
+
+  .mh-text {
+    min-width: 0;
+    container-type: inline-size;
+
+    @media (width >=48rem) {
+      align-self: center;
+    }
+  }
+
+  .mh-title {
+    margin: 0;
+    font-size: clamp(2.25rem, 13.25cqi, 5.5rem);
+    line-height: 1.02;
+    font-weight: var(--font-weight-extrabold);
+    letter-spacing: -0.03em;
+    color: var(--color-text-on-dark);
+  }
+
+  .mh-line {
+    --fh-shift: 24px;
+    display: block;
+    animation: hero-fade var(--mh-line-dur) var(--mh-ease) backwards;
+
+    @media (width >=64rem) {
+      white-space: nowrap;
+    }
+
+    &:nth-child(2) {
+      animation-delay: var(--mh-line-step);
+    }
+
+    &:nth-child(3) {
+      animation-delay: calc(var(--mh-line-step) * 2);
+    }
+  }
+
+  .mh-gold {
+    color: var(--color-brand-gold);
+  }
+
+  .mh-desc {
+    --fh-shift: 12px;
+    max-width: 33.75rem;
+    margin-top: 2rem;
+    font-size: var(--text-body-lg);
+    line-height: 1.65;
+    color: color-mix(in oklab, var(--color-brand-white) 88%, transparent);
+    animation: hero-fade var(--mh-fade-dur) var(--mh-ease) var(--mh-desc-delay) backwards;
+  }
+
+  .mh-cta {
+    --fh-shift: 12px;
+    min-height: 3.5rem;
+    margin-top: 2.25rem;
+    animation: hero-fade var(--mh-fade-dur) var(--mh-ease) var(--mh-cta-delay) backwards;
+    /* le verre du CTA de /formations/ecole : flou de 10px */
+    backdrop-filter: blur(10px);
+
+    @media (width >=48rem) {
+      min-height: 3.5rem;
+      margin-top: 2.25rem;
+    }
+  }
+
+  /* ---------- Arche ---------- */
+  .mh-arche {
+    /* Cellule de droite : 95 % de sa largeur, 95 % de sa hauteur moins la légende, rapport fixe 450 / 533 (0,844).
+       Décalage du contour = 5 % de la cellule (même valeur en x et en y). */
+    --mh-o: 5cqw;
+    --mh-sw: 95cqw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    container-type: inline-size;
+    width: 100%;
+    max-width: 27.6rem;
+    margin-inline: auto;
+
+    @media (width >=48rem) {
+      --mh-o: min(5cqw, 5cqh);
+      --mh-sw: min(95cqw, calc((95cqh - 2.75rem) * 0.844));
+      container-type: size;
+      align-self: stretch;
+      max-width: none;
+      margin-inline: 0;
+    }
+  }
+
+  .mh-stage {
+    position: relative;
+    width: var(--mh-sw);
+    aspect-ratio: 450 / 533;
+  }
+
+  /* Contour doré : même arche décalée vers la droite et vers le haut de 5 % de la cellule */
+  .mh-outline {
+    position: absolute;
+    left: var(--mh-o);
+    top: calc(var(--mh-o) * -1);
+    width: 100%;
+    aspect-ratio: 450 / 533;
+    overflow: visible;
+    pointer-events: none;
+
+    path {
+      fill: none;
+      stroke: var(--color-brand-gold);
+      stroke-width: 1.5;
+      vector-effect: non-scaling-stroke;
+    }
+  }
+
+  .mh-door {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 450 / 533;
+    padding: 0;
+    border: 0;
+    /* demi-cercle en haut : rayon = moitié de la largeur */
+    border-radius: 50% 50% 0 0 / 42.19% 42.19% 0 0;
+    overflow: hidden;
+    isolation: isolate;
+    transform: translateZ(0);
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    background-color: var(--color-brand-navy);
+    color: inherit;
+
+    &:focus-visible {
+      outline: 2px solid var(--color-brand-gold);
+      outline-offset: 4px;
+    }
+  }
+
+  .mh-clip,
+  .mh-fill,
+  .mh-leaf,
+  .mh-half {
+    position: absolute;
+    display: block;
+    top: 0;
+    bottom: 0;
+  }
+
+  .mh-clip,
+  .mh-fill {
+    inset: 0;
+  }
+
+  .mh-leaf {
+    width: 50%;
+    overflow: hidden;
+  }
+
+  .mh-leaf-l {
+    left: 0;
+  }
+
+  .mh-leaf-r {
+    right: 0;
+  }
+
+  /* Même image à 200 % de la largeur d'un battant, décalée de 0 et de -100 % */
+  .mh-half {
+    width: 200%;
+  }
+
+  .mh-half-l {
+    left: 0;
+  }
+
+  .mh-half-r {
+    left: -100%;
+  }
+
+  .mh-img {
+    object-fit: cover;
+  }
+
+  .mh-veil {
+    position: absolute;
+    inset: 0;
+    display: block;
+    border-radius: inherit;
+    overflow: hidden;
+    pointer-events: none;
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--color-brand-navy) var(--arche-voile-haut), transparent),
+      color-mix(in srgb, var(--color-brand-navy) var(--arche-voile-milieu), transparent) 50%,
+      color-mix(in srgb, var(--color-brand-navy) var(--arche-voile-bas), transparent)
+    );
+  }
+
+  .mh-placeholder {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background-image: linear-gradient(to bottom, var(--color-brand-navy-glow), var(--color-brand-navy));
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    circle {
+      fill: none;
+      stroke: var(--color-brand-gold);
+      stroke-width: 1.5;
+      opacity: 0.6;
+    }
+  }
+
+  .mh-edge {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background-color: color-mix(in oklab, var(--color-brand-gold) 30%, transparent);
+  }
+
+  .mh-leaf-l .mh-edge {
+    right: 0;
+  }
+
+  .mh-leaf-r .mh-edge {
+    left: 0;
+  }
+
+  /* Couture quasi invisible : la poignée reste le seul indice */
+  .mh-seam {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    translate: -50% 0;
+    background-color: color-mix(in oklab, var(--color-brand-gold) 22%, transparent);
+  }
+
+  .mh-slit {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    translate: -50% 0;
+    opacity: 0;
+    background-color: var(--color-brand-gold);
+  }
+
+  .mh-handle {
+    position: absolute;
+    left: 50%;
+    top: 56%;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    translate: -50% -50%;
+    border: 1px solid color-mix(in oklab, var(--color-brand-gold) 50%, transparent);
+    border-radius: 50%;
+  }
+
+  .mh-handle-dot {
+    width: 0.875rem;
+    height: 0.875rem;
+    border-radius: 50%;
+    background-color: var(--color-brand-gold);
+  }
+
+  .mh-caption {
+    display: grid;
+    margin-top: 1.375rem;
+    font-size: var(--text-xs);
+    line-height: 1.2;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-brand-white);
+  }
+
+  /* Les deux légendes dans la même cellule : fondu enchaîné */
+  .mh-cap {
+    grid-area: 1 / 1;
+  }
+
+  .mh-cap-n {
+    margin-right: 0.75rem;
+    color: var(--color-brand-gold);
   }
 }

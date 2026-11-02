@@ -14,7 +14,7 @@ export type NavChild = {
 
 const formationsMenu: readonly NavChild[] = [
   { label: "Pour les écoles", href: "/formations/ecole" },
-  { label: "Apprendre le développement web et mobile", href: "/formations/developpement" },
+  { label: "Aux métiers du numérique", href: "/formations/metiers-du-numerique" },
   { label: "Pour les organisations", href: "/formations/organisations" },
 ];
 

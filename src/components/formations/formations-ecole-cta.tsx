@@ -12,7 +12,7 @@ import { ROUTES } from "@/lib/routes";
  */
 
 const CANDIDATES = [
-  { href: "/formations/developpement", label: "Apprendre le développement web et mobile", segment: "developpement" },
+  { href: "/formations/metiers-du-numerique", label: "Se former aux métiers du numérique", segment: "metiers-du-numerique" },
   { href: "/formations/organisations", label: "Pour les organisations", segment: "organisations" },
 ] as const;
 
