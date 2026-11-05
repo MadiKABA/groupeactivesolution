@@ -17,6 +17,7 @@ export type ExpertiseAnchor = "former" | "creer" | "transformer";
 export type DomainIcon =
   | "Code" | "Bot" | "Cpu" | "Wifi" | "Sparkles" | "Lightbulb"
   | "Globe" | "Smartphone" | "Layers" | "LayoutDashboard" | "Cloud" | "Zap"
+  | "ShieldCheck" | "ReceiptText" | "Workflow"
   | "MessagesSquare" | "Plug" | "Users" | "RefreshCw" | "LineChart";
 
 /** Fiche détaillée de l'expertise sur /services (contenus validés : ne pas reformuler). */
@@ -94,18 +95,18 @@ export const expertises = [
     fiche: {
       hook: { before: "De la première ligne de code au ", highlight: "premier robot." },
       paragraph:
-        "Nous concevons et animons des programmes pour les établissements scolaires : programmation, robotique, électronique, objets connectés et intelligence artificielle. L'objectif : développer la créativité, la logique et l'esprit d'initiative des jeunes.",
+        "Chez nous, les élèves ne regardent pas le numérique, ils le fabriquent. Nous venons dans votre école leur apprendre à coder, à construire des robots et à utiliser l’intelligence artificielle sans danger.",
       audience: ["Écoles primaires", "Collèges", "Lycées"],
-      approach: ["Partenariats sur mesure", "Conception pédagogique", "Encadrement par des formateurs spécialisés"],
+      approach: ["Un partenariat adapté à votre école", "Des cours pensés pour chaque âge", "Des formateurs passionnés dans vos classes"],
       domains: [
-        { label: "Programmation et développement web", icon: "Code" },
-        { label: "Robotique éducative", icon: "Bot" },
-        { label: "Électronique et systèmes embarqués", icon: "Cpu" },
-        { label: "Internet des objets", icon: "Wifi" },
+        { label: "Scratch et programmation", icon: "Code" },
+        { label: "Robotique", icon: "Bot" },
+        { label: "Objets connectés", icon: "Wifi" },
         { label: "Intelligence artificielle", icon: "Sparkles" },
-        { label: "Culture numérique et innovation", icon: "Lightbulb" },
+        { label: "Cybersécurité et protection en ligne", icon: "ShieldCheck" },
+        { label: "Culture numérique et créativité", icon: "Lightbulb" },
       ],
-      link: { label: "Voir la page École", href: "/formations/ecole" },
+      link: { label: "Devenir école partenaire", href: ROUTES.contact },
       photo: { alt: "", objectPosition: "50% 50%" }, // TODO : alt factuel quand la photo sera déposée
       theme: "clair",
       photoSide: "droite",
@@ -140,23 +141,23 @@ export const expertises = [
     fiche: {
       hook: { before: "Des solutions numériques construites autour de ", highlight: "votre métier." },
       paragraph:
-        "Sites web professionnels, applications web et mobiles, plateformes, logiciels métiers et solutions SaaS : nous concevons et réalisons des outils adaptés à la façon dont vous travaillez.",
-      audience: ["Entreprises", "Startups", "ONG", "Institutions"],
-      approach: ["Des solutions numériques sur mesure", "Un projet qui commence par l'écoute de vos besoins métier"],
+        "Votre activité mérite des outils qui lui ressemblent. Nous créons votre site, votre application ou votre logiciel de gestion en partant de votre façon de travailler, pour vous faire gagner du temps dès le premier jour.",
+      audience: ["Entreprises", "Startups", "Entrepreneurs", "Collectivités", "Associations"],
+      approach: ["Des outils pensés pour les réalités d’ici", "Un projet qui commence par vous écouter"],
       domains: [
-        { label: "Sites web professionnels", icon: "Globe" },
-        { label: "Applications web et mobiles", icon: "Smartphone" },
-        { label: "Plateformes numériques sur mesure", icon: "Layers" },
-        { label: "Logiciels métiers", icon: "LayoutDashboard" },
+        { label: "Sites vitrines et boutiques en ligne", icon: "Globe" },
+        { label: "Applications mobiles", icon: "Smartphone" },
+        { label: "Plateformes de gestion", icon: "Layers" },
+        { label: "Logiciels de facturation et de stock", icon: "ReceiptText" },
         { label: "Solutions SaaS", icon: "Cloud" },
-        { label: "Intégration de l'IA et automatisation", icon: "Zap" },
+        { label: "IA et automatisation", icon: "Zap" },
       ],
       link: { label: "Discuter de votre projet", href: ROUTES.contact },
       photo: { alt: "", objectPosition: "50% 50%" }, // TODO : alt factuel quand la photo sera déposée
       theme: "sombre",
       photoSide: "gauche",
-      serviceType: "Développement de sites web, d'applications et de logiciels métiers",
-      audienceType: "Entreprises, startups, ONG et institutions",
+      serviceType: "Développement de sites web, d'applications et de logiciels de gestion",
+      audienceType: "Entreprises, startups, entrepreneurs, collectivités et associations",
     },
   },
   {
@@ -180,22 +181,22 @@ export const expertises = [
     fiche: {
       hook: { before: "Passer au numérique sans perdre ", highlight: "vos équipes", after: " en route." },
       paragraph:
-        "Conseil, outils digitaux, formation des équipes, optimisation des processus et exploitation des données : nous accompagnons les organisations vers des usages numériques qui renforcent leur performance.",
-      audience: ["Organisations qui évoluent vers le numérique"],
-      approach: ["Un accompagnement au-delà des seuls outils", "Des ateliers adaptés au niveau et au rythme des équipes"],
+        typo("Vos équipes passent trop de temps sur des tâches répétitives ? Nous les aidons à adopter les bons outils, à automatiser ce qui peut l’être et à travailler plus simplement, à leur rythme."),
+      audience: ["Entreprises", "Institutions", "Associations", "Équipes en croissance"],
+      approach: ["Un accompagnement qui va au-delà des outils", "Des ateliers adaptés au niveau et au rythme de chaque équipe"],
       domains: [
         { label: "Conseil numérique", icon: "MessagesSquare" },
-        { label: "Déploiement d'outils digitaux", icon: "Plug" },
-        { label: "Formation des équipes et séminaires", icon: "Users" },
-        { label: "Optimisation des processus internes", icon: "RefreshCw" },
-        { label: "Exploitation des données pour la décision", icon: "LineChart" },
+        { label: "Déploiement d’outils", icon: "Plug" },
+        { label: "Formation des équipes", icon: "Users" },
+        { label: "Automatisation des tâches", icon: "Workflow" },
+        { label: "Tableaux de bord et décisions", icon: "LayoutDashboard" },
       ],
       link: { label: "Discuter de votre projet", href: ROUTES.contact },
       photo: { alt: "", objectPosition: "50% 50%" }, // TODO : alt factuel quand la photo sera déposée
       theme: "clair",
       photoSide: "droite",
       serviceType: "Accompagnement à la transformation digitale des organisations",
-      audienceType: "Organisations qui évoluent vers le numérique",
+      audienceType: "Entreprises, institutions, associations et équipes en croissance",
     },
   },
 ] satisfies readonly Expertise[];

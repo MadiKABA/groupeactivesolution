@@ -24,7 +24,7 @@ export function CtaGlassBand({
   /** Fin du titre, en dégradé doré. */
   titleHighlight: string;
   support: string;
-  cta: { label: string; href: string };
+  cta: { label: string; href: string; external?: boolean };
 }) {
   return (
     <section id={id} aria-labelledby={titleId} className="cg-section">
@@ -46,10 +46,23 @@ export function CtaGlassBand({
           </span>
         </h2>
         <p className="cg-support">{support}</p>
-        <Link href={cta.href} className="cg-button">
-          {cta.label}
-          <ArrowRight aria-hidden="true" className="cg-button-icon" />
-        </Link>
+        {cta.external ? (
+          <a
+            href={cta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${cta.label} (s’ouvre dans un nouvel onglet)`}
+            className="cg-button"
+          >
+            {cta.label}
+            <ArrowRight aria-hidden="true" className="cg-button-icon" />
+          </a>
+        ) : (
+          <Link href={cta.href} className="cg-button">
+            {cta.label}
+            <ArrowRight aria-hidden="true" className="cg-button-icon" />
+          </Link>
+        )}
       </div>
     </section>
   );

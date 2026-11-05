@@ -1,6 +1,6 @@
 import {
   Bot, Cloud, Code, Cpu, Globe, Layers, LayoutDashboard, Lightbulb, LineChart, MessagesSquare,
-  Plug, RefreshCw, Smartphone, Sparkles, Users, Wifi, Zap, type LucideIcon,
+  Plug, ReceiptText, RefreshCw, ShieldCheck, Smartphone, Sparkles, Users, Wifi, Workflow, Zap, type LucideIcon,
 } from "lucide-react";
 import type { CSSProperties } from "react";
 
@@ -9,7 +9,7 @@ import type { DomainIcon, ExpertiseFiche } from "@/lib/expertises";
 // Correspondance nom → icône, côté serveur uniquement (aucune icône dans le bundle client).
 const ICONS: Record<DomainIcon, LucideIcon> = {
   Bot, Cloud, Code, Cpu, Globe, Layers, LayoutDashboard, Lightbulb, LineChart, MessagesSquare,
-  Plug, RefreshCw, Smartphone, Sparkles, Users, Wifi, Zap,
+  Plug, ReceiptText, RefreshCw, ShieldCheck, Smartphone, Sparkles, Users, Wifi, Workflow, Zap,
 };
 
 /**

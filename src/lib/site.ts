@@ -49,6 +49,9 @@ export function getWhatsAppUrl(message: string = SITE_CONTACT.whatsappMessage): 
   return `https://wa.me/${SITE_CONTACT.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
+/** Lien wa.me sans message prérempli (numéro de SITE_CONTACT, confirmé : identique au téléphone). */
+export const WHATSAPP_URL = `https://wa.me/${SITE_CONTACT.whatsappNumber}`;
+
 /** Lien mailto (sujet et corps encodés). */
 export function getMailtoUrl(subject?: string, body?: string): string {
   const params = [subject && `subject=${encodeURIComponent(subject)}`, body && `body=${encodeURIComponent(body)}`].filter(Boolean).join("&");
