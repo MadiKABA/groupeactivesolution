@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { ButtonShine } from "@/components/ui/ButtonShine";
 import { aboutArches, aboutHero, type AboutArchId } from "@/lib/about";
+import { showPlaceholders } from "@/lib/flags";
 
 /*
  * Hero « Notre manifeste » (page /a-propos). Server Component : entrées et portes des arches
@@ -144,10 +145,13 @@ export function AboutHero({ photos = {} }: AboutHeroProps) {
                 <span className="about-hint-dot" />
                 {hint}
               </span>
-              <span className="about-caption-text">
-                <span aria-hidden="true" className="about-caption-line" />
-                {caption}
-              </span>
+              {/* Légende provisoire : jamais en production (aucune légende fabriquée) */}
+              {showPlaceholders && (
+                <span className="about-caption-text">
+                  <span aria-hidden="true" className="about-caption-line" />
+                  {caption}
+                </span>
+              )}
             </figcaption>
           </figure>
         </div>

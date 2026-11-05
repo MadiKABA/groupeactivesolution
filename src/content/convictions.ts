@@ -1,7 +1,7 @@
 /*
  * Section « Nos convictions » (page /a-propos, ancre #convictions).
  *
- * Textes PROVISOIRES : tout objet marqué `needsValidation: true` affiche « [À valider] » en
+ * Textes VALIDÉS (novembre 2026) pour les titres, textes et blocs « Ce que nous en faisons ». Tout objet marqué `needsValidation: true` affiche « [À valider] » en
  * développement uniquement, et `pnpm build:prod` échoue tant qu'il en reste un (voir
  * scripts/check-convictions.mjs). Chaque phrase doit rester compréhensible seule (citable).
  *
@@ -64,7 +64,7 @@ export const convictionsContent: ConvictionsContent = {
     surtitre: "03 — Ce qui nous anime",
     titreLignes: ["Nos convictions", "donnent du sens", "à ce que nous"],
     titreAccent: "construisons.",
-    needsValidation: true,
+    needsValidation: false,
   },
   convictions: [
     {
@@ -73,11 +73,11 @@ export const convictionsContent: ConvictionsContent = {
       word: "Partager",
       micro: "le savoir",
       label: "La connaissance transforme",
-      title: "Le savoir prend toute sa valeur lorsqu'il se partage.",
-      text: "Former, accompagner, transmettre : c'est ainsi que naissent les compétences capables de répondre aux défis d'aujourd'hui et de demain.",
-      proof: "Formations en programmation, robotique et intelligence artificielle.",
+      title: "Le savoir prend toute sa valeur lorsqu’il se partage.",
+      text: "Ce que nous savons ne vaut que s’il aide quelqu’un d’autre à avancer. Alors nous formons, nous accompagnons et nous transmettons, pour que chacun puisse relever ses propres défis.",
+      proof: "Des cours de programmation, de robotique et d’intelligence artificielle, pour les jeunes comme pour les équipes.",
       photo: photoTodo("La connaissance transforme"),
-      needsValidation: true,
+      needsValidation: false,
     },
     {
       id: "utilite",
@@ -85,11 +85,11 @@ export const convictionsContent: ConvictionsContent = {
       word: "Utilité",
       micro: "la technologie",
       label: "La technologie doit être utile",
-      title: "Innover n'a de sens que lorsque cela répond à un besoin réel.",
-      text: "La technologie est un moyen, pas une finalité. Chaque solution doit simplifier une réalité ou créer une valeur concrète pour ceux qui l'utilisent.",
-      proof: "Chaque projet part d'un besoin identifié sur le terrain.",
+      title: "Innover n’a de sens que lorsque cela répond à un besoin réel.",
+      text: "Une technologie qui ne sert à personne ne vaut rien. Nous construisons des solutions qui simplifient vraiment la vie de ceux qui s’en servent.",
+      proof: "Chaque projet part d’un besoin que nous avons vu sur le terrain.",
       photo: photoTodo("La technologie doit être utile"),
-      needsValidation: true,
+      needsValidation: false,
     },
     {
       id: "ensemble",
@@ -97,11 +97,11 @@ export const convictionsContent: ConvictionsContent = {
       word: "Ensemble",
       micro: "le progrès",
       label: "Le progrès se construit ensemble",
-      title: "Les grandes avancées naissent de l'intelligence collective.",
-      text: "Collaboration, partage d'expériences, compétences complémentaires : les meilleures solutions apparaissent quand les idées se rencontrent.",
-      proof: "Nous construisons avec nos clients et partenaires, pas à leur place.",
+      title: "Les grandes avancées naissent de l’intelligence collective.",
+      text: "Seuls, nous allons vite. Ensemble, nous allons plus loin. Les meilleures idées naissent quand on partage son expérience et ses compétences.",
+      proof: "Nous construisons avec nos clients et nos partenaires, jamais à leur place.",
       photo: photoTodo("Le progrès se construit ensemble"),
-      needsValidation: true,
+      needsValidation: false,
     },
     {
       id: "accessible",
@@ -110,10 +110,10 @@ export const convictionsContent: ConvictionsContent = {
       micro: "le numérique",
       label: "Le numérique doit être accessible",
       title: "Le progrès numérique doit être une opportunité pour tous.",
-      text: "Les connaissances, les outils et les opportunités doivent être accessibles au plus grand nombre, quel que soit le niveau de départ.",
-      proof: "Des parcours ouverts à des profils et des niveaux différents.",
+      text: "Peu importe d’où l’on part : chacun mérite de pouvoir apprendre, créer et saisir sa chance dans le numérique.",
+      proof: "Des parcours ouverts à tous les âges et à tous les niveaux.",
       photo: photoTodo("Le numérique doit être accessible"),
-      needsValidation: true,
+      needsValidation: false,
     },
   ],
 };

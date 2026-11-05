@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:prod": "node scripts/check-history.mjs && node scripts/check-convictions.mjs && node scripts/check-equipe.mjs && node scripts/check-impact.mjs && next build",
+    "build:prod": "node scripts/check-history.mjs && node scripts/check-convictions.mjs && node scripts/check-equipe.mjs && node scripts/check-impact.mjs && node scripts/check-images.mjs && next build",
     "test:impact": "node scripts/test-impact-counter.mjs",
-    "check:content": "node scripts/check-history.mjs && node scripts/check-convictions.mjs && node scripts/check-equipe.mjs && node scripts/check-impact.mjs",
+    "check:content": "node scripts/check-history.mjs && node scripts/check-convictions.mjs && node scripts/check-equipe.mjs && node scripts/check-impact.mjs && node scripts/check-images.mjs",
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "next typegen && tsc --noEmit"

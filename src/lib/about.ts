@@ -8,14 +8,14 @@ export const aboutHero = {
     line2: "bâtir le présent.",
   },
   paragraphs: [
-    "Née à Dakar, Active Solution associe technologie, transmission des connaissances et innovation pour accompagner les écoles, les entreprises et les organisations dans leur évolution numérique.",
-    "Notre ambition : contribuer à un écosystème numérique africain plus compétent, plus innovant et plus accessible.",
+    "Chez Active Solution, nous croyons que chaque jeune a en lui de quoi créer le numérique de demain. Alors nous l’aidons à apprendre, nous accompagnons les entreprises et les organisations, et nous avançons à leurs côtés.",
+    "Notre engagement : rendre le numérique accessible à tous, et former ceux qui le feront grandir en Afrique.",
   ],
   cta: { label: "Découvrir notre histoire", href: "#histoire" },
   // Indice décoratif sous les arches (appareils à souris uniquement).
   hint: "Survolez les arches pour les ouvrir",
   // TODO : vraies légendes (lieu · activité · année) à fournir avec les photos.
-  caption: "[Légendes des photos : lieu · activité · année]",
+  caption: "[Légendes des photos : lieu · activité · année]",
 } as const;
 
 export type AboutArchId = "enseigner" | "batir";
@@ -23,6 +23,8 @@ export type AboutArchId = "enseigner" | "batir";
 type AboutArch = {
   label: string;
   src: string;
+  /** Photo provisoire (banque d'images) : listée par scripts/check-images.mjs, à remplacer par une vraie photo. */
+  provisional: boolean;
   /** Description de la photo (aria-label de l'arche, role="img"). */
   description: string;
   /** Phrase révélée à l'ouverture des battants (décorative), une entrée par ligne. */
@@ -39,12 +41,14 @@ export const aboutArches: Readonly<Record<AboutArchId, AboutArch>> = {
   enseigner: {
     label: "Enseigner",
     src: "/about/hero-enseigner.jpg",
-    description: "Un formateur présente des graphiques à un groupe d'apprenants dans une salle de formation",
+    provisional: true,
+    description: "Un formateur présente des graphiques à un groupe d’apprenants dans une salle de formation",
     phrase: ["Former", "les talents"],
   },
   batir: {
     label: "Bâtir",
     src: "/about/hero-batir.jpg",
+    provisional: true,
     description: "Deux jeunes femmes travaillent sur ordinateur dans un espace de travail partagé",
     phrase: ["Créer", "les solutions"],
   },

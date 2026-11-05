@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent } from "react";
 
-import type { HistoryArchive, HistoryChapter } from "@/content/history";
+import { isArchiveReady, type HistoryArchive, type HistoryChapter } from "@/content/history";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { showPlaceholders } from "@/lib/flags";
 
@@ -44,6 +44,11 @@ const HOVER_MODE = "(min-width: 64rem) and (hover: hover) and (pointer: fine)";
 const MOBILE_OPEN_MS = 450;
 
 type OpenArchive = { chapter: number; index: number };
+
+/** Archives rendues : toutes avec les placeholders, sinon seulement celles qui ont image et légende réelles. */
+function visibleArchives(chapter: HistoryChapter): readonly HistoryArchive[] {
+  return showPlaceholders ? chapter.archives : chapter.archives.filter(isArchiveReady);
+}
 
 function hideOnError(event: { currentTarget: HTMLImageElement }) {
   // Image en échec : le placeholder rayé, déjà dessous, reste visible.
@@ -153,6 +158,7 @@ export function HistoryAccordion({ chapters }: { chapters: readonly HistoryChapt
   };
 
   const dialogChapter = archive ? chapters[archive.chapter] : undefined;
+  const dialogArchives = dialogChapter ? visibleArchives(dialogChapter) : [];
 
   return (
     <div className="hs-zone">
@@ -233,9 +239,11 @@ export function HistoryAccordion({ chapters }: { chapters: readonly HistoryChapt
                 </span>
               </button>
 
-              <p aria-hidden={chapter.photo.src ? undefined : true} className="hs-caption">
-                {chapter.photo.caption}
-              </p>
+              {(chapter.photo.src || showPlaceholders) && (
+                <p aria-hidden={chapter.photo.src ? undefined : true} className="hs-caption">
+                  {chapter.photo.caption}
+                </p>
+              )}
 
               {/* Bloc de verre : enfant direct du panneau, porte sa propre opacité */}
               <div id={panelId} className="hs-glass">
@@ -266,9 +274,9 @@ export function HistoryAccordion({ chapters }: { chapters: readonly HistoryChapt
                   )}
                 </div>
 
-                {chapter.archives.length > 0 && (
+                {visibleArchives(chapter).length > 0 && (
                   <ul className="hs-archives" aria-label={`Archives du chapitre ${chapter.number}`}>
-                    {chapter.archives.map((item, archiveIndex) => (
+                    {visibleArchives(chapter).map((item, archiveIndex) => (
                       <ArchiveCard
                         key={item.id}
                         archive={item}
@@ -287,8 +295,8 @@ export function HistoryAccordion({ chapters }: { chapters: readonly HistoryChapt
       <div className="hs-foot">
         <p aria-hidden="true" className="hs-hint" data-interacted={interacted}>
           <span className="hs-hint-dot" />
-          <span className="hs-hint-fine">Survolez ou cliquez un chapitre pour l&apos;ouvrir</span>
-          <span className="hs-hint-touch">Touchez un chapitre pour l&apos;ouvrir</span>
+          <span className="hs-hint-fine">Survolez ou cliquez un chapitre pour l’ouvrir</span>
+          <span className="hs-hint-touch">Touchez un chapitre pour l’ouvrir</span>
         </p>
         <p aria-hidden="true" className="hs-steps">
           {chapters.map((chapter, index) => (
@@ -303,7 +311,7 @@ export function HistoryAccordion({ chapters }: { chapters: readonly HistoryChapt
       {dialogChapter && archive && (
         <ArchiveDialog
           open={dialogOpen}
-          archives={dialogChapter.archives}
+          archives={dialogArchives}
           index={archive.index}
           onIndexChange={(index) => setArchive({ chapter: archive.chapter, index })}
           onClose={closeArchive}
@@ -332,7 +340,7 @@ function ArchiveCard({ archive, focusable, onOpen }: ArchiveCardProps) {
         className="arc"
         tabIndex={focusable ? undefined : -1}
         aria-haspopup="dialog"
-        aria-label={`Agrandir l'archive : ${archive.title}`}
+        aria-label={`Agrandir l’archive : ${archive.title}`}
         aria-describedby={storyId}
         onClick={(event) => {
           // Le clic ne remonte pas au panneau : il ouvre l'archive, rien d'autre.

@@ -78,11 +78,13 @@ function initials(name: string) {
 }
 
 /** « Qui s'en occupe » : membres confirmés, sinon emplacement signalé avec les placeholders seulement. */
-function Members({ skill, members }: { skill: TeamSkill; members: readonly TeamMember[] }) {
+function Members({ skill, members: all }: { skill: TeamSkill; members: readonly TeamMember[] }) {
+  // Aucun nom ni photo sans accord enregistré.
+  const members = all.filter((member) => member.consent);
   if (members.length === 0 && !showPlaceholders) return null;
   return (
     <div className="eq-who">
-      <p className="eq-who-label">Qui s&apos;en occupe</p>
+      <p className="eq-who-label">Qui s’en occupe</p>
       {members.length > 0 ? (
         <ul className="eq-members" aria-label={`Membres : ${skill.name}`}>
           {members.map((member) => (
@@ -110,7 +112,7 @@ function Members({ skill, members }: { skill: TeamSkill; members: readonly TeamM
         </ul>
       ) : (
         <p className="eq-who-empty">
-          {teamContent.intro.membersPlaceholder} <ValidationMark pending />
+          {teamContent.intro.membersPlaceholder}
         </p>
       )}
     </div>

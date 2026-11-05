@@ -1,11 +1,10 @@
 /*
  * Section « Notre équipe » (page /a-propos, ancre #equipe) : « l'établi », un objet par savoir-faire.
  *
- * Textes PROVISOIRES : tout objet marqué `needsValidation: true` affiche « [À valider] » en
+ * Textes VALIDÉS (novembre 2026). Tout objet futur marqué `needsValidation: true` affiche « [À valider] » en
  * développement uniquement, et `pnpm build:prod` échoue tant qu'il en reste un (voir
  * scripts/check-equipe.mjs). Ce n'est pas une présentation des membres : aucun nom, aucune
- * photo, aucun chiffre n'est inventé. Une fois les textes validés, préférer « Active Solution »
- * à « l'équipe » dans les phrases pour qu'elles se comprennent hors contexte.
+ * photo, aucun chiffre n'est inventé.
  *
  * Ce fichier ne dépend d'aucun alias ni module : il est relu tel quel par le script de contrôle.
  */
@@ -25,6 +24,8 @@ export type TeamMember = {
   name: string;
   role: string;
   photo?: TeamPhoto;
+  /** Accord de la personne obtenu : tant que ce n'est pas `true`, rien n'est affiché (ni nom, ni photo). */
+  consent: boolean;
 };
 
 export type TeamSkill = {
@@ -58,6 +59,8 @@ export type TeamIntro = {
   hintTouch: string;
   /** Phrase d'emplacement du bloc « Qui s'en occupe » (développement seulement). */
   membersPlaceholder: string;
+  /** Phrase d'emplacement en attente de données (champ distinct, non bloquant pour le build). */
+  membersPlaceholderPending: boolean;
   needsValidation: boolean;
 };
 
@@ -82,7 +85,10 @@ export const teamContent: TeamContent = {
     hintFine: "Cliquez un objet pour découvrir le savoir-faire",
     hintTouch: "Touchez un savoir-faire pour le découvrir",
     membersPlaceholder: "Les membres concernés seront présentés ici (noms ou initiales à confirmer).",
-    needsValidation: true,
+    // Placeholder « en attente de données » (développement seulement), non bloquant pour le build :
+    // son texte visible reste à valider, ou la ligne à masquer, tant qu'aucun membre n'est renseigné.
+    membersPlaceholderPending: true,
+    needsValidation: false,
   },
   workshopPhoto: null,
   skills: [
@@ -91,44 +97,44 @@ export const teamContent: TeamContent = {
       number: "01",
       name: "Former",
       title: "Transmettre pour rendre autonome.",
-      text: "Programmation, robotique, électronique, IoT et intelligence artificielle : l'équipe conçoit et anime des formations pour les établissements, les entreprises et les particuliers.",
-      tags: ["Programmation", "Robotique", "IoT", "IA"],
+      text: "Nous formons les élèves, les professionnels et les équipes à la programmation, à la robotique et à l’intelligence artificielle. Nos méthodes sont pratiques et progressives, pour développer leur autonomie et leur confiance.",
+      tags: ["Scratch", "Robotique", "IA", "Cybersécurité"],
       members: [],
       photo: null,
-      needsValidation: true,
+      needsValidation: false,
     },
     {
       id: "developper",
       number: "02",
       name: "Développer",
       title: "Concevoir des solutions qui servent.",
-      text: "Sites web, applications web et mobiles, logiciels de gestion, plateformes métier, solutions SaaS : l'équipe conçoit et réalise des outils numériques adaptés à chaque organisation.",
+      text: "Sites web, applications web et mobiles, logiciels de gestion, solutions SaaS : nous concevons et réalisons des outils adaptés à votre activité. Chaque projet commence par l’écoute de vos besoins et de vos usages.",
       tags: ["Web", "Mobile", "Logiciels", "SaaS"],
       members: [],
       photo: null,
-      needsValidation: true,
+      needsValidation: false,
     },
     {
       id: "conseiller",
       number: "03",
       name: "Conseiller",
       title: "Éclairer avant de transformer.",
-      text: "Analyse des besoins, digitalisation des processus, choix des outils : l'équipe accompagne les organisations dans leur transformation digitale.",
+      text: "Avant de transformer, nous prenons le temps d’analyser vos besoins et vos processus. Nous vous aidons ensuite à choisir les outils les mieux adaptés à votre organisation, et à les mettre en place avec méthode.",
       tags: ["Audit", "Processus", "Outils", "Stratégie"],
       members: [],
       photo: null,
-      needsValidation: true,
+      needsValidation: false,
     },
     {
       id: "accompagner",
       number: "04",
       name: "Accompagner",
       title: "Rester présents après la livraison.",
-      text: "Formation des équipes, prise en main des outils, suivi et évolution : l'équipe reste aux côtés de ses clients une fois la solution en service.",
+      text: "Une fois la solution en service, nous restons à vos côtés. Nous formons vos équipes à la prise en main, assurons le suivi et la faisons évoluer selon vos besoins.",
       tags: ["Formation", "Suivi", "Évolution"],
       members: [],
       photo: null,
-      needsValidation: true,
+      needsValidation: false,
     },
   ],
 };

@@ -108,7 +108,7 @@ export function ArchiveDialog({ open, archives, index, onIndexChange, onClose }:
     >
       <div className="hs-dialog-inner">
         {/* Premier élément focalisable : reçoit le focus à l'ouverture */}
-        <button type="button" className="hs-dialog-btn hs-dialog-close" aria-label="Fermer l'archive" onClick={close}>
+        <button type="button" className="hs-dialog-btn hs-dialog-close" aria-label="Fermer l’archive" onClick={close}>
           <X aria-hidden="true" className="size-5" />
         </button>
 

@@ -6,7 +6,7 @@
  *   CHROME_PATH=/chemin/vers/chrome pnpm test:impact
  *
  * Pour chaque largeur et chaque scénario, lit le texte VISIBLE de chaque repère 4 s après l'arrivée
- * sur la section et vérifie qu'il est strictement égal aux valeurs de src/content/impact.ts (avec
+ * sur la section et vérifie qu'il est strictement égal aux valeurs de src/lib/chiffres.ts (avec
  * « + » quand il y en a un) : jamais un doublon (« 1010 »), jamais une valeur intermédiaire figée.
  * Vérifie aussi que la phrase pour lecteur d'écran est bien masquée visuellement (classe sr-only).
  */
@@ -22,12 +22,13 @@ const CHROME = process.env.CHROME_PATH ?? "google-chrome";
 const WAIT_MS = 4000;
 
 // Valeurs attendues : lues dans les données (aucune valeur en dur ici).
-const source = fileURLToPath(new URL("../src/content/impact.ts", import.meta.url));
-const { outputText } = ts.transpileModule(readFileSync(source, "utf8"), {
+// Source unique avec l'accueil : src/lib/chiffres.ts (l'import de `typo` est neutralisé, inutile ici).
+const source = fileURLToPath(new URL("../src/lib/chiffres.ts", import.meta.url));
+const { outputText } = ts.transpileModule(readFileSync(source, "utf8").replace(/import \{ typo \} from "\.\/typography";/, "const typo = (text) => text;"), {
   compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 },
 });
-const { impactContent } = await import(`data:text/javascript;base64,${Buffer.from(outputText).toString("base64")}`);
-const expected = impactContent.figures.map((figure) => `${figure.value}${figure.suffix ?? ""}`);
+const { chiffres } = await import(`data:text/javascript;base64,${Buffer.from(outputText).toString("base64")}`);
+const expected = chiffres.map((figure) => `${figure.value}${figure.suffix ?? ""}`);
 
 const profile = mkdtempSync(join(tmpdir(), "impact-test-"));
 const chrome = spawn(CHROME, ["--headless=new", "--no-sandbox", "--remote-debugging-port=0", `--user-data-dir=${profile}`, "about:blank"], {
