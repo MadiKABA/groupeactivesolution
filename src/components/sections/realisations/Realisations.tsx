@@ -12,18 +12,21 @@ import { RealisationsScene, RealisationsStacked } from "./RealisationsScene";
 const publicFile = (src: string) => existsSync(join(process.cwd(), "public", src));
 const ROUTE_FILES = ["page.tsx", "page.ts", "page.jsx", "page.js"].map((file) => join(process.cwd(), "src", "app", "realisations", file));
 
-/** Les 2 photos du projet existent dans public/realisations/. */
+/** Les 2 photos du projet existent (scène) : jamais le cas, une seule photo par carte. */
 const hasPhotos = (project: Realisation) => project.photos.length === 2 && project.photos.every((photo) => publicFile(photo.src));
+/** La photo de la carte existe dans public/realisations/ (mode bento). */
+const hasCardPhoto = (project: Realisation) => project.photos.length > 0 && publicFile(project.photos[0].src);
 
 /*
  * Section « Des idées aux réalisations » (fond bleu nuit), après « Nos expertises ». Toujours publiée.
  * Mode choisi au serveur (au build, la page étant statique) : « scene » si les 3 projets ont leurs
- * 2 photos, sinon « bento » (illustrations étiquetées, photo réelle dès qu'un projet est complet).
+ * 2 photos (non utilisé : une photo par carte), sinon « bento » (visuel graphique avec le nom du domaine,
+ * remplacé par la photo réelle et sa légende dès que le fichier existe).
  * Le lien « Voir toutes nos réalisations » n'est rendu que si la route existe et qu'une vraie photo est présente.
  */
 export function Realisations() {
-  const photographed = realisations.map(hasPhotos);
-  const mode = photographed.every(Boolean) ? "scene" : "bento";
+  const mode = realisations.every(hasPhotos) ? "scene" : "bento";
+  const photographed = realisations.map(hasCardPhoto);
   const showLink = ROUTE_FILES.some((file) => existsSync(file)) && realisations.some((project) => project.photos.some((photo) => publicFile(photo.src)));
 
   const header = (

@@ -1,4 +1,4 @@
-// CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
+// Contenu validé : novembre 2026 (document Textes validés de la page d'accueil). Modifier ces valeurs sans toucher aux composants.
 
 import { ROUTES } from "./routes";
 
@@ -17,7 +17,7 @@ export const footerTagline = {
 } as const;
 
 export const footerServices: readonly FooterLink[] = [
-  { label: "Formations", href: "/#expertise-education" },
+  { label: "Formations pour les écoles", href: "/#expertise-education" },
   { label: "Développement digital", href: "/#expertise-developpement" },
   { label: "Transformation digitale", href: "/#expertise-transformation" },
 ];

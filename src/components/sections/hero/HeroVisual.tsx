@@ -6,7 +6,6 @@ import Image, { getImageProps } from "next/image";
 import { useEffect } from "react";
 
 import type { HeroCarousel } from "@/hooks/useHeroCarousel";
-import { showPlaceholders } from "@/lib/flags";
 import { formatSlideCount, HERO_EASE, HERO_SLIDE_DURATION, heroSlides } from "@/lib/hero-slides";
 
 const IMAGE_SIZES = "(min-width: 1024px) 50vw, 100vw";
@@ -51,19 +50,9 @@ const slideVariants: Variants = {
 const WIPE_DURATION = 0.9;
 const KEN_BURNS_TOTAL = WIPE_DURATION + HERO_SLIDE_DURATION / 1000;
 
-// Sans placeholders : le même fond, sans libellé.
-function ImagePlaceholder({ path }: { path: string }) {
-  return (
-    <div className="flex size-full items-center justify-center bg-brand-navy-soft p-6 text-center">
-      {showPlaceholders && (
-        <p className="rounded-md border border-dashed border-brand-gold px-4 py-3 text-sm text-text-on-dark">
-          Image à fournir
-          <br />
-          <span className="text-text-on-dark/70">public{path}</span>
-        </p>
-      )}
-    </div>
-  );
+// Sans image : visuel purement graphique de la charte, sans aucun texte.
+function ImagePlaceholder() {
+  return <div aria-hidden="true" className="size-full bg-brand-navy-soft" />;
 }
 
 export function HeroVisual({ carousel, imagesAvailable, reduce, offsetX, offsetY }: HeroVisualProps) {
@@ -159,7 +148,7 @@ export function HeroVisual({ carousel, imagesAvailable, reduce, offsetX, offsetY
                   draggable={false}
                 />
               ) : (
-                <ImagePlaceholder path={slide.image} />
+                <ImagePlaceholder />
               )}
             </motion.div>
           </motion.div>
@@ -213,8 +202,8 @@ export function HeroVisual({ carousel, imagesAvailable, reduce, offsetX, offsetY
         )}
       </motion.div>
 
-      {/* Pagination (mobile) : la pastille active se remplit selon la progression */}
-      <div className="relative z-10 mt-5 flex justify-center gap-1 lg:hidden">
+      {/* Pagination : la pastille active se remplit selon la progression (zone de clic ≥ 24 × 24 px) */}
+      <div className="relative z-10 mt-5 flex justify-center">
         {heroSlides.map((item, index) => {
           const active = index === activeIndex;
           return (
@@ -224,7 +213,7 @@ export function HeroVisual({ carousel, imagesAvailable, reduce, offsetX, offsetY
               onClick={() => goTo(index)}
               aria-label={`Afficher : ${item.label}`}
               aria-current={active ? "true" : undefined}
-              className="flex h-6 items-center rounded-full px-1"
+              className="flex h-6 min-w-6 items-center justify-center rounded-full px-1"
             >
               <span
                 className={`relative block h-2 overflow-hidden rounded-full transition-[width,background-color] duration-300 ease-standard ${active ? "w-7 bg-text-on-dark/20" : "w-2 bg-text-on-dark/40"}`}

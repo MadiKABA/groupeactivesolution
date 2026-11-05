@@ -25,6 +25,7 @@ export function Partners({
   texts = partnersIntro,
   introSuffix,
   motifMask,
+  joinedAbove,
 }: {
   list?: readonly Partner[];
   /** Textes de l'en-tête (accueil : partnersIntro ; bande TrustBand : src/content/trust.ts). */
@@ -33,6 +34,8 @@ export function Partners({
   introSuffix?: ReactNode;
   /** Masque du zigzag (accueil : `full`, tout le fond) ; coin bas droit par défaut. */
   motifMask?: WaveMask;
+  /** Section précédente de même fond (Chiffres) : padding haut réduit, un seul chapitre. */
+  joinedAbove?: boolean;
 }) {
   const confirmed = confirmedPartners(list);
   const plan = layout(confirmed.length);
@@ -41,7 +44,7 @@ export function Partners({
 
   return (
     <section id="partenaires" aria-labelledby={titleId} className="partners-section relative isolate overflow-x-clip bg-surface-warm text-brand-navy">
-      <PartnersStage regime={plan.regime} routes={plan.routes} count={plan.cards.length} height={plan.height} motifMask={motifMask}>
+      <PartnersStage regime={plan.regime} routes={plan.routes} count={plan.cards.length} height={plan.height} motifMask={motifMask} joinedAbove={joinedAbove}>
         <header>
           <p className="flex items-center gap-3 text-tag font-bold tracking-eyebrow text-gold-ink-warm uppercase">
             <span aria-hidden="true" className="pt-a h-0.5 w-9 origin-left bg-gold-line" {...reveal(0, 500, "scaleX(0)")} />
@@ -96,7 +99,7 @@ export function Partners({
               <span className="pt-core">
                 <Image src="/logos/logo-mark.svg" alt="" width={1000} height={420} unoptimized className="pt-mark h-auto w-[70%]" />
               </span>
-              {confirmed.length >= 5 && <span className="pt-counter">01 / {String(plan.cards.length).padStart(2, "0")}</span>}
+              {confirmed.length >= 2 && <span className="pt-counter">01 / {String(plan.cards.length).padStart(2, "0")}</span>}
               <span className="pt-fade" />
             </div>
 

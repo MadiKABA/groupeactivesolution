@@ -1,0 +1,100 @@
+{
+  "reflow": {
+    "320": {
+      "scrollWidth": 320,
+      "clientWidth": 320,
+      "overflowing": [
+        "button.fo-a group/tab relative flex h-11 shrink-0 snap-st right=355 sec=formations",
+        "span. right=338 sec=formations",
+        "button.fo-a group/tab relative flex h-11 shrink-0 snap-st right=596 sec=formations",
+        "span.text-xs font-extrabold tracking-badge text-brand-g right=396 sec=formations",
+        "span. right=579 sec=formations",
+        "button.fo-a group/tab relative flex h-11 shrink-0 snap-st right=792 sec=formations",
+        "span.text-xs font-extrabold tracking-badge text-brand-g right=638 sec=formations",
+        "span. right=775 sec=formations",
+        "button.fo-a group/tab relative flex h-11 shrink-0 snap-st right=1009 sec=formations",
+        "span.text-xs font-extrabold tracking-badge text-brand-g right=833 sec=formations",
+        "span. right=992 sec=formations",
+        "button.faq-tab fq-a group/tab relative flex h-12 shrink-0 right=347 sec=faq",
+        "button.faq-tab fq-a group/tab relative flex h-12 shrink-0 right=575 sec=faq",
+        "span.sr-only right=373 sec=faq",
+        "button.faq-tab fq-a group/tab relative flex h-12 shrink-0 right=758 sec=faq"
+      ]
+    },
+    "640": {
+      "scrollWidth": 640,
+      "clientWidth": 640,
+      "overflowing": [
+        "button.fo-a group/tab relative flex h-11 shrink-0 snap-st right=792 sec=formations",
+        "span. right=775 sec=formations",
+        "button.fo-a group/tab relative flex h-11 shrink-0 snap-st right=1009 sec=formations",
+        "span.text-xs font-extrabold tracking-badge text-brand-g right=833 sec=formations",
+        "span. right=992 sec=formations",
+        "button.faq-tab fq-a group/tab relative flex h-12 shrink-0 right=758 sec=faq"
+      ]
+    },
+    "720": {
+      "scrollWidth": 720,
+      "clientWidth": 720,
+      "overflowing": [
+        "button.fo-a group/tab relative flex h-11 shrink-0 snap-st right=792 sec=formations",
+        "span. right=775 sec=formations",
+        "button.fo-a group/tab relative flex h-11 shrink-0 snap-st right=1009 sec=formations",
+        "span.text-xs font-extrabold tracking-badge text-brand-g right=833 sec=formations",
+        "span. right=992 sec=formations",
+        "button.faq-tab fq-a group/tab relative flex h-12 shrink-0 right=758 sec=faq"
+      ]
+    },
+    "spacing-390": {
+      "count": 8,
+      "scrollWidth": 390,
+      "list": [
+        {
+          "text": "03",
+          "why": "page",
+          "sec": "formations"
+        },
+        {
+          "text": "Électronique et embarqué",
+          "why": "page",
+          "sec": "formations"
+        },
+        {
+          "text": "04",
+          "why": "page",
+          "sec": "formations"
+        },
+        {
+          "text": "Internet des objets",
+          "why": "page",
+          "sec": "formations"
+        },
+        {
+          "text": "05",
+          "why": "page",
+          "sec": "formations"
+        },
+        {
+          "text": "Intelligence artificielle",
+          "why": "page",
+          "sec": "formations"
+        },
+        {
+          "text": "Projets numériques, 3 questions3",
+          "why": "page",
+          "sec": "faq"
+        },
+        {
+          "text": "Collaboration, 3 questions3",
+          "why": "page",
+          "sec": "faq"
+        }
+      ]
+    },
+    "spacing-1440": {
+      "count": 0,
+      "scrollWidth": 1440,
+      "list": []
+    }
+  }
+}

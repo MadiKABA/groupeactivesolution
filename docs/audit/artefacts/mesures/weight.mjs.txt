@@ -1,0 +1,29 @@
+import puppeteer from "puppeteer-core";
+const b = await puppeteer.launch({ executablePath: "/usr/bin/google-chrome", headless: true, args: ["--no-sandbox"] });
+const p = await b.newPage(); await p.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
+const cdp = await p.createCDPSession(); await cdp.send("Network.enable");
+let rows = [];
+const reqs = new Map();
+cdp.on("Network.responseReceived", (e) => reqs.set(e.requestId, { url: e.response.url, type: e.type, status: e.response.status, fromCache: e.response.fromDiskCache || e.response.fromMemoryCache, enc: e.response.headers["content-encoding"] || e.response.headers["Content-Encoding"] || "" }));
+cdp.on("Network.loadingFinished", (e) => { const r = reqs.get(e.requestId); if (r) rows.push({ ...r, bytes: e.encodedDataLength }); });
+const sum = (label) => {
+  const by = {}; let total = 0;
+  for (const r of rows) { by[r.type] = by[r.type] || { n: 0, kb: 0 }; by[r.type].n++; by[r.type].kb += r.bytes / 1024; total += r.bytes; }
+  for (const k in by) by[k].kb = +by[k].kb.toFixed(1);
+  console.log(label, "requêtes", rows.length, "transféré KiB", (total / 1024).toFixed(1), JSON.stringify(by));
+};
+await p.goto("http://localhost:3100/", { waitUntil: "networkidle0" });
+await new Promise(r => setTimeout(r, 1500));
+sum("CACHE VIDE (avant défilement)");
+rows.filter(r=>r.type==="Script"||r.type==="Stylesheet"||r.type==="Document"||r.type==="Font").forEach(r=>console.log("   ",r.type,r.status,(r.bytes/1024).toFixed(1)+"KiB",r.enc,r.url.replace("http://localhost:3100","")));
+const before = rows.length;
+const total = await p.evaluate(() => document.documentElement.scrollHeight);
+for (let y = 0; y < total; y += 400) { await p.evaluate((v) => scrollTo(0, v), y); await new Promise(r => setTimeout(r, 100)); }
+await new Promise(r => setTimeout(r, 2000));
+console.log("Requêtes pendant le défilement:", rows.slice(before).map(r => `${r.status} ${r.type} ${(r.bytes/1024).toFixed(1)}KiB ${r.url.replace("http://localhost:3100","").slice(0,80)}`).join("\n   "));
+rows = [];
+await p.reload({ waitUntil: "networkidle0" });
+await new Promise(r => setTimeout(r, 1500));
+sum("CACHE CHAUD (rechargement)");
+console.log("   depuis le cache:", rows.filter(r => r.fromCache).length);
+await b.close();

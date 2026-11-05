@@ -1,0 +1,16 @@
+import puppeteer from "puppeteer-core";
+const b = await puppeteer.launch({ executablePath: "/usr/bin/google-chrome", headless: true, args: ["--no-sandbox"] });
+const p = await b.newPage(); await p.setViewport({ width: 1440, height: 900 });
+await p.goto("http://localhost:3100/", { waitUntil: "networkidle0" });
+await p.evaluate(() => document.getElementById("realisations").scrollIntoView());
+await new Promise(r => setTimeout(r, 4000));
+console.log(await p.evaluate(() => {
+  const span = document.querySelector("#realisations header p span:not([aria-hidden])");
+  const chain = []; for (let e = span; e && e.id !== "realisations"; e = e.parentElement) chain.push(`${e.tagName}.${String(e.className).slice(0,40)} op=${getComputedStyle(e).opacity}`);
+  return JSON.stringify({ text: span.textContent, color: getComputedStyle(span).color, chain, anims: span.getAnimations().map(a => a.animationName + ":" + a.playState) }, null, 1);
+}));
+// Puces des expertises : opacité réelle selon l'état
+await p.evaluate(() => document.getElementById("expertise-developpement").scrollIntoView({ block: "center" }));
+await new Promise(r => setTimeout(r, 2500));
+console.log(await p.evaluate(() => [...document.querySelectorAll("#expertises article")].map(a => a.id + " chips op=" + getComputedStyle(a.querySelector("ul li span")).opacity + " desc op=" + getComputedStyle(a.querySelector("p.mt-3, p.desk\\:mt-4") || a.querySelector("p")).opacity).join("\n")));
+await b.close();

@@ -277,7 +277,7 @@ export function RealisationsController({ mode, children }: { mode: Mode; childre
           else button.removeAttribute("aria-current");
         });
         // Annonce au changement de projet seulement (pas au premier calcul).
-        if (current.k !== -1 && live) live.textContent = projectAnnouncement(k + 1, COUNT, realisations[k].name);
+        if (current.k !== -1 && live) live.textContent = projectAnnouncement(k + 1, COUNT, realisations[k].domainLabel);
       }
       if (photo !== current.photo) stage.dataset.photo = String(photo);
       if (pinned !== current.pinned) {

@@ -173,7 +173,7 @@ export function ExpertisePanel({
             {expertise.services.map((service) => (
               <motion.li key={service} variants={item}>
                 <span
-                  className={`inline-block rounded-full border border-brand-navy/14 bg-surface px-2.5 py-1 text-xs text-text-primary transition-[translate,border-color,opacity] duration-(--duration-base) ease-standard hover:-translate-y-0.5 hover:border-brand-gold desk:px-3.5 desk:py-1.5 desk:text-tag ${decoDim}`}
+                  className={`inline-block max-w-full rounded-full border border-brand-navy/14 leading-snug bg-surface px-2.5 py-1 text-xs text-text-primary transition-[translate,border-color,opacity] duration-(--duration-base) ease-standard hover:-translate-y-0.5 hover:border-brand-gold desk:px-3.5 desk:py-1.5 desk:text-tag ${decoDim}`}
                 >
                   {service}
                 </span>
@@ -188,7 +188,14 @@ export function ExpertisePanel({
             <span className="text-2xs font-semibold tracking-label text-text-primary/72 uppercase">
               Idéal pour
             </span>
-            <span className="text-sm text-text-primary desk:text-nav">{expertise.idealFor.join(" · ")}</span>
+            <span className="flex flex-wrap items-baseline gap-x-4 gap-y-1 text-sm text-text-primary desk:text-nav">
+              {expertise.idealFor.map((audience) => (
+                <span key={audience} className="inline-flex items-baseline gap-2 whitespace-nowrap">
+                  <span aria-hidden="true" className="size-1 shrink-0 self-center rounded-full bg-brand-gold" />
+                  {audience}
+                </span>
+              ))}
+            </span>
           </motion.p>
 
           <motion.div variants={item} className={`mt-2 desk:mt-6 ${text}`}>

@@ -1,0 +1,1329 @@
+{
+  "keyboard": {
+    "390": [
+      {
+        "name": "/",
+        "tag": "a",
+        "section": "header",
+        "top": 957,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Ouvrir le menu",
+        "tag": "button",
+        "section": "header",
+        "top": 629,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Former les talents,Former les talents,",
+        "tag": "button",
+        "section": "hero",
+        "top": 168,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "créer les solutions,créer les solutions,",
+        "tag": "button",
+        "section": "hero",
+        "top": 207,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 28,
+        "obscuredRatio": 0.71,
+        "visible": true
+      },
+      {
+        "name": "transformer les organisations.transformer les",
+        "tag": "button",
+        "section": "hero",
+        "top": 246,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Découvrir nos services",
+        "tag": "a",
+        "section": "hero",
+        "top": 464,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Parlons de votre projet",
+        "tag": "a",
+        "section": "hero",
+        "top": 528,
+        "ring": "outline 2px rgb(240, 208, 149)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Mettre en pause le défilement automatique",
+        "tag": "button",
+        "section": "hero",
+        "top": 625,
+        "ring": "outline 2px rgb(237, 200, 133)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Afficher : Éducation numérique",
+        "tag": "button",
+        "section": "hero",
+        "top": 885,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Afficher : Développement digital",
+        "tag": "button",
+        "section": "hero",
+        "top": 885,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Afficher : Transformation digitale",
+        "tag": "button",
+        "section": "hero",
+        "top": 885,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Découvrir les programmes",
+        "tag": "a",
+        "section": "expertises",
+        "top": 2018,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Découvrir nos solutions",
+        "tag": "a",
+        "section": "expertises",
+        "top": 2555,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Transformer votre organisation",
+        "tag": "a",
+        "section": "expertises",
+        "top": 3022,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Aller à l'expertise 01 : Formations",
+        "tag": "button",
+        "section": "expertises",
+        "top": 1366,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Aller à l'expertise 02 : Développement digita",
+        "tag": "button",
+        "section": "expertises",
+        "top": 1366,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Aller à l'expertise 03 : Transformation digit",
+        "tag": "button",
+        "section": "expertises",
+        "top": 1366,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Étape 1 : Comprendre le besoin",
+        "tag": "button",
+        "section": "methode",
+        "top": 4961,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Étape 2 : Définir la solution",
+        "tag": "button",
+        "section": "methode",
+        "top": 5006,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Étape 3 : Concevoir et réaliser",
+        "tag": "button",
+        "section": "methode",
+        "top": 5059,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Étape 4 : Accompagner et faire évoluer",
+        "tag": "button",
+        "section": "methode",
+        "top": 5120,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Nous contacter",
+        "tag": "a",
+        "section": "methode",
+        "top": 6373,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "01Programmation web",
+        "tag": "button[tab]",
+        "section": "formations",
+        "top": 7234,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Programmation webCréer des sites et des appli",
+        "tag": "div[tabpanel]",
+        "section": "formations",
+        "top": 7292,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Découvrir nos formations",
+        "tag": "a",
+        "section": "formations",
+        "top": 8221,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "L'entreprise, 3 questions3",
+        "tag": "button[tab]",
+        "section": "faq",
+        "top": 8651,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "01Qui est Active Solution Digital Service ?",
+        "tag": "button",
+        "section": "faq",
+        "top": 8724,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "02Dans quels domaines intervenez-vous ?",
+        "tag": "button",
+        "section": "faq",
+        "top": 8987,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "03Intervenez-vous en dehors de Dakar ?",
+        "tag": "button",
+        "section": "faq",
+        "top": 9070,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Écrire sur WhatsApp (s'ouvre dans un nouvel o",
+        "tag": "a",
+        "section": "faq",
+        "top": 9321,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Nous contacter",
+        "tag": "a",
+        "section": "faq",
+        "top": 9385,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "+221 76 809 51 59",
+        "tag": "a",
+        "section": "contact",
+        "top": 9961,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Copier le numéro de téléphone",
+        "tag": "button",
+        "section": "contact",
+        "top": 9952,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "contact@groupactivesolution.com",
+        "tag": "a",
+        "section": "contact",
+        "top": 10061,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Copier l'adresse e-mail",
+        "tag": "button",
+        "section": "contact",
+        "top": 10051,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Ouvrir l'adresse dans Google Maps (nouvel ong",
+        "tag": "a",
+        "section": "contact",
+        "top": 10154,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Voir sur Maps (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 10158,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "LinkedIn (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 10297,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Facebook (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 10297,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Instagram (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 10297,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "TikTok (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 10297,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Formation",
+        "tag": "button[radio]",
+        "section": "contact",
+        "top": 10574,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "",
+        "tag": "input",
+        "section": "contact",
+        "top": 10728,
+        "ring": "box-shadow",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "",
+        "tag": "textarea",
+        "section": "contact",
+        "top": 10837,
+        "ring": "box-shadow",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Envoyer sur WhatsApp",
+        "tag": "button",
+        "section": "contact",
+        "top": 10986,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Ou par e-mail",
+        "tag": "button",
+        "section": "contact",
+        "top": 11055,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "LinkedIn (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 12545,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Facebook (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 12545,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Instagram (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 12545,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "TikTok (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 12545,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Éducation numérique",
+        "tag": "a",
+        "section": "footer",
+        "top": 12662,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Développement digital",
+        "tag": "a",
+        "section": "footer",
+        "top": 12706,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Transformation digitale",
+        "tag": "a",
+        "section": "footer",
+        "top": 12761,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Réalisations",
+        "tag": "a",
+        "section": "footer",
+        "top": 12662,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Méthode",
+        "tag": "a",
+        "section": "footer",
+        "top": 12706,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Formations",
+        "tag": "a",
+        "section": "footer",
+        "top": 12750,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "FAQ",
+        "tag": "a",
+        "section": "footer",
+        "top": 12794,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Contact",
+        "tag": "a",
+        "section": "footer",
+        "top": 12838,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "+221 76 809 51 59",
+        "tag": "a",
+        "section": "footer",
+        "top": 12957,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "contact@groupactivesolution.com",
+        "tag": "a",
+        "section": "footer",
+        "top": 13001,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Liberté 1, Dakar, Sénégal (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 13045,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Retour en haut",
+        "tag": "a",
+        "section": "footer",
+        "top": 13154,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      }
+    ],
+    "1440": [
+      {
+        "name": "/",
+        "tag": "a",
+        "section": "header",
+        "top": 475,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Accueil",
+        "tag": "a",
+        "section": "header",
+        "top": 248,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Nos services",
+        "tag": "a",
+        "section": "header",
+        "top": 131,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Réalisations",
+        "tag": "a",
+        "section": "header",
+        "top": 58,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Formations",
+        "tag": "a",
+        "section": "header",
+        "top": 22,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "À propos",
+        "tag": "a",
+        "section": "header",
+        "top": 21,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Parlons de votre projet",
+        "tag": "a",
+        "section": "header",
+        "top": 22,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Former les talents,Former les talents,Former ",
+        "tag": "button",
+        "section": "hero",
+        "top": 310,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "créer les solutions,créer les solutions,",
+        "tag": "button",
+        "section": "hero",
+        "top": 358,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "transformer les organisations.transformer les",
+        "tag": "button",
+        "section": "hero",
+        "top": 406,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Découvrir nos services",
+        "tag": "a",
+        "section": "hero",
+        "top": 595,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Parlons de votre projet",
+        "tag": "a",
+        "section": "hero",
+        "top": 595,
+        "ring": "outline 2px rgb(240, 208, 149)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Mettre en pause le défilement automatique",
+        "tag": "button",
+        "section": "hero",
+        "top": 259,
+        "ring": "outline 2px rgb(234, 192, 114)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Aller à la section suivante",
+        "tag": "a",
+        "section": "hero",
+        "top": 717,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Aller à l'expertise 01 : Formations",
+        "tag": "button",
+        "section": "expertises",
+        "top": 1440,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Découvrir les programmes",
+        "tag": "a",
+        "section": "expertises",
+        "top": 1688,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Aller à l'expertise 02 : Développement digita",
+        "tag": "button",
+        "section": "expertises",
+        "top": 2070,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Découvrir nos solutions",
+        "tag": "a",
+        "section": "expertises",
+        "top": 2318,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Aller à l'expertise 03 : Transformation digit",
+        "tag": "button",
+        "section": "expertises",
+        "top": 2671,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Transformer votre organisation",
+        "tag": "a",
+        "section": "expertises",
+        "top": 2918,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Étape 1 : Comprendre le besoin",
+        "tag": "button",
+        "section": "methode",
+        "top": 4787,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Étape 2 : Définir la solution",
+        "tag": "button",
+        "section": "methode",
+        "top": 4897,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Étape 3 : Concevoir et réaliser",
+        "tag": "button",
+        "section": "methode",
+        "top": 5027,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Étape 4 : Accompagner et faire évoluer",
+        "tag": "button",
+        "section": "methode",
+        "top": 5177,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Nous contacter",
+        "tag": "a",
+        "section": "methode",
+        "top": 5447,
+        "ring": "outline 2px rgb(227, 169, 63)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "01Programmation web",
+        "tag": "button",
+        "section": "formations",
+        "top": 5990,
+        "ring": "AUCUN",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "02Robotique",
+        "tag": "button",
+        "section": "formations",
+        "top": 6200,
+        "ring": "AUCUN",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "03Électronique et embarqué",
+        "tag": "button",
+        "section": "formations",
+        "top": 6270,
+        "ring": "AUCUN",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "04Internet des objets",
+        "tag": "button",
+        "section": "formations",
+        "top": 6340,
+        "ring": "AUCUN",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "05Intelligence artificielle",
+        "tag": "button",
+        "section": "formations",
+        "top": 6410,
+        "ring": "AUCUN",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Découvrir nos formations",
+        "tag": "a",
+        "section": "formations",
+        "top": 6801,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "L'entreprise, 3 questions3",
+        "tag": "button[tab]",
+        "section": "faq",
+        "top": 7222,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "01Qui est Active Solution Digital Service ?",
+        "tag": "button",
+        "section": "faq",
+        "top": 7303,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "02Dans quels domaines intervenez-vous ?",
+        "tag": "button",
+        "section": "faq",
+        "top": 7555,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "03Intervenez-vous en dehors de Dakar ?",
+        "tag": "button",
+        "section": "faq",
+        "top": 7665,
+        "ring": "outline 2px rgb(7, 23, 46)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Écrire sur WhatsApp (s'ouvre dans un nouvel o",
+        "tag": "a",
+        "section": "faq",
+        "top": 7623,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Nous contacter",
+        "tag": "a",
+        "section": "faq",
+        "top": 7687,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "+221 76 809 51 59",
+        "tag": "a",
+        "section": "contact",
+        "top": 8297,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Copier le numéro de téléphone",
+        "tag": "button",
+        "section": "contact",
+        "top": 8289,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "contact@groupactivesolution.com",
+        "tag": "a",
+        "section": "contact",
+        "top": 8477,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Copier l'adresse e-mail",
+        "tag": "button",
+        "section": "contact",
+        "top": 8469,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Ouvrir l'adresse dans Google Maps (nouvel ong",
+        "tag": "a",
+        "section": "contact",
+        "top": 8640,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Voir sur Maps (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 8644,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "LinkedIn (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 8755,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Facebook (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 8755,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Instagram (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 8755,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "TikTok (nouvel onglet)",
+        "tag": "a",
+        "section": "contact",
+        "top": 8756,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Formation",
+        "tag": "button[radio]",
+        "section": "contact",
+        "top": 8179,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "",
+        "tag": "input",
+        "section": "contact",
+        "top": 8334,
+        "ring": "box-shadow",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "",
+        "tag": "textarea",
+        "section": "contact",
+        "top": 8442,
+        "ring": "box-shadow",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Envoyer sur WhatsApp",
+        "tag": "button",
+        "section": "contact",
+        "top": 8591,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Ou par e-mail",
+        "tag": "button",
+        "section": "contact",
+        "top": 8661,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "LinkedIn (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 10161,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Facebook (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 10161,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Instagram (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 10161,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "TikTok (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 10161,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Éducation numérique",
+        "tag": "a",
+        "section": "footer",
+        "top": 10024,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Développement digital",
+        "tag": "a",
+        "section": "footer",
+        "top": 10068,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Transformation digitale",
+        "tag": "a",
+        "section": "footer",
+        "top": 10112,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Réalisations",
+        "tag": "a",
+        "section": "footer",
+        "top": 9980,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Méthode",
+        "tag": "a",
+        "section": "footer",
+        "top": 10024,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Formations",
+        "tag": "a",
+        "section": "footer",
+        "top": 10068,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "FAQ",
+        "tag": "a",
+        "section": "footer",
+        "top": 10112,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Contact",
+        "tag": "a",
+        "section": "footer",
+        "top": 10156,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "+221 76 809 51 59",
+        "tag": "a",
+        "section": "footer",
+        "top": 10294,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "contact@groupactivesolution.com",
+        "tag": "a",
+        "section": "footer",
+        "top": 10294,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Liberté 1, Dakar, Sénégal (nouvel onglet)",
+        "tag": "a",
+        "section": "footer",
+        "top": 10294,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      },
+      {
+        "name": "Retour en haut",
+        "tag": "a",
+        "section": "footer",
+        "top": 10403,
+        "ring": "outline 2px rgb(237, 185, 77)",
+        "obscuredPx": 0,
+        "obscuredRatio": 0,
+        "visible": true
+      }
+    ]
+  },
+  "mobileMenu": {
+    "expandedBefore": "false",
+    "open": true,
+    "expandedAfter": "true",
+    "focusInside": "Fermer le menu",
+    "tabCycle": [
+      "dans:Accueil",
+      "dans:Nos services",
+      "dans:Réalisations",
+      "dans:Formations",
+      "dans:À propos",
+      "dans:Parlons de votre projet",
+      "HORS:AccueilNos servicesRéalisation",
+      "dans:Fermer le menu",
+      "dans:Accueil"
+    ],
+    "bodyScrollLocked": "visible/hidden",
+    "openAfterEscape": false,
+    "focusReturned": "mobile-menu",
+    "expandedAfterEscape": "false"
+  }
+}

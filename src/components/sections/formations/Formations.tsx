@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+import { routeExists } from "@/lib/route-exists";
 import { formationDomains, formationPanelId, formationsIntro, formationTabId } from "@/lib/formations";
 
 import { FormationTags } from "./FormationTags";
@@ -63,7 +64,8 @@ export function Formations() {
     </div>
   );
 
-  const cta = (
+  // Bouton rendu seulement si la route de destination existe (sinon masqué sans trace).
+  const cta = !routeExists(formationsIntro.cta.href) ? null : (
     <div data-fo-target="c" className="mt-12 flex justify-center lg:mt-16 fo-desk:mt-12">
       <Link
         href={formationsIntro.cta.href}

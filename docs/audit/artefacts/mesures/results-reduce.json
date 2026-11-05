@@ -1,0 +1,46 @@
+{
+  "reduce": {
+    "390": {
+      "top": {
+        "total": 63,
+        "running": 0,
+        "infiniteRunning": 0,
+        "infiniteOffscreen": 0,
+        "groups": {}
+      }
+    },
+    "1440": {
+      "top": {
+        "total": 63,
+        "running": 0,
+        "infiniteRunning": 0,
+        "infiniteOffscreen": 0,
+        "groups": {}
+      }
+    }
+  },
+  "anim390Top": {
+    "total": 162,
+    "running": 51,
+    "infiniteRunning": 21,
+    "infiniteOffscreen": 12,
+    "groups": {
+      "header|box-shadow|1|visible": 1,
+      "header|backdrop-filter|1|visible": 1,
+      "header|background-color|1|visible": 1,
+      "header|opacity|1|visible": 1,
+      "expertises|opacity|1|hors-écran": 4,
+      "hero|motif-band|∞|visible": 1,
+      "hero|motif-band-inner|∞|visible": 1,
+      "hero|twinkle|∞|visible": 6,
+      "hero|pulse-ring|∞|visible": 1,
+      "formations|twinkle-soft|∞|hors-écran": 3,
+      "formations|fo-enter|1|hors-écran": 13,
+      "formations|fo-draw|1|hors-écran": 5,
+      "faq|twinkle-soft|∞|hors-écran": 3,
+      "contact|twinkle-soft|∞|hors-écran": 3,
+      "partenaires|twinkle-soft|∞|hors-écran": 3,
+      "expertises|Animation|1|hors-écran": 4
+    }
+  }
+}

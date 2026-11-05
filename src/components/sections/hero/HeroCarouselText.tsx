@@ -3,12 +3,17 @@
 import { ArrowRight } from "lucide-react";
 import { AnimatePresence, motion, type MotionValue, type Transition } from "motion/react";
 import Link from "next/link";
-import { useId, useRef, type KeyboardEvent } from "react";
+import { Fragment, useId, useRef, type KeyboardEvent } from "react";
 
 import { ButtonShine } from "@/components/ui/ButtonShine";
 import type { HeroCarousel } from "@/hooks/useHeroCarousel";
-import { HERO_EASE, HERO_ENTRY_DELAY, heroSlides, type HeroSlide } from "@/lib/hero-slides";
-import { ROUTES } from "@/lib/routes";
+import {
+  HERO_EASE,
+  HERO_ENTRY_DELAY,
+  HERO_SECONDARY_CTA,
+  HERO_TITLE_LINES,
+  heroSlides,
+} from "@/lib/hero-slides";
 
 const MotionLink = motion.create(Link);
 
@@ -55,7 +60,7 @@ function HeroBadge({ reduce }: { reduce: boolean }) {
 }
 
 type TitleLineProps = {
-  slide: HeroSlide;
+  line: string;
   index: number;
   active: boolean;
   progress: MotionValue<number>;
@@ -65,11 +70,14 @@ type TitleLineProps = {
   buttonRef: (element: HTMLButtonElement | null) => void;
 };
 
-function TitleLine({ slide, index, active, progress, reduce, hintId, onSelect, buttonRef }: TitleLineProps) {
+/**
+ * Ligne sélectionnable du titre. Le texte n'existe qu'une fois dans le DOM : le doré de la ligne
+ * active est un pseudo-élément (`.hero-line-text::after`, contenu lu dans `data-text`).
+ */
+function TitleLine({ line, index, active, progress, reduce, hintId, onSelect, buttonRef }: TitleLineProps) {
   return (
     // Masque de révélation ; le padding évite de rogner les jambages et la barre.
-    // En xl (titre sans retour à la ligne), le masque suit la largeur du texte, qui peut
-    // déborder dans l'espace entre les colonnes sans jamais atteindre le visuel.
+    // En xl (titre sans retour à la ligne), le masque suit la largeur du texte.
     <span className="-mb-[0.14em] block overflow-hidden pb-[0.14em] xl:w-max">
       <motion.span
         className="block"
@@ -92,34 +100,18 @@ function TitleLine({ slide, index, active, progress, reduce, hintId, onSelect, b
           aria-current={active ? "true" : undefined}
           aria-controls="hero-visual"
           aria-describedby={hintId}
-          className="group relative inline-block cursor-pointer rounded-sm text-left"
+          data-active={active ? "" : undefined}
+          className="hero-line group relative inline-block cursor-pointer rounded-sm text-left"
         >
-          {/* Texte blanc (inactif) et texte doré (actif) en fondu croisé : aucun saut de couleur */}
-          <span
-            className={`transition-opacity duration-500 ease-out ${active ? "opacity-0" : "opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)"}`}
-          >
-            {slide.line}
+          <span className="hero-line-text" data-text={line}>
+            {line}
           </span>
-          <span
-            aria-hidden="true"
-            className={`hero-gradient-text absolute inset-0 transition-opacity duration-500 ease-out ${active ? "opacity-100" : "opacity-0"}`}
-          >
-            {slide.line}
-          </span>
-          {active && !reduce && (
-            <span aria-hidden="true" className="hero-text-shine absolute inset-0 animate-text-shine">
-              {slide.line}
-            </span>
-          )}
           {active && (
             <span
               aria-hidden="true"
               className="absolute inset-x-0 bottom-0 h-0.5 overflow-hidden rounded-full bg-text-on-dark/12"
             >
-              <motion.span
-                className="block size-full origin-left bg-brand-gold"
-                style={{ scaleX: progress }}
-              />
+              <motion.span className="block size-full origin-left bg-brand-gold" style={{ scaleX: progress }} />
             </span>
           )}
         </button>
@@ -130,11 +122,12 @@ function TitleLine({ slide, index, active, progress, reduce, hintId, onSelect, b
 
 export function HeroCarouselText({ carousel, reduce }: HeroCarouselTextProps) {
   const { activeIndex, progress, goTo, next, prev, setHold } = carousel;
+  const slide = heroSlides[activeIndex];
   const buttons = useRef<(HTMLButtonElement | null)[]>([]);
   const hintId = useId();
-  const count = heroSlides.length;
+  const count = HERO_TITLE_LINES.length;
 
-  // Flèches gauche / droite dans le titre : change d'état et suit le focus.
+  // Flèches gauche / droite dans le titre : change de diapo et suit le focus.
   const onTitleKeyDown = (event: KeyboardEvent<HTMLHeadingElement>) => {
     if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
     event.preventDefault();
@@ -155,25 +148,27 @@ export function HeroCarouselText({ carousel, reduce }: HeroCarouselTextProps) {
       {/* a0) Badge */}
       <HeroBadge reduce={reduce} />
 
-      {/* a) Titre : les 3 lignes cliquables forment un seul h1 */}
+      {/* a) Titre : texte identique sur les 3 diapos, les 3 lignes restent les sélecteurs du carrousel */}
       <h1
         onKeyDown={onTitleKeyDown}
         className="mt-6 text-hero font-bold tracking-display text-text-on-dark xl:whitespace-nowrap"
       >
-        {heroSlides.map((slide, index) => (
-          <TitleLine
-            key={slide.line}
-            slide={slide}
-            index={index}
-            active={index === activeIndex}
-            progress={progress}
-            reduce={reduce}
-            hintId={hintId}
-            onSelect={() => goTo(index)}
-            buttonRef={(element) => {
-              buttons.current[index] = element;
-            }}
-          />
+        {HERO_TITLE_LINES.map((line, index) => (
+          <Fragment key={line}>
+            {index > 0 ? " " : null}
+            <TitleLine
+              line={line}
+              index={index}
+              active={index === activeIndex}
+              progress={progress}
+              reduce={reduce}
+              hintId={hintId}
+              onSelect={() => goTo(index)}
+              buttonRef={(element) => {
+                buttons.current[index] = element;
+              }}
+            />
+          </Fragment>
         ))}
       </h1>
       <span id={hintId} className="sr-only">
@@ -182,10 +177,10 @@ export function HeroCarouselText({ carousel, reduce }: HeroCarouselTextProps) {
 
       {/* b) Légende de l'état actif (hauteur réservée : 3 lignes) */}
       <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ y: 8 }}
+        animate={{ y: 0 }}
         transition={entry(reduce, HERO_ENTRY_DELAY.caption)}
-        className="mt-7 min-h-[4.8em] max-w-130 text-base leading-relaxed text-text-on-dark/82"
+        className="mt-7 min-h-[4.8em] max-w-130 text-base leading-relaxed text-balance text-text-on-dark/82"
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.p
@@ -194,7 +189,7 @@ export function HeroCarouselText({ carousel, reduce }: HeroCarouselTextProps) {
             animate={{ opacity: 1, y: 0, transition: { duration: reduce ? 0.2 : 0.45, ease: "easeOut" } }}
             exit={{ opacity: 0, y: -8, transition: { duration: reduce ? 0.1 : 0.25, ease: "easeIn" } }}
           >
-            {heroSlides[activeIndex].caption}
+            {slide.caption}
           </motion.p>
         </AnimatePresence>
       </motion.div>
@@ -207,12 +202,12 @@ export function HeroCarouselText({ carousel, reduce }: HeroCarouselTextProps) {
         className="mt-9 flex flex-col gap-4 xs:flex-row xs:flex-wrap"
       >
         <MotionLink
-          href="/services"
+          href={slide.cta.href}
           whileHover={{ y: -1 }}
           whileTap={{ scale: 0.97 }}
           className="group relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full bg-brand-gold px-7 text-sm font-semibold whitespace-nowrap text-brand-navy transition-[background-color,box-shadow] duration-(--duration-base) ease-standard hover:bg-brand-gold-light hover:shadow-gold xs:h-11.25"
         >
-          Découvrir nos services
+          {slide.cta.label}
           <ArrowRight
             aria-hidden="true"
             className="size-4 transition-transform duration-(--duration-base) ease-standard group-hover:translate-x-1"
@@ -221,7 +216,7 @@ export function HeroCarouselText({ carousel, reduce }: HeroCarouselTextProps) {
         </MotionLink>
 
         <MotionLink
-          href={ROUTES.contact}
+          href={HERO_SECONDARY_CTA.href}
           whileTap={{ scale: 0.97 }}
           className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full border border-brand-gold px-7 text-sm font-semibold whitespace-nowrap text-text-on-dark transition-colors duration-300 ease-standard hover:text-brand-navy xs:h-11.25"
         >
@@ -231,7 +226,7 @@ export function HeroCarouselText({ carousel, reduce }: HeroCarouselTextProps) {
             className="absolute inset-0 origin-bottom scale-y-0 bg-brand-gold transition-transform duration-300 ease-standard group-hover:scale-y-100"
           />
           <span className="relative flex items-center gap-2">
-            Parlons de votre projet
+            {HERO_SECONDARY_CTA.label}
             <ArrowRight
               aria-hidden="true"
               className="size-4 transition-transform duration-(--duration-base) ease-standard group-hover:translate-x-1"

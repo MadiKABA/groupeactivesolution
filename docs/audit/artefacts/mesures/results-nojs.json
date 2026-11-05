@@ -1,0 +1,348 @@
+{
+  "nojs": {
+    "390": {
+      "invisibleText": 71,
+      "bySection": {
+        "hero": 14,
+        "header": 2,
+        "expertises": 32,
+        "methode": 3,
+        "formations": 20
+      },
+      "samples": [
+        {
+          "text": "Dakar",
+          "section": "hero"
+        },
+        {
+          "text": ",",
+          "section": "hero"
+        },
+        {
+          "text": "Sénégal",
+          "section": "hero"
+        },
+        {
+          "text": ",",
+          "section": "hero"
+        },
+        {
+          "text": "Depuis 2021",
+          "section": "hero"
+        },
+        {
+          "text": "2021",
+          "section": "hero"
+        },
+        {
+          "text": "Former les talents,",
+          "section": "hero"
+        },
+        {
+          "text": "Programmation, robotique, intelligence artificielle et compé",
+          "section": "hero"
+        },
+        {
+          "text": "Découvrir nos services",
+          "section": "hero"
+        },
+        {
+          "text": "Parlons de votre projet",
+          "section": "hero"
+        },
+        {
+          "text": "Image à fournirpublic/hero/education.webp",
+          "section": "hero"
+        },
+        {
+          "text": "public/hero/education.webp",
+          "section": "hero"
+        },
+        {
+          "text": "Éducation numérique",
+          "section": "hero"
+        },
+        {
+          "text": "01 / 03",
+          "section": "hero"
+        },
+        {
+          "text": "Nos expertises",
+          "section": "header"
+        },
+        {
+          "text": "Nous connectons l'éducation, la technologie et la stratégie ",
+          "section": "header"
+        },
+        {
+          "text": "01",
+          "section": "expertises"
+        },
+        {
+          "text": "Formations",
+          "section": "expertises"
+        },
+        {
+          "text": "Des programmes qui permettent aux jeunes de découvrir la pro",
+          "section": "expertises"
+        },
+        {
+          "text": "Programmation",
+          "section": "expertises"
+        },
+        {
+          "text": "Robotique",
+          "section": "expertises"
+        },
+        {
+          "text": "Électronique",
+          "section": "expertises"
+        },
+        {
+          "text": "Internet des objets",
+          "section": "expertises"
+        },
+        {
+          "text": "Intelligence artificielle",
+          "section": "expertises"
+        },
+        {
+          "text": "Idéal pour",
+          "section": "expertises"
+        },
+        {
+          "text": "Établissements scolaires · Jeunes talents",
+          "section": "expertises"
+        },
+        {
+          "text": "Découvrir les programmes",
+          "section": "expertises"
+        },
+        {
+          "text": "02",
+          "section": "expertises"
+        },
+        {
+          "text": "Développement digital",
+          "section": "expertises"
+        },
+        {
+          "text": "Des sites web, applications et logiciels conçus autour des b",
+          "section": "expertises"
+        },
+        {
+          "text": "Sites web",
+          "section": "expertises"
+        },
+        {
+          "text": "Applications web et mobiles",
+          "section": "expertises"
+        },
+        {
+          "text": "Logiciels de gestion",
+          "section": "expertises"
+        },
+        {
+          "text": "Plateformes métier",
+          "section": "expertises"
+        },
+        {
+          "text": "Solutions SaaS",
+          "section": "expertises"
+        },
+        {
+          "text": "Idéal pour",
+          "section": "expertises"
+        },
+        {
+          "text": "Entreprises · Organisations · Entrepreneurs",
+          "section": "expertises"
+        },
+        {
+          "text": "Découvrir nos solutions",
+          "section": "expertises"
+        },
+        {
+          "text": "03",
+          "section": "expertises"
+        },
+        {
+          "text": "Transformation digitale",
+          "section": "expertises"
+        }
+      ]
+    },
+    "1440": {
+      "invisibleText": 71,
+      "bySection": {
+        "header": 8,
+        "hero": 15,
+        "expertises": 29,
+        "methode": 3,
+        "formations": 16
+      },
+      "samples": [
+        {
+          "text": "Accueil",
+          "section": "header"
+        },
+        {
+          "text": "Nos services",
+          "section": "header"
+        },
+        {
+          "text": "Réalisations",
+          "section": "header"
+        },
+        {
+          "text": "Formations",
+          "section": "header"
+        },
+        {
+          "text": "À propos",
+          "section": "header"
+        },
+        {
+          "text": "Parlons de votre projet",
+          "section": "header"
+        },
+        {
+          "text": "Dakar",
+          "section": "hero"
+        },
+        {
+          "text": ",",
+          "section": "hero"
+        },
+        {
+          "text": "Sénégal",
+          "section": "hero"
+        },
+        {
+          "text": ",",
+          "section": "hero"
+        },
+        {
+          "text": "Depuis 2021",
+          "section": "hero"
+        },
+        {
+          "text": "2021",
+          "section": "hero"
+        },
+        {
+          "text": "Former les talents,",
+          "section": "hero"
+        },
+        {
+          "text": "Programmation, robotique, intelligence artificielle et compé",
+          "section": "hero"
+        },
+        {
+          "text": "Découvrir nos services",
+          "section": "hero"
+        },
+        {
+          "text": "Parlons de votre projet",
+          "section": "hero"
+        },
+        {
+          "text": "Image à fournirpublic/hero/education.webp",
+          "section": "hero"
+        },
+        {
+          "text": "public/hero/education.webp",
+          "section": "hero"
+        },
+        {
+          "text": "Éducation numérique",
+          "section": "hero"
+        },
+        {
+          "text": "01 / 03",
+          "section": "hero"
+        },
+        {
+          "text": "Défiler",
+          "section": "hero"
+        },
+        {
+          "text": "Nos expertises",
+          "section": "header"
+        },
+        {
+          "text": "Nous connectons l'éducation, la technologie et la stratégie ",
+          "section": "header"
+        },
+        {
+          "text": "Formations",
+          "section": "expertises"
+        },
+        {
+          "text": "Des programmes qui permettent aux jeunes de découvrir la pro",
+          "section": "expertises"
+        },
+        {
+          "text": "Programmation",
+          "section": "expertises"
+        },
+        {
+          "text": "Robotique",
+          "section": "expertises"
+        },
+        {
+          "text": "Électronique",
+          "section": "expertises"
+        },
+        {
+          "text": "Internet des objets",
+          "section": "expertises"
+        },
+        {
+          "text": "Intelligence artificielle",
+          "section": "expertises"
+        },
+        {
+          "text": "Idéal pour",
+          "section": "expertises"
+        },
+        {
+          "text": "Établissements scolaires · Jeunes talents",
+          "section": "expertises"
+        },
+        {
+          "text": "Découvrir les programmes",
+          "section": "expertises"
+        },
+        {
+          "text": "Développement digital",
+          "section": "expertises"
+        },
+        {
+          "text": "Des sites web, applications et logiciels conçus autour des b",
+          "section": "expertises"
+        },
+        {
+          "text": "Sites web",
+          "section": "expertises"
+        },
+        {
+          "text": "Applications web et mobiles",
+          "section": "expertises"
+        },
+        {
+          "text": "Logiciels de gestion",
+          "section": "expertises"
+        },
+        {
+          "text": "Plateformes métier",
+          "section": "expertises"
+        },
+        {
+          "text": "Solutions SaaS",
+          "section": "expertises"
+        }
+      ]
+    }
+  }
+}

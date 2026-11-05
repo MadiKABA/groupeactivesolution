@@ -216,12 +216,41 @@ Route `/services` (`src/app/services/page.tsx`) : hero (`src/components/services
 - **Bande CTA** : `src/components/services/CtaGlassBand.tsx` (Server Component, props : `title`, `titleHighlight`, `support`, `cta { label, href }`), textes dans `servicesCta` de `src/lib/services.ts`, CSS `cg-*`. Fond bleu nuit à bords droits, filet doré en haut, trois lueurs en `radial-gradient` (doré via `--motif-halo`, bleu `brand-navy-glow`), zigzag `WaveMotif` dans les deux coins bas. **Verre : un seul panneau avec `backdrop-filter`, presque transparent** (blanc 2,5 %, bordure 8 %), repli plein sans support. Entrées et dérive en CSS (`animation-timeline: view()`), état final sans support ou en mouvement réduit. Bouton : `/#contact` tant que `/contact` n'existe pas.
 - **Partenaires** : le composant `Partners` de l'accueil, rendu tel quel (mêmes textes `partnersIntro`, fond clair : jonction directe avec la bande sombre).
 
+## Contenu de l'accueil
+
+**Source de vérité : le document « Textes validés de la page d'accueil » (novembre 2026).** Les textes sont dans `src/lib/` (modifier les valeurs sans toucher aux composants) :
+
+| Fichier | Contenu |
+| --- | --- |
+| `hero-slides.ts` | Titre fixe, 3 diapos (nom, phrase, bouton principal), bouton secondaire |
+| `expertises.ts` | Trois expertises (la clé `fiche` alimente `/services`) |
+| `realisations.ts` | Titre, intro, 3 cartes (domaine, légende, alt), phrase de fin |
+| `methode.ts` | 4 étapes (`**gras**` via `splitStrong`), bandeau |
+| `formations.ts` | 5 modules, « Pour qui ? », `FORMATION_AUDIENCES` (libellés partagés avec l'expertise 01) |
+| `faq.ts` | 3 questions, carte de contact, JSON-LD FAQPage |
+| `chiffres.ts` | Section Chiffres : 3 repères et date de mise à jour |
+| `partners.ts` | 10HTech, MondialeHome, TME Education, Lamtoro Automobil |
+| `footer.ts`, `site.ts` | Pied de page ; coordonnées (e-mail officiel `contact.activesolution@gmail.com`) |
+| `typography.ts` | `typo()` (typographie française) et `splitStrong()` |
+
+L'offre de formation est : Scratch, robotique, objets connectés, intelligence artificielle, cybersécurité. La section **Chiffres** (`#chiffres`) affiche des valeurs fixes (aucun compteur) ; mettre à jour `chiffresUpdatedAt` à chaque changement.
+
+### Images attendues (WebP, < 200 Ko)
+
+| Emplacement | Format | Fichier |
+| --- | --- | --- |
+| Hero (3 diapos) | 4:3, 1200 × 900 | `public/hero/education.webp`, `developpement.webp`, `transformation.webp` |
+| Expertises (3) | 1:1, 1600 × 1600 | `public/expertises/{education,developpement,transformation}.webp` |
+| Réalisations (3 cartes) | 5:3, 2000 × 1200 | `public/realisations/carte-1.webp` (atelier élèves + ordinateurs), `carte-2.webp` (capture d'un vrai projet), `carte-3.webp` (tournée numérique) |
+
+Sans image, chaque emplacement affiche un visuel graphique de la charte, sans texte de remplacement. Rebuilder après l'ajout. **Publier des photos d'élèves mineurs exige une autorisation écrite.**
+
 ## Logos des partenaires
 
 Les logos officiels des partenaires (fournis par le client, jamais redessinés ni téléchargés) se déposent dans **`public/partners/`** sous le nom **`<id>.svg`** (ou `.png` / `.webp`, fond transparent), où `<id>` est l'identifiant du partenaire dans `src/lib/partners.ts`. Renseigner ensuite son entrée :
 
 ```ts
-{ id: "simplon", name: "Simplon", logo: { src: "/partners/simplon.svg", width: 280, height: 88 }, logoAlt: "Simplon", website: null, confirmed: true }
+{ id: "10htech", name: "10HTech", logo: { src: "/partners/10htech.svg", width: 280, height: 88 }, logoAlt: "10HTech", website: null, confirmed: true }
 ```
 
 `width` / `height` : dimensions intrinsèques du fichier (le logo est contenu dans une boîte de 140 × 44 px). Tant que `logo` vaut `null`, la carte affiche le nom du partenaire. `website` n'est renseigné qu'avec une URL vérifiée : la carte devient alors un lien (nouvel onglet).

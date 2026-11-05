@@ -1,0 +1,2766 @@
+{
+  "viewports": {
+    "360": {
+      "axe": {
+        "violations": [
+          {
+            "id": "landmark-complementary-is-top-level",
+            "impact": "moderate",
+            "help": "Aside should not be contained in another landmark",
+            "tags": [],
+            "count": 1,
+            "nodes": [
+              {
+                "target": "aside",
+                "html": "<aside aria-label=\"Contact\" data-fq-target=\"b\" class=\"faq-aside fq-s relative mt-8 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy p-6 text-text-on-dark shadow-aside [--focus-ring:var(--color-brand",
+                "summary": "Fix any of the following:\n  The complementary landmark is contained in another landmark.",
+                "data": {
+                  "role": "complementary"
+                }
+              }
+            ]
+          },
+          {
+            "id": "target-size",
+            "impact": "serious",
+            "help": "All touch targets must be 24px large, or leave sufficient space",
+            "tags": [
+              "wcag22aa",
+              "wcag258"
+            ],
+            "count": 2,
+            "nodes": [
+              {
+                "target": ".px-1.h-6[type=\"button\"]:nth-child(2)",
+                "html": "<button type=\"button\" aria-label=\"Afficher : Développement digital\" class=\"flex h-6 items-center rounded-full px-1\"><span class=\"relative block h-2 overflow-hidden rounded-full transition-[width,background-color] duratio",
+                "summary": "Fix any of the following:\n  Target has insufficient size (16px by 24px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px.",
+                "data": {
+                  "minSize": 24,
+                  "width": 16,
+                  "height": 24
+                }
+              },
+              {
+                "target": ".px-1.h-6[type=\"button\"]:nth-child(3)",
+                "html": "<button type=\"button\" aria-label=\"Afficher : Transformation digitale\" class=\"flex h-6 items-center rounded-full px-1\"><span class=\"relative block h-2 overflow-hidden rounded-full transition-[width,background-color] durat",
+                "summary": "Fix any of the following:\n  Target has insufficient size (16px by 24px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px.",
+                "data": {
+                  "minSize": 24,
+                  "width": 16,
+                  "height": 24
+                }
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "tags": [
+              "wcag2aa",
+              "wcag143"
+            ],
+            "count": 190,
+            "nodes": [
+              {
+                "target": ".glass-sweep > span:nth-child(2)",
+                "html": "<span>Dakar</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(5)",
+                "html": "<span>Sénégal</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(8)",
+                "html": "<span>Depuis <span class=\"font-semibold text-text-on-dark/92\">2021</span></span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/92",
+                "html": "<span class=\"font-semibold text-text-on-dark/92\">2021</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".opacity-100.hero-gradient-text.ease-out",
+                "html": "<span aria-hidden=\"true\" class=\"hero-gradient-text absolute inset-0 transition-opacity duration-500 ease-out opacity-100\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".hero-text-shine",
+                "html": "<span aria-hidden=\"true\" class=\"hero-text-shine absolute inset-0 animate-text-shine\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(2) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">créer les solutions,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(3) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">transformer les organisations.</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".min-h-\\[4\\.8em\\] > p",
+                "html": "<p style=\"opacity:1;transform:none\">Programmation, robotique, intelligence artificielle et compétences digitales pour tous les niveaux.</p>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "12.0pt (16px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscuring",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".gap-3.items-center.flex > .text-sm.text-text-on-dark.font-semibold",
+                "html": "<span class=\"text-sm font-semibold text-text-on-dark\">Éducation numérique</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/60.text-sm",
+                "html": "<span class=\"text-sm text-text-on-dark/60\">01 / 03</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": "#expertises > .px-6.max-w-site.md\\:px-10 > header > .tracking-eyebrow.gap-3.uppercase > span:nth-child(2)",
+                "html": "<span style=\"opacity: 1;\">Nos expertises</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background image",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgImage",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "census": {
+        "heights": {
+          "hero": 989,
+          "expertises": 2096,
+          "realisations": 1275,
+          "methode": 1915,
+          "formations": 1836,
+          "faq": 1214,
+          "contact": 1880,
+          "partenaires": 958,
+          "footer": 1024,
+          "total": 13187
+        },
+        "scrollWidth": 360,
+        "clientWidth": 360,
+        "small": [
+          {
+            "size": 10.5,
+            "transform": "uppercase",
+            "spacing": "1.47px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Illustration"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "2.2px",
+            "weight": "600",
+            "count": 3,
+            "samples": [
+              "Idéal pour"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "1.54px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Éducation numérique",
+              "Développement digital",
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.61px",
+            "weight": "700",
+            "count": 7,
+            "samples": [
+              "Téléphone",
+              "E-mail",
+              "Adresse",
+              "Suivez-nous",
+              "Votre besoin",
+              "Votre nom"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.84px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Services",
+              "Navigation"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "500",
+            "count": 3,
+            "samples": [
+              "Dakar",
+              "Sénégal",
+              "Depuis"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "2021"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "uppercase",
+            "spacing": "2.16px",
+            "weight": "600",
+            "count": 5,
+            "samples": [
+              "Nos expertises",
+              "Réalisations",
+              "Notre méthode",
+              "Formations",
+              "FAQ"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 17,
+            "samples": [
+              "Programmation",
+              "Robotique",
+              "Électronique",
+              "Internet des objets",
+              "Intelligence artificielle",
+              "Sites web"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "800",
+            "count": 5,
+            "samples": [
+              "01",
+              "02",
+              "03",
+              "04",
+              "05"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.08px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Pour qui ?"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.34px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Contact",
+              "Partenaires"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 4,
+            "samples": [
+              "Ce formulaire ne stocke rien : il prépar",
+              "©",
+              "2026",
+              "Active Solution Digital Service. Tous dr"
+            ]
+          },
+          {
+            "size": 13.5,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 4,
+            "samples": [
+              "HTML et CSS",
+              "JavaScript",
+              "Applications web",
+              "contact@groupactivesolution.com"
+            ]
+          }
+        ],
+        "targets": 71,
+        "under24": [
+          {
+            "tag": "button",
+            "name": "Afficher : Développement digital",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Transformation digitale",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          }
+        ],
+        "under44": 6,
+        "under44List": [
+          {
+            "tag": "button",
+            "name": "Former les talents,Former les talents,Former les t",
+            "w": 311,
+            "h": 39,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Mettre en pause le défilement automatique",
+            "w": 36,
+            "h": 36,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Éducation numérique",
+            "w": 36,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Développement digital",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Transformation digitale",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "a",
+            "name": "FAQ",
+            "w": 30,
+            "h": 44,
+            "section": "footer"
+          }
+        ],
+        "domNodes": 2043,
+        "depth": 18
+      }
+    },
+    "390": {
+      "axe": {
+        "violations": [
+          {
+            "id": "landmark-complementary-is-top-level",
+            "impact": "moderate",
+            "help": "Aside should not be contained in another landmark",
+            "tags": [],
+            "count": 1,
+            "nodes": [
+              {
+                "target": "aside",
+                "html": "<aside aria-label=\"Contact\" data-fq-target=\"b\" class=\"faq-aside fq-s relative mt-8 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy p-6 text-text-on-dark shadow-aside [--focus-ring:var(--color-brand",
+                "summary": "Fix any of the following:\n  The complementary landmark is contained in another landmark.",
+                "data": {
+                  "role": "complementary"
+                }
+              }
+            ]
+          },
+          {
+            "id": "target-size",
+            "impact": "serious",
+            "help": "All touch targets must be 24px large, or leave sufficient space",
+            "tags": [
+              "wcag22aa",
+              "wcag258"
+            ],
+            "count": 2,
+            "nodes": [
+              {
+                "target": "button[aria-label=\"Afficher : Éducation numérique\"]",
+                "html": "<button type=\"button\" aria-label=\"Afficher : Éducation numérique\" class=\"flex h-6 items-center rounded-full px-1\"><span class=\"relative block h-2 overflow-hidden rounded-full transition-[width,background-color] duration-",
+                "summary": "Fix any of the following:\n  Target has insufficient size (16px by 24px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px.",
+                "data": {
+                  "minSize": 24,
+                  "width": 16,
+                  "height": 24
+                }
+              },
+              {
+                "target": ".px-1.h-6[type=\"button\"]:nth-child(2)",
+                "html": "<button type=\"button\" aria-label=\"Afficher : Développement digital\" class=\"flex h-6 items-center rounded-full px-1\"><span class=\"relative block h-2 overflow-hidden rounded-full transition-[width,background-color] duratio",
+                "summary": "Fix any of the following:\n  Target has insufficient size (16px by 24px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px.",
+                "data": {
+                  "minSize": 24,
+                  "width": 16,
+                  "height": 24
+                }
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "tags": [
+              "wcag2aa",
+              "wcag143"
+            ],
+            "count": 187,
+            "nodes": [
+              {
+                "target": ".glass-sweep > span:nth-child(2)",
+                "html": "<span>Dakar</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(5)",
+                "html": "<span>Sénégal</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(8)",
+                "html": "<span>Depuis <span class=\"font-semibold text-text-on-dark/92\">2021</span></span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/92",
+                "html": "<span class=\"font-semibold text-text-on-dark/92\">2021</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(1) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(2) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">créer les solutions,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".opacity-100.hero-gradient-text.ease-out",
+                "html": "<span aria-hidden=\"true\" class=\"hero-gradient-text absolute inset-0 transition-opacity duration-500 ease-out opacity-100\">transformer les organisations.</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".hero-text-shine",
+                "html": "<span aria-hidden=\"true\" class=\"hero-text-shine absolute inset-0 animate-text-shine\">transformer les organisations.</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".gap-3.items-center.flex > .text-sm.text-text-on-dark.font-semibold",
+                "html": "<span class=\"text-sm font-semibold text-text-on-dark\">Transformation digitale</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/60.text-sm",
+                "html": "<span class=\"text-sm text-text-on-dark/60\">03 / 03</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": "#expertises > .px-6.max-w-site.md\\:px-10 > header > .tracking-eyebrow.gap-3.uppercase > span:nth-child(2)",
+                "html": "<span style=\"opacity: 1;\">Nos expertises</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background image",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgImage",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": "span:nth-child(1) > .lg\\:inline-block.lg\\:align-top.-mb-\\[0\\.2em\\] > .inline-block.relative",
+                "html": "<span class=\"relative inline-block\" style=\"transform: none;\">Trois expertises.</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background image",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "24.9pt (33.15px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgImage",
+                  "expectedContrastRatio": "3:1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "census": {
+        "heights": {
+          "hero": 973,
+          "expertises": 2068,
+          "realisations": 1310,
+          "methode": 1889,
+          "formations": 1827,
+          "faq": 1187,
+          "contact": 1722,
+          "partenaires": 958,
+          "footer": 1024,
+          "total": 12959
+        },
+        "scrollWidth": 390,
+        "clientWidth": 390,
+        "small": [
+          {
+            "size": 10.5,
+            "transform": "uppercase",
+            "spacing": "1.47px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Illustration"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "2.2px",
+            "weight": "600",
+            "count": 3,
+            "samples": [
+              "Idéal pour"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "1.54px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Éducation numérique",
+              "Développement digital",
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.61px",
+            "weight": "700",
+            "count": 7,
+            "samples": [
+              "Téléphone",
+              "E-mail",
+              "Adresse",
+              "Suivez-nous",
+              "Votre besoin",
+              "Votre nom"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.84px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Services",
+              "Navigation"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "500",
+            "count": 3,
+            "samples": [
+              "Dakar",
+              "Sénégal",
+              "Depuis"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "2021"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "uppercase",
+            "spacing": "2.16px",
+            "weight": "600",
+            "count": 5,
+            "samples": [
+              "Nos expertises",
+              "Réalisations",
+              "Notre méthode",
+              "Formations",
+              "FAQ"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 17,
+            "samples": [
+              "Programmation",
+              "Robotique",
+              "Électronique",
+              "Internet des objets",
+              "Intelligence artificielle",
+              "Sites web"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "800",
+            "count": 5,
+            "samples": [
+              "01",
+              "02",
+              "03",
+              "04",
+              "05"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.08px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Pour qui ?"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.34px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Contact",
+              "Partenaires"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 4,
+            "samples": [
+              "Ce formulaire ne stocke rien : il prépar",
+              "©",
+              "2026",
+              "Active Solution Digital Service. Tous dr"
+            ]
+          },
+          {
+            "size": 13.5,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 4,
+            "samples": [
+              "HTML et CSS",
+              "JavaScript",
+              "Applications web",
+              "contact@groupactivesolution.com"
+            ]
+          }
+        ],
+        "targets": 71,
+        "under24": [
+          {
+            "tag": "button",
+            "name": "Afficher : Éducation numérique",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Développement digital",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          }
+        ],
+        "under44": 7,
+        "under44List": [
+          {
+            "tag": "button",
+            "name": "Former les talents,Former les talents,",
+            "w": 311,
+            "h": 39,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "créer les solutions,créer les solutions,",
+            "w": 319,
+            "h": 39,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Mettre en pause le défilement automatique",
+            "w": 36,
+            "h": 36,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Éducation numérique",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Développement digital",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Transformation digitale",
+            "w": 36,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "a",
+            "name": "FAQ",
+            "w": 30,
+            "h": 44,
+            "section": "footer"
+          }
+        ],
+        "domNodes": 2044,
+        "depth": 18
+      }
+    },
+    "768": {
+      "axe": {
+        "violations": [
+          {
+            "id": "landmark-complementary-is-top-level",
+            "impact": "moderate",
+            "help": "Aside should not be contained in another landmark",
+            "tags": [],
+            "count": 1,
+            "nodes": [
+              {
+                "target": "aside",
+                "html": "<aside aria-label=\"Contact\" data-fq-target=\"b\" class=\"faq-aside fq-s relative mt-8 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy p-6 text-text-on-dark shadow-aside [--focus-ring:var(--color-brand",
+                "summary": "Fix any of the following:\n  The complementary landmark is contained in another landmark.",
+                "data": {
+                  "role": "complementary"
+                }
+              }
+            ]
+          },
+          {
+            "id": "target-size",
+            "impact": "serious",
+            "help": "All touch targets must be 24px large, or leave sufficient space",
+            "tags": [
+              "wcag22aa",
+              "wcag258"
+            ],
+            "count": 2,
+            "nodes": [
+              {
+                "target": ".px-1.h-6[type=\"button\"]:nth-child(2)",
+                "html": "<button type=\"button\" aria-label=\"Afficher : Développement digital\" class=\"flex h-6 items-center rounded-full px-1\"><span class=\"relative block h-2 overflow-hidden rounded-full transition-[width,background-color] duratio",
+                "summary": "Fix any of the following:\n  Target has insufficient size (16px by 24px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px.",
+                "data": {
+                  "minSize": 24,
+                  "width": 16,
+                  "height": 24
+                }
+              },
+              {
+                "target": ".px-1.h-6[type=\"button\"]:nth-child(3)",
+                "html": "<button type=\"button\" aria-label=\"Afficher : Transformation digitale\" class=\"flex h-6 items-center rounded-full px-1\"><span class=\"relative block h-2 overflow-hidden rounded-full transition-[width,background-color] durat",
+                "summary": "Fix any of the following:\n  Target has insufficient size (16px by 24px, should be at least 24px by 24px)\n  Target has insufficient space to its closest neighbors. Safe clickable space has a diameter of 16px instead of at least 24px.",
+                "data": {
+                  "minSize": 24,
+                  "width": 16,
+                  "height": 24
+                }
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "tags": [
+              "wcag2aa",
+              "wcag143"
+            ],
+            "count": 160,
+            "nodes": [
+              {
+                "target": ".glass-sweep > span:nth-child(2)",
+                "html": "<span>Dakar</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(5)",
+                "html": "<span>Sénégal</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(8)",
+                "html": "<span>Depuis <span class=\"font-semibold text-text-on-dark/92\">2021</span></span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/92",
+                "html": "<span class=\"font-semibold text-text-on-dark/92\">2021</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".opacity-100.hero-gradient-text.ease-out",
+                "html": "<span aria-hidden=\"true\" class=\"hero-gradient-text absolute inset-0 transition-opacity duration-500 ease-out opacity-100\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".hero-text-shine",
+                "html": "<span aria-hidden=\"true\" class=\"hero-text-shine absolute inset-0 animate-text-shine\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(2) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">créer les solutions,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(3) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">transformer les organisations.</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".hover\\:text-brand-navy > .gap-2.relative.items-center",
+                "html": "<span class=\"relative flex items-center gap-2\">",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".gap-3.items-center.flex > .text-sm.text-text-on-dark.font-semibold",
+                "html": "<span class=\"text-sm font-semibold text-text-on-dark\">Éducation numérique</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/60.text-sm",
+                "html": "<span class=\"text-sm text-text-on-dark/60\">01 / 03</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": "#expertises > .px-6.max-w-site.md\\:px-10 > header > .tracking-eyebrow.gap-3.uppercase > span:nth-child(2)",
+                "html": "<span style=\"opacity: 1;\">Nos expertises</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background image",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgImage",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "census": {
+        "heights": {
+          "hero": 1126,
+          "expertises": 2247,
+          "realisations": 1195,
+          "methode": 1828,
+          "formations": 1594,
+          "faq": 1019,
+          "contact": 1505,
+          "partenaires": 938,
+          "footer": 1045,
+          "total": 12496
+        },
+        "scrollWidth": 768,
+        "clientWidth": 768,
+        "small": [
+          {
+            "size": 10.5,
+            "transform": "uppercase",
+            "spacing": "1.47px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Illustration"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "2.2px",
+            "weight": "600",
+            "count": 3,
+            "samples": [
+              "Idéal pour"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "1.54px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Éducation numérique",
+              "Développement digital",
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.61px",
+            "weight": "700",
+            "count": 7,
+            "samples": [
+              "Téléphone",
+              "E-mail",
+              "Adresse",
+              "Suivez-nous",
+              "Votre besoin",
+              "Votre nom"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.84px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Services",
+              "Navigation"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "500",
+            "count": 3,
+            "samples": [
+              "Dakar",
+              "Sénégal",
+              "Depuis"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "2021"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "uppercase",
+            "spacing": "2.16px",
+            "weight": "600",
+            "count": 5,
+            "samples": [
+              "Nos expertises",
+              "Réalisations",
+              "Notre méthode",
+              "Formations",
+              "FAQ"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 17,
+            "samples": [
+              "Programmation",
+              "Robotique",
+              "Électronique",
+              "Internet des objets",
+              "Intelligence artificielle",
+              "Sites web"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "800",
+            "count": 5,
+            "samples": [
+              "01",
+              "02",
+              "03",
+              "04",
+              "05"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.08px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Pour qui ?"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.34px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Contact",
+              "Partenaires"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 4,
+            "samples": [
+              "Ce formulaire ne stocke rien : il prépar",
+              "©",
+              "2026",
+              "Active Solution Digital Service. Tous dr"
+            ]
+          },
+          {
+            "size": 13.5,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 4,
+            "samples": [
+              "HTML et CSS",
+              "JavaScript",
+              "Applications web",
+              "contact@groupactivesolution.com"
+            ]
+          }
+        ],
+        "targets": 71,
+        "under24": [
+          {
+            "tag": "button",
+            "name": "Afficher : Développement digital",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Transformation digitale",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          }
+        ],
+        "under44": 8,
+        "under44List": [
+          {
+            "tag": "button",
+            "name": "Former les talents,Former les talents,Former les t",
+            "w": 311,
+            "h": 39,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "créer les solutions,créer les solutions,",
+            "w": 319,
+            "h": 39,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "transformer les organisations.transformer les orga",
+            "w": 506,
+            "h": 39,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Mettre en pause le défilement automatique",
+            "w": 36,
+            "h": 36,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Éducation numérique",
+            "w": 36,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Développement digital",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Afficher : Transformation digitale",
+            "w": 16,
+            "h": 24,
+            "section": "hero"
+          },
+          {
+            "tag": "a",
+            "name": "FAQ",
+            "w": 30,
+            "h": 44,
+            "section": "footer"
+          }
+        ],
+        "domNodes": 2039,
+        "depth": 18
+      }
+    },
+    "1024": {
+      "axe": {
+        "violations": [
+          {
+            "id": "landmark-complementary-is-top-level",
+            "impact": "moderate",
+            "help": "Aside should not be contained in another landmark",
+            "tags": [],
+            "count": 1,
+            "nodes": [
+              {
+                "target": "aside",
+                "html": "<aside aria-label=\"Contact\" data-fq-target=\"b\" class=\"faq-aside fq-s relative mt-8 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy p-6 text-text-on-dark shadow-aside [--focus-ring:var(--color-brand",
+                "summary": "Fix any of the following:\n  The complementary landmark is contained in another landmark.",
+                "data": {
+                  "role": "complementary"
+                }
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "tags": [
+              "wcag2aa",
+              "wcag143"
+            ],
+            "count": 177,
+            "nodes": [
+              {
+                "target": ".glass-sweep > span:nth-child(2)",
+                "html": "<span>Dakar</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(5)",
+                "html": "<span>Sénégal</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(8)",
+                "html": "<span>Depuis <span class=\"font-semibold text-text-on-dark/92\">2021</span></span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/92",
+                "html": "<span class=\"font-semibold text-text-on-dark/92\">2021</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(1) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".opacity-100",
+                "html": "<span aria-hidden=\"true\" class=\"hero-gradient-text absolute inset-0 transition-opacity duration-500 ease-out opacity-100\">créer les solutions,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".hero-text-shine",
+                "html": "<span aria-hidden=\"true\" class=\"hero-text-shine absolute inset-0 animate-text-shine\">créer les solutions,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(3) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">transformer les organisations.</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "27.0pt (36px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/70",
+                "html": "<span class=\"text-text-on-dark/70\">public/hero/developpement.webp</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "elmPartiallyObscuring",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".bottom-5 > .gap-3.items-center.flex > .text-sm.text-text-on-dark.font-semibold",
+                "html": "<span class=\"text-sm font-semibold text-text-on-dark\">Développement digital</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".bottom-5 > .gap-3.items-center.flex > .text-text-on-dark\\/60.text-sm",
+                "html": "<span class=\"text-sm text-text-on-dark/60\">02 / 03</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "10.5pt (14px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": "#expertises > .px-6.max-w-site.md\\:px-10 > header > .tracking-eyebrow.gap-3.uppercase > span:nth-child(2)",
+                "html": "<span style=\"opacity: 1;\">Nos expertises</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background image",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgImage",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "census": {
+        "heights": {
+          "hero": 804,
+          "expertises": 2255,
+          "realisations": 1162,
+          "methode": 1212,
+          "formations": 1642,
+          "faq": 943,
+          "contact": 1054,
+          "partenaires": 783,
+          "footer": 1045,
+          "total": 10901
+        },
+        "scrollWidth": 1024,
+        "clientWidth": 1024,
+        "small": [
+          {
+            "size": 10.5,
+            "transform": "uppercase",
+            "spacing": "1.47px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Illustration"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "2.2px",
+            "weight": "600",
+            "count": 3,
+            "samples": [
+              "Idéal pour"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "1.54px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Éducation numérique",
+              "Développement digital",
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.61px",
+            "weight": "700",
+            "count": 7,
+            "samples": [
+              "Téléphone",
+              "E-mail",
+              "Adresse",
+              "Suivez-nous",
+              "Votre besoin",
+              "Votre nom"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.84px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Services",
+              "Navigation"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "500",
+            "count": 3,
+            "samples": [
+              "Dakar",
+              "Sénégal",
+              "Depuis"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "2021"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "uppercase",
+            "spacing": "2.16px",
+            "weight": "600",
+            "count": 5,
+            "samples": [
+              "Nos expertises",
+              "Réalisations",
+              "Notre méthode",
+              "Formations",
+              "FAQ"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "800",
+            "count": 5,
+            "samples": [
+              "01",
+              "02",
+              "03",
+              "04",
+              "05"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 18,
+            "samples": [
+              "Programmation",
+              "Robotique",
+              "Électronique",
+              "Internet des objets",
+              "Intelligence artificielle",
+              "Sites web"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.08px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Pour qui ?"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.34px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Contact",
+              "Partenaires"
+            ]
+          },
+          {
+            "size": 13.5,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 4,
+            "samples": [
+              "HTML et CSS",
+              "JavaScript",
+              "Applications web",
+              "contact@groupactivesolution.com"
+            ]
+          }
+        ],
+        "targets": 68,
+        "under24": [
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 01 : Formations",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 02 : Développement digital",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 03 : Transformation digitale",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          }
+        ],
+        "under44": 11,
+        "under44List": [
+          {
+            "tag": "button",
+            "name": "Former les talents,Former les talents,",
+            "w": 311,
+            "h": 39,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "créer les solutions,créer les solutions,créer les ",
+            "w": 319,
+            "h": 39,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Mettre en pause le défilement automatique",
+            "w": 36,
+            "h": 36,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 01 : Formations",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 02 : Développement digital",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 03 : Transformation digitale",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Étape 1 : Comprendre le besoin",
+            "w": 26,
+            "h": 26,
+            "section": "methode"
+          },
+          {
+            "tag": "button",
+            "name": "Étape 2 : Définir la solution",
+            "w": 26,
+            "h": 26,
+            "section": "methode"
+          },
+          {
+            "tag": "button",
+            "name": "Étape 3 : Concevoir et réaliser",
+            "w": 26,
+            "h": 26,
+            "section": "methode"
+          },
+          {
+            "tag": "button",
+            "name": "Étape 4 : Accompagner et faire évoluer",
+            "w": 26,
+            "h": 26,
+            "section": "methode"
+          },
+          {
+            "tag": "a",
+            "name": "FAQ",
+            "w": 30,
+            "h": 44,
+            "section": "footer"
+          }
+        ],
+        "domNodes": 2022,
+        "depth": 18
+      }
+    },
+    "1440": {
+      "axe": {
+        "violations": [
+          {
+            "id": "landmark-complementary-is-top-level",
+            "impact": "moderate",
+            "help": "Aside should not be contained in another landmark",
+            "tags": [],
+            "count": 1,
+            "nodes": [
+              {
+                "target": "aside",
+                "html": "<aside aria-label=\"Contact\" data-fq-target=\"b\" class=\"faq-aside fq-s relative mt-8 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy p-6 text-text-on-dark shadow-aside [--focus-ring:var(--color-brand",
+                "summary": "Fix any of the following:\n  The complementary landmark is contained in another landmark.",
+                "data": {
+                  "role": "complementary"
+                }
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "tags": [
+              "wcag2aa",
+              "wcag143"
+            ],
+            "count": 176,
+            "nodes": [
+              {
+                "target": ".transition-\\[color\\,opacity\\][aria-current=\"page\"][href=\"/\"]",
+                "html": "<a aria-current=\"page\" class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-brand-gold \" href=\"/\">",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".transition-\\[color\\,opacity\\].py-2\\.5[href$=\"services\"]",
+                "html": "<a class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-text-on-dark \" href=\"/services\">Nos services</a>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".transition-\\[color\\,opacity\\].py-2\\.5[href$=\"realisations\"]",
+                "html": "<a class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-text-on-dark \" href=\"/realisations\">Réalisations</a>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".transition-\\[color\\,opacity\\].py-2\\.5[href$=\"formations\"]",
+                "html": "<a class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-text-on-dark \" href=\"/formations\">Formations</a>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".transition-\\[color\\,opacity\\].py-2\\.5[href$=\"a-propos\"]",
+                "html": "<a class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-text-on-dark \" href=\"/a-propos\">À propos</a>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(2)",
+                "html": "<span>Dakar</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(5)",
+                "html": "<span>Sénégal</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(8)",
+                "html": "<span>Depuis <span class=\"font-semibold text-text-on-dark/92\">2021</span></span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/92",
+                "html": "<span class=\"font-semibold text-text-on-dark/92\">2021</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".opacity-100.hero-gradient-text.ease-out",
+                "html": "<span aria-hidden=\"true\" class=\"hero-gradient-text absolute inset-0 transition-opacity duration-500 ease-out opacity-100\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "33.5pt (44.64px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".hero-text-shine",
+                "html": "<span aria-hidden=\"true\" class=\"hero-text-shine absolute inset-0 animate-text-shine\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "33.5pt (44.64px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(2) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">créer les solutions,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "33.5pt (44.64px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "census": {
+        "heights": {
+          "hero": 804,
+          "expertises": 2306,
+          "realisations": 1192,
+          "methode": 1362,
+          "formations": 1289,
+          "faq": 944,
+          "contact": 1054,
+          "partenaires": 897,
+          "footer": 631,
+          "total": 10479
+        },
+        "scrollWidth": 1440,
+        "clientWidth": 1440,
+        "small": [
+          {
+            "size": 10.5,
+            "transform": "uppercase",
+            "spacing": "1.47px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Illustration"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "2.2px",
+            "weight": "600",
+            "count": 3,
+            "samples": [
+              "Idéal pour"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "1.54px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Éducation numérique",
+              "Développement digital",
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.61px",
+            "weight": "700",
+            "count": 7,
+            "samples": [
+              "Téléphone",
+              "E-mail",
+              "Adresse",
+              "Suivez-nous",
+              "Votre besoin",
+              "Votre nom"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.84px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Services",
+              "Navigation"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "500",
+            "count": 3,
+            "samples": [
+              "Dakar",
+              "Sénégal",
+              "Depuis"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "2021"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "uppercase",
+            "spacing": "2.16px",
+            "weight": "600",
+            "count": 5,
+            "samples": [
+              "Nos expertises",
+              "Réalisations",
+              "Notre méthode",
+              "Formations",
+              "FAQ"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 18,
+            "samples": [
+              "Programmation",
+              "Robotique",
+              "Électronique",
+              "Internet des objets",
+              "Intelligence artificielle",
+              "Sites web"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.08px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Pour qui ?"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.34px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Contact",
+              "Partenaires"
+            ]
+          },
+          {
+            "size": 13.5,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 15,
+            "samples": [
+              "HTML et CSS",
+              "JavaScript",
+              "Applications web",
+              "Capteurs",
+              "Moteurs",
+              "Programmation"
+            ]
+          }
+        ],
+        "targets": 73,
+        "under24": [
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 01 : Formations",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 02 : Développement digital",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 03 : Transformation digitale",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          }
+        ],
+        "under44": 10,
+        "under44List": [
+          {
+            "tag": "a",
+            "name": "Accueil",
+            "w": 52,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "a",
+            "name": "Nos services",
+            "w": 89,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "a",
+            "name": "Réalisations",
+            "w": 87,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "a",
+            "name": "Formations",
+            "w": 79,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "a",
+            "name": "À propos",
+            "w": 62,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "button",
+            "name": "Mettre en pause le défilement automatique",
+            "w": 36,
+            "h": 36,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 01 : Formations",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 02 : Développement digital",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 03 : Transformation digitale",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "a",
+            "name": "FAQ",
+            "w": 30,
+            "h": 44,
+            "section": "footer"
+          }
+        ],
+        "domNodes": 2025,
+        "depth": 18
+      }
+    },
+    "1920": {
+      "axe": {
+        "violations": [
+          {
+            "id": "landmark-complementary-is-top-level",
+            "impact": "moderate",
+            "help": "Aside should not be contained in another landmark",
+            "tags": [],
+            "count": 1,
+            "nodes": [
+              {
+                "target": "aside",
+                "html": "<aside aria-label=\"Contact\" data-fq-target=\"b\" class=\"faq-aside fq-s relative mt-8 overflow-hidden rounded-hero border border-brand-gold/40 bg-brand-navy p-6 text-text-on-dark shadow-aside [--focus-ring:var(--color-brand",
+                "summary": "Fix any of the following:\n  The complementary landmark is contained in another landmark.",
+                "data": {
+                  "role": "complementary"
+                }
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "tags": [
+              "wcag2aa",
+              "wcag143"
+            ],
+            "count": 168,
+            "nodes": [
+              {
+                "target": ".transition-\\[color\\,opacity\\][aria-current=\"page\"][href=\"/\"]",
+                "html": "<a aria-current=\"page\" class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-brand-gold \" href=\"/\">",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".transition-\\[color\\,opacity\\].py-2\\.5[href$=\"services\"]",
+                "html": "<a class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-text-on-dark \" href=\"/services\">Nos services</a>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".transition-\\[color\\,opacity\\].py-2\\.5[href$=\"realisations\"]",
+                "html": "<a class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-text-on-dark \" href=\"/realisations\">Réalisations</a>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".transition-\\[color\\,opacity\\].py-2\\.5[href$=\"formations\"]",
+                "html": "<a class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-text-on-dark \" href=\"/formations\">Formations</a>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a background gradient",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "bgGradient",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".transition-\\[color\\,opacity\\].py-2\\.5[href$=\"a-propos\"]",
+                "html": "<a class=\"relative block rounded-sm py-2.5 text-nav font-medium whitespace-nowrap transition-[color,opacity] duration-(--duration-base) ease-standard text-text-on-dark \" href=\"/a-propos\">À propos</a>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because element contains an image node",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "11.3pt (15px)",
+                  "fontWeight": "normal",
+                  "messageKey": "imgNode",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(2)",
+                "html": "<span>Dakar</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(5)",
+                "html": "<span>Sénégal</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".glass-sweep > span:nth-child(8)",
+                "html": "<span>Depuis <span class=\"font-semibold text-text-on-dark/92\">2021</span></span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".text-text-on-dark\\/92",
+                "html": "<span class=\"font-semibold text-text-on-dark/92\">2021</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined due to a pseudo element",
+                "data": {
+                  "fontSize": "9.0pt (12px)",
+                  "fontWeight": "normal",
+                  "messageKey": "pseudoContent",
+                  "expectedContrastRatio": "4.5:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(1) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">Former les talents,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "39.0pt (52px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".xl\\:w-max.-mb-\\[0\\.14em\\].pb-\\[0\\.14em\\]:nth-child(2) > .block > .group[aria-controls=\"hero-visual\"][aria-describedby=\"_R_365btb_\"] > .opacity-35.group-hover\\:opacity-60.group-hover\\:duration-\\(--duration-base\\)",
+                "html": "<span class=\"transition-opacity duration-500 ease-out opacity-35 group-hover:opacity-60 group-hover:duration-(--duration-base)\">créer les solutions,</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "39.0pt (52px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              },
+              {
+                "target": ".opacity-100.hero-gradient-text.ease-out",
+                "html": "<span aria-hidden=\"true\" class=\"hero-gradient-text absolute inset-0 transition-opacity duration-500 ease-out opacity-100\">transformer les organisations.</span>",
+                "summary": "Fix any of the following:\n  Element's background color could not be determined because it is overlapped by another element",
+                "data": {
+                  "contrastRatio": 0,
+                  "fontSize": "39.0pt (52px)",
+                  "fontWeight": "bold",
+                  "messageKey": "bgOverlap",
+                  "expectedContrastRatio": "3:1"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "census": {
+        "heights": {
+          "hero": 804,
+          "expertises": 2284,
+          "realisations": 1192,
+          "methode": 1456,
+          "formations": 1439,
+          "faq": 944,
+          "contact": 976,
+          "partenaires": 907,
+          "footer": 631,
+          "total": 10633
+        },
+        "scrollWidth": 1920,
+        "clientWidth": 1920,
+        "small": [
+          {
+            "size": 10.5,
+            "transform": "uppercase",
+            "spacing": "1.47px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Illustration"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "2.2px",
+            "weight": "600",
+            "count": 3,
+            "samples": [
+              "Idéal pour"
+            ]
+          },
+          {
+            "size": 11,
+            "transform": "uppercase",
+            "spacing": "1.54px",
+            "weight": "700",
+            "count": 3,
+            "samples": [
+              "Éducation numérique",
+              "Développement digital",
+              "Transformation digitale"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.61px",
+            "weight": "700",
+            "count": 7,
+            "samples": [
+              "Téléphone",
+              "E-mail",
+              "Adresse",
+              "Suivez-nous",
+              "Votre besoin",
+              "Votre nom"
+            ]
+          },
+          {
+            "size": 11.5,
+            "transform": "uppercase",
+            "spacing": "1.84px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Services",
+              "Navigation"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "500",
+            "count": 3,
+            "samples": [
+              "Dakar",
+              "Sénégal",
+              "Depuis"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "none",
+            "spacing": "0.48px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "2021"
+            ]
+          },
+          {
+            "size": 12,
+            "transform": "uppercase",
+            "spacing": "2.16px",
+            "weight": "600",
+            "count": 5,
+            "samples": [
+              "Nos expertises",
+              "Réalisations",
+              "Notre méthode",
+              "Formations",
+              "FAQ"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "400",
+            "count": 18,
+            "samples": [
+              "Programmation",
+              "Robotique",
+              "Électronique",
+              "Internet des objets",
+              "Intelligence artificielle",
+              "Sites web"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.08px",
+            "weight": "600",
+            "count": 1,
+            "samples": [
+              "Pour qui ?"
+            ]
+          },
+          {
+            "size": 13,
+            "transform": "uppercase",
+            "spacing": "2.34px",
+            "weight": "700",
+            "count": 2,
+            "samples": [
+              "Contact",
+              "Partenaires"
+            ]
+          },
+          {
+            "size": 13.5,
+            "transform": "none",
+            "spacing": "normal",
+            "weight": "600",
+            "count": 15,
+            "samples": [
+              "HTML et CSS",
+              "JavaScript",
+              "Applications web",
+              "Capteurs",
+              "Moteurs",
+              "Programmation"
+            ]
+          }
+        ],
+        "targets": 73,
+        "under24": [
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 01 : Formations",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 02 : Développement digital",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 03 : Transformation digitale",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          }
+        ],
+        "under44": 10,
+        "under44List": [
+          {
+            "tag": "a",
+            "name": "Accueil",
+            "w": 52,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "a",
+            "name": "Nos services",
+            "w": 89,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "a",
+            "name": "Réalisations",
+            "w": 87,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "a",
+            "name": "Formations",
+            "w": 79,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "a",
+            "name": "À propos",
+            "w": 62,
+            "h": 43,
+            "section": "header"
+          },
+          {
+            "tag": "button",
+            "name": "Mettre en pause le défilement automatique",
+            "w": 36,
+            "h": 36,
+            "section": "hero"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 01 : Formations",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 02 : Développement digital",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "button",
+            "name": "Aller à l'expertise 03 : Transformation digitale",
+            "w": 12,
+            "h": 12,
+            "section": "expertises"
+          },
+          {
+            "tag": "a",
+            "name": "FAQ",
+            "w": 30,
+            "h": 44,
+            "section": "footer"
+          }
+        ],
+        "domNodes": 2026,
+        "depth": 18
+      }
+    }
+  }
+}

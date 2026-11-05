@@ -35,16 +35,23 @@ export type CircuitNode = { cx: number; cy: number; track: string };
 
 /*
  * Nœuds N1 → N5 (même ordre que formationDomains) et leur piste vers la puce (diagonales à 45°).
- * Le circuit occupe tout le viewBox : haut du nœud 01 en y = 0, bas du libellé « Électronique »
- * (ligne de base 476 + jambage du « q ») en y = 480, bord droit des nœuds de droite en x = 780 ;
- * nœuds de gauche en cx = 48 pour que le libellé centré « Électronique » commence à x ≥ 0.
+ * Le circuit occupe tout le viewBox : haut du nœud 01 en y = 0, bas du libellé du nœud 03 en y = 480,
+ * bords du circuit dans [0, 780] en largeur. Les libellés (14px, gras) étant centrés sous leur nœud,
+ * cx de gauche = max(48, demi-largeur du plus large libellé de gauche) et cx de droite =
+ * 780 − max(30, demi-largeur du plus large libellé de droite). Largeurs mesurées avec
+ * getComputedTextLength() (Manrope 700, 14px) : « Objets connectés » 127 (demi 63,5 → 64) et « Cybersécurité » 103 (demi 51,5 → 52).
  */
+const LEFT_LABEL_HALF = 64;
+const RIGHT_LABEL_HALF = 52;
+const LEFT_CX = Math.max(48, LEFT_LABEL_HALF);
+const RIGHT_CX = 780 - Math.max(30, RIGHT_LABEL_HALF);
+
 export const CIRCUIT_NODES: readonly CircuitNode[] = [
-  { cx: 48, cy: 30, track: "M78 30H100L270 200H330" },
-  { cx: 48, cy: 240, track: "M78 240H330" },
-  { cx: 48, cy: 422, track: "M78 422H128L270 280H330" },
-  { cx: 750, cy: 150, track: "M720 150H560L510 200H450" },
-  { cx: 750, cy: 330, track: "M720 330H560L510 280H450" },
+  { cx: LEFT_CX, cy: 30, track: `M${LEFT_CX + 30} 30H100L270 200H330` },
+  { cx: LEFT_CX, cy: 240, track: `M${LEFT_CX + 30} 240H330` },
+  { cx: LEFT_CX, cy: 422, track: `M${LEFT_CX + 30} 422H128L270 280H330` },
+  { cx: RIGHT_CX, cy: 150, track: `M${RIGHT_CX - 30} 150H560L510 200H450` },
+  { cx: RIGHT_CX, cy: 330, track: `M${RIGHT_CX - 30} 330H560L510 280H450` },
 ];
 
 export type CircuitChip = {

@@ -21,7 +21,7 @@ const formationsMenu: readonly NavChild[] = [
 export const navLinks: readonly NavLink[] = [
   { label: "Accueil", href: "/" },
   { label: "Nos services", href: "/services" },
-  { label: "Réalisations", href: "/realisations" },
+  { label: "Réalisations", href: "/#realisations" },
   // `href` sert seulement à l'état actif (toute page sous /formations).
   { label: "Formations", href: "/formations", children: formationsMenu },
   { label: "À propos", href: "/a-propos" },

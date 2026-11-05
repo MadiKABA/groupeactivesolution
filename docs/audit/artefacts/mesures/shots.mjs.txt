@@ -1,0 +1,19 @@
+import puppeteer from "puppeteer-core";
+const b = await puppeteer.launch({ executablePath: "/usr/bin/google-chrome", headless: true, args: ["--no-sandbox", "--hide-scrollbars"] });
+for (const [w, h] of [[1440, 900], [390, 844]]) {
+  const p = await b.newPage(); await p.setViewport({ width: w, height: h, isMobile: w < 768, hasTouch: w < 768 });
+  await p.goto("http://localhost:3100/", { waitUntil: "networkidle0" });
+  await new Promise(r => setTimeout(r, 2500));
+  await p.screenshot({ path: `out/s-${w}-00-hero.png` });
+  const ids = ["expertises", "realisations", "methode", "formations", "faq", "contact", "partenaires"];
+  for (const [i, id] of ids.entries()) {
+    await p.evaluate((x) => { const el = document.getElementById(x); scrollTo(0, el.getBoundingClientRect().top + scrollY - (innerWidth >= 1280 ? 90 : 72)); }, id);
+    await new Promise(r => setTimeout(r, 3200));
+    await p.screenshot({ path: `out/s-${w}-${String(i + 1).padStart(2, "0")}-${id}.png` });
+  }
+  await p.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+  await new Promise(r => setTimeout(r, 2500));
+  await p.screenshot({ path: `out/s-${w}-08-footer.png` });
+  await p.close();
+}
+await b.close();

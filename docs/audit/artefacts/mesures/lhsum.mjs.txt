@@ -1,0 +1,20 @@
+import fs from "node:fs";
+const m = ["first-contentful-paint","largest-contentful-paint","total-blocking-time","cumulative-layout-shift","speed-index","server-response-time","interactive","max-potential-fid"];
+for (const ff of ["mobile","desktop"]) {
+  const rows = [1,2,3].map(i => JSON.parse(fs.readFileSync(`lh/${ff}-${i}.report.json`)));
+  console.log(`== ${ff}`);
+  for (const r of rows) {
+    const c = r.categories;
+    console.log([ "perf", Math.round(c.performance.score*100), "a11y", Math.round(c.accessibility.score*100), "bp", Math.round(c["best-practices"].score*100), "seo", Math.round(c.seo.score*100), ...m.map(k => `${k.split("-").map(s=>s[0]).join("")}=${r.audits[k]?.numericValue?.toFixed(k==="cumulative-layout-shift"?3:0)}`)].join(" "));
+  }
+  const r = rows[1];
+  console.log("throttling", JSON.stringify(r.configSettings.throttling), r.configSettings.throttlingMethod, "UA", r.environment.hostUserAgent.slice(0,60), "lh", r.lighthouseVersion);
+  console.log("LCP elem:", JSON.stringify(r.audits["largest-contentful-paint-element"]?.details?.items?.[0]?.items?.[0]?.node?.snippet), JSON.stringify(r.audits["largest-contentful-paint-element"]?.details?.items?.[1]?.items?.map(x=>x.phase+":"+Math.round(x.timing))));
+  console.log("CLS elems:", JSON.stringify(r.audits["layout-shifts"]?.details?.items?.slice(0,5).map(x=>[x.node?.snippet?.slice(0,90), x.score?.toFixed(3)])));
+  for (const cat of ["accessibility","best-practices","seo","performance"]) {
+    const fails = r.categories[cat].auditRefs.filter(a => r.audits[a.id].score !== null && r.audits[a.id].score < 1 && r.audits[a.id].scoreDisplayMode !== "informative" && r.audits[a.id].scoreDisplayMode!=="notApplicable").map(a => `${a.id}(${r.audits[a.id].score}) ${r.audits[a.id].displayValue??""}`);
+    console.log(cat, "fails:", fails.join(" | "));
+  }
+  console.log("bytes", r.audits["total-byte-weight"].numericValue, "requests", r.audits["network-requests"].details.items.length, "dom", JSON.stringify(r.audits["dom-size"]?.details?.items?.slice(0,3)?.map(i=>i.value?.value ?? i.value)), "mainthread", r.audits["mainthread-work-breakdown"].numericValue?.toFixed(0), "bootup", r.audits["bootup-time"].numericValue?.toFixed(0));
+  console.log("unused-js", r.audits["unused-javascript"]?.displayValue, "unused-css", r.audits["unused-css-rules"]?.displayValue, "long-tasks", r.audits["long-tasks"]?.details?.items?.length, "non-composited", r.audits["non-composited-animations"]?.displayValue);
+}

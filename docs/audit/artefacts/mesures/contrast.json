@@ -1,0 +1,2905 @@
+{
+  "390": [
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.78)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 12,
+      "weight": 500,
+      "large": false,
+      "ratio": 10.11,
+      "gradientText": false,
+      "samples": [
+        "Dakar",
+        "Sénégal",
+        "Depuis"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.92)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 13.6,
+      "gradientText": false,
+      "samples": [
+        "2021"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 0.35,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 36,
+      "weight": 700,
+      "large": true,
+      "ratio": 3.18,
+      "gradientText": false,
+      "samples": [
+        "créer les solutions,",
+        "transformer les organisations."
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.82)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 16,
+      "weight": 400,
+      "large": false,
+      "ratio": 12.21,
+      "gradientText": false,
+      "samples": [
+        "Programmation, robotique, intelligence a"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Découvrir nos services"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Parlons de votre projet"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(31,47,68)",
+      "overImage": null,
+      "size": 14,
+      "weight": 400,
+      "large": false,
+      "ratio": 13.56,
+      "gradientText": false,
+      "samples": [
+        "Image à fournir"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+      "opacity": 1,
+      "bg": "rgb(31,47,68)",
+      "overImage": null,
+      "size": 14,
+      "weight": 400,
+      "large": false,
+      "ratio": 7.46,
+      "gradientText": false,
+      "samples": [
+        "public",
+        "/hero/education.webp"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 15.88,
+      "gradientText": false,
+      "samples": [
+        "Éducation numérique"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 14,
+      "weight": 400,
+      "large": false,
+      "ratio": 6.54,
+      "gradientText": false,
+      "samples": [
+        "01 / 03"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Nos expertises",
+        "Notre méthode",
+        "FAQ"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 33.15,
+      "weight": 800,
+      "large": true,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Trois expertises.",
+        "Une vision.",
+        "De"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 18,
+      "weight": 400,
+      "large": false,
+      "ratio": 6.93,
+      "gradientText": false,
+      "samples": [
+        "Nous connectons l'éducation, la technolo",
+        "Quatre étapes, de l'écoute de votre beso"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 0.85,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 10.99,
+      "gradientText": false,
+      "samples": [
+        "01",
+        "Formations",
+        "02"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 0.85,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 20,
+      "weight": 700,
+      "large": true,
+      "ratio": 10.99,
+      "gradientText": false,
+      "samples": [
+        "Donner aux talents les moyens de créer l",
+        "Transformer les idées en solutions numér"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 16,
+      "weight": 400,
+      "large": false,
+      "ratio": 6.93,
+      "gradientText": false,
+      "samples": [
+        "Des programmes qui permettent aux jeunes",
+        "Des sites web, applications et logiciels",
+        "Nous accompagnons les équipes dans l'ado"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 0.35,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 12,
+      "weight": 400,
+      "large": false,
+      "ratio": 2.24,
+      "gradientText": false,
+      "samples": [
+        "Programmation",
+        "Robotique",
+        "Électronique"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 11,
+      "weight": 600,
+      "large": false,
+      "ratio": 6.93,
+      "gradientText": false,
+      "samples": [
+        "Idéal pour",
+        "Idéal pour",
+        "Idéal pour"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 14,
+      "weight": 400,
+      "large": false,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Établissements scolaires · Jeunes talent",
+        "Entreprises · Organisations · Entreprene",
+        "Entreprises · Institutions · Organisatio"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 15,
+      "weight": 600,
+      "large": false,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Découvrir les programmes",
+        "Découvrir nos solutions",
+        "Transformer votre organisation"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "03",
+        "Transformation digitale"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 20,
+      "weight": 700,
+      "large": true,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Faire évoluer les organisations durablem"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 12,
+      "weight": 400,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Conseil",
+        "Digitalisation des processus",
+        "Formation des équipes"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,24,46)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.87,
+      "gradientText": false,
+      "samples": [
+        "Transformation digitale"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+      "opacity": 1,
+      "bg": "rgb(7,24,46)",
+      "overImage": null,
+      "size": 12,
+      "weight": 400,
+      "large": false,
+      "ratio": 6.97,
+      "gradientText": false,
+      "samples": [
+        "03",
+        "/",
+        "03"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 0.53,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 3.22,
+      "gradientText": false,
+      "samples": [
+        "Réalisations"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 38,
+      "weight": 800,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Des idées aux"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 38,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "réalisations."
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "rgb(237, 185, 77)",
+      "opacity": 0.8,
+      "bg": "rgb(7,23,46)",
+      "overImage": "rz-tile rz-a group/tile relative isolate",
+      "size": 15,
+      "weight": 800,
+      "large": false,
+      "ratio": 6.69,
+      "gradientText": false,
+      "samples": [
+        "01",
+        "02"
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "rz-tile rz-a group/tile relative isolate",
+      "size": 10.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 11.66,
+      "gradientText": false,
+      "samples": [
+        "Illustration",
+        "Illustration",
+        "Illustration"
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "rgb(237, 185, 77)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "rz-tile rz-a group/tile relative isolate",
+      "size": 15,
+      "weight": 800,
+      "large": false,
+      "ratio": 9.95,
+      "gradientText": false,
+      "samples": [
+        "03"
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 26,
+      "weight": 800,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Chaque idée ouvre de nouvelles"
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 26,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "possibilités."
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 33.15,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "solution."
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.75)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.06,
+      "gradientText": false,
+      "samples": [
+        "Nous écoutons, analysons votre contexte ",
+        ".",
+        "Nous proposons une approche adaptée :"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "objectifs",
+        "fonctionnalités",
+        "livrons"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 22,
+      "weight": 700,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Créons ensemble votre prochain projet nu"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.74)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.09,
+      "gradientText": false,
+      "samples": [
+        "Contactez-nous pour discuter de votre pr"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 16,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Nous contacter"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Formations"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 36,
+      "weight": 800,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Apprendre en"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 36,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "construisant."
+      ]
+    },
+    {
+      "section": "header",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.76)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 18.4,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.6,
+      "gradientText": false,
+      "samples": [
+        "Programmation, robotique, électronique, "
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.770892 0.0263748 0.134178 / 0.8)",
+      "opacity": 1,
+      "bg": "rgb(25,34,47)",
+      "overImage": null,
+      "size": 12,
+      "weight": 800,
+      "large": false,
+      "ratio": 5.35,
+      "gradientText": false,
+      "samples": [
+        "01"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(25,34,47)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 15.95,
+      "gradientText": false,
+      "samples": [
+        "Programmation web"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(17,32,54)",
+      "overImage": null,
+      "size": 12,
+      "weight": 800,
+      "large": false,
+      "ratio": 7.78,
+      "gradientText": false,
+      "samples": [
+        "02",
+        "03",
+        "04"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.78)",
+      "opacity": 1,
+      "bg": "rgb(17,32,54)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 10.33,
+      "gradientText": false,
+      "samples": [
+        "Robotique",
+        "Électronique et embarqué",
+        "Internet des objets"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 22,
+      "weight": 700,
+      "large": true,
+      "ratio": 15.88,
+      "gradientText": false,
+      "samples": [
+        "Programmation web"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.78)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.11,
+      "gradientText": false,
+      "samples": [
+        "Créer des sites et des applications web "
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+      "opacity": 1,
+      "bg": "rgb(34,48,68)",
+      "overImage": null,
+      "size": 13.5,
+      "weight": 600,
+      "large": false,
+      "ratio": 11.13,
+      "gradientText": false,
+      "samples": [
+        "HTML et CSS",
+        "JavaScript",
+        "Applications web"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 13,
+      "weight": 600,
+      "large": false,
+      "ratio": 6.99,
+      "gradientText": false,
+      "samples": [
+        "Pour qui ?"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 18,
+      "weight": 700,
+      "large": false,
+      "ratio": 15.88,
+      "gradientText": false,
+      "samples": [
+        "Établissements scolaires",
+        "Entreprises et organisations",
+        "Jeunes et apprenants"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 14.5,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.81,
+      "gradientText": false,
+      "samples": [
+        "Un accompagnement pour intégrer le numér",
+        "La formation de vos équipes aux outils e",
+        "Une première approche concrète de la pro"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 16,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Découvrir nos formations"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 36,
+      "weight": 800,
+      "large": true,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Vos questions, nos"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 36,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "réponses."
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 15.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 1.07,
+      "gradientText": false,
+      "samples": [
+        "L'entreprise"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.78)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 15.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.64,
+      "gradientText": false,
+      "samples": [
+        "Formations",
+        "Projets numériques",
+        "Collaboration"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 16.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Qui est Active Solution Digital Service ",
+        "Dans quels domaines intervenez-vous ?",
+        "Intervenez-vous en dehors de Dakar ?"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.75)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15.5,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.06,
+      "gradientText": false,
+      "samples": [
+        "Active Solution Digital Service est une ",
+        ". Elle forme aux métiers du numérique, c"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Dakar, au Sénégal"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 21,
+      "weight": 700,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Vous ne trouvez pas votre réponse ?"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.76)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.6,
+      "gradientText": false,
+      "samples": [
+        "Parlez-nous de votre projet ou de votre "
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 16,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Écrire sur WhatsApp"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 16,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Nous contacter"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 13,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Contact"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 38.4,
+      "weight": 800,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Parlons",
+        "de",
+        "votre"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 38.4,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "projet."
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.76)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 16,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.6,
+      "gradientText": false,
+      "samples": [
+        "Formation, application, site web ou tran"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "ct-glass ct-a flex flex-1 flex-col justi",
+      "size": 11.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 9.6,
+      "gradientText": false,
+      "samples": [
+        "Téléphone",
+        "E-mail",
+        "Adresse"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "ct-glass ct-a flex flex-1 flex-col justi",
+      "size": 18,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "+221 76 809 51 59",
+        "Liberté 1, Dakar, Sénégal"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "ct-glass ct-a flex flex-1 flex-col justi",
+      "size": 13.5,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "contact@groupactivesolution.com"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 24,
+      "weight": 800,
+      "large": true,
+      "ratio": 15.44,
+      "gradientText": false,
+      "samples": [
+        "Décrivez votre besoin"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.63,
+      "gradientText": false,
+      "samples": [
+        "Votre message est préparé ici, puis envo"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 11.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.63,
+      "gradientText": false,
+      "samples": [
+        "Votre besoin",
+        "Votre nom",
+        "Votre message"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 15.44,
+      "gradientText": false,
+      "samples": [
+        "Formation",
+        "Développement digital",
+        "Transformation digitale"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": "ct-primary relative flex h-14 w-full cur",
+      "size": 16,
+      "weight": 800,
+      "large": false,
+      "ratio": 1.16,
+      "gradientText": false,
+      "samples": [
+        "Envoyer sur WhatsApp"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 16,
+      "weight": 600,
+      "large": false,
+      "ratio": 15.44,
+      "gradientText": false,
+      "samples": [
+        "Ou par e-mail"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.68)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 13,
+      "weight": 400,
+      "large": false,
+      "ratio": 7.85,
+      "gradientText": false,
+      "samples": [
+        "Ce formulaire ne stocke rien : il prépar"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(150, 101, 13)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 13,
+      "weight": 700,
+      "large": false,
+      "ratio": 4.71,
+      "gradientText": false,
+      "samples": [
+        "Partenaires"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 33.6,
+      "weight": 800,
+      "large": true,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Nos"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 33.6,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "partenaires."
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(74, 82, 98)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 16,
+      "weight": 400,
+      "large": false,
+      "ratio": 7.33,
+      "gradientText": false,
+      "samples": [
+        "Les organisations qui avancent avec Acti"
+      ]
+    },
+    {
+      "section": "partenaires",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(253,254,254)",
+      "overImage": null,
+      "size": 17,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.78,
+      "gradientText": false,
+      "samples": [
+        "IISAN",
+        "10HTech",
+        "Simplon"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 21,
+      "weight": 700,
+      "large": true,
+      "ratio": 19.19,
+      "gradientText": false,
+      "samples": [
+        "Former les talents, créer les solutions,"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 21,
+      "weight": 700,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "transformer les organisations."
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 11.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 9.15,
+      "gradientText": false,
+      "samples": [
+        "Services",
+        "Navigation"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "lab(100 -0.0000298023 0.0000119209 / 0.86)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 16,
+      "weight": 500,
+      "large": false,
+      "ratio": 14.16,
+      "gradientText": false,
+      "samples": [
+        "Éducation numérique",
+        "Développement digital",
+        "Transformation digitale"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "lab(100 -0.0000298023 0.0000119209 / 0.88)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 15,
+      "weight": 600,
+      "large": false,
+      "ratio": 14.82,
+      "gradientText": false,
+      "samples": [
+        "+221 76 809 51 59",
+        "contact@groupactivesolution.com",
+        "Liberté 1, Dakar, Sénégal"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "lab(100 -0.0000298023 0.0000119209 / 0.64)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 13,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.09,
+      "gradientText": false,
+      "samples": [
+        "©",
+        "2026",
+        "Active Solution Digital Service. Tous dr"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(25,34,49)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 15.95,
+      "gradientText": false,
+      "samples": [
+        "Retour en haut"
+      ]
+    }
+  ],
+  "1440": [
+    {
+      "section": "header",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15,
+      "weight": 500,
+      "large": false,
+      "ratio": 2.1,
+      "gradientText": false,
+      "samples": [
+        "Accueil"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15,
+      "weight": 500,
+      "large": false,
+      "ratio": 1,
+      "gradientText": false,
+      "samples": [
+        "Nos services",
+        "Réalisations",
+        "Formations"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Parlons de votre projet"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.78)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 12,
+      "weight": 500,
+      "large": false,
+      "ratio": 10.11,
+      "gradientText": false,
+      "samples": [
+        "Dakar",
+        "Sénégal",
+        "Depuis"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.92)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 13.6,
+      "gradientText": false,
+      "samples": [
+        "2021"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 0.35,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 44.64,
+      "weight": 700,
+      "large": true,
+      "ratio": 3.18,
+      "gradientText": false,
+      "samples": [
+        "Former les talents,",
+        "transformer les organisations."
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.82)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 16,
+      "weight": 400,
+      "large": false,
+      "ratio": 12.21,
+      "gradientText": false,
+      "samples": [
+        "Sites web, applications mobiles, platefo"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Découvrir nos services"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Parlons de votre projet"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(31,47,68)",
+      "overImage": null,
+      "size": 14,
+      "weight": 400,
+      "large": false,
+      "ratio": 13.56,
+      "gradientText": false,
+      "samples": [
+        "Image à fournir"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+      "opacity": 1,
+      "bg": "rgb(31,47,68)",
+      "overImage": null,
+      "size": 14,
+      "weight": 400,
+      "large": false,
+      "ratio": 7.46,
+      "gradientText": false,
+      "samples": [
+        "public",
+        "/hero/developpement.webp"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 15.88,
+      "gradientText": false,
+      "samples": [
+        "Développement digital"
+      ]
+    },
+    {
+      "section": "hero",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 14,
+      "weight": 400,
+      "large": false,
+      "ratio": 6.54,
+      "gradientText": false,
+      "samples": [
+        "02 / 03"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Nos expertises",
+        "Notre méthode",
+        "FAQ"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 63.36,
+      "weight": 800,
+      "large": true,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Trois expertises.",
+        "Une vision."
+      ]
+    },
+    {
+      "section": "header",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 18,
+      "weight": 400,
+      "large": false,
+      "ratio": 6.93,
+      "gradientText": false,
+      "samples": [
+        "Nous connectons l'éducation, la technolo",
+        "Quatre étapes, de l'écoute de votre beso"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 0.85,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 10.99,
+      "gradientText": false,
+      "samples": [
+        "Formations",
+        "Développement digital"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 0.85,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 34.56,
+      "weight": 700,
+      "large": true,
+      "ratio": 10.99,
+      "gradientText": false,
+      "samples": [
+        "Donner aux talents les moyens de créer l",
+        "Transformer les idées en solutions numér"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 17,
+      "weight": 400,
+      "large": false,
+      "ratio": 6.93,
+      "gradientText": false,
+      "samples": [
+        "Des programmes qui permettent aux jeunes",
+        "Des sites web, applications et logiciels",
+        "Nous accompagnons les équipes dans l'ado"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 0.5,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 13,
+      "weight": 400,
+      "large": false,
+      "ratio": 3.44,
+      "gradientText": false,
+      "samples": [
+        "Programmation",
+        "Robotique",
+        "Électronique"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 11,
+      "weight": 600,
+      "large": false,
+      "ratio": 6.93,
+      "gradientText": false,
+      "samples": [
+        "Idéal pour",
+        "Idéal pour",
+        "Idéal pour"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Établissements scolaires · Jeunes talent",
+        "Entreprises · Organisations · Entreprene",
+        "Entreprises · Institutions · Organisatio"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 15,
+      "weight": 600,
+      "large": false,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Découvrir les programmes",
+        "Découvrir nos solutions",
+        "Transformer votre organisation"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Transformation digitale"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 34.56,
+      "weight": 700,
+      "large": true,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Faire évoluer les organisations durablem"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 13,
+      "weight": 400,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Conseil",
+        "Digitalisation des processus",
+        "Formation des équipes"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,24,46)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.87,
+      "gradientText": false,
+      "samples": [
+        "Transformation digitale"
+      ]
+    },
+    {
+      "section": "expertises",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+      "opacity": 1,
+      "bg": "rgb(7,24,46)",
+      "overImage": null,
+      "size": 14,
+      "weight": 400,
+      "large": false,
+      "ratio": 6.97,
+      "gradientText": false,
+      "samples": [
+        "03",
+        "/",
+        "03"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 0.53,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 3.22,
+      "gradientText": false,
+      "samples": [
+        "Réalisations"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 72,
+      "weight": 800,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Des idées aux",
+        "Apprendre en"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 72,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "réalisations.",
+        "construisant."
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "rgb(237, 185, 77)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "rz-tile rz-a group/tile relative isolate",
+      "size": 15,
+      "weight": 800,
+      "large": false,
+      "ratio": 9.95,
+      "gradientText": false,
+      "samples": [
+        "01"
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "rz-tile rz-a group/tile relative isolate",
+      "size": 10.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 11.66,
+      "gradientText": false,
+      "samples": [
+        "Illustration",
+        "Illustration",
+        "Illustration"
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "rgb(237, 185, 77)",
+      "opacity": 0.8,
+      "bg": "rgb(7,23,46)",
+      "overImage": "rz-tile rz-a group/tile relative isolate",
+      "size": 15,
+      "weight": 800,
+      "large": false,
+      "ratio": 6.69,
+      "gradientText": false,
+      "samples": [
+        "02",
+        "03"
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 40,
+      "weight": 800,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Chaque idée ouvre de nouvelles"
+      ]
+    },
+    {
+      "section": "realisations",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 40,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "possibilités."
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 66.24,
+      "weight": 800,
+      "large": true,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "De",
+        "l'idée",
+        "à"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 66.24,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "solution."
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.75)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.06,
+      "gradientText": false,
+      "samples": [
+        "Nous écoutons, analysons votre contexte ",
+        ".",
+        "Nous proposons une approche adaptée :"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "objectifs",
+        "fonctionnalités"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.75)",
+      "opacity": 0.79,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 4.61,
+      "gradientText": false,
+      "samples": [
+        "Nous développons, testons et",
+        "la solution, ou nous animons la formatio"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 0.79,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 15,
+      "weight": 700,
+      "large": false,
+      "ratio": 9.25,
+      "gradientText": false,
+      "samples": [
+        "livrons"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 28,
+      "weight": 700,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Créons ensemble votre prochain projet nu"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.74)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.09,
+      "gradientText": false,
+      "samples": [
+        "Contactez-nous pour discuter de votre pr"
+      ]
+    },
+    {
+      "section": "methode",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 16,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Nous contacter"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 12,
+      "weight": 600,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Formations"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.76)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 18.4,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.6,
+      "gradientText": false,
+      "samples": [
+        "Programmation, robotique, électronique, "
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.770892 0.0263748 0.134178 / 0.8)",
+      "opacity": 1,
+      "bg": "rgb(18,31,47)",
+      "overImage": null,
+      "size": 14,
+      "weight": 800,
+      "large": false,
+      "ratio": 5.53,
+      "gradientText": false,
+      "samples": [
+        "01"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(18,31,47)",
+      "overImage": null,
+      "size": 19,
+      "weight": 700,
+      "large": true,
+      "ratio": 16.67,
+      "gradientText": false,
+      "samples": [
+        "Programmation web"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.78)",
+      "opacity": 1,
+      "bg": "rgb(18,31,47)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.52,
+      "gradientText": false,
+      "samples": [
+        "Créer des sites et des applications web "
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+      "opacity": 1,
+      "bg": "rgb(33,44,59)",
+      "overImage": null,
+      "size": 13.5,
+      "weight": 600,
+      "large": false,
+      "ratio": 11.7,
+      "gradientText": false,
+      "samples": [
+        "HTML et CSS",
+        "JavaScript",
+        "Applications web"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(17,32,54)",
+      "overImage": null,
+      "size": 14,
+      "weight": 800,
+      "large": false,
+      "ratio": 7.78,
+      "gradientText": false,
+      "samples": [
+        "02",
+        "03",
+        "04"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.78)",
+      "opacity": 1,
+      "bg": "rgb(17,32,54)",
+      "overImage": null,
+      "size": 19,
+      "weight": 700,
+      "large": true,
+      "ratio": 10.33,
+      "gradientText": false,
+      "samples": [
+        "Robotique",
+        "Électronique et embarqué",
+        "Internet des objets"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 13,
+      "weight": 600,
+      "large": false,
+      "ratio": 6.99,
+      "gradientText": false,
+      "samples": [
+        "Pour qui ?"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 18,
+      "weight": 700,
+      "large": false,
+      "ratio": 15.88,
+      "gradientText": false,
+      "samples": [
+        "Établissements scolaires",
+        "Entreprises et organisations",
+        "Jeunes et apprenants"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(19,35,56)",
+      "overImage": null,
+      "size": 14.5,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.81,
+      "gradientText": false,
+      "samples": [
+        "Un accompagnement pour intégrer le numér",
+        "La formation de vos équipes aux outils e",
+        "Une première approche concrète de la pro"
+      ]
+    },
+    {
+      "section": "formations",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 16,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Découvrir nos formations"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 72,
+      "weight": 800,
+      "large": true,
+      "ratio": 16.74,
+      "gradientText": false,
+      "samples": [
+        "Vos questions, nos",
+        "Nos"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 72,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "réponses.",
+        "partenaires."
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 15.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 1.07,
+      "gradientText": false,
+      "samples": [
+        "L'entreprise"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.78)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 15.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.64,
+      "gradientText": false,
+      "samples": [
+        "Formations",
+        "Projets numériques",
+        "Collaboration"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 20,
+      "weight": 700,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Qui est Active Solution Digital Service ",
+        "Dans quels domaines intervenez-vous ?",
+        "Intervenez-vous en dehors de Dakar ?"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "oklab(0.205308 -0.0111109 -0.0497717 / 0.75)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 16.5,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.06,
+      "gradientText": false,
+      "samples": [
+        "Active Solution Digital Service est une ",
+        ". Elle forme aux métiers du numérique, c"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(255,255,255)",
+      "overImage": null,
+      "size": 16.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Dakar, au Sénégal"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 22,
+      "weight": 700,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Vous ne trouvez pas votre réponse ?"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.76)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.6,
+      "gradientText": false,
+      "samples": [
+        "Parlez-nous de votre projet ou de votre "
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(227,169,63)",
+      "overImage": null,
+      "size": 16,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Écrire sur WhatsApp"
+      ]
+    },
+    {
+      "section": "faq",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 16,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Nous contacter"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 13,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.55,
+      "gradientText": false,
+      "samples": [
+        "Contact"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 50.908,
+      "weight": 800,
+      "large": true,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Parlons",
+        "de",
+        "votre"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 50.908,
+      "weight": 800,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "projet."
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.76)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": null,
+      "size": 18,
+      "weight": 400,
+      "large": false,
+      "ratio": 10.6,
+      "gradientText": false,
+      "samples": [
+        "Formation, application, site web ou tran"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "ct-glass ct-a flex flex-1 flex-col justi",
+      "size": 11.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 9.6,
+      "gradientText": false,
+      "samples": [
+        "Téléphone",
+        "E-mail",
+        "Adresse"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "ct-glass ct-a flex flex-1 flex-col justi",
+      "size": 18,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "+221 76 809 51 59",
+        "Liberté 1, Dakar, Sénégal"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "ct-glass ct-a flex flex-1 flex-col justi",
+      "size": 16,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "contact@groupactivesolution.com"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(7,23,46)",
+      "overImage": "ct-glass ct-a flex flex-1 flex-col justi",
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 17.93,
+      "gradientText": false,
+      "samples": [
+        "Voir sur Maps"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 24,
+      "weight": 800,
+      "large": true,
+      "ratio": 15.44,
+      "gradientText": false,
+      "samples": [
+        "Décrivez votre besoin"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 15,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.63,
+      "gradientText": false,
+      "samples": [
+        "Votre message est préparé ici, puis envo"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.72)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 11.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 8.63,
+      "gradientText": false,
+      "samples": [
+        "Votre besoin",
+        "Votre nom",
+        "Votre message"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 15.44,
+      "gradientText": false,
+      "samples": [
+        "Formation",
+        "Développement digital",
+        "Transformation digitale"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": "ct-primary relative flex h-14 w-full cur",
+      "size": 16,
+      "weight": 800,
+      "large": false,
+      "ratio": 1.16,
+      "gradientText": false,
+      "samples": [
+        "Envoyer sur WhatsApp"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 16,
+      "weight": 600,
+      "large": false,
+      "ratio": 15.44,
+      "gradientText": false,
+      "samples": [
+        "Ou par e-mail"
+      ]
+    },
+    {
+      "section": "contact",
+      "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.68)",
+      "opacity": 1,
+      "bg": "rgb(22,37,59)",
+      "overImage": null,
+      "size": 13,
+      "weight": 400,
+      "large": false,
+      "ratio": 7.85,
+      "gradientText": false,
+      "samples": [
+        "Ce formulaire ne stocke rien : il prépar"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(150, 101, 13)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 13,
+      "weight": 700,
+      "large": false,
+      "ratio": 4.71,
+      "gradientText": false,
+      "samples": [
+        "Partenaires"
+      ]
+    },
+    {
+      "section": "header",
+      "color": "rgb(74, 82, 98)",
+      "opacity": 1,
+      "bg": "rgb(248,247,244)",
+      "overImage": null,
+      "size": 18,
+      "weight": 400,
+      "large": false,
+      "ratio": 7.33,
+      "gradientText": false,
+      "samples": [
+        "Les organisations qui avancent avec Acti"
+      ]
+    },
+    {
+      "section": "partenaires",
+      "color": "rgb(7, 23, 46)",
+      "opacity": 1,
+      "bg": "rgb(253,254,254)",
+      "overImage": null,
+      "size": 17,
+      "weight": 700,
+      "large": false,
+      "ratio": 17.78,
+      "gradientText": false,
+      "samples": [
+        "IISAN",
+        "10HTech",
+        "Simplon"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 22,
+      "weight": 700,
+      "large": true,
+      "ratio": 19.19,
+      "gradientText": false,
+      "samples": [
+        "Former les talents, créer les solutions,"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "rgba(0, 0, 0, 0)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 22,
+      "weight": 700,
+      "large": true,
+      "ratio": null,
+      "gradientText": true,
+      "samples": [
+        "transformer les organisations."
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "rgb(227, 169, 63)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 11.5,
+      "weight": 700,
+      "large": false,
+      "ratio": 9.15,
+      "gradientText": false,
+      "samples": [
+        "Services",
+        "Navigation"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "lab(100 -0.0000298023 0.0000119209 / 0.86)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 16,
+      "weight": 500,
+      "large": false,
+      "ratio": 14.16,
+      "gradientText": false,
+      "samples": [
+        "Éducation numérique",
+        "Développement digital",
+        "Transformation digitale"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "lab(100 -0.0000298023 0.0000119209 / 0.88)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 15,
+      "weight": 600,
+      "large": false,
+      "ratio": 14.82,
+      "gradientText": false,
+      "samples": [
+        "+221 76 809 51 59",
+        "contact@groupactivesolution.com",
+        "Liberté 1, Dakar, Sénégal"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "lab(100 -0.0000298023 0.0000119209 / 0.64)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 13,
+      "weight": 400,
+      "large": false,
+      "ratio": 8.09,
+      "gradientText": false,
+      "samples": [
+        "©",
+        "2026",
+        "Active Solution Digital Service. Tous dr"
+      ]
+    },
+    {
+      "section": "footer",
+      "color": "rgb(255, 255, 255)",
+      "opacity": 1,
+      "bg": "rgb(5,15,31)",
+      "overImage": null,
+      "size": 14,
+      "weight": 600,
+      "large": false,
+      "ratio": 19.19,
+      "gradientText": false,
+      "samples": [
+        "Retour en haut"
+      ]
+    }
+  ]
+}

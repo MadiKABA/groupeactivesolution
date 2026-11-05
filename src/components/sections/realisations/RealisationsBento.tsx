@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 
 import { reveal } from "@/components/sections/formations/reveal";
-import { realisationsIntro, type Realisation } from "@/lib/realisations";
+import type { Realisation } from "@/lib/realisations";
 
 import { RealisationIllustration } from "./RealisationsIllustrations";
 
@@ -34,8 +34,8 @@ type BentoProps = {
 };
 
 /**
- * Mode « bento » (tant que les photos manquent) : 3 tuiles, une par domaine. Tuile illustrée
- * (étiquetée « Illustration ») ou photo réelle du projet. Rendu serveur ; le rideau, la construction
+ * Mode « bento » : 3 tuiles, une par domaine. Visuel graphique de la charte (sans légende ni mention)
+ * ou photo réelle de la carte avec sa légende. Rendu serveur ; le rideau, la construction
  * des illustrations et les états de survol / tuile active sont en CSS, pilotés par RealisationsController.
  */
 export function RealisationsBento({ projects, photographed }: BentoProps) {
@@ -79,11 +79,6 @@ export function RealisationsBento({ projects, photographed }: BentoProps) {
 
               <div className="relative flex items-start justify-between p-5 lg:p-6">
                 <span className="rz-index text-index font-extrabold">{project.index}</span>
-                {!photo && (
-                  <span className="rounded-full border border-text-on-dark/25 px-2.5 py-1 text-badge-xs font-bold tracking-category text-text-on-dark/80 uppercase">
-                    {realisationsIntro.illustrationBadge}
-                  </span>
-                )}
               </div>
 
               <div
@@ -94,16 +89,8 @@ export function RealisationsBento({ projects, photographed }: BentoProps) {
                   <span aria-hidden="true" className="size-1.5 rounded-full bg-brand-gold" />
                   {project.domainLabel}
                 </p>
-                {photo ? (
-                  <>
-                    <p className={`mt-1 font-semibold text-text-on-dark ${index === 0 ? "text-legend" : "text-legend-sm"}`}>{project.name}</p>
-                    <p className="mt-0.5 text-sm text-text-on-dark/85">{project.caption}</p>
-                  </>
-                ) : (
-                  <p className={`mt-1 text-text-on-dark ${index === 0 ? "text-legend font-semibold" : "text-legend-sm font-medium"}`}>
-                    {project.illustrationText}
-                  </p>
-                )}
+                {/* Légende seulement si la photo réelle existe ; sinon, le nom du domaine seul */}
+                {photo && <p className={`mt-1 font-semibold text-text-on-dark ${index === 0 ? "text-legend" : "text-legend-sm"}`}>{project.caption}</p>}
               </div>
             </li>
           );

@@ -96,16 +96,14 @@ export function MetiersArche({ photos }: { photos: Photos }) {
       </noscript>
       <div className="mh-arche">
         <div className="mh-stage">
-          <svg className="mh-outline" viewBox="0 0 450 533" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-            <m.path
-              d="M 0 533 V 225 A 225 225 0 0 1 450 225 V 533"
-              pathLength={1}
-              data-reveal=""
-              initial={reduce ? false : { pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={tween(0.9, 0.3)}
-            />
-          </svg>
+          <m.div
+            className="mh-outline"
+            aria-hidden="true"
+            data-reveal=""
+            initial={reduce ? false : { clipPath: "inset(100% 0% 0% 0%)" }}
+            animate={{ clipPath: "inset(0% 0% 0% 0%)" }}
+            transition={tween(0.9, 0.3)}
+          />
 
           <button
             type="button"

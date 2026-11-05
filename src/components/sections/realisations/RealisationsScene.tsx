@@ -124,7 +124,7 @@ export function RealisationsScene({ projects, showLink }: { projects: readonly R
                     <p className="text-2xs font-bold tracking-category text-brand-gold uppercase">
                       {project.index} · {project.domainLabel}
                     </p>
-                    <p className="mt-1 truncate text-lg font-bold text-text-on-dark">{project.name}</p>
+                    <p className="mt-1 truncate text-lg font-bold text-text-on-dark">{project.domainLabel}</p>
                     <p className="line-clamp-2 text-sm leading-relaxed text-text-on-dark/78">{project.caption}</p>
                     <div className="-ml-3.5">
                       <Dots project={project} />
@@ -179,7 +179,7 @@ export function RealisationsScene({ projects, showLink }: { projects: readonly R
                         <span className="text-2xs font-bold tracking-category uppercase">
                           {project.index} · {project.domainLabel}
                         </span>
-                        <span className="w-full truncate text-lg font-bold">{project.name}</span>
+                        <span className="w-full truncate text-lg font-bold">{project.domainLabel}</span>
                       </button>
                       <div className="rz-rail-detail">
                         <p className="line-clamp-2 px-5 pt-3 text-nav leading-relaxed text-text-on-dark/78">{project.caption}</p>
@@ -212,7 +212,7 @@ export function RealisationsStacked({ projects }: { projects: readonly Realisati
             <p className="text-2xs font-bold tracking-category text-brand-gold uppercase">
               {project.index} · {project.domainLabel}
             </p>
-            <h3 className="mt-2 text-h3 font-bold text-text-on-dark">{project.name}</h3>
+            <h3 className="mt-2 text-h3 font-bold text-text-on-dark">{project.domainLabel}</h3>
             <p className="mt-1 text-nav leading-relaxed text-text-on-dark/78">{project.caption}</p>
             <div className="mt-5 grid gap-4 md:grid-cols-2 lg:gap-5">
               {project.photos.slice(0, 2).map((photo) => (

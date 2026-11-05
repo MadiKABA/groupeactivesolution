@@ -1,11 +1,13 @@
 /*
  * Section « Notre méthode » (page d'accueil) : quatre étapes.
- * Textes à valider par Active Solution : ne pas les enrichir (ni durées, ni livrables, ni garanties).
+ * Contenu validé : novembre 2026 (document Textes validés de la page d'accueil). Modifier ces valeurs sans toucher aux composants.
+ * Les passages entre ** sont rendus en gras (<strong>) via splitStrong().
  */
 
 import { ROUTES } from "./routes";
+import { splitStrong, typo, type StrongSegment } from "./typography";
 
-export type MethodeSegment = { texte: string; fort?: boolean };
+export type MethodeSegment = StrongSegment;
 
 export type MethodeEtape = {
   id: string;
@@ -22,8 +24,8 @@ export type MethodeEtape = {
 export const methodeIntro = {
   eyebrow: "Notre méthode",
   /** Mots du titre, révélés un à un ; le dernier est en dégradé doré. Retour à la ligne après le 2e sous 640px. */
-  titleWords: ["De", "l'idée", "à", "la", "solution."],
-  intro: "Quatre étapes, de l'écoute de votre besoin à l'évolution de votre solution.",
+  titleWords: ["De", "l’idée", "à", "la", "solution."],
+  intro: "Quatre étapes, pour que votre projet naisse d’une vraie écoute et grandisse avec vous.",
 } as const;
 
 export const methodeEtapes: readonly MethodeEtape[] = [
@@ -31,53 +33,36 @@ export const methodeEtapes: readonly MethodeEtape[] = [
     id: "comprendre",
     numero: "01",
     titre: "Comprendre",
-    titreComplet: "Comprendre le besoin",
-    segments: [
-      { texte: "Nous écoutons, analysons votre contexte et cadrons vos " },
-      { texte: "objectifs", fort: true },
-      { texte: "." },
-    ],
+    titreComplet: "Comprendre",
+    segments: splitStrong("Nous prenons le temps de vous écouter, de comprendre votre réalité et vos **objectifs**."),
   },
   {
     id: "definir",
     numero: "02",
     titre: "Définir",
-    titreComplet: "Définir la solution",
-    segments: [
-      { texte: "Nous proposons une approche adaptée : " },
-      { texte: "fonctionnalités", fort: true },
-      { texte: ", parcours et technologies." },
-    ],
+    titreComplet: "Définir",
+    segments: splitStrong("Ensemble, nous choisissons les **fonctionnalités** et les technologies qui vous correspondent."),
   },
   {
     id: "concevoir",
     numero: "03",
-    titre: "Concevoir & réaliser",
+    titre: "Concevoir et réaliser",
     titreComplet: "Concevoir et réaliser",
-    segments: [
-      { texte: "Nous développons, testons et " },
-      { texte: "livrons", fort: true },
-      { texte: " la solution, ou nous animons la formation." },
-    ],
+    segments: splitStrong("Nous construisons, testons et **livrons** votre solution, ou nous animons la formation."),
   },
   {
     id: "accompagner",
     numero: "04",
     titre: "Accompagner",
-    titreComplet: "Accompagner et faire évoluer",
-    segments: [
-      { texte: "Nous " },
-      { texte: "formons vos équipes", fort: true },
-      { texte: ", assurons le suivi et faisons évoluer la solution." },
-    ],
+    titreComplet: "Accompagner",
+    segments: splitStrong("Nous **formons vos équipes** et restons à vos côtés pour faire évoluer votre solution."),
   },
 ];
 
 export const methodeCta = {
-  title: "Créons ensemble votre prochain projet numérique.",
-  text: "Contactez-nous pour discuter de votre projet, d'une collaboration ou simplement échanger.",
-  // Page Contact.
-  label: "Nous contacter",
+  title: "Parlons de votre projet, nous sommes là pour l’écouter.",
+  text: typo("Un projet, une école, une idée ou une simple question : écrivez-nous, nous vous répondons avec plaisir."),
+  label: "Nous écrire",
   href: ROUTES.contact,
 } as const;
 

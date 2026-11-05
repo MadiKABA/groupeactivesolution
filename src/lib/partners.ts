@@ -1,4 +1,4 @@
-// CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
+// Contenu validé : novembre 2026 (document Textes validés de la page d'accueil). Modifier ces valeurs sans toucher aux composants.
 
 export type Partner = {
   id: string;
@@ -20,7 +20,7 @@ export const partnersIntro = {
   /** Titre en deux parties : la seconde est en dégradé or profond. */
   title: "Nos",
   titleHighlight: "partenaires.",
-  intro: "Les organisations qui avancent avec Active Solution, de la formation aux solutions numériques.",
+  intro: "Des organisations qui nous font confiance et avec qui nous construisons, de la formation aux solutions numériques.",
   listLabel: "Partenaires d'Active Solution",
   /** Affiché à la place de la liste tant qu'aucun partenaire n'est confirmé. */
   empty: "Nos partenaires seront présentés prochainement.",
@@ -29,17 +29,12 @@ export const partnersIntro = {
   more: (count: number) => `+${count} partenaires`,
 } as const;
 
-// Confirmés par le client à partir de l'ancien site. À valider : orthographe de « MondialeHome »,
-// nom complet de « ODC » (aucun développement du sigle tant qu'il n'est pas confirmé).
+// Partenaires affichés, dans cet ordre (logos à fournir : public/partners/<id>.svg|png|webp).
 export const partners: readonly Partner[] = [
-  { id: "iisan", name: "IISAN", logo: null, logoAlt: "IISAN", website: null, confirmed: true },
   { id: "10htech", name: "10HTech", logo: null, logoAlt: "10HTech", website: null, confirmed: true },
-  { id: "simplon", name: "Simplon", logo: null, logoAlt: "Simplon", website: null, confirmed: true },
   { id: "mondialehome", name: "MondialeHome", logo: null, logoAlt: "MondialeHome", website: null, confirmed: true },
-  { id: "odc", name: "ODC", logo: null, logoAlt: "ODC", website: null, confirmed: true },
-  // Cités dans l'analyse initiale, non confirmés : non affichés.
-  { id: "tme-education", name: "TME Education", logo: null, logoAlt: "TME Education", website: null, confirmed: false },
-  { id: "lamtoro-automobil", name: "Lamtoro Automobil", logo: null, logoAlt: "Lamtoro Automobil", website: null, confirmed: false },
+  { id: "tme-education", name: "TME Education", logo: null, logoAlt: "TME Education", website: null, confirmed: true },
+  { id: "lamtoro-automobil", name: "Lamtoro Automobil", logo: null, logoAlt: "Lamtoro Automobil", website: null, confirmed: true },
 ];
 
 export const confirmedPartners = (list: readonly Partner[] = partners) => list.filter((partner) => partner.confirmed);

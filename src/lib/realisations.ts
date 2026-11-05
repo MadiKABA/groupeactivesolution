@@ -1,8 +1,10 @@
-// CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
+// Contenu validé : novembre 2026 (document Textes validés de la page d'accueil). Modifier ces valeurs sans toucher aux composants.
+
+import { typo } from "./typography";
 
 export type RealisationDomain = "education" | "developpement" | "transformation";
 
-/** Photo paysage 5:3 (2000 × 1200, WebP < 200 Ko) ; les deux photos d'un projet ont le même rapport. */
+/** Photo paysage 5:3 (2000 × 1200, WebP < 200 Ko). */
 export type RealisationPhoto = { src: string; alt: string; width: number; height: number };
 
 export type Realisation = {
@@ -10,13 +12,10 @@ export type Realisation = {
   index: "01" | "02" | "03";
   domain: RealisationDomain;
   domainLabel: string;
-  name: string;
+  /** Légende : affichée seulement si la photo de la carte existe (vérifié côté serveur). */
   caption: string;
-  /** 0 à 2 photos ; le projet n'est « photographié » que si ses 2 fichiers existent (vérifié côté serveur). */
+  /** Une photo par carte (la « scène », qui exige 2 photos par projet, ne s'active donc pas : mode bento). */
   photos: RealisationPhoto[];
-  /** Phrase de la tuile illustrée (mode bento, tant que la photo manque). */
-  illustrationText: string;
-  href?: string;
 };
 
 export const realisationsIntro = {
@@ -24,12 +23,11 @@ export const realisationsIntro = {
   /** Titre en deux parties : la seconde est en dégradé doré. */
   title: "Des idées aux",
   titleHighlight: "réalisations.",
-  intro: "Un aperçu de nos activités sur le terrain : formations, ateliers et projets numériques.",
+  intro: typo("Sur le terrain, avec des élèves, des entrepreneurs et des équipes : voici ce que nous construisons ensemble."),
   /** Rendu seulement si la route existe (src/app/realisations/page.tsx) et qu'au moins une vraie photo est présente. */
   link: { label: "Voir toutes nos réalisations", href: "/realisations" },
   sceneLabel: "Réalisations en images",
   skipLabel: "Passer la galerie",
-  illustrationBadge: "Illustration",
 } as const;
 
 export const realisationsClosing = {
@@ -37,11 +35,7 @@ export const realisationsClosing = {
   highlight: "possibilités.",
 } as const;
 
-const PENDING_NAME = "[Nom du projet à valider]";
-const PENDING_CAPTION = "[Légende à valider]";
-const PENDING_ALT = "[Texte alternatif à valider]";
-
-const photo = (file: string): RealisationPhoto => ({ src: `/realisations/${file}`, alt: PENDING_ALT, width: 2000, height: 1200 });
+const photo = (file: string, alt: string): RealisationPhoto => ({ src: `/realisations/${file}`, alt, width: 2000, height: 1200 });
 
 export const realisations: readonly Realisation[] = [
   {
@@ -49,32 +43,26 @@ export const realisations: readonly Realisation[] = [
     index: "01",
     domain: "education",
     domainLabel: "Formations",
-    name: PENDING_NAME,
-    caption: PENDING_CAPTION,
-    photos: [photo("projet-1-a.webp"), photo("projet-1-b.webp")],
-    illustrationText: "Transmettre les compétences. Préparer l'avenir.",
+    caption: "Des élèves qui créent, pas seulement qui consomment.",
+    photos: [photo("carte-1.webp", "Atelier de formation au numérique avec des élèves et des ordinateurs")],
   },
   {
     id: "projet-2",
     index: "02",
     domain: "developpement",
     domainLabel: "Développement digital",
-    name: PENDING_NAME,
-    caption: PENDING_CAPTION,
-    photos: [photo("projet-2-a.webp"), photo("projet-2-b.webp")],
-    illustrationText: "Transformer les idées en solutions.",
+    caption: "Des outils pensés pour les commerçants d’ici.",
+    photos: [photo("carte-2.webp", "Capture d’écran d’un projet réalisé par Active Solution")],
   },
   {
     id: "projet-3",
     index: "03",
     domain: "transformation",
     domainLabel: "Transformation digitale",
-    name: PENDING_NAME,
-    caption: PENDING_CAPTION,
-    photos: [photo("projet-3-a.webp"), photo("projet-3-b.webp")],
-    illustrationText: "Faire évoluer les organisations.",
+    caption: "Des entrepreneurs qui gagnent du temps.",
+    photos: [photo("carte-3.webp", "Tournée numérique d’Active Solution")],
   },
 ];
 
 /** Annonce vocale au changement de projet (scène). */
-export const projectAnnouncement = (position: number, total: number, name: string) => `Projet ${position} sur ${total} : ${name}`;
+export const projectAnnouncement = (position: number, total: number, label: string) => `Carte ${position} sur ${total} : ${label}`;

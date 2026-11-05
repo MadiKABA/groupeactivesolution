@@ -1,0 +1,1469 @@
+{
+  "structure": {
+    "title": "Active Solution Digital Service",
+    "lang": "fr",
+    "headings": [
+      {
+        "level": 1,
+        "text": "Former les talents,Former les talents,Former les talents,créer les solutions,créer les sol",
+        "hidden": false,
+        "section": "hero"
+      },
+      {
+        "level": 2,
+        "text": "Trois expertises. Une vision.",
+        "hidden": false,
+        "section": "header"
+      },
+      {
+        "level": 3,
+        "text": "Donner aux talents les moyens de créer le futur.",
+        "hidden": false,
+        "section": "expertises"
+      },
+      {
+        "level": 3,
+        "text": "Transformer les idées en solutions numériques.",
+        "hidden": false,
+        "section": "expertises"
+      },
+      {
+        "level": 3,
+        "text": "Faire évoluer les organisations durablement.",
+        "hidden": false,
+        "section": "expertises"
+      },
+      {
+        "level": 2,
+        "text": "Des idées aux réalisations.",
+        "hidden": false,
+        "section": "header"
+      },
+      {
+        "level": 2,
+        "text": "De l'idée à la solution.solution.",
+        "hidden": false,
+        "section": "header"
+      },
+      {
+        "level": 3,
+        "text": "ComprendreÉtape 1 : Comprendre le besoin/01",
+        "hidden": false,
+        "section": "methode"
+      },
+      {
+        "level": 3,
+        "text": "DéfinirÉtape 2 : Définir la solution/02",
+        "hidden": false,
+        "section": "methode"
+      },
+      {
+        "level": 3,
+        "text": "Concevoir & réaliserÉtape 3 : Concevoir et réaliser/03",
+        "hidden": false,
+        "section": "methode"
+      },
+      {
+        "level": 3,
+        "text": "AccompagnerÉtape 4 : Accompagner et faire évoluer/04",
+        "hidden": false,
+        "section": "methode"
+      },
+      {
+        "level": 2,
+        "text": "Apprendre en construisant.",
+        "hidden": false,
+        "section": "header"
+      },
+      {
+        "level": 3,
+        "text": "01Programmation web",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "02Robotique",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "03Électronique et embarqué",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "04Internet des objets",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "05Intelligence artificielle",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "Programmation web",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "Robotique",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "Électronique et embarqué",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "Internet des objets",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "Intelligence artificielle",
+        "hidden": true,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "Établissements scolaires",
+        "hidden": false,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "Entreprises et organisations",
+        "hidden": false,
+        "section": "formations"
+      },
+      {
+        "level": 3,
+        "text": "Jeunes et apprenants",
+        "hidden": false,
+        "section": "formations"
+      },
+      {
+        "level": 2,
+        "text": "Vos questions, nos réponses.",
+        "hidden": false,
+        "section": "header"
+      },
+      {
+        "level": 3,
+        "text": "01Qui est Active Solution Digital Service ?",
+        "hidden": false,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "02Dans quels domaines intervenez-vous ?",
+        "hidden": false,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "03Intervenez-vous en dehors de Dakar ?",
+        "hidden": false,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "04Quelles formations proposez-vous, et pour qui ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "05Faut-il des connaissances préalables ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "06Les formations ont-elles lieu en présentiel, en ligne ou dans les établissements ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "07Quels types de solutions réalisez-vous ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "08Comment se déroule un projet, de la première discussion à la livraison ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "09Que recouvre concrètement la transformation digitale ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "10Comment obtenir un devis, et quels sont vos tarifs ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "11Quels sont les délais habituels ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 3,
+        "text": "12Assurez-vous un suivi après la livraison ?",
+        "hidden": true,
+        "section": "faq"
+      },
+      {
+        "level": 2,
+        "text": "Parlons de votre projet.",
+        "hidden": false,
+        "section": "contact"
+      },
+      {
+        "level": 3,
+        "text": "Décrivez votre besoin",
+        "hidden": false,
+        "section": "contact"
+      },
+      {
+        "level": 3,
+        "text": "Décrivez votre besoin",
+        "hidden": true,
+        "section": "contact"
+      },
+      {
+        "level": 2,
+        "text": "Nos partenaires.",
+        "hidden": false,
+        "section": "header"
+      },
+      {
+        "level": 2,
+        "text": "Services",
+        "hidden": false,
+        "section": "footer"
+      },
+      {
+        "level": 2,
+        "text": "Navigation",
+        "hidden": false,
+        "section": "footer"
+      }
+    ],
+    "landmarks": [
+      {
+        "tag": "header",
+        "role": null,
+        "label": null,
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "nav",
+        "role": null,
+        "label": "Navigation principale",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "dialog",
+        "role": null,
+        "label": "Menu principal",
+        "inSection": null,
+        "displayed": false
+      },
+      {
+        "tag": "nav",
+        "role": null,
+        "label": "Navigation principale",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "main",
+        "role": null,
+        "label": null,
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "label": "Présentation d'Active Solution",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "label": "Trois expertises. Une vision.",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "header",
+        "role": null,
+        "label": null,
+        "inSection": "expertises",
+        "displayed": true
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "label": "Des idées aux réalisations.",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "header",
+        "role": null,
+        "label": null,
+        "inSection": "realisations",
+        "displayed": true
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "label": "De l'idée à la solution.solution.",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "header",
+        "role": null,
+        "label": null,
+        "inSection": "methode",
+        "displayed": true
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "label": "Apprendre en construisant.",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "header",
+        "role": null,
+        "label": null,
+        "inSection": "formations",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "01Programmation web",
+        "inSection": "formations",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "02Robotique",
+        "inSection": "formations",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "03Électronique et embarqué",
+        "inSection": "formations",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "04Internet des objets",
+        "inSection": "formations",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "05Intelligence artificielle",
+        "inSection": "formations",
+        "displayed": true
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "label": "Vos questions, nos réponses.",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "header",
+        "role": null,
+        "label": null,
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "01Qui est Active Solution Digital Service ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "02Dans quels domaines intervenez-vous ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "03Intervenez-vous en dehors de Dakar ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "04Quelles formations proposez-vous, et pour qui ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "05Faut-il des connaissances préalables ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "06Les formations ont-elles lieu en présentiel, en ligne ou d",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "07Quels types de solutions réalisez-vous ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "08Comment se déroule un projet, de la première discussion à ",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "09Que recouvre concrètement la transformation digitale ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "10Comment obtenir un devis, et quels sont vos tarifs ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "11Quels sont les délais habituels ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "role": "region",
+        "label": "12Assurez-vous un suivi après la livraison ?",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "aside",
+        "role": null,
+        "label": "Contact",
+        "inSection": "faq",
+        "displayed": true
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "label": "Parlons de votre projet.",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "section",
+        "role": null,
+        "label": "Nos partenaires.",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "header",
+        "role": null,
+        "label": null,
+        "inSection": "partenaires",
+        "displayed": true
+      },
+      {
+        "tag": "footer",
+        "role": null,
+        "label": null,
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "nav",
+        "role": null,
+        "label": "Services",
+        "inSection": null,
+        "displayed": true
+      },
+      {
+        "tag": "nav",
+        "role": null,
+        "label": "Navigation",
+        "inSection": null,
+        "displayed": true
+      }
+    ],
+    "links": [
+      {
+        "href": "/",
+        "text": "",
+        "target": null,
+        "rel": null,
+        "section": "header",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/",
+        "text": "Accueil",
+        "target": null,
+        "rel": null,
+        "section": "header",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/services",
+        "text": "Nos services",
+        "target": null,
+        "rel": null,
+        "section": "header",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/realisations",
+        "text": "Réalisations",
+        "target": null,
+        "rel": null,
+        "section": "header",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/formations",
+        "text": "Formations",
+        "target": null,
+        "rel": null,
+        "section": "header",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/a-propos",
+        "text": "À propos",
+        "target": null,
+        "rel": null,
+        "section": "header",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/contact",
+        "text": "Parlons de votre projet",
+        "target": null,
+        "rel": null,
+        "section": "header",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/",
+        "text": "Accueil",
+        "target": null,
+        "rel": null,
+        "section": "mobile-menu",
+        "displayed": false,
+        "inert": false
+      },
+      {
+        "href": "/services",
+        "text": "Nos services",
+        "target": null,
+        "rel": null,
+        "section": "mobile-menu",
+        "displayed": false,
+        "inert": false
+      },
+      {
+        "href": "/realisations",
+        "text": "Réalisations",
+        "target": null,
+        "rel": null,
+        "section": "mobile-menu",
+        "displayed": false,
+        "inert": false
+      },
+      {
+        "href": "/formations",
+        "text": "Formations",
+        "target": null,
+        "rel": null,
+        "section": "mobile-menu",
+        "displayed": false,
+        "inert": false
+      },
+      {
+        "href": "/a-propos",
+        "text": "À propos",
+        "target": null,
+        "rel": null,
+        "section": "mobile-menu",
+        "displayed": false,
+        "inert": false
+      },
+      {
+        "href": "/contact",
+        "text": "Parlons de votre projet",
+        "target": null,
+        "rel": null,
+        "section": "mobile-menu",
+        "displayed": false,
+        "inert": false
+      },
+      {
+        "href": "/services",
+        "text": "Découvrir nos services",
+        "target": null,
+        "rel": null,
+        "section": "hero",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/contact",
+        "text": "Parlons de votre projet",
+        "target": null,
+        "rel": null,
+        "section": "hero",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "#expertises",
+        "text": "Aller à la section suivante",
+        "target": null,
+        "rel": null,
+        "section": "hero",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/formations",
+        "text": "Découvrir les programmes",
+        "target": null,
+        "rel": null,
+        "section": "expertises",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/services#developpement",
+        "text": "Découvrir nos solutions",
+        "target": null,
+        "rel": null,
+        "section": "expertises",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/services#transformation",
+        "text": "Transformer votre organisation",
+        "target": null,
+        "rel": null,
+        "section": "expertises",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "#contact",
+        "text": "Nous contacter",
+        "target": null,
+        "rel": null,
+        "section": "methode",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/formations",
+        "text": "Découvrir nos formations",
+        "target": null,
+        "rel": null,
+        "section": "formations",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://wa.me/221768095159?text=Bonjour%2C%20j'ai%20une%20question%20concernant%20",
+        "text": "Écrire sur WhatsApp (s'ouvre dans un nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "faq",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/contact",
+        "text": "Nous contacter",
+        "target": null,
+        "rel": null,
+        "section": "faq",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "tel:+221768095159",
+        "text": "+221 76 809 51 59",
+        "target": null,
+        "rel": null,
+        "section": "contact",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "mailto:contact@groupactivesolution.com",
+        "text": "contact@groupactivesolution.com",
+        "target": null,
+        "rel": null,
+        "section": "contact",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://www.google.com/maps/search/?api=1&query=Libert%C3%A9%201%2C%20Dakar%2C%20S%C3%A9n%C3%A9gal",
+        "text": "Ouvrir l'adresse dans Google Maps (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "contact",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://www.google.com/maps/search/?api=1&query=Libert%C3%A9%201%2C%20Dakar%2C%20S%C3%A9n%C3%A9gal",
+        "text": "Voir sur Maps (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "contact",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://www.linkedin.com/company/actives-solutions/",
+        "text": "LinkedIn (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "contact",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://www.facebook.com/share/1HX8JAow32/",
+        "text": "Facebook (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "contact",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://www.instagram.com/active_solution_groupe",
+        "text": "Instagram (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "contact",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://vm.tiktok.com/ZS9UKhCFqLhBk-yJHdC/",
+        "text": "TikTok (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "contact",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://wa.me/221768095159?text=Bonjour%2C%20j'ai%20une%20question%20concernant%20",
+        "text": "Écrire sur WhatsApp",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "contact",
+        "displayed": false,
+        "inert": false
+      },
+      {
+        "href": "mailto:contact@groupactivesolution.com",
+        "text": "Écrire par e-mail",
+        "target": null,
+        "rel": null,
+        "section": "contact",
+        "displayed": false,
+        "inert": false
+      },
+      {
+        "href": "https://www.linkedin.com/company/actives-solutions/",
+        "text": "LinkedIn (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://www.facebook.com/share/1HX8JAow32/",
+        "text": "Facebook (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://www.instagram.com/active_solution_groupe",
+        "text": "Instagram (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://vm.tiktok.com/ZS9UKhCFqLhBk-yJHdC/",
+        "text": "TikTok (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/#expertise-education",
+        "text": "Éducation numérique",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/#expertise-developpement",
+        "text": "Développement digital",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/#expertise-transformation",
+        "text": "Transformation digitale",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/#realisations",
+        "text": "Réalisations",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/#methode",
+        "text": "Méthode",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/#formations",
+        "text": "Formations",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/#faq",
+        "text": "FAQ",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "/#contact",
+        "text": "Contact",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "tel:+221768095159",
+        "text": "+221 76 809 51 59",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "mailto:contact@groupactivesolution.com",
+        "text": "contact@groupactivesolution.com",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "https://www.google.com/maps/search/?api=1&query=Libert%C3%A9%201%2C%20Dakar%2C%20S%C3%A9n%C3%A9gal",
+        "text": "Liberté 1, Dakar, Sénégal (nouvel onglet)",
+        "target": "_blank",
+        "rel": "noopener noreferrer",
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      },
+      {
+        "href": "#top",
+        "text": "Retour en haut",
+        "target": null,
+        "rel": null,
+        "section": "footer",
+        "displayed": true,
+        "inert": false
+      }
+    ],
+    "images": [
+      {
+        "tag": "img",
+        "src": "/logos/logo.svg",
+        "alt": "Active Solution Digital Service",
+        "label": null,
+        "loading": "eager",
+        "fetchpriority": null,
+        "w": "1000",
+        "h": "550",
+        "displayed": false
+      },
+      {
+        "tag": "img",
+        "src": "/logos/logo-mark.svg",
+        "alt": "Active Solution Digital Service",
+        "label": null,
+        "loading": "eager",
+        "fetchpriority": null,
+        "w": "1000",
+        "h": "420",
+        "displayed": true
+      },
+      {
+        "tag": "div",
+        "src": null,
+        "alt": null,
+        "label": "Pile de quatre couches représentant les quatre étapes de la méthode",
+        "loading": null,
+        "fetchpriority": null,
+        "w": null,
+        "h": null,
+        "displayed": true
+      },
+      {
+        "tag": "img",
+        "src": "/logos/logo-mark.svg",
+        "alt": "",
+        "label": null,
+        "loading": "lazy",
+        "fetchpriority": null,
+        "w": "1000",
+        "h": "420",
+        "displayed": true
+      },
+      {
+        "tag": "img",
+        "src": "/logos/logo.svg",
+        "alt": "Active Solution Digital Service",
+        "label": null,
+        "loading": "lazy",
+        "fetchpriority": null,
+        "w": "1000",
+        "h": "550",
+        "displayed": true
+      }
+    ],
+    "dupIds": [],
+    "jsonld": [
+      "{\"@context\":\"https://schema.org\",\"@type\":\"FAQPage\",\"mainEntity\":[{\"@type\":\"Question\",\"name\":\"Qui est Active Solution Digital Service ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Active Solution Digital Service est une entreprise basée à Dakar, au Sénégal. Elle forme aux métiers du numérique, conçoit des solutions digitales sur mesure et accompagne la transformation digitale des organisations.\"}},{\"@type\":\"Question\",\"name\":\"Dans quels domaines intervenez-vous ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Nous intervenons dans trois domaines : la formation et l'éducation numérique, le développement de solutions numériques et la transformation digitale des organisations.\"}},{\"@type\":\"Question\",\"name\":\"Quelles formations proposez-vous, et pour qui ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Programmation et développement web, robotique, électronique et systèmes embarqués, Internet des objets et intelligence artificielle, pour les établissements scolaires, les organisations et les apprenants.\"}},{\"@type\":\"Question\",\"name\":\"Quels types de solutions réalisez-vous ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"Sites web, applications web et mobiles, logiciels de gestion, plateformes métier, solutions SaaS et automatisation de processus.\"}},{\"@type\":\"Question\",\"name\":\"Comment se déroule un projet, de la première discussion à la livraison ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"En quatre étapes : comprendre votre besoin, définir la solution, la concevoir et la réaliser, puis vous accompagner et la faire évoluer.\"}},{\"@type\":\"Question\",\"name\":\"Que recouvre concrètement la transformation digitale ?\",\"acceptedAnswer\":{\"@type\":\"Answer\",\"text\":\"C'est l'accompagnement d'une organisation pour digitaliser ses processus, intégrer des outils numériques et former ses équipes à leur usage.\"}}]}"
+    ],
+    "placeholders": [
+      {
+        "text": "Illustration",
+        "section": "realisations"
+      },
+      {
+        "text": "Illustration",
+        "section": "realisations"
+      },
+      {
+        "text": "Illustration",
+        "section": "realisations"
+      }
+    ],
+    "firstLinks": [
+      "/",
+      "/",
+      "/services"
+    ],
+    "fonts": [
+      "Manrope 400 normal",
+      "Manrope 500 normal",
+      "Manrope 600 normal",
+      "Manrope 700 normal",
+      "Manrope 800 normal"
+    ]
+  },
+  "network": [
+    {
+      "url": "http://localhost:3100/_next/static/media/a343f882a40d2cc9.p.1sj6eobyi31rd.woff2",
+      "type": "font",
+      "status": 200,
+      "size": 24576,
+      "enc": ""
+    },
+    {
+      "url": "http://localhost:3100/",
+      "type": "document",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/logos/logo-mark.svg",
+      "type": "image",
+      "status": 200,
+      "size": 863,
+      "enc": ""
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/29zwkhuxh17kw.css",
+      "type": "stylesheet",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/234-rd7lwxcbz.css",
+      "type": "stylesheet",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/logos/logo.svg",
+      "type": "image",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E",
+      "type": "image",
+      "status": 200,
+      "size": 0,
+      "enc": ""
+    },
+    {
+      "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23e3a93f' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M0 12 L12 0 L24 12 L36 0 L48 12 L60 0 L72 12 L84 0 L96 12' stroke-opacity='0.168'/%3E%3Cpath d='M0 22 L12 10 L24 22 L36 10 L48 22 L60 10 L72 22 L84 10 L96 22' stroke-opacity='0.116'/%3E%3Cpath d='M24 30 L42 48 L24 66 L6 48 Z' stroke-opacity='0.18'/%3E%3Cpath d='M24 38 L34 48 L24 58 L14 48 Z' stroke-opacity='0.137'/%3E%3Cpath d='M72 30 L90 48 L72 66 L54 48 Z' stroke-opacity='0.18'/%3E%3Cpath d='M72 38 L82 48 L72 58 L62 48 Z' stroke-opacity='0.137'/%3E%3Cpath d='M48 44 L52 48 L48 52 L44 48 Z' stroke-opacity='0.179'/%3E%3Cpath d='M0 74 L12 86 L24 74 L36 86 L48 74 L60 86 L72 74 L84 86 L96 74' stroke-opacity='0.116'/%3E%3Cpath d='M0 84 L12 96 L24 84 L36 96 L48 84 L60 96 L72 84 L84 96 L96 84' stroke-opacity='0.168'/%3E%3C/g%3E%3C/svg%3E",
+      "type": "image",
+      "status": 200,
+      "size": 0,
+      "enc": ""
+    },
+    {
+      "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%2307172e' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M0 12 L12 0 L24 12 L36 0 L48 12 L60 0 L72 12 L84 0 L96 12' stroke-opacity='0.034'/%3E%3Cpath d='M0 22 L12 10 L24 22 L36 10 L48 22 L60 10 L72 22 L84 10 L96 22' stroke-opacity='0.023'/%3E%3Cpath d='M24 30 L42 48 L24 66 L6 48 Z' stroke-opacity='0.04'/%3E%3Cpath d='M24 38 L34 48 L24 58 L14 48 Z' stroke-opacity='0.027'/%3E%3Cpath d='M72 30 L90 48 L72 66 L54 48 Z' stroke-opacity='0.04'/%3E%3Cpath d='M72 38 L82 48 L72 58 L62 48 Z' stroke-opacity='0.027'/%3E%3Cpath d='M48 44 L52 48 L48 52 L44 48 Z' stroke-opacity='0.036'/%3E%3Cpath d='M0 74 L12 86 L24 74 L36 86 L48 74 L60 86 L72 74 L84 86 L96 74' stroke-opacity='0.023'/%3E%3Cpath d='M0 84 L12 96 L24 84 L36 96 L48 84 L60 96 L72 84 L84 96 L96 84' stroke-opacity='0.034'/%3E%3C/g%3E%3C/svg%3E",
+      "type": "image",
+      "status": 200,
+      "size": 0,
+      "enc": ""
+    },
+    {
+      "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23edb94d' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M0 12 L12 0 L24 12 L36 0 L48 12 L60 0 L72 12 L84 0 L96 12' stroke-opacity='0.16'/%3E%3Cpath d='M0 22 L12 10 L24 22 L36 10 L48 22 L60 10 L72 22 L84 10 L96 22' stroke-opacity='0.11'/%3E%3Cpath d='M24 30 L42 48 L24 66 L6 48 Z' stroke-opacity='0.19'/%3E%3Cpath d='M24 38 L34 48 L24 58 L14 48 Z' stroke-opacity='0.13'/%3E%3Cpath d='M72 30 L90 48 L72 66 L54 48 Z' stroke-opacity='0.19'/%3E%3Cpath d='M72 38 L82 48 L72 58 L62 48 Z' stroke-opacity='0.13'/%3E%3Cpath d='M48 44 L52 48 L48 52 L44 48 Z' stroke-opacity='0.17'/%3E%3Cpath d='M0 74 L12 86 L24 74 L36 86 L48 74 L60 86 L72 74 L84 86 L96 74' stroke-opacity='0.11'/%3E%3Cpath d='M0 84 L12 96 L24 84 L36 96 L48 84 L60 96 L72 84 L84 96 L96 84' stroke-opacity='0.16'/%3E%3C/g%3E%3C/svg%3E",
+      "type": "image",
+      "status": 200,
+      "size": 0,
+      "enc": ""
+    },
+    {
+      "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23e3a93f' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M0 12 L12 0 L24 12 L36 0 L48 12 L60 0 L72 12 L84 0 L96 12'/%3E%3Cpath d='M0 22 L12 10 L24 22 L36 10 L48 22 L60 10 L72 22 L84 10 L96 22'/%3E%3Cpath d='M24 30 L42 48 L24 66 L6 48 Z'/%3E%3Cpath d='M24 38 L34 48 L24 58 L14 48 Z'/%3E%3Cpath d='M72 30 L90 48 L72 66 L54 48 Z'/%3E%3Cpath d='M72 38 L82 48 L72 58 L62 48 Z'/%3E%3Cpath d='M48 44 L52 48 L48 52 L44 48 Z'/%3E%3Cpath d='M0 74 L12 86 L24 74 L36 86 L48 74 L60 86 L72 74 L84 86 L96 74'/%3E%3Cpath d='M0 84 L12 96 L24 84 L36 96 L48 84 L60 96 L72 84 L84 96 L96 84'/%3E%3C/g%3E%3C/svg%3E",
+      "type": "image",
+      "status": 200,
+      "size": 0,
+      "enc": ""
+    },
+    {
+      "url": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23e3a93f' stroke-width='0.6' stroke-linejoin='round'%3E%3Cpath d='M0 12 L12 0 L24 12 L36 0 L48 12 L60 0 L72 12 L84 0 L96 12' stroke-opacity='0.08'/%3E%3Cpath d='M0 22 L12 10 L24 22 L36 10 L48 22 L60 10 L72 22 L84 10 L96 22' stroke-opacity='0.055'/%3E%3Cpath d='M24 30 L42 48 L24 66 L6 48 Z' stroke-opacity='0.095'/%3E%3Cpath d='M24 38 L34 48 L24 58 L14 48 Z' stroke-opacity='0.065'/%3E%3Cpath d='M72 30 L90 48 L72 66 L54 48 Z' stroke-opacity='0.095'/%3E%3Cpath d='M72 38 L82 48 L72 58 L62 48 Z' stroke-opacity='0.065'/%3E%3Cpath d='M48 44 L52 48 L48 52 L44 48 Z' stroke-opacity='0.085'/%3E%3Cpath d='M0 74 L12 86 L24 74 L36 86 L48 74 L60 86 L72 74 L84 86 L96 74' stroke-opacity='0.055'/%3E%3Cpath d='M0 84 L12 96 L24 84 L36 96 L48 84 L60 96 L72 84 L84 96 L96 84' stroke-opacity='0.08'/%3E%3C/g%3E%3C/svg%3E",
+      "type": "image",
+      "status": 200,
+      "size": 0,
+      "enc": ""
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/2jygzg74srhbo.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/1zrpvnvdv4qoa.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/1799mnl2bbi8e.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/turbopack-3-ry682tkyiqk.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/0qjfut2iftf44.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/1py18mvnmfoi4.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/260lv0xr7-tdp.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/2od9uxm_fjm2m.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/_next/static/chunks/43ab9gstha5ke.js",
+      "type": "script",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/favicon.ico",
+      "type": "other",
+      "status": 404,
+      "size": 0,
+      "enc": ""
+    },
+    {
+      "url": "http://localhost:3100/services?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": "failed",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:3100/realisations?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": "failed",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:3100/?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": 200,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/formations?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": 404,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/a-propos?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": "failed",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:3100/contact?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": 404,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/services?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": 404,
+      "size": 0,
+      "enc": "gzip"
+    },
+    {
+      "url": "http://localhost:3100/formations?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": "failed",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:3100/contact?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": "failed",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:3100/a-propos?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": "failed",
+      "failure": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://localhost:3100/realisations?_rsc=5CB68i4pnAekjehf",
+      "type": "fetch",
+      "status": "failed",
+      "failure": "net::ERR_ABORTED"
+    }
+  ],
+  "console": {
+    "duringLoad": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ],
+    "all": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      }
+    ]
+  },
+  "anim1440Bottom": {
+    "total": 174,
+    "running": 57,
+    "infiniteRunning": 47,
+    "infiniteOffscreen": 42,
+    "groups": {
+      "hero|motif-band|∞|hors-écran": 1,
+      "hero|motif-band-inner|∞|hors-écran": 1,
+      "hero|twinkle|∞|hors-écran": 16,
+      "hero|pulse-ring|∞|hors-écran": 1,
+      "hero|scroll-dot|∞|hors-écran": 1,
+      "formations|twinkle-soft|∞|hors-écran": 6,
+      "formations|fo-draw|1|hors-écran": 2,
+      "formations|fo-enter|1|hors-écran": 3,
+      "faq|twinkle-soft|∞|hors-écran": 6,
+      "contact|twinkle-soft|∞|hors-écran": 6,
+      "partenaires|twinkle-soft|∞|hors-écran": 4,
+      "partenaires|twinkle-soft|∞|visible": 2,
+      "partenaires|pt-breathe|∞|visible": 1,
+      "partenaires|pt-sonar|∞|visible": 2,
+      "header|Animation|1|hors-écran": 2,
+      "partenaires|Animation|1|hors-écran": 3
+    }
+  },
+  "anim1440Top": {
+    "total": 257,
+    "running": 140,
+    "infiniteRunning": 52,
+    "infiniteOffscreen": 30,
+    "groups": {
+      "expertises|translate|1|hors-écran": 2,
+      "expertises|opacity|1|hors-écran": 17,
+      "expertises|background-color|1|hors-écran": 2,
+      "expertises|border-bottom-color|1|hors-écran": 2,
+      "expertises|border-left-color|1|hors-écran": 2,
+      "expertises|border-right-color|1|hors-écran": 2,
+      "expertises|border-top-color|1|hors-écran": 2,
+      "expertises|box-shadow|1|hors-écran": 2,
+      "hero|motif-band|∞|visible": 1,
+      "hero|motif-band-inner|∞|visible": 1,
+      "hero|twinkle|∞|visible": 16,
+      "hero|pulse-ring|∞|visible": 1,
+      "hero|scroll-dot|∞|visible": 1,
+      "expertises|motif-band|∞|visible": 1,
+      "expertises|motif-band-inner|∞|visible": 1,
+      "expertises|twinkle-soft|∞|hors-écran": 6,
+      "formations|twinkle-soft|∞|hors-écran": 6,
+      "faq|twinkle-soft|∞|hors-écran": 6,
+      "faq|fo-enter|1|hors-écran": 13,
+      "contact|twinkle-soft|∞|hors-écran": 6,
+      "partenaires|twinkle-soft|∞|hors-écran": 6,
+      "faq|Animation|1|hors-écran": 6,
+      "methode|Animation|1|hors-écran": 31,
+      "expertises|Animation|1|hors-écran": 7
+    }
+  },
+  "linkStatus": {
+    "/": "200",
+    "/services": "404",
+    "/realisations": "404",
+    "/formations": "404",
+    "/a-propos": "404",
+    "/contact": "404",
+    "#expertises": "ancre OK",
+    "/services#developpement": "404 + ANCRE ABSENTE",
+    "/services#transformation": "404 + ANCRE ABSENTE",
+    "#contact": "ancre OK",
+    "https://wa.me/221768095159?text=Bonjour%2C%20j'ai%20une%20question%20concernant%20": "https",
+    "tel:+221768095159": "tel",
+    "mailto:contact@groupactivesolution.com": "mailto",
+    "https://www.google.com/maps/search/?api=1&query=Libert%C3%A9%201%2C%20Dakar%2C%20S%C3%A9n%C3%A9gal": "https",
+    "https://www.linkedin.com/company/actives-solutions/": "https",
+    "https://www.facebook.com/share/1HX8JAow32/": "https",
+    "https://www.instagram.com/active_solution_groupe": "https",
+    "https://vm.tiktok.com/ZS9UKhCFqLhBk-yJHdC/": "https",
+    "/#expertise-education": "200 + ancre OK",
+    "/#expertise-developpement": "200 + ancre OK",
+    "/#expertise-transformation": "200 + ancre OK",
+    "/#realisations": "200 + ancre OK",
+    "/#methode": "200 + ancre OK",
+    "/#formations": "200 + ancre OK",
+    "/#faq": "200 + ancre OK",
+    "/#contact": "200 + ancre OK",
+    "#top": "ancre OK"
+  }
+}

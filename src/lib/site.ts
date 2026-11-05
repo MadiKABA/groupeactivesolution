@@ -1,8 +1,7 @@
-// CONTENU PROVISOIRE : rédaction en cours. Remplacer ces valeurs sans toucher aux composants.
+// Contenu validé : novembre 2026 (document Textes validés de la page d'accueil). Modifier ces valeurs sans toucher aux composants.
 
 /*
  * Coordonnées du site : source UNIQUE (aucun numéro, e-mail ni lien WhatsApp en dur dans un composant).
- * NUMÉRO ISSU DE L'ANCIEN SITE (+221 76 809 51 59) : À CONFIRMER comme numéro WhatsApp valide avant publication.
  */
 const STREET = "Liberté 1";
 const CITY = "Dakar";
@@ -18,7 +17,7 @@ export const SITE_CONTACT = {
   whatsappNumber: "221768095159",
   whatsappMessage: "Bonjour, j'ai une question concernant ",
   phone: { display: "+221 76 809 51 59", href: "tel:+221768095159" },
-  email: "contact@groupactivesolution.com",
+  email: "contact.activesolution@gmail.com",
   address: {
     display: ADDRESS,
     // Champs du PostalAddress (JSON-LD) : ni rue précise ni code postal connus, ne pas en inventer.

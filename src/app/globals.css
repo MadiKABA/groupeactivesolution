@@ -220,10 +220,6 @@
   --text-answer--line-height: 1.7;
   --text-answer-sm: 0.96875rem;
   --text-answer-sm--line-height: 1.7;
-  --text-counter: 0.78125rem;
-  --text-counter--line-height: 1;
-  --text-counter-sm: 0.71875rem;
-  --text-counter-sm--line-height: 1;
   /* Partenaires : titre (2.1rem en mobile) */
   --text-display-partners: clamp(2.1rem, 5vw, 4.5rem);
   --text-display-partners--line-height: 1.05;
@@ -250,7 +246,7 @@
   --text-email-sm--line-height: 1.4;
   --text-h3-lg: 1.5rem;
   --text-h3-lg--line-height: 1.25;
-  /* Réalisations : titre sous 640px (38px), index (15px), pastille « Illustration » (10.5px), légendes
+  /* Réalisations : titre sous 640px (38px), index (15px), légendes
      des tuiles (17px, 14px), titre de la barre compacte (22px, puis 28 à 40px), numéro du projet, phrase de fin */
   --text-display-mobile: 2.375rem;
   --text-display-mobile--line-height: 1.08;
@@ -271,8 +267,6 @@
   --text-closing: clamp(1.625rem, 3.2vw, 2.5rem);
   --text-closing--line-height: 1.15;
   /* FAQ : onglets (15.5px), titre du bloc contact sous 1024px (21px), texte du bloc contact (15px) */
-  --text-faq-tab: 0.96875rem;
-  --text-faq-tab--line-height: 1;
   --text-aside-sm: 1.3125rem;
   --text-aside-sm--line-height: 1.3;
   --text-aside-body: 0.9375rem;
@@ -2208,17 +2202,16 @@
     }
   }
 
-  /*
+/*
    * Section FAQ (fond clair) — effets validés pour cette section : liseré haut, halo doré derrière
    * le titre, zigzag doré en coin (statique), mot du titre en dégradé or
    * foncé (.gold-ink-text), bloc contact sombre (zigzag, halo, projecteur, scène du « ? »).
    *
    * États posés par FaqInteractive — sur .faq-root : data-js (état masqué initial), data-in-a (en-tête,
-   * onglets, cartes), data-in-s (bloc contact ; départ dans --fq-side-at), data-swapped (cascades
-   * suivantes en WAAPI) ; sur .faq-scene : data-inview, data-pulse ; sur .faq-aside : data-spot.
+   * cartes), data-in-s (bloc contact ; départ dans --fq-side-at) ; sur .faq-scene : data-inview ;
+   * sur .faq-aside : data-spot.
    *
-   * Transform et opacité partout, sauf exceptions assumées : grid-template-rows (réponse), largeur de
-   * l'indicateur d'onglet, hauteur de la liste au changement de catégorie, tracé de la coche.
+   * Transform et opacité partout.
    */
   .faq-topline {
     background-image: linear-gradient(90deg, transparent, color-mix(in oklab, var(--color-brand-gold) 50%, transparent), transparent);
@@ -2253,8 +2246,7 @@
     opacity: 0;
   }
 
-  .faq-root[data-in-a] .fq-a:not(.faq-card),
-  .faq-root[data-in-a]:not([data-swapped]) .faq-card.fq-a {
+  .faq-root[data-in-a] .fq-a {
     animation: fo-enter var(--fo-dur, 500ms) var(--ease-out-expo) var(--fo-d, 0ms) backwards;
   }
 
@@ -2264,165 +2256,6 @@
 
   .faq-root[data-in-s] .fq-s {
     animation: fo-enter var(--fo-dur, 500ms) var(--ease-out-expo) calc(var(--fq-side-at, 0ms) + var(--fo-d, 0ms)) backwards;
-  }
-
-  /* ---------- Onglets : pastilles (fond en ::before) et indicateur unique qui glisse dessous ---------- */
-  .faq-tablist {
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .faq-indicator {
-    transition:
-      translate 380ms var(--ease-out-expo),
-      width 380ms var(--ease-out-expo);
-  }
-
-  .faq-tab {
-    color: color-mix(in oklab, var(--color-brand-navy) 78%, transparent);
-    transition:
-      color 220ms var(--ease-soft),
-      translate 200ms var(--ease-soft);
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -20;
-      border: 1px solid color-mix(in oklab, var(--color-brand-navy) 14%, transparent);
-      border-radius: inherit;
-      background-color: var(--color-surface);
-      transition:
-        opacity 220ms var(--ease-soft),
-        background-color 200ms var(--ease-soft);
-    }
-
-    &[aria-selected="true"] {
-      color: var(--color-text-on-dark);
-
-      &::before {
-        opacity: 0;
-      }
-    }
-  }
-
-  .faq-counter {
-    background-color: color-mix(in oklab, var(--color-brand-navy) 8%, transparent);
-    transition:
-      background-color 220ms var(--ease-soft),
-      color 220ms var(--ease-soft);
-  }
-
-  .faq-tab[aria-selected="true"] .faq-counter {
-    background-color: var(--color-brand-gold);
-    color: var(--color-brand-navy);
-  }
-
-  /* ---------- Accordéon : une carte ouverte (classe is-open, aria-expanded sur le bouton) ---------- */
-  .faq-list {
-    transition: height 350ms var(--ease-out-expo);
-  }
-
-  .faq-card {
-    transition: translate 240ms var(--ease-soft);
-
-    /* Ombre de survol : seule l'opacité du calque change (jamais box-shadow) */
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      box-shadow: 0 22px 40px -26px color-mix(in oklab, var(--color-brand-navy) 30%, transparent);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 240ms var(--ease-soft);
-    }
-  }
-
-  .faq-ring {
-    border: 1px solid color-mix(in oklab, var(--color-gold-line) 55%, transparent);
-    box-shadow:
-      0 0 0 4px color-mix(in oklab, var(--color-brand-gold) 14%, transparent),
-      0 20px 36px -26px color-mix(in oklab, var(--color-brand-navy) 22%, transparent);
-    opacity: 0;
-    transition: opacity 240ms var(--ease-soft);
-  }
-
-  .faq-bar {
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: transform 360ms var(--ease-out-expo);
-  }
-
-  .faq-plus-icon {
-    transition: transform 320ms var(--ease-overshoot);
-  }
-
-  .faq-num {
-    transition: color 240ms var(--ease-soft);
-  }
-
-  .faq-answer {
-    grid-template-rows: 0fr;
-    visibility: hidden;
-    transition:
-      grid-template-rows 380ms var(--ease-out-expo),
-      visibility 0s linear 380ms;
-  }
-
-  .faq-answer-inner {
-    opacity: 0;
-    transform: translateY(10px);
-    transition:
-      opacity 200ms var(--ease-soft),
-      transform 200ms var(--ease-soft);
-  }
-
-  @keyframes fq-pop {
-    50% {
-      transform: scale(1.06);
-    }
-  }
-
-  .faq-card.is-open {
-    .faq-ring {
-      opacity: 1;
-    }
-
-    .faq-bar {
-      transform: scaleY(1);
-    }
-
-    .faq-plus {
-      animation: fq-pop 240ms var(--ease-soft);
-    }
-
-    .faq-plus-icon {
-      transform: rotate(45deg);
-    }
-
-    .faq-num {
-      color: var(--color-gold-ink-strong);
-    }
-
-    .faq-answer {
-      grid-template-rows: 1fr;
-      visibility: visible;
-      transition:
-        grid-template-rows 380ms var(--ease-out-expo),
-        visibility 0s;
-    }
-
-    .faq-answer-inner {
-      opacity: 1;
-      transform: none;
-      transition:
-        opacity 320ms var(--ease-out-expo) 90ms,
-        transform 320ms var(--ease-out-expo) 90ms;
-    }
   }
 
   /* ---------- Bloc contact ---------- */
@@ -2486,22 +2319,6 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .faq-tab[aria-selected="false"]:hover {
-      translate: 0 -1px;
-
-      &::before {
-        background-color: color-mix(in oklab, var(--color-brand-navy) 5%, var(--color-surface));
-      }
-    }
-
-    .faq-card:not(.is-open):hover {
-      translate: 0 -2px;
-
-      &::after {
-        opacity: 1;
-      }
-    }
-
     .faq-contact:hover {
       background-color: color-mix(in oklab, white 8%, transparent);
 
@@ -2722,15 +2539,9 @@
 
     .faq-root[data-in-a] .fq-a,
     .faq-root[data-in-s] .fq-s,
-    .faq-card.is-open .faq-plus,
     .faq-scene-halo,
     .faq-scene .fqm * {
       animation: none;
-    }
-
-    .faq-card.is-open .faq-plus-icon,
-    .faq-answer-inner {
-      transform: none;
     }
 
     .fqm-check {
@@ -3722,11 +3533,43 @@
     color: transparent;
   }
 
-  .hero-text-shine {
-    background-image: linear-gradient(110deg, transparent 35%, color-mix(in oklab, white 55%, transparent) 50%, transparent 65%);
-    background-size: 250% 100%;
+  /*
+   * Ligne du titre du hero : texte unique dans le DOM. Inactive : blanc à 35 % (60 % au survol).
+   * Active : le texte devient transparent et le pseudo-élément doré (contenu lu dans data-text,
+   * sans texte alternatif) apparaît en fondu : aucun saut de couleur.
+   */
+  .hero-line-text {
+    position: relative;
+    display: inline-block;
+    color: color-mix(in oklab, var(--color-text-on-dark) 35%, transparent);
+    transition: color 500ms ease-out;
+  }
+
+  .hero-line:hover .hero-line-text {
+    color: color-mix(in oklab, var(--color-text-on-dark) 60%, transparent);
+    transition-duration: var(--duration-base);
+  }
+
+  .hero-line-text::after {
+    content: attr(data-text);
+    content: attr(data-text) / "";
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(90deg, var(--color-brand-gold-light), var(--color-brand-gold), var(--color-brand-gold-deep));
     background-clip: text;
+    -webkit-background-clip: text;
     color: transparent;
+    opacity: 0;
+    transition: opacity 500ms ease-out;
+  }
+
+  .hero-line[data-active] .hero-line-text,
+  .hero-line[data-active]:hover .hero-line-text {
+    color: transparent;
+  }
+
+  .hero-line[data-active] .hero-line-text::after {
+    opacity: 1;
   }
 }
 
@@ -4070,6 +3913,30 @@
     @media (width >=68.75rem) {
       flex-direction: row;
       gap: 48px;
+    }
+  }
+
+  /* Numéro + icône WhatsApp : une seule rangée, icône visible (20px) à 10px du numéro (la cible de 44px déborde de 12px de chaque côté) */
+  .ft-contact-phone {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .ft-contact-wa {
+    display: inline-flex;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    margin-left: -2px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    color: color-mix(in oklab, white 88%, transparent);
+    transition: color 220ms var(--ease-soft);
+
+    &:is(:hover, :focus-visible) {
+      color: var(--color-brand-gold-light);
     }
   }
 
@@ -6576,7 +6443,7 @@
       height: var(--cv-d);
       border-radius: 50%;
       grid-template-rows: 1fr auto auto auto auto 1fr;
-      align-content: stretch;
+      align-content: center;
     }
 
     .cv-disc {
@@ -8524,6 +8391,13 @@
 
     @media (width >=64rem) {
       grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /* Trois repères (accueil) : trois colonnes dès 1024px */
+    &[data-cols="3"] {
+      @media (width >=64rem) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
   }
 
@@ -13288,10 +13162,6 @@
   .mh-text {
     min-width: 0;
     container-type: inline-size;
-
-    @media (width >=48rem) {
-      align-self: center;
-    }
   }
 
   .mh-title {
@@ -13351,23 +13221,17 @@
 
   /* ---------- Arche ---------- */
   .mh-arche {
-    /* Cellule de droite : 95 % de sa largeur, 95 % de sa hauteur moins la légende, rapport fixe 450 / 533 (0,844).
-       Décalage du contour = 5 % de la cellule (même valeur en x et en y). */
-    --mh-o: 5cqw;
+    /* Cellule de droite : hauteur = ligne de la grille = hauteur du bloc de texte ; l'arche en occupe 100 %.
+       Largeur = 95 % de la cellule, réduite si le rapport largeur / hauteur dépasserait 0,95. */
     --mh-sw: 95cqw;
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
     container-type: inline-size;
     width: 100%;
     max-width: 27.6rem;
     margin-inline: auto;
 
     @media (width >=48rem) {
-      --mh-o: min(5cqw, 5cqh);
-      --mh-sw: min(95cqw, calc((95cqh - 2.75rem) * 0.844));
+      --mh-sw: min(95cqw, 95cqh);
       container-type: size;
       align-self: stretch;
       max-width: none;
@@ -13378,36 +13242,37 @@
   .mh-stage {
     position: relative;
     width: var(--mh-sw);
-    aspect-ratio: 450 / 533;
+    aspect-ratio: 4 / 5;
+
+    @media (width >=48rem) {
+      height: 100%;
+      aspect-ratio: auto;
+    }
   }
 
-  /* Contour doré : même arche décalée vers la droite et vers le haut de 5 % de la cellule */
+  /* Contour doré : même arche (même haut, même bas), décalée de 5 % de la cellule vers la droite */
   .mh-outline {
     position: absolute;
-    left: var(--mh-o);
-    top: calc(var(--mh-o) * -1);
+    left: 5cqw;
+    top: 0;
     width: 100%;
-    aspect-ratio: 450 / 533;
-    overflow: visible;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1.5px solid var(--color-brand-gold);
+    border-bottom: 0;
+    border-radius: calc(var(--mh-sw) / 2) calc(var(--mh-sw) / 2) 0 0;
     pointer-events: none;
-
-    path {
-      fill: none;
-      stroke: var(--color-brand-gold);
-      stroke-width: 1.5;
-      vector-effect: non-scaling-stroke;
-    }
   }
 
   .mh-door {
     position: relative;
     display: block;
     width: 100%;
-    aspect-ratio: 450 / 533;
+    height: 100%;
     padding: 0;
     border: 0;
     /* demi-cercle en haut : rayon = moitié de la largeur */
-    border-radius: 50% 50% 0 0 / 42.19% 42.19% 0 0;
+    border-radius: calc(var(--mh-sw) / 2) calc(var(--mh-sw) / 2) 0 0;
     overflow: hidden;
     isolation: isolate;
     transform: translateZ(0);
@@ -13561,6 +13426,9 @@
   }
 
   .mh-caption {
+    position: absolute;
+    top: 100%;
+    left: 0;
     display: grid;
     margin-top: 1.375rem;
     font-size: var(--text-xs);

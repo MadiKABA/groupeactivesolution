@@ -1,6 +1,10 @@
+// Contenu validé : novembre 2026 (document Textes validés de la page d'accueil). Modifier ces valeurs sans toucher aux composants.
+
 import { Code2, GraduationCap, Settings2, type LucideIcon } from "lucide-react";
 
+import { FORMATION_AUDIENCES } from "./formations";
 import { ROUTES } from "./routes";
+import { typo } from "./typography";
 
 export type ExpertiseSlug = "education" | "developpement" | "transformation";
 /** Ancre de la fiche de l'expertise sur la page /services. */
@@ -63,11 +67,12 @@ export type Expertise = {
 export const expertisesIntro = {
   eyebrow: "Nos expertises",
   titleLines: ["Trois expertises.", "Une vision."],
-  intro:
-    "Nous connectons l'éducation, la technologie et la stratégie pour transformer les idées en compétences et en solutions concrètes.",
+  intro: typo(
+    "Nous formons les talents, nous développons vos outils numériques et nous accompagnons la transformation de votre organisation.",
+  ),
 } as const;
 
-// Destinations à confirmer (fiches : sections de l'accueil) ; /ecole et /formations redirigent vers /formations/ecole.
+// Textes de l'accueil validés (novembre 2026) ; les fiches de /services (champ `fiche`) sont indépendantes.
 export const expertises = [
   {
     slug: "education",
@@ -76,10 +81,10 @@ export const expertises = [
     icon: GraduationCap,
     tagline: "Donner aux talents les moyens de créer le futur.",
     description:
-      "Des programmes qui permettent aux jeunes de découvrir la programmation, la robotique et les technologies émergentes.",
-    services: ["Programmation", "Robotique", "Électronique", "Internet des objets", "Intelligence artificielle"],
-    idealFor: ["Établissements scolaires", "Jeunes talents"],
-    link: { label: "Découvrir les programmes", href: "/formations" },
+      "Votre école s’associe à Active Solution, et nous venons apprendre à vos élèves à comprendre, créer et maîtriser le numérique.",
+    services: ["Scratch", "Robotique", "Intelligence artificielle", "Objets connectés", "Cybersécurité", "Protection des enfants en ligne"],
+    idealFor: [FORMATION_AUDIENCES.schools, FORMATION_AUDIENCES.youth, FORMATION_AUDIENCES.organisations],
+    link: { label: "Devenir école partenaire", href: ROUTES.contact },
     alt: "Jeunes apprenants en atelier de programmation et de robotique",
     focalDesktop: "50% 45%",
     focalMobile: "50% 40%",
@@ -114,8 +119,9 @@ export const expertises = [
     name: "Développement digital",
     icon: Code2,
     tagline: "Transformer les idées en solutions numériques.",
-    description:
-      "Des sites web, applications et logiciels conçus autour des besoins réels des entreprises et des organisations.",
+    description: typo(
+      "Vous avez une idée, un besoin, un projet qui vous tient à cœur ? Nous en faisons un site, une application ou un logiciel qui vous ressemble et qui vous fait gagner du temps.",
+    ),
     services: [
       "Sites web",
       "Applications web et mobiles",
@@ -123,8 +129,8 @@ export const expertises = [
       "Plateformes métier",
       "Solutions SaaS",
     ],
-    idealFor: ["Entreprises", "Organisations", "Entrepreneurs"],
-    link: { label: "Découvrir nos solutions", href: "/services#creer" },
+    idealFor: ["Entreprises", "Collectivités", "Entrepreneurs"],
+    link: { label: "Voir nos réalisations", href: "/#realisations" },
     alt: "Interface d'application web et mobile en cours de développement",
     focalDesktop: "50% 50%",
     focalMobile: "50% 45%",
@@ -159,11 +165,12 @@ export const expertises = [
     name: "Transformation digitale",
     icon: Settings2,
     tagline: "Faire évoluer les organisations durablement.",
-    description:
-      "Nous accompagnons les équipes dans l'adoption des outils numériques et l'amélioration de leurs processus.",
-    services: ["Conseil", "Digitalisation des processus", "Formation des équipes", "Intégration d'outils"],
-    idealFor: ["Entreprises", "Institutions", "Organisations"],
-    link: { label: "Transformer votre organisation", href: "/services#transformer" },
+    description: typo(
+      "Vos équipes perdent du temps sur des tâches répétitives ? Nous les accompagnons pour adopter les bons outils et travailler plus simplement, plus vite, avec moins de stress.",
+    ),
+    services: ["Conseil", "Digitalisation des processus", "Formation des équipes", "Automatisation"],
+    idealFor: ["Entreprises", "Institutions", "Associations"],
+    link: { label: "Transformer votre organisation", href: ROUTES.contact },
     alt: "Équipe accompagnée dans l'adoption de nouveaux outils numériques",
     focalDesktop: "50% 45%",
     focalMobile: "50% 35%",

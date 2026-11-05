@@ -1,0 +1,421 @@
+// Mesures d'audit de la page d'accueil (build de production). Usage : node audit.mjs <phase>
+import fs from "node:fs";
+import path from "node:path";
+import puppeteer from "puppeteer-core";
+
+const URL = "http://localhost:3100/";
+const OUT = path.resolve("out");
+fs.mkdirSync(OUT, { recursive: true });
+const AXE = fs.readFileSync("node_modules/axe-core/axe.min.js", "utf8");
+const phase = process.argv[2] ?? "all";
+const save = (name, data) => fs.writeFileSync(path.join(OUT, name), typeof data === "string" ? data : JSON.stringify(data, null, 2));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const browser = await puppeteer.launch({
+  executablePath: "/usr/bin/google-chrome",
+  headless: true,
+  args: ["--no-sandbox", "--hide-scrollbars"],
+});
+
+async function open(width, { height = 900, js = true, reduce = false, mobile = width < 768, prep } = {}) {
+  const page = await browser.newPage();
+  await page.setJavaScriptEnabled(js);
+  await page.setViewport({ width, height, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: 1 });
+  if (reduce) await page.emulateMediaFeatures([{ name: "prefers-reduced-motion", value: "reduce" }]);
+  const consoleMsgs = [];
+  page.on("console", (m) => consoleMsgs.push({ type: m.type(), text: m.text().slice(0, 300) }));
+  page.on("pageerror", (e) => consoleMsgs.push({ type: "pageerror", text: String(e).slice(0, 300) }));
+  const requests = [];
+  page.on("requestfinished", async (req) => {
+    const res = req.response();
+    let size = 0;
+    try {
+      size = Number(res?.headers()["content-length"] ?? 0);
+    } catch {}
+    requests.push({ url: req.url(), type: req.resourceType(), status: res?.status(), size, enc: res?.headers()["content-encoding"] ?? "" });
+  });
+  page.on("requestfailed", (req) => requests.push({ url: req.url(), type: req.resourceType(), status: "failed", failure: req.failure()?.errorText }));
+  if (prep) await prep(page);
+  await page.goto(URL, { waitUntil: "networkidle0", timeout: 60000 });
+  return { page, consoleMsgs, requests };
+}
+
+/** Défilement progressif jusqu'en bas (déclenche les révélations), puis retour en haut. */
+async function scrollThrough(page, step = 400, wait = 120) {
+  const total = await page.evaluate(() => document.documentElement.scrollHeight);
+  for (let y = 0; y < total; y += step) {
+    await page.evaluate((v) => window.scrollTo(0, v), y);
+    await sleep(wait);
+  }
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await sleep(2500);
+}
+
+async function axe(page) {
+  await page.addScriptTag({ content: AXE });
+  return page.evaluate(async () => {
+    const r = await window.axe.run(document, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] }, resultTypes: ["violations", "incomplete"] });
+    const map = (list) =>
+      list.map((v) => ({ id: v.id, impact: v.impact, help: v.help, tags: v.tags.filter((t) => t.startsWith("wcag")), count: v.nodes.length, nodes: v.nodes.slice(0, 12).map((n) => ({ target: n.target.join(" "), html: n.html.slice(0, 220), summary: n.failureSummary?.slice(0, 400), data: n.any?.[0]?.data ?? null })) }));
+    return { violations: map(r.violations), incomplete: map(r.incomplete) };
+  });
+}
+
+const SECTIONS = ["hero", "expertises", "realisations", "methode", "formations", "faq", "contact", "partenaires"];
+
+async function census(page) {
+  return page.evaluate((SECTIONS) => {
+    const rect = (el) => el.getBoundingClientRect();
+    const heights = Object.fromEntries(SECTIONS.map((id) => [id, Math.round(document.getElementById(id)?.getBoundingClientRect().height ?? -1)]));
+    heights.footer = Math.round(document.querySelector("footer")?.getBoundingClientRect().height ?? -1);
+    heights.total = document.documentElement.scrollHeight;
+    // Textes : taille réelle des éléments qui portent du texte visible.
+    const small = new Map();
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const text = node.textContent.trim();
+      if (!text) continue;
+      const el = node.parentElement;
+      if (!el || el.closest("script,style,noscript,[aria-hidden=true],.sr-only,[hidden]")) continue;
+      const cs = getComputedStyle(el);
+      if (cs.display === "none" || cs.visibility === "hidden") continue;
+      const r = rect(el);
+      if (r.width === 0 || r.height === 0) continue;
+      const size = parseFloat(cs.fontSize);
+      if (size < 14) {
+        const key = `${size}px|${cs.textTransform}|${cs.letterSpacing}|${cs.fontWeight}`;
+        const entry = small.get(key) ?? { size, transform: cs.textTransform, spacing: cs.letterSpacing, weight: cs.fontWeight, count: 0, samples: [] };
+        entry.count += 1;
+        if (entry.samples.length < 6 && !entry.samples.includes(text.slice(0, 40))) entry.samples.push(text.slice(0, 40));
+        small.set(key, entry);
+      }
+    }
+    // Cibles interactives.
+    const targets = [...document.querySelectorAll("a[href],button,[role=tab],[role=radio],input,textarea,select,summary")]
+      .filter((el) => {
+        const cs = getComputedStyle(el);
+        const r = rect(el);
+        return cs.display !== "none" && cs.visibility !== "hidden" && r.width > 0 && r.height > 0 && !el.closest("[inert],[hidden]");
+      })
+      .map((el) => {
+        const r = rect(el);
+        return { tag: el.tagName.toLowerCase(), name: (el.getAttribute("aria-label") || el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 50), w: Math.round(r.width), h: Math.round(r.height), section: el.closest("section,header,footer")?.id || el.closest("section,header,footer")?.tagName.toLowerCase() };
+      });
+    const under24 = targets.filter((t) => t.w < 24 || t.h < 24);
+    const under44 = targets.filter((t) => t.w < 44 || t.h < 44);
+    let depth = 0;
+    const measure = (el, d) => {
+      depth = Math.max(depth, d);
+      for (const c of el.children) measure(c, d + 1);
+    };
+    measure(document.documentElement, 1);
+    return {
+      heights,
+      scrollWidth: document.documentElement.scrollWidth,
+      clientWidth: document.documentElement.clientWidth,
+      small: [...small.values()].sort((a, b) => a.size - b.size),
+      targets: targets.length,
+      under24,
+      under44: under44.length,
+      under44List: under44.slice(0, 60),
+      domNodes: document.getElementsByTagName("*").length,
+      depth,
+    };
+  }, SECTIONS);
+}
+
+async function animations(page) {
+  return page.evaluate(() => {
+    const vh = innerHeight;
+    const list = document.getAnimations().map((a) => {
+      const t = a.effect?.target;
+      const el = t instanceof Element ? t : null;
+      const r = el?.getBoundingClientRect();
+      const timing = a.effect?.getComputedTiming?.() ?? {};
+      return {
+        name: a.animationName || a.transitionProperty || a.constructor.name,
+        cls: (el?.className?.baseVal ?? el?.className ?? "").toString().slice(0, 60),
+        state: a.playState,
+        infinite: timing.iterations === Infinity,
+        onscreen: r ? r.bottom > 0 && r.top < vh && r.width > 0 : false,
+        section: el?.closest("section,header,footer")?.id || el?.closest("section,header,footer")?.tagName?.toLowerCase(),
+      };
+    });
+    const running = list.filter((a) => a.state === "running");
+    const by = {};
+    for (const a of running) {
+      const k = `${a.section}|${a.name}|${a.infinite ? "∞" : "1"}|${a.onscreen ? "visible" : "hors-écran"}`;
+      by[k] = (by[k] ?? 0) + 1;
+    }
+    return { total: list.length, running: running.length, infiniteRunning: running.filter((a) => a.infinite).length, infiniteOffscreen: running.filter((a) => a.infinite && !a.onscreen).length, groups: by };
+  });
+}
+
+const results = {};
+
+// ---------------- 1. Desktop 1440 : structure, liens, réseau, console ----------------
+if (phase === "all" || phase === "structure") {
+  const { page, consoleMsgs, requests } = await open(1440);
+  await sleep(1500);
+  const firstConsole = [...consoleMsgs];
+  await scrollThrough(page);
+  const structure = await page.evaluate(() => {
+    const headings = [...document.querySelectorAll("h1,h2,h3,h4,h5,h6")].map((h) => ({
+      level: Number(h.tagName[1]),
+      text: h.textContent.trim().replace(/\s+/g, " ").slice(0, 90),
+      hidden: !!h.closest("[hidden],noscript") || getComputedStyle(h).display === "none" || h.getBoundingClientRect().height === 0,
+      section: h.closest("section,footer,header")?.id || h.closest("section,footer,header")?.tagName.toLowerCase(),
+    }));
+    const landmarks = [...document.querySelectorAll("header,nav,main,footer,aside,section[aria-label],section[aria-labelledby],[role=region],[role=navigation],[role=banner],[role=contentinfo],dialog")].map((el) => ({
+      tag: el.tagName.toLowerCase(),
+      role: el.getAttribute("role"),
+      label: el.getAttribute("aria-label") || (el.getAttribute("aria-labelledby") ? document.getElementById(el.getAttribute("aria-labelledby"))?.textContent.trim().slice(0, 60) : null),
+      inSection: el.parentElement?.closest("section,header,footer")?.id || null,
+      displayed: getComputedStyle(el).display !== "none",
+    }));
+    const links = [...document.querySelectorAll("a")].map((a) => ({
+      href: a.getAttribute("href"),
+      text: (a.getAttribute("aria-label") || a.textContent || "").trim().replace(/\s+/g, " ").slice(0, 70),
+      target: a.getAttribute("target"),
+      rel: a.getAttribute("rel"),
+      section: a.closest("section,header,footer,dialog")?.id || a.closest("section,header,footer,dialog")?.tagName.toLowerCase(),
+      displayed: a.getClientRects().length > 0,
+      inert: !!a.closest("[inert]"),
+    }));
+    const images = [...document.querySelectorAll("img,svg[role=img],[role=img]")].map((i) => ({
+      tag: i.tagName.toLowerCase(),
+      src: i.getAttribute("src")?.slice(0, 90) ?? null,
+      alt: i.getAttribute("alt"),
+      label: i.getAttribute("aria-label"),
+      loading: i.getAttribute("loading"),
+      fetchpriority: i.getAttribute("fetchpriority"),
+      w: i.getAttribute("width"),
+      h: i.getAttribute("height"),
+      displayed: i.getClientRects().length > 0,
+    }));
+    const ids = [...document.querySelectorAll("[id]")].map((e) => e.id);
+    const dupIds = ids.filter((id, i) => ids.indexOf(id) !== i);
+    const jsonld = [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => s.textContent);
+    const placeholders = [...document.body.querySelectorAll("*")]
+      .filter((el) => el.children.length === 0 && /Image à fournir|à valider|\[.*?\]|TODO|PROVISOIRE|Illustration/i.test(el.textContent) && el.getClientRects().length > 0)
+      .map((el) => ({ text: el.textContent.trim().slice(0, 80), section: el.closest("section,footer,header")?.id || el.closest("section,footer,header")?.tagName.toLowerCase() }));
+    const skip = [...document.querySelectorAll("a")].slice(0, 3).map((a) => a.getAttribute("href"));
+    return { title: document.title, lang: document.documentElement.lang, headings, landmarks, links, images, dupIds, jsonld, placeholders, firstLinks: skip, fonts: [...document.fonts].filter((f) => f.status === "loaded").map((f) => `${f.family} ${f.weight} ${f.style}`) };
+  });
+  results.structure = structure;
+  results.network = requests;
+  results.console = { duringLoad: firstConsole, all: consoleMsgs };
+  results.anim1440Bottom = await animations(page);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await sleep(1500);
+  results.anim1440Top = await animations(page);
+  // Liens : statut HTTP de chaque destination interne
+  const uniq = [...new Set(structure.links.map((l) => l.href).filter(Boolean))];
+  const status = {};
+  for (const href of uniq) {
+    if (href.startsWith("#")) {
+      status[href] = (await page.evaluate((h) => !!document.getElementById(h.slice(1)), href)) ? "ancre OK" : "ANCRE ABSENTE";
+    } else if (href.startsWith("/")) {
+      const [p, hash] = href.split("#");
+      const res = await fetch(new globalThis.URL(p || "/", URL));
+      let anchor = "";
+      if (hash) anchor = (await page.evaluate((h) => !!document.getElementById(h), hash)) ? " + ancre OK" : " + ANCRE ABSENTE";
+      status[href] = `${res.status}${anchor}`;
+    } else status[href] = href.split(":")[0];
+  }
+  results.linkStatus = status;
+  await page.close();
+}
+
+// ---------------- 2. axe + recensement à chaque largeur ----------------
+if (phase === "all" || phase === "axe") {
+  results.viewports = {};
+  for (const width of [360, 390, 768, 1024, 1440, 1920]) {
+    const { page } = await open(width, { height: width < 768 ? 800 : 900 });
+    await scrollThrough(page, width < 768 ? 300 : 450);
+    const a = await axe(page);
+    const c = await census(page);
+    results.viewports[width] = { axe: a, census: c };
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await sleep(800);
+    await page.screenshot({ path: path.join(OUT, `viewport-${width}-top.png`) });
+    await page.close();
+    console.log("viewport", width, "axe violations", a.violations.map((v) => `${v.id}:${v.count}`).join(","));
+  }
+}
+
+// ---------------- 3. Sans JavaScript ----------------
+if (phase === "all" || phase === "nojs") {
+  results.nojs = {};
+  for (const width of [390, 1440]) {
+    const { page } = await open(width, { js: false });
+    const hidden = await page.evaluate(() => {
+      const out = [];
+      for (const el of document.body.querySelectorAll("*")) {
+        if (el.closest("noscript,[aria-hidden=true],script,style")) continue;
+        const own = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+        if (!own) continue;
+        let e = el;
+        let op = 1;
+        while (e && e !== document.body) {
+          op *= parseFloat(getComputedStyle(e).opacity);
+          e = e.parentElement;
+        }
+        const r = el.getBoundingClientRect();
+        if (op < 0.05 && r.width > 0) out.push({ text: el.textContent.trim().slice(0, 60), section: el.closest("section,header,footer")?.id || el.closest("section,header,footer")?.tagName.toLowerCase() });
+      }
+      return out;
+    });
+    results.nojs[width] = { invisibleText: hidden.length, bySection: hidden.reduce((m, h) => ((m[h.section] = (m[h.section] ?? 0) + 1), m), {}), samples: hidden.slice(0, 40) };
+    await page.screenshot({ path: path.join(OUT, `nojs-${width}-top.png`) });
+    await page.close();
+  }
+}
+
+// ---------------- 4. Animations réduites ----------------
+if (phase === "all" || phase === "reduce") {
+  results.reduce = {};
+  for (const width of [390, 1440]) {
+    const { page } = await open(width, { reduce: true });
+    await scrollThrough(page, 450, 100);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await sleep(1500);
+    results.reduce[width] = { top: await animations(page) };
+    await page.close();
+  }
+  // Sans réduction, à 390 en haut de page
+  const { page } = await open(390);
+  await scrollThrough(page, 300, 100);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await sleep(1500);
+  results.anim390Top = await animations(page);
+  await page.close();
+}
+
+// ---------------- 5. Reflow (zoom), espacement du texte, contraste forcé ----------------
+if (phase === "all" || phase === "reflow") {
+  results.reflow = {};
+  for (const width of [320, 640, 720]) {
+    const { page } = await open(width, { height: 640, mobile: false });
+    await scrollThrough(page, 300, 80);
+    results.reflow[width] = await page.evaluate(() => {
+      const sw = document.documentElement.scrollWidth;
+      const wide = [...document.body.querySelectorAll("*")]
+        .filter((el) => {
+          const r = el.getBoundingClientRect();
+          return r.right > innerWidth + 1 && r.width > 0 && !el.closest("[aria-hidden=true]") && getComputedStyle(el).position !== "fixed";
+        })
+        .slice(0, 15)
+        .map((el) => `${el.tagName.toLowerCase()}.${String(el.className.baseVal ?? el.className).slice(0, 50)} right=${Math.round(el.getBoundingClientRect().right)} sec=${el.closest("section,footer,header")?.id}`);
+      return { scrollWidth: sw, clientWidth: document.documentElement.clientWidth, overflowing: wide };
+    });
+    await page.close();
+  }
+  // Espacement WCAG 1.4.12
+  for (const width of [390, 1440]) {
+    const { page } = await open(width);
+    await page.addStyleTag({ content: "*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}" });
+    await scrollThrough(page, 400, 80);
+    results.reflow[`spacing-${width}`] = await page.evaluate(() => {
+      const clipped = [];
+      for (const el of document.body.querySelectorAll("*")) {
+        if (el.closest("[aria-hidden=true],svg,.sr-only")) continue;
+        const own = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
+        if (!own) continue;
+        const cs = getComputedStyle(el);
+        const r = el.getBoundingClientRect();
+        if (r.width === 0) continue;
+        const overflowX = el.scrollWidth > el.clientWidth + 2 && ["hidden", "clip"].includes(cs.overflowX);
+        const overflowY = el.scrollHeight > el.clientHeight + 2 && ["hidden", "clip"].includes(cs.overflowY);
+        const clampLine = cs.webkitLineClamp && cs.webkitLineClamp !== "none";
+        const pageOverflow = r.right > innerWidth + 1;
+        if (overflowX || overflowY || clampLine || pageOverflow) clipped.push({ text: el.textContent.trim().slice(0, 50), why: [overflowX && "x", overflowY && "y", clampLine && "clamp", pageOverflow && "page"].filter(Boolean).join(","), sec: el.closest("section,footer,header")?.id || el.closest("section,footer,header")?.tagName.toLowerCase() });
+      }
+      return { count: clipped.length, scrollWidth: document.documentElement.scrollWidth, list: clipped.slice(0, 40) };
+    });
+    await page.close();
+  }
+  // Contraste forcé
+  const { page } = await open(1440);
+  const cdp = await page.createCDPSession();
+  await cdp.send("Emulation.setEmulatedMedia", { features: [{ name: "forced-colors", value: "active" }] });
+  await sleep(800);
+  await page.screenshot({ path: path.join(OUT, "forced-colors-1440-top.png") });
+  for (const id of ["expertises", "formations", "faq", "contact"]) {
+    await page.evaluate((i) => document.getElementById(i)?.scrollIntoView(), id);
+    await sleep(2200);
+    await page.screenshot({ path: path.join(OUT, `forced-colors-1440-${id}.png`) });
+  }
+  await page.close();
+}
+
+// ---------------- 6. Clavier ----------------
+if (phase === "all" || phase === "keyboard") {
+  results.keyboard = {};
+  for (const width of [1440, 390]) {
+    const { page } = await open(width);
+    await scrollThrough(page, 450, 80);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await sleep(800);
+    const seq = [];
+    for (let i = 0; i < 160; i += 1) {
+      await page.keyboard.press("Tab");
+      await sleep(90);
+      const info = await page.evaluate(() => {
+        const el = document.activeElement;
+        if (!el || el === document.body) return null;
+        const r = el.getBoundingClientRect();
+        const cs = getComputedStyle(el);
+        const header = document.querySelector("body > header, header.fixed, header")?.getBoundingClientRect();
+        const ring = cs.outlineStyle !== "none" && parseFloat(cs.outlineWidth) > 0 ? `outline ${cs.outlineWidth} ${cs.outlineColor}` : cs.boxShadow !== "none" ? "box-shadow" : "AUCUN";
+        const sticky = header && el.closest("header") === null ? Math.max(0, Math.min(r.bottom, header.bottom) - Math.max(r.top, header.top)) : 0;
+        return {
+          name: (el.getAttribute("aria-label") || el.textContent || el.getAttribute("href") || "").trim().replace(/\s+/g, " ").slice(0, 45),
+          tag: el.tagName.toLowerCase() + (el.getAttribute("role") ? `[${el.getAttribute("role")}]` : ""),
+          section: el.closest("section,header,footer,dialog")?.id || el.closest("section,header,footer,dialog")?.tagName.toLowerCase(),
+          top: Math.round(r.top + scrollY),
+          ring,
+          obscuredPx: Math.round(sticky),
+          obscuredRatio: r.height ? +(sticky / r.height).toFixed(2) : 0,
+          visible: r.width > 0 && r.height > 0,
+        };
+      });
+      seq.push(info);
+      if (info && i > 5 && info.tag === "a" && info.section === "footer" && /haut/i.test(info.name)) break;
+    }
+    results.keyboard[width] = seq;
+    await page.close();
+  }
+  // Menu mobile
+  const { page } = await open(390);
+  await sleep(1200);
+  const menu = {};
+  const btn = await page.$('button[aria-controls="mobile-menu"]');
+  menu.expandedBefore = await btn.evaluate((b) => b.getAttribute("aria-expanded"));
+  await btn.click();
+  await sleep(600);
+  menu.open = await page.evaluate(() => document.getElementById("mobile-menu").open);
+  menu.expandedAfter = await btn.evaluate((b) => b.getAttribute("aria-expanded"));
+  menu.focusInside = await page.evaluate(() => document.getElementById("mobile-menu").contains(document.activeElement) && document.activeElement.getAttribute("aria-label"));
+  const tabs = [];
+  for (let i = 0; i < 9; i += 1) {
+    await page.keyboard.press("Tab");
+    tabs.push(await page.evaluate(() => (document.getElementById("mobile-menu").contains(document.activeElement) ? "dans" : "HORS") + ":" + (document.activeElement.getAttribute("aria-label") || document.activeElement.textContent.trim().slice(0, 30))));
+  }
+  menu.tabCycle = tabs;
+  menu.bodyScrollLocked = await page.evaluate(() => getComputedStyle(document.body).overflow + "/" + getComputedStyle(document.documentElement).overflow);
+  await page.keyboard.press("Escape");
+  await sleep(500);
+  menu.openAfterEscape = await page.evaluate(() => document.getElementById("mobile-menu").open);
+  menu.focusReturned = await page.evaluate(() => document.activeElement?.getAttribute("aria-controls"));
+  menu.expandedAfterEscape = await btn.evaluate((b) => b.getAttribute("aria-expanded"));
+  results.mobileMenu = menu;
+  await page.screenshot({ path: path.join(OUT, "menu-390-closed.png") });
+  await page.close();
+}
+
+const file = `results-${phase}.json`;
+save(file, results);
+await browser.close();
+console.log("ok", file);

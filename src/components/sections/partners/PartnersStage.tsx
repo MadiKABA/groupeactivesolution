@@ -46,6 +46,7 @@ type StageProps = {
   children: ReactNode;
   /** Masque du zigzag : coin bas droit par défaut, tout le fond sur l'accueil. */
   motifMask?: WaveMask;
+  joinedAbove?: boolean;
 };
 
 /**
@@ -54,7 +55,7 @@ type StageProps = {
  * le focus et la carte active en mobile. Un IntersectionObserver pour l'entrée, un pour la visibilité,
  * un seul setInterval pour les impulsions ambiantes (effacé hors écran ou onglet masqué).
  */
-export function PartnersStage({ regime, routes, count, height, children, motifMask = "br" }: StageProps) {
+export function PartnersStage({ regime, routes, count, height, children, motifMask = "br", joinedAbove = false }: StageProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -348,7 +349,7 @@ export function PartnersStage({ regime, routes, count, height, children, motifMa
   }, [routes, count]);
 
   return (
-    <div ref={rootRef} data-regime={regime} style={{ "--h": `${height}px` } as CSSProperties} className="pt-root relative pt-16 pb-16 lg:pt-28 lg:pb-30">
+    <div ref={rootRef} data-regime={regime} style={{ "--h": `${height}px` } as CSSProperties} className={`pt-root relative pb-16 lg:pb-30 ${joinedAbove ? "pt-8 lg:pt-12" : "pt-16 lg:pt-28"}`}>
       {/* Zigzag doré (fond clair, statique) : coin bas droit, tout le fond sur l'accueil */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-clip">
         <WaveMotif tone="light" mask={motifMask} />

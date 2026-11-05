@@ -1,15 +1,14 @@
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-
 import { ArrowUp, Mail, MapPin, Phone } from "lucide-react";
 import { cacheLife } from "next/cache";
 import Image from "next/image";
 
 import { reveal } from "@/components/sections/formations/reveal";
+import { WhatsAppIcon } from "@/components/ui/icons/WhatsAppIcon";
 import { SocialIcon } from "@/components/ui/icons/SocialIcons";
 import { WaveMotif } from "@/components/ui/WaveMotif";
 import { footerLabels, footerLegal, footerNavigation, footerServices, footerTagline, type FooterLink } from "@/lib/footer";
-import { SITE_CONTACT, SOCIALS } from "@/lib/site";
+import { routeExists } from "@/lib/route-exists";
+import { getWhatsAppUrl, SITE_CONTACT, SOCIALS } from "@/lib/site";
 
 import { BackToTop } from "./BackToTop";
 import { FooterLive } from "./FooterLive";
@@ -17,11 +16,6 @@ import { FooterRings } from "./FooterRings";
 
 /** Logo officiel pour fond sombre (le même que le header), viewBox 1000 × 550. */
 const LOGO = { src: "/logos/logo.svg", width: 1000, height: 550 };
-
-const PAGE_FILES = ["page.tsx", "page.ts", "page.jsx", "page.js"];
-
-/** La route existe : src/app/<route>/page.(tsx|ts|jsx|js). Lu au build (page statique). */
-const routeExists = (href: string) => PAGE_FILES.some((file) => existsSync(join(process.cwd(), "src", "app", href.replace(/^\//, ""), file)));
 
 /** Année courante : `new Date()` exige un cache explicite avec cacheComponents (renouvelé chaque jour). */
 async function CurrentYear() {
@@ -109,12 +103,23 @@ export function Footer() {
         <div className="ft-contact">
           <ul className="ft-contact-list ft-a" {...reveal(560, 550)}>
             {contacts.map(({ key, href, label, icon: Icon, external }) => (
-              <li key={key}>
+              <li key={key} className={key === "phone" ? "ft-contact-phone" : undefined}>
                 <a href={href} className="ft-contact-link" {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
                   <Icon aria-hidden="true" className="ft-contact-icon" />
                   <span>{label}</span>
                   {external && <span className="sr-only"> {footerLabels.newTab}</span>}
                 </a>
+                {key === "phone" && (
+                  <a
+                    href={getWhatsAppUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Écrire sur WhatsApp au ${SITE_CONTACT.phone.display} ${footerLabels.newTab}`}
+                    className="ft-contact-wa"
+                  >
+                    <WhatsAppIcon className="size-5" />
+                  </a>
+                )}
               </li>
             ))}
           </ul>
