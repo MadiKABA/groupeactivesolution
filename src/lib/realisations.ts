@@ -4,7 +4,7 @@ import { typo } from "./typography";
 
 export type RealisationDomain = "education" | "developpement" | "transformation";
 
-/** Photo paysage 5:3 (2000 × 1200, WebP < 200 Ko). */
+/** Photo paysage 5:3 (1280 × 768, WebP < 200 Ko). */
 export type RealisationPhoto = { src: string; alt: string; width: number; height: number };
 
 export type Realisation = {
@@ -14,7 +14,7 @@ export type Realisation = {
   domainLabel: string;
   /** Légende : affichée seulement si la photo de la carte existe (vérifié côté serveur). */
   caption: string;
-  /** Une photo par carte (la « scène », qui exige 2 photos par projet, ne s'active donc pas : mode bento). */
+  /** Deux photos par projet : la « scène » s'active quand les 6 fichiers existent (sinon mode bento). */
   photos: RealisationPhoto[];
 };
 
@@ -35,7 +35,7 @@ export const realisationsClosing = {
   highlight: "possibilités.",
 } as const;
 
-const photo = (file: string, alt: string): RealisationPhoto => ({ src: `/realisations/${file}`, alt, width: 2000, height: 1200 });
+const photo = (file: string, alt: string): RealisationPhoto => ({ src: `/realisations/${file}`, alt, width: 1280, height: 768 });
 
 export const realisations: readonly Realisation[] = [
   {
@@ -44,7 +44,10 @@ export const realisations: readonly Realisation[] = [
     domain: "education",
     domainLabel: "Formations",
     caption: "Des élèves qui créent, pas seulement qui consomment.",
-    photos: [photo("carte-1.webp", "Atelier de formation au numérique avec des élèves et des ordinateurs")],
+    photos: [
+      photo("projet-1-a.webp", "Élèves en blouse bleue et rose devant des ordinateurs portables, autour d’une grande table, pendant un atelier numérique"),
+      photo("projet-1-b.webp", "Élèves en blouse bleue réunis autour d’une grande feuille de papier sur un bureau d’école, en plein travail de groupe"),
+    ],
   },
   {
     id: "projet-2",
@@ -52,7 +55,10 @@ export const realisations: readonly Realisation[] = [
     domain: "developpement",
     domainLabel: "Développement digital",
     caption: "Des outils pensés pour les commerçants d’ici.",
-    photos: [photo("carte-2.webp", "Capture d’écran d’un projet réalisé par Active Solution")],
+    photos: [
+      photo("projet-2-a.webp", "Page d’accueil de Tam Tam FinConnect : des mains autour d’une calebasse remplie de billets"),
+      photo("projet-2-b.webp", "Page d’accueil de Topoto, l’assistant digital pour véhicule, avec son titre et ses boutons de téléchargement"),
+    ],
   },
   {
     id: "projet-3",
@@ -60,7 +66,10 @@ export const realisations: readonly Realisation[] = [
     domain: "transformation",
     domainLabel: "Transformation digitale",
     caption: "Des entrepreneurs qui gagnent du temps.",
-    photos: [photo("carte-3.webp", "Tournée numérique d’Active Solution")],
+    photos: [
+      photo("projet-3-a.webp", "Salle informatique remplie de jeunes travaillant sur des ordinateurs, écrans habillés de tissus colorés"),
+      photo("projet-3-b.webp", "Un formateur penché vers des enfants devant un ordinateur portable affichant Scratch"),
+    ],
   },
 ];
 
